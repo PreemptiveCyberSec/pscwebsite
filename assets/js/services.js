@@ -40,10 +40,22 @@ const ICON = {
     mobsec:    '<svg viewBox="0 0 24 24"><rect x="3.5" y="3" width="9" height="18" rx="2"/><path d="M6.5 18h3"/><rect x="10.5" y="6" width="10" height="8" rx="1.2"/><path d="M10.5 8.6h10M13 7.3h.01M15 7.3h.01"/><path d="M13.5 11h4"/></svg>',
     blueteam:  '<svg viewBox="0 0 24 24"><circle cx="7" cy="4.8" r="2.2"/><path d="M7 7.2v6.3M4.7 20l2.3-6.5L9.3 20"/><path d="M13 4v10M13 4l6 1.6-6 1.7"/></svg>',
 
+    // AI Security service icons
+    aillm:    '<svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3.5V16H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M12 8.2l1 2 2 .8-2 .8-1 2-1-2-2-.8 2-.8z"/></svg>',
+    aiagent:  '<svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="10" rx="2.5"/><circle cx="9.5" cy="13" r="1.3"/><circle cx="14.5" cy="13" r="1.3"/><path d="M12 8V5M12 4.6a1.2 1.2 0 1 0 .01 0M3.5 12H2M22 12h-1.5M9 18v2M15 18v2"/></svg>',
+    aiharness:'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1"/><rect x="15" y="4" width="6" height="5" rx="1"/><rect x="9" y="15" width="6" height="5" rx="1"/><path d="M6 9v2.5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9M12 12.5V15"/></svg>',
+    aimcp:    '<svg viewBox="0 0 24 24"><path d="M9 3v5M15 3v5"/><rect x="6.5" y="8" width="11" height="6" rx="2"/><path d="M12 14v3a3 3 0 0 1-3 3H7.5"/></svg>',
+    aia2a:    '<svg viewBox="0 0 24 24"><circle cx="6" cy="8" r="3"/><circle cx="18" cy="16" r="3"/><path d="M9 8h4.5a2 2 0 0 1 2 2v2M15 16h-4.5a2 2 0 0 1-2-2v-2"/><path d="M13.7 6.3L15.7 8l-2 1.7M10.3 17.7L8.3 16l2-1.7"/></svg>',
+    airag:    '<svg viewBox="0 0 24 24"><ellipse cx="9" cy="6" rx="6" ry="2.4"/><path d="M3 6v6c0 1.3 2.7 2.4 6 2.4M3 12c0 1.3 2.7 2.4 6 2.4"/><circle cx="16" cy="15" r="3.3"/><path d="M18.4 17.4L21 20"/></svg>',
+    aimodel:  '<svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12v9M4 7.7l8 4.3 8-4.3"/></svg>',
+    airack:   '<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><rect x="7.5" y="5.5" width="9" height="3" rx="0.6"/><rect x="7.5" y="10.5" width="9" height="3" rx="0.6"/><rect x="7.5" y="15.5" width="9" height="3" rx="0.6"/><path d="M9 7h.01M9 12h.01M9 17h.01"/></svg>',
+    aiguard:  '<svg viewBox="0 0 24 24"><path d="M12 22s7-3.5 7-9V5l-7-2.5L5 5v8c0 5.5 7 9 7 9z"/><circle cx="12" cy="10" r="1.4"/><path d="M12 11.4v2.2M10.6 9.3L9.1 8.4M13.4 9.3L14.9 8.4M10.6 10.9L9.1 11.8M13.4 10.9L14.9 11.8"/></svg>',
+
     // Category icons
     offensive:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
     defensive:'<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
-    training: '<svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>'
+    training: '<svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>',
+    ai:       '<svg viewBox="0 0 24 24"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><circle cx="12" cy="9" r="1.6"/><circle cx="12" cy="15" r="1.6"/><circle cx="19" cy="12" r="1.6"/><path d="M6.5 6.7l4 1.9M6.5 11.4l4-1.8M6.5 12.6l4 1.8M6.5 17.3l4-1.8M13.5 9.5l4 1.9M13.5 14.5l4-1.9"/></svg>'
 };
 
 // --- Service catalogue ---
@@ -413,6 +425,154 @@ const CATEGORIES = [
                 ],
                 frameworks: ['ISO 27001 / 27002', 'NIST CSF', 'CIS Controls', 'COBIT'],
                 deliverables: ['Policy gap analysis', 'Framework coverage map', 'Updated policy templates', 'Governance improvement plan']
+            }
+        ]
+    },
+    {
+        id: 'ai',
+        icon: ICON.ai,
+        title: 'AI Security',
+        blurb: 'Offensive and defensive security for LLMs, autonomous agents, and the infrastructure that runs them — securing how you build, deploy, connect, and defend AI systems.',
+        services: [
+            {
+                id: 'ai-llm', icon: ICON.aillm, name: 'LLM & GenAI Penetration Testing',
+                overview: 'Adversarial testing of LLM-powered features — chatbots, copilots, and generative workflows — probing for prompt injection, jailbreaks, sensitive-data disclosure, and insecure output handling against the OWASP LLM Top 10.',
+                phases: [
+                    ['Scoping & threat modelling', 'Map the model, system prompts, tools, and data sources, and define the feature\'s trust boundaries.'],
+                    ['Prompt injection & jailbreak testing', 'Attempt direct and indirect injection, system-prompt exfiltration, and guardrail bypass.'],
+                    ['Sensitive data & output handling', 'Probe for training-data and secret leakage, and unsafe rendering of model output (XSS/SSRF via output).'],
+                    ['Tool & plugin abuse', 'Test how connected tools and functions can be coerced into unintended actions.'],
+                    ['Abuse & denial-of-wallet', 'Assess rate limiting, token exhaustion, and cost-based abuse.'],
+                    ['Reporting & retest', 'Deliver ranked findings with reproducible prompts and mitigations, then verify fixes.']
+                ],
+                frameworks: ['OWASP Top 10 for LLM Applications', 'MITRE ATLAS', 'NIST AI RMF', 'OWASP WSTG'],
+                deliverables: ['Prompt-level findings with reproducible payloads', 'Guardrail-bypass evidence', 'Output-handling remediation guidance', 'Executive summary + free retest']
+            },
+            {
+                id: 'ai-agent', icon: ICON.aiagent, name: 'AI Agent Security & Secure Build',
+                overview: 'Security review and secure-by-design build support for autonomous and semi-autonomous AI agents — evaluating tool access, memory, planning loops, and human-in-the-loop controls so agents act within safe, least-privilege boundaries.',
+                phases: [
+                    ['Agent architecture review', 'Map the agent\'s models, tools, memory, planners, and level of autonomy.'],
+                    ['Tool & permission scoping', 'Enforce least-privilege on tool calls, credentials, and side effects.'],
+                    ['Injection & goal-hijack testing', 'Test prompt/goal manipulation, unsafe tool chaining, and loop abuse.'],
+                    ['Memory & context integrity', 'Assess persistence, context poisoning, and cross-session leakage.'],
+                    ['Guardrail & HITL design', 'Add approval gates, sandboxing, and action allow-lists for high-risk operations.'],
+                    ['Validation & hardening', 'Re-test the hardened agent and document residual risk.']
+                ],
+                frameworks: ['OWASP Agentic AI (Threats & Mitigations)', 'MITRE ATLAS', 'NIST AI RMF', 'Google SAIF'],
+                deliverables: ['Agent threat model', 'Least-privilege tool/permission matrix', 'Guardrail & human-in-the-loop design', 'Hardened-build validation report']
+            },
+            {
+                id: 'ai-harness', icon: ICON.aiharness, name: 'Agent Harness & Orchestration Security',
+                overview: 'Assessment of the agent harness and orchestration layer — the runtime that schedules models, routes tool calls, and manages multi-step execution — where insecure defaults and missing isolation turn a single prompt into system-wide impact.',
+                phases: [
+                    ['Harness architecture review', 'Document the orchestration runtime, execution loop, and trust boundaries.'],
+                    ['Isolation & sandboxing', 'Assess process, container, and network isolation for tool and code execution.'],
+                    ['Secrets & credential flow', 'Trace how the harness stores and injects API keys and tokens.'],
+                    ['Input/output mediation', 'Review sanitisation between models, tools, and downstream systems.'],
+                    ['Resource & loop controls', 'Test timeouts, step limits, and runaway-execution safeguards.'],
+                    ['Reporting & hardening', 'Deliver findings with orchestration-hardening guidance.']
+                ],
+                frameworks: ['OWASP Agentic AI', 'NIST AI RMF', 'CIS Benchmarks', 'MITRE ATLAS'],
+                deliverables: ['Orchestration threat model', 'Isolation & sandbox assessment', 'Secrets-handling review', 'Hardening roadmap']
+            },
+            {
+                id: 'ai-mcp', icon: ICON.aimcp, name: 'MCP (Model Context Protocol) Security',
+                overview: 'Security assessment of Model Context Protocol servers and clients — the connectors that expose tools, resources, and data to AI models — testing authentication, authorization, and injection paths a malicious server or crafted resource can exploit.',
+                phases: [
+                    ['MCP surface mapping', 'Inventory MCP servers and their exposed tools, resources, and prompts.'],
+                    ['Authentication & authorization', 'Test token handling, scopes, and consent for tool invocation.'],
+                    ['Malicious server & tool poisoning', 'Assess tool-description injection, rug-pull, and confused-deputy risks.'],
+                    ['Data exposure & injection', 'Probe resources for indirect prompt injection and over-broad access.'],
+                    ['Transport & isolation', 'Review stdio/HTTP transport security and client isolation.'],
+                    ['Reporting & retest', 'Deliver connector-level findings and remediation.']
+                ],
+                frameworks: ['MCP Specification (security best practices)', 'OWASP LLM Top 10', 'OWASP Agentic AI', 'MITRE ATLAS'],
+                deliverables: ['MCP server & tool inventory', 'Authorization & consent findings', 'Tool-poisoning risk assessment', 'Remediation guidance']
+            },
+            {
+                id: 'ai-a2a', icon: ICON.aia2a, name: 'A2A (Agent-to-Agent) Protocol Development & Security',
+                overview: 'Design and security review of agent-to-agent communication — building and hardening the protocols, identity, and trust model that let multiple agents delegate tasks safely without becoming an uncontrolled attack surface.',
+                phases: [
+                    ['Interaction design', 'Define agent roles, capabilities, and task-delegation flows.'],
+                    ['Identity & trust', 'Establish authentication, capability tokens, and agent verification.'],
+                    ['Message integrity & injection', 'Protect inter-agent messages from tampering and injected instructions.'],
+                    ['Delegation & scope control', 'Enforce least-privilege delegation and prevent authority sprawl.'],
+                    ['Abuse & collusion testing', 'Test rogue-agent, replay, and cascading-failure scenarios.'],
+                    ['Reference implementation & review', 'Deliver a hardened pattern and security assessment.']
+                ],
+                frameworks: ['A2A Protocol', 'OWASP Agentic AI', 'NIST AI RMF', 'Zero Trust (NIST SP 800-207)'],
+                deliverables: ['A2A interaction & trust model', 'Identity & authorization design', 'Inter-agent injection findings', 'Reference implementation & review']
+            },
+            {
+                id: 'ai-redteam', icon: ICON.adversarial, name: 'AI Red Teaming & Adversarial ML',
+                overview: 'End-to-end adversarial testing of AI/ML systems — from evasion and model-extraction attacks to data poisoning and jailbreaks — measuring real-world resilience and whether your safety and detection controls actually hold.',
+                phases: [
+                    ['Objective & model recon', 'Agree goals and profile the target models and pipelines.'],
+                    ['Adversarial input attacks', 'Craft evasion, perturbation, and jailbreak inputs against the model.'],
+                    ['Model extraction & inversion', 'Test for model theft and training-data reconstruction.'],
+                    ['Data & supply-chain poisoning', 'Assess poisoning of training data and fine-tuning pipelines.'],
+                    ['Safety & detection validation', 'Measure which attacks bypass guardrails and monitoring.'],
+                    ['Purple-team tuning', 'Feed results to defenders to improve controls.']
+                ],
+                frameworks: ['MITRE ATLAS', 'OWASP ML Security Top 10', 'NIST AI RMF', 'Google SAIF'],
+                deliverables: ['Adversarial-attack scorecard', 'Extraction / poisoning evidence', 'Guardrail-bypass analysis', 'Detection-improvement recommendations']
+            },
+            {
+                id: 'ai-rag', icon: ICON.airag, name: 'RAG Pipeline Security',
+                overview: 'Assessment of retrieval-augmented generation pipelines — vector stores, embeddings, and retrieval logic — where poisoned documents and over-broad retrieval enable indirect prompt injection and cross-tenant data leakage.',
+                phases: [
+                    ['Pipeline mapping', 'Document ingestion, embedding, vector store, and retrieval flow.'],
+                    ['Indirect injection testing', 'Plant adversarial content to hijack the model via retrieved context.'],
+                    ['Access & tenant isolation', 'Test retrieval authorization and cross-tenant boundaries.'],
+                    ['Data poisoning & integrity', 'Assess ingestion trust and embedding-store integrity.'],
+                    ['Sensitive-data exposure', 'Probe for leakage through retrieval and citations.'],
+                    ['Reporting & retest', 'Deliver pipeline findings and mitigations.']
+                ],
+                frameworks: ['OWASP LLM Top 10', 'MITRE ATLAS', 'NIST AI RMF', 'CSA AI guidance'],
+                deliverables: ['RAG data-flow & trust map', 'Indirect-injection findings', 'Tenant-isolation assessment', 'Remediation guidance']
+            },
+            {
+                id: 'ai-supply', icon: ICON.aimodel, name: 'AI/ML Supply Chain & Model Integrity',
+                overview: 'Verification of the AI supply chain — third-party models, datasets, and ML dependencies — establishing provenance and integrity so a poisoned model or backdoored dependency never reaches production.',
+                phases: [
+                    ['Inventory & AI-BOM', 'Catalogue models, datasets, and ML dependencies as an AI Bill of Materials.'],
+                    ['Provenance & integrity', 'Verify model sources, signatures, and licensing.'],
+                    ['Poisoning & backdoor review', 'Assess models and fine-tunes for hidden triggers and unsafe behaviour.'],
+                    ['Dependency & artefact security', 'Scan ML libraries and serialized-model formats for risk.'],
+                    ['Pipeline hardening', 'Add signing, scanning, and gating to the MLOps pipeline.'],
+                    ['Reporting', 'Deliver an AI-BOM and integrity roadmap.']
+                ],
+                frameworks: ['NIST AI RMF', 'SLSA', 'OWASP ML Security Top 10', 'MITRE ATLAS'],
+                deliverables: ['AI Bill of Materials (AI-BOM)', 'Provenance & integrity assessment', 'Poisoning / backdoor review', 'MLOps hardening roadmap']
+            },
+            {
+                id: 'ai-rack', icon: ICON.airack, name: 'AI Hardware & GPU Rack Configuration Review',
+                overview: 'A configuration and security review of AI compute infrastructure — GPU servers, racks, and cluster fabric — covering firmware, isolation, network fabric, and hardening for on-prem and colocated AI training and inference estates.',
+                phases: [
+                    ['Inventory & topology', 'Map GPU nodes, racks, interconnect (NVLink/InfiniBand), and management planes.'],
+                    ['Firmware & BMC hardening', 'Review BMC/IPMI, BIOS, and GPU firmware for exposure and insecure defaults.'],
+                    ['Isolation & multi-tenancy', 'Assess node, network, and tenant isolation across the cluster.'],
+                    ['Configuration benchmarking', 'Measure host, hypervisor, and orchestration config against hardening baselines.'],
+                    ['Physical & supply-chain', 'Review rack access, out-of-band management, and hardware provenance.'],
+                    ['Reporting & remediation', 'Deliver a prioritized hardening plan for the estate.']
+                ],
+                frameworks: ['CIS Benchmarks', 'NIST SP 800-193 (firmware resilience)', 'NIST SP 800-53', 'ISO 27001'],
+                deliverables: ['Compute topology & exposure map', 'Firmware / BMC hardening findings', 'Isolation & configuration gap analysis', 'Prioritized remediation plan']
+            },
+            {
+                id: 'ai-gov', icon: ICON.aiguard, name: 'AI Governance, Guardrails & Safety',
+                overview: 'We help you deploy AI responsibly — building the governance, guardrails, and monitoring that keep AI systems safe, compliant, and aligned to emerging regulation and standards such as the NIST AI RMF and ISO/IEC 42001.',
+                phases: [
+                    ['AI inventory & risk tiering', 'Catalogue AI use cases and classify them by risk.'],
+                    ['Governance & policy', 'Establish an AI management system, roles, and acceptable-use policy.'],
+                    ['Guardrail engineering', 'Implement input/output filtering, content safety, and abuse monitoring.'],
+                    ['Assurance & red-team cadence', 'Define ongoing evaluation, red-teaming, and sign-off gates.'],
+                    ['Monitoring & response', 'Stand up logging, drift detection, and incident response for AI.'],
+                    ['Roadmap', 'Deliver a maturity roadmap aligned to regulation.']
+                ],
+                frameworks: ['NIST AI RMF', 'ISO/IEC 42001', 'ISO/IEC 23894', 'EU AI Act (readiness)'],
+                deliverables: ['AI governance framework & policy', 'AI risk register & tiering', 'Guardrail & monitoring design', 'Compliance-readiness roadmap']
             }
         ]
     },
