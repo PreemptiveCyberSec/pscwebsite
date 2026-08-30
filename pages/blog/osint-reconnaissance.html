@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINT: Reconnaissance from Open Sources — Preemptive Cyber Security</title>
+    <meta name="description" content="How passive intelligence gathering works — source categories, the power of pivoting between data points, and the operational security a tester must keep.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">OSINT</span>
+                    <span class="dot">//</span>
+                    <span>2026-04-04</span>
+                    <span class="dot">//</span>
+                    <span>9 min read</span>
+                </div>
+
+                <h1>OSINT: Reconnaissance from Open Sources</h1>
+                <p class="article-lead">Before a single packet touches a target, a skilled adversary already knows the shape of it — the domains, the people, the leaked passwords, the software versions. Open-source intelligence turns scattered public data into a coherent picture of exposure, and doing it well is as much about discipline as it is about tooling.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Open-source intelligence — OSINT — is the practice of collecting and analysing information from publicly available sources to build knowledge about a target. In an offensive engagement it is the quiet first phase: no exploits, no alerts, just careful reading of what an organisation has, often unknowingly, left in the open. The reason it matters is simple. Attackers begin here, so defenders and testers must too. The map you build from public sources determines every decision that follows, from which subdomain to probe first to which employee makes the most plausible phishing target.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 340" role="img" aria-label="A collection funnel showing five open-source categories narrowing into a pivot and correlate stage, then enrichment, then a target profile.">
+                            <text x="16" y="24" class="dg-title">OSINT collection funnel</text>
+
+                            <!-- source row -->
+                            <g>
+                                <rect x="20" y="46" width="132" height="46" rx="8" class="dg-node"/>
+                                <text x="86" y="66" text-anchor="middle" class="dg-label">DNS &amp; Certs</text>
+                                <text x="86" y="82" text-anchor="middle" class="dg-sub">records, CT logs</text>
+                            </g>
+                            <g>
+                                <rect x="166" y="46" width="132" height="46" rx="8" class="dg-node"/>
+                                <text x="232" y="66" text-anchor="middle" class="dg-label">Social Media</text>
+                                <text x="232" y="82" text-anchor="middle" class="dg-sub">people, roles</text>
+                            </g>
+                            <g>
+                                <rect x="312" y="46" width="132" height="46" rx="8" class="dg-node"/>
+                                <text x="378" y="66" text-anchor="middle" class="dg-label">Breach Data</text>
+                                <text x="378" y="82" text-anchor="middle" class="dg-sub">creds, emails</text>
+                            </g>
+                            <g>
+                                <rect x="458" y="46" width="132" height="46" rx="8" class="dg-node"/>
+                                <text x="524" y="66" text-anchor="middle" class="dg-label">Public Code</text>
+                                <text x="524" y="82" text-anchor="middle" class="dg-sub">repos, secrets</text>
+                            </g>
+                            <g>
+                                <rect x="604" y="46" width="132" height="46" rx="8" class="dg-node"/>
+                                <text x="670" y="66" text-anchor="middle" class="dg-label">Metadata</text>
+                                <text x="670" y="82" text-anchor="middle" class="dg-sub">docs, EXIF</text>
+                            </g>
+
+                            <!-- converging lines to pivot -->
+                            <g class="dg-flow-dim">
+                                <line x1="86" y1="92" x2="360" y2="140"/>
+                                <line x1="232" y1="92" x2="368" y2="140"/>
+                                <line x1="378" y1="92" x2="380" y2="140"/>
+                                <line x1="524" y1="92" x2="392" y2="140"/>
+                                <line x1="670" y1="92" x2="400" y2="140"/>
+                            </g>
+
+                            <!-- pivot -->
+                            <g>
+                                <rect x="280" y="142" width="200" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="380" y="166" text-anchor="middle" class="dg-accent-text">Pivot / Correlate</text>
+                                <text x="380" y="183" text-anchor="middle" class="dg-sub">link data points together</text>
+                            </g>
+                            <path d="M380 194 l-5 -9 10 0 z" fill="var(--neon)" transform="translate(0,10)"/>
+                            <line x1="380" y1="194" x2="380" y2="228" class="dg-flow"/>
+                            <path d="M376 226 l4 8 4 -8 z" fill="var(--neon)"/>
+
+                            <!-- enrichment -->
+                            <g>
+                                <rect x="290" y="236" width="180" height="48" rx="8" class="dg-node"/>
+                                <text x="380" y="258" text-anchor="middle" class="dg-label">Enrichment</text>
+                                <text x="380" y="274" text-anchor="middle" class="dg-sub">validate, add context</text>
+                            </g>
+                            <line x1="380" y1="284" x2="380" y2="300" class="dg-flow"/>
+                            <path d="M376 298 l4 8 4 -8 z" fill="var(--neon)"/>
+
+                            <!-- target profile -->
+                            <g>
+                                <rect x="300" y="304" width="160" height="24" rx="8" class="dg-node-accent"/>
+                                <text x="380" y="320" text-anchor="middle" class="dg-accent-text">Target Profile</text>
+                            </g>
+
+                            <text x="16" y="332" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> Many weak signals funnel into a strong one — the value is in the correlation, not any single source.</figcaption>
+                    </figure>
+
+                    <h2>Passive by design</h2>
+                    <p>The defining trait of true reconnaissance from open sources is that it is <strong>passive</strong>: the collection never touches the target's own infrastructure. Querying a certificate transparency log, reading a public GitHub repository, or browsing a LinkedIn profile leaves no trace in the target's logs, because those requests go to third parties. This is what makes OSINT so attractive to an attacker and so useful to a tester modelling an external threat — a great deal of an organisation's attack surface can be mapped without ever announcing your presence.</p>
+                    <p>The line matters. The moment you resolve a discovered hostname against the target's own DNS server, port-scan an IP, or authenticate to a portal, you have crossed from passive into active reconnaissance, and you may generate log entries or alerts. Knowing exactly where that line sits — and staying on the passive side until scope permits otherwise — is a core skill.</p>
+
+                    <h2>The source categories that matter</h2>
+                    <p>Public information falls into a handful of durable categories, each answering a different question about the target.</p>
+                    <h3>Infrastructure: DNS and certificates</h3>
+                    <p>DNS records, WHOIS data, and certificate transparency logs reveal the shape of an organisation's estate. A single wildcard certificate can leak the naming convention for an internal environment; CT logs frequently expose staging, dev, and admin subdomains that were never meant to be found. This is often the richest starting point because it is factual, structured, and continuously published.</p>
+                    <h3>People: social media and public records</h3>
+                    <p>Employees are part of the attack surface. Job titles, reporting lines, tools mentioned in posts, and conference talks all reveal how an organisation is structured and what technology it runs. A job advertisement asking for experience with a specific firewall or EDR product tells an attacker precisely what defences to expect.</p>
+                    <h3>Exposure: breach data and public code</h3>
+                    <p>Historical breach corpora expose which corporate email addresses have appeared in third-party compromises and, sometimes, the passwords associated with them — the raw material for credential-stuffing. Public code repositories are a recurring source of accidental disclosure: hard-coded API keys, internal hostnames, and connection strings committed and never fully purged from history.</p>
+                    <h3>Documents: metadata</h3>
+                    <p>Files an organisation publishes carry metadata. A PDF or Office document can embed the author's username, the internal file path, and the software version used to create it — small facts that, aggregated, reveal naming conventions and software estates.</p>
+
+                    <h2>Pivoting is where the value lives</h2>
+                    <p>Any single data point is usually weak. The craft of OSINT is <strong>pivoting</strong> — using one discovered fact to unlock the next, and correlating across sources until a picture emerges that no individual source contained. A username found in document metadata becomes a search term across code repositories; a matching commit exposes an internal hostname; that hostname appears in a certificate log alongside a dozen siblings; one of those siblings maps to an email format that lines up with a breach dataset. None of these facts is dramatic on its own. Chained together, they describe a credible path in.</p>
+
+                    <blockquote>OSINT rarely hands you a finished answer. It hands you fragments — and the discipline is in connecting them faithfully, without inventing the links you wish were there.</blockquote>
+
+                    <p>This is also where rigour matters most. Correlation invites false positives: two people share a name, an old record describes infrastructure long since retired, a leaked password was changed years ago. Enrichment — validating and dating each fact before it earns a place in the profile — is what separates intelligence from a pile of coincidences.</p>
+
+                    <h2>Operational security for the tester</h2>
+                    <p>Reconnaissance runs in both directions. While you study a target, your own activity can be observed — and a tester who is careless about operational security leaks method, intent, and sometimes identity. Searches, account interactions, and document downloads can all be attributable. Viewing a LinkedIn profile can notify its owner. Cloning a repository, downloading a file, or resolving a hostname against infrastructure you do not control may be logged by a third party who later cooperates with the target.</p>
+                    <p>Good practice is to separate research identity from personal identity, to prefer sources that do not notify their subjects, and to keep meticulous notes on <em>where</em> each fact came from and <em>when</em> it was true. That provenance is not bureaucratic overhead — it is what makes the eventual report defensible and reproducible. It also keeps the engagement lawful and in-scope, which is the non-negotiable frame around all of this work.</p>
+
+                    <h2>Turning collection into defence</h2>
+                    <p>For a defender, the same funnel is a to-do list. Every category an attacker mines is one you can audit yourself: enumerate your own subdomains and certificates, monitor breach datasets for your domains, scan your public repositories for secrets, and strip metadata from documents before publishing. The most effective OSINT programme inside an organisation is the one that runs continuously against itself, closing exposure before an outsider finds it. Frameworks such as the reconnaissance tactics catalogued by <a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a> give a useful checklist of what adversaries look for.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>OSINT is <strong>passive by design</strong> — collection touches third parties, not the target, and leaves no trace in their logs.</li>
+                            <li>Know exactly where passive ends and active reconnaissance begins, and stay on the passive side until scope allows more.</li>
+                            <li>The value is in <strong>pivoting and correlation</strong>, not in any single source — weak signals combine into strong ones.</li>
+                            <li>Enrich and date every fact; correlation without validation produces confident nonsense.</li>
+                            <li>Mind your own operational security, and run the same funnel against yourself to shrink your exposure first.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#osint</span>
+                        <span class="tag">#recon</span>
+                        <span class="tag">#footprinting</span>
+                        <span class="tag">#intelligence</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Assess your exposure
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

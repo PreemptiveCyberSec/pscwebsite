@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ransomware in 2026: Double Extortion &amp; Defense — Preemptive Cyber Security</title>
+    <meta name="description" content="Ransomware-as-a-Service, double and triple extortion, the intrusion kill chain, and the layered defenses — including immutable backups — that break it.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Threat</span>
+                    <span class="dot">//</span>
+                    <span>2026-06-27</span>
+                    <span class="dot">//</span>
+                    <span>11 min read</span>
+                </div>
+
+                <h1>Ransomware in 2026: Double Extortion &amp; Defense</h1>
+                <p class="article-lead">Ransomware stopped being a single piece of malware years ago. Today it is a criminal supply chain — affiliates, brokers, and negotiators — that steals your data before it ever encrypts a file. Defending against it means breaking the intrusion at every stage, not just restoring from backup.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>The word "ransomware" still conjures a single image: a skull on a locked screen demanding payment for a decryption key. That picture is a decade out of date. Modern ransomware is the final act of a deliberate, human-operated intrusion that may have begun weeks earlier. Understanding the campaign as a chain of steps — each one an opportunity to detect and stop it — is the foundation of effective defence.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 280" role="img" aria-label="A seven-stage intrusion kill chain from initial access to encryption, with a defensive control mapped beneath each stage to break the chain.">
+                            <text x="16" y="22" class="dg-title">Intrusion kill chain &amp; controls</text>
+
+                            <!-- kill chain nodes -->
+                            <g>
+                                <rect x="16" y="60" width="92" height="50" rx="8" class="dg-node"/>
+                                <text x="62" y="82" text-anchor="middle" class="dg-label"><tspan x="62">Initial</tspan><tspan x="62" dy="15">Access</tspan></text>
+                            </g>
+                            <g>
+                                <rect x="122" y="60" width="92" height="50" rx="8" class="dg-node"/>
+                                <text x="168" y="90" text-anchor="middle" class="dg-label">Execution</text>
+                            </g>
+                            <g>
+                                <rect x="228" y="60" width="92" height="50" rx="8" class="dg-node"/>
+                                <text x="274" y="90" text-anchor="middle" class="dg-label">Persistence</text>
+                            </g>
+                            <g>
+                                <rect x="334" y="60" width="92" height="50" rx="8" class="dg-node"/>
+                                <text x="380" y="82" text-anchor="middle" class="dg-label"><tspan x="380">Credential</tspan><tspan x="380" dy="15">Access</tspan></text>
+                            </g>
+                            <g>
+                                <rect x="440" y="60" width="92" height="50" rx="8" class="dg-node"/>
+                                <text x="486" y="82" text-anchor="middle" class="dg-label"><tspan x="486">Lateral</tspan><tspan x="486" dy="15">Movement</tspan></text>
+                            </g>
+                            <g>
+                                <rect x="546" y="60" width="92" height="50" rx="8" class="dg-node"/>
+                                <text x="592" y="90" text-anchor="middle" class="dg-label">Exfiltration</text>
+                            </g>
+                            <g>
+                                <rect x="652" y="60" width="92" height="50" rx="8" class="dg-node"/>
+                                <text x="698" y="90" text-anchor="middle" class="dg-label">Encryption</text>
+                            </g>
+
+                            <!-- chain arrows -->
+                            <g>
+                                <line x1="108" y1="85" x2="120" y2="85" class="dg-flow"/><path d="M120 81 l8 4 -8 4 z" fill="var(--neon)"/>
+                                <line x1="214" y1="85" x2="226" y2="85" class="dg-flow"/><path d="M226 81 l8 4 -8 4 z" fill="var(--neon)"/>
+                                <line x1="320" y1="85" x2="332" y2="85" class="dg-flow"/><path d="M332 81 l8 4 -8 4 z" fill="var(--neon)"/>
+                                <line x1="426" y1="85" x2="438" y2="85" class="dg-flow"/><path d="M438 81 l8 4 -8 4 z" fill="var(--neon)"/>
+                                <line x1="532" y1="85" x2="544" y2="85" class="dg-flow"/><path d="M544 81 l8 4 -8 4 z" fill="var(--neon)"/>
+                                <line x1="638" y1="85" x2="650" y2="85" class="dg-flow"/><path d="M650 81 l8 4 -8 4 z" fill="var(--neon)"/>
+                            </g>
+
+                            <!-- down connectors -->
+                            <g class="dg-flow-dim" stroke-dasharray="3 4">
+                                <line x1="62" y1="110" x2="62" y2="178"/>
+                                <line x1="168" y1="110" x2="168" y2="178"/>
+                                <line x1="274" y1="110" x2="274" y2="178"/>
+                                <line x1="380" y1="110" x2="380" y2="178"/>
+                                <line x1="486" y1="110" x2="486" y2="178"/>
+                                <line x1="592" y1="110" x2="592" y2="178"/>
+                                <line x1="698" y1="110" x2="698" y2="178"/>
+                            </g>
+                            <g fill="var(--neon)" stroke="none">
+                                <path d="M58 178 l4 8 4 -8 z"/><path d="M164 178 l4 8 4 -8 z"/><path d="M270 178 l4 8 4 -8 z"/>
+                                <path d="M376 178 l4 8 4 -8 z"/><path d="M482 178 l4 8 4 -8 z"/><path d="M588 178 l4 8 4 -8 z"/><path d="M694 178 l4 8 4 -8 z"/>
+                            </g>
+
+                            <!-- control nodes -->
+                            <g>
+                                <rect x="16" y="186" width="92" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="62" y="216" text-anchor="middle" class="dg-accent-text" font-size="11">MFA / patch</text>
+                            </g>
+                            <g>
+                                <rect x="122" y="186" width="92" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="168" y="216" text-anchor="middle" class="dg-accent-text" font-size="11">EDR</text>
+                            </g>
+                            <g>
+                                <rect x="228" y="186" width="92" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="274" y="216" text-anchor="middle" class="dg-accent-text" font-size="11">Hardening</text>
+                            </g>
+                            <g>
+                                <rect x="334" y="186" width="92" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="380" y="216" text-anchor="middle" class="dg-accent-text" font-size="11">LAPS / tiering</text>
+                            </g>
+                            <g>
+                                <rect x="440" y="186" width="92" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="486" y="216" text-anchor="middle" class="dg-accent-text" font-size="11">Segmentation</text>
+                            </g>
+                            <g>
+                                <rect x="546" y="186" width="92" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="592" y="216" text-anchor="middle" class="dg-accent-text" font-size="11">DLP / egress</text>
+                            </g>
+                            <g>
+                                <rect x="652" y="186" width="92" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="698" y="210" text-anchor="middle" class="dg-accent-text" font-size="11"><tspan x="698">Immutable</tspan><tspan x="698" dy="14">backups</tspan></text>
+                            </g>
+
+                            <text x="16" y="262" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> Each stage of the intrusion is an opportunity to break the chain — the accent nodes map a concrete defensive control to every step.</figcaption>
+                    </figure>
+
+                    <h2>Ransomware-as-a-Service</h2>
+                    <p>The economics changed everything. Ransomware-as-a-Service (RaaS) splits the crime into specialised roles. A core group develops and maintains the ransomware, the leak site, and the payment infrastructure. <strong>Affiliates</strong> rent that toolkit and carry out the intrusions, sharing a cut of the proceeds. <strong>Initial access brokers</strong> sell ready-made footholds — valid VPN credentials, exposed remote services, or already-compromised hosts. This division of labour means an attacker no longer needs to write malware; they only need to buy access and follow a playbook, which is why the volume of attacks has stayed stubbornly high.</p>
+
+                    <h2>Double and triple extortion</h2>
+                    <p>Encryption alone became a weak form of leverage once organisations improved their backups — so attackers added pressure. <strong>Double extortion</strong> steals data before encrypting it, threatening to publish it on a leak site if the ransom is not paid. Restoring from backup no longer makes the problem disappear, because the stolen copy is still in the attacker's hands. <strong>Triple extortion</strong> piles on further: contacting the victim's customers directly, launching denial-of-service attacks, or threatening regulatory disclosure. The lesson is stark — a good backup protects availability, but it does nothing for confidentiality once data has been exfiltrated.</p>
+
+                    <h2>The intrusion kill chain</h2>
+                    <p>Human-operated ransomware follows a recognisable sequence, shown along the top of Figure 1. It begins with <strong>initial access</strong> — phishing, a stolen credential, or an exposed service. Then comes <strong>execution</strong> of tooling, <strong>persistence</strong> to survive reboots, <strong>credential access</strong> to harvest more privileges, and <strong>lateral movement</strong> across the network toward high-value systems. Only near the end do attackers perform <strong>exfiltration</strong> of the data they intend to hold hostage, followed by mass <strong>encryption</strong>. Crucially, that whole sequence often unfolds over days, giving defenders a window to intervene.</p>
+                    <h3>Dwell time is your opportunity</h3>
+                    <p>The gap between initial access and encryption is called dwell time, and it is where defence is won or lost. An attacker who is detected during credential access or lateral movement can be evicted before any data leaves or any file is encrypted. Every stage crossed without detection, however, compounds the damage.</p>
+
+                    <h2>Layered defence, mapped to the chain</h2>
+                    <p>The accent row in Figure 1 pairs each stage with a control that disrupts it. Phishing-resistant <strong>multi-factor authentication</strong> and disciplined <strong>patching</strong> shrink the initial-access surface. <strong>Endpoint detection and response (EDR)</strong> catches execution and suspicious behaviour. System <strong>hardening</strong> removes the footholds attackers use for persistence. Local admin password randomisation (<strong>LAPS</strong>) and <strong>tiered administration</strong> blunt credential theft. Network <strong>segmentation</strong> constrains lateral movement. <strong>Data-loss prevention and egress monitoring</strong> flag exfiltration. And <strong>immutable backups</strong> ensure that even successful encryption is survivable. No single control is sufficient; their overlap is the point.</p>
+
+                    <blockquote>Backups are the control of last resort — but only if they cannot be altered or deleted. An attacker who can encrypt your backups has no reason to negotiate.</blockquote>
+
+                    <h2>Immutable backups and recovery</h2>
+                    <p>Because attackers now hunt for backup systems specifically, the backup strategy must assume the production environment is fully compromised. Immutability — write-once storage that cannot be modified or deleted for a defined retention period — is what makes backups trustworthy under attack. Equally important is the ability to actually restore: an untested backup is a hypothesis, not a plan. Regular, timed recovery drills turn "we have backups" into a defensible recovery-time objective. Guidance from national bodies such as <a href="https://www.cisa.gov/stopransomware">CISA</a> reinforces offline, immutable, and regularly tested backups as core to resilience.</p>
+
+                    <h2>Prepare to respond, not just prevent</h2>
+                    <p>Prevention will sometimes fail, so the mature organisation rehearses the response. A ransomware-specific incident plan defines who declares an incident, how systems are isolated, when law enforcement is engaged, and how the organisation communicates while its primary systems may be down. Tabletop exercises expose the gaps — missing contact lists, unclear decision authority, backups nobody has restored — long before a real incident does. The goal is to make the worst day a rehearsed procedure rather than an improvisation.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Ransomware is a criminal service economy — affiliates and access brokers, not lone malware authors.</li>
+                            <li>Double and triple extortion mean a clean restore no longer resolves the incident; stolen data stays stolen.</li>
+                            <li>Human-operated attacks follow a kill chain, and dwell time gives defenders a window to intervene.</li>
+                            <li>Defence is layered — a specific control maps to each stage, from MFA to segmentation to immutable backups.</li>
+                            <li>Immutable, tested backups and a rehearsed incident plan turn a catastrophe into a recoverable event.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#ransomware</span>
+                        <span class="tag">#threat</span>
+                        <span class="tag">#backups</span>
+                        <span class="tag">#defense</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Test your ransomware readiness
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

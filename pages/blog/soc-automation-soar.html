@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC Automation with SOAR — Preemptive Cyber Security</title>
+    <meta name="description" content="Playbook-driven automation, alert enrichment, keeping the analyst in the loop, and measuring MTTR — how SOAR turns a drowning SOC into a measured operation.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Blue Team</span>
+                    <span class="dot">//</span>
+                    <span>2026-02-14</span>
+                    <span class="dot">//</span>
+                    <span>9 min read</span>
+                </div>
+
+                <h1>SOC Automation with SOAR</h1>
+                <p class="article-lead">Every security operations centre eventually hits the same wall: more alerts than analysts, more analysts than budget, and a queue that only grows. SOAR is not a magic drain for that queue — it is a way to automate the repetitive 80% so your people can spend their judgement on the 20% that actually needs it.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>SOAR — Security Orchestration, Automation, and Response — is the connective tissue of a modern SOC. Where a SIEM detects and raises alerts, SOAR decides what happens next: it orchestrates across your tools, automates the mechanical steps, and drives a consistent response process. The promise is not to remove analysts but to remove their toil — the copy-paste lookups, the tab-switching, the "check these five consoles for every alert" grind that burns people out and lets real incidents hide in the noise.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 300" role="img" aria-label="A SOAR workflow. An alert triggers a SOAR playbook, which enriches with threat intelligence and a sandbox, then reaches a decision that branches into auto-contain or analyst review, both leading to close. A dashed loop feeds MTTR and metrics back to the playbook.">
+                            <text x="16" y="22" class="dg-title">SOAR response workflow</text>
+
+                            <g>
+                                <rect x="16" y="120" width="110" height="46" rx="8" class="dg-node"/>
+                                <text x="71" y="141" text-anchor="middle" class="dg-label">Alert</text>
+                                <text x="71" y="156" text-anchor="middle" class="dg-sub">SIEM / EDR</text>
+                            </g>
+                            <g>
+                                <rect x="166" y="120" width="120" height="46" rx="8" class="dg-node-accent"/>
+                                <text x="226" y="141" text-anchor="middle" class="dg-accent-text" font-size="11">SOAR</text>
+                                <text x="226" y="156" text-anchor="middle" class="dg-sub">playbook</text>
+                            </g>
+                            <g>
+                                <rect x="326" y="120" width="120" height="46" rx="8" class="dg-node"/>
+                                <text x="386" y="141" text-anchor="middle" class="dg-label">Enrich</text>
+                                <text x="386" y="156" text-anchor="middle" class="dg-sub">intel + sandbox</text>
+                            </g>
+                            <g>
+                                <rect x="486" y="120" width="120" height="46" rx="8" class="dg-node"/>
+                                <text x="546" y="141" text-anchor="middle" class="dg-label">Decision</text>
+                                <text x="546" y="156" text-anchor="middle" class="dg-sub">branch</text>
+                            </g>
+                            <g>
+                                <rect x="646" y="120" width="98" height="46" rx="8" class="dg-node"/>
+                                <text x="695" y="141" text-anchor="middle" class="dg-label">Close</text>
+                                <text x="695" y="156" text-anchor="middle" class="dg-sub">ticket</text>
+                            </g>
+
+                            <!-- enrichment feeders -->
+                            <g>
+                                <rect x="306" y="40" width="80" height="34" rx="8" class="dg-node"/>
+                                <text x="346" y="61" text-anchor="middle" class="dg-sub">Threat Intel</text>
+                            </g>
+                            <g>
+                                <rect x="396" y="40" width="80" height="34" rx="8" class="dg-node"/>
+                                <text x="436" y="61" text-anchor="middle" class="dg-sub">Sandbox</text>
+                            </g>
+                            <line x1="346" y1="74" x2="376" y2="118" class="dg-flow-dim"/>
+                            <line x1="436" y1="74" x2="396" y2="118" class="dg-flow-dim"/>
+
+                            <!-- branch targets -->
+                            <g>
+                                <rect x="486" y="210" width="120" height="40" rx="8" class="dg-node-accent"/>
+                                <text x="546" y="228" text-anchor="middle" class="dg-accent-text" font-size="11">Auto-Contain</text>
+                                <text x="546" y="242" text-anchor="middle" class="dg-sub">isolate / block</text>
+                            </g>
+                            <g>
+                                <rect x="486" y="40" width="120" height="40" rx="8" class="dg-node"/>
+                                <text x="546" y="58" text-anchor="middle" class="dg-label">Analyst</text>
+                                <text x="546" y="72" text-anchor="middle" class="dg-sub">review</text>
+                            </g>
+
+                            <!-- main flow -->
+                            <line x1="126" y1="143" x2="162" y2="143" class="dg-flow"/>
+                            <path d="M162 139 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="286" y1="143" x2="322" y2="143" class="dg-flow"/>
+                            <path d="M322 139 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="446" y1="143" x2="482" y2="143" class="dg-flow"/>
+                            <path d="M482 139 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <!-- branches -->
+                            <line x1="546" y1="120" x2="546" y2="82" class="dg-flow"/>
+                            <path d="M546 82 l-4 8 8 0 z" fill="var(--neon)"/>
+                            <line x1="546" y1="166" x2="546" y2="208" class="dg-flow"/>
+                            <path d="M546 208 l-4 -8 8 0 z" fill="var(--neon)"/>
+                            <!-- to close -->
+                            <line x1="606" y1="230" x2="695" y2="230" class="dg-flow-dim"/>
+                            <line x1="695" y1="230" x2="695" y2="168" class="dg-flow-dim"/>
+                            <line x1="606" y1="60" x2="695" y2="60" class="dg-flow-dim"/>
+                            <line x1="695" y1="60" x2="695" y2="118" class="dg-flow-dim"/>
+
+                            <!-- MTTR feedback loop -->
+                            <path d="M695 166 C 695 265, 226 275, 226 168" class="dg-flow" stroke-dasharray="4 5"/>
+                            <path d="M226 168 l-4 8 8 0 z" fill="var(--neon)"/>
+                            <text x="430" y="292" text-anchor="middle" class="dg-sub">MTTR / metrics feedback → tune playbooks</text>
+
+                            <text x="16" y="285" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> A playbook enriches, decides, and either auto-contains or routes to an analyst — while MTTR metrics feed back to sharpen the next run.</figcaption>
+                    </figure>
+
+                    <h2>Orchestration: taming the tool sprawl</h2>
+                    <p>The "O" in SOAR is easy to overlook, but it is the foundation the rest stands on. A typical SOC runs a sprawl of disconnected tools — a SIEM, an EDR, a firewall, an identity provider, a ticketing system, threat-intel platforms, email security — each with its own console, its own data model, and its own API. Orchestration is the integration layer that lets these tools act as one: it authenticates to each, normalises their data into a common case object, and issues commands back out. Without it, "automation" is just a script bolted to one product. With it, a single playbook can pull a detection from the SIEM, look up the user in the identity provider, quarantine the host through the EDR, and open a ticket — as one coherent action. Getting orchestration right, with well-managed credentials and resilient integrations, is unglamorous plumbing that determines whether everything above it works.</p>
+
+                    <h2>Playbooks: codifying the runbook</h2>
+                    <p>The heart of SOAR is the playbook — a documented response procedure expressed as executable workflow. Every mature SOC already has runbooks in a wiki: "for a phishing report, do these twelve steps." A playbook turns that prose into an orchestrated sequence with defined inputs, branching logic, and integrations. The discipline this imposes is as valuable as the automation itself: a playbook cannot be vague. Writing one forces you to answer exactly what data is needed, what thresholds matter, and what the response should be — turning tribal knowledge into a repeatable, auditable process that runs the same way at 3am as it does at 3pm. Start with your highest-volume, most repetitive alert types — phishing triage, commodity malware, brute-force lockouts — where the payoff is largest and the logic is well understood.</p>
+
+                    <h2>Enrichment: context before decisions</h2>
+                    <p>Most analyst time is spent not deciding, but gathering. An alert arrives as a bare indicator — an IP, a hash, a domain, a user — and the analyst manually assembles context from a dozen sources before they can judge it. Enrichment automates that gathering. The playbook queries threat-intelligence feeds for reputation, detonates suspicious attachments in a sandbox, pulls the asset's owner and criticality from a CMDB, checks whether the user recently travelled, and correlates against recent alerts. By the time a human looks at the case, it is already a rich, decision-ready picture rather than a naked IOC. This single capability often delivers the largest share of SOAR's value.</p>
+
+                    <blockquote>Automate the gathering, not the judgement. Enrichment should hand your analyst a complete case; the decision to contain a production system still deserves a human — until you have earned the confidence to let the playbook act alone.</blockquote>
+
+                    <h2>Keeping the analyst in the loop</h2>
+                    <p>The fastest way to lose trust in a SOAR programme is an over-eager playbook that isolates a critical server on a false positive. Automation and human judgement are not opposites; the design goal is to place the human at the right point. Low-risk, high-confidence, reversible actions — blocking a known-bad domain, disabling a clearly compromised test account, tagging and closing obvious duplicates — are good candidates for full automation. High-impact or ambiguous actions should pause for an approval step, presenting the enriched case and a recommended action so the analyst decides in seconds rather than minutes.</p>
+
+                    <h3>Crawl, walk, run</h3>
+                    <p>Start playbooks in an assist mode: they enrich and recommend, but a human approves every response. As confidence in a playbook's accuracy grows — measured, not assumed — progressively promote its safe branches to full automation. This staged approach earns trust and prevents the brittle, over-automated deployment that teams quietly switch off after the first bad containment. Design every automated action to be observable and, wherever possible, reversible: log what the playbook did, why, and on what evidence, so an analyst can audit and unwind it if the decision was wrong.</p>
+
+                    <h2>Measuring what matters: MTTR</h2>
+                    <p>SOAR programmes justify themselves with metrics, and the headline is <strong>Mean Time To Respond</strong> — the elapsed time from alert to resolution. Break it down: mean time to <em>detect</em>, to <em>acknowledge</em>, to <em>contain</em>, and to <em>recover</em>. Automating enrichment collapses the time-to-acknowledge; automating containment collapses the time-to-contain. Track these before and after each playbook goes live, and the value becomes measurable rather than anecdotal. Pair MTTR with quality metrics — false-positive rate, analyst hours reclaimed, percentage of alerts auto-triaged — so you optimise for outcomes, not just speed. Those same metrics form the feedback loop in Figure 1: every closed case is data that tells you which playbooks to sharpen next.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>SOAR removes analyst <strong>toil</strong>, not analysts — automate the repetitive 80%, keep judgement for the 20%.</li>
+                            <li><strong>Playbooks</strong> turn tribal runbooks into consistent, auditable, executable workflows.</li>
+                            <li><strong>Enrichment</strong> — auto-gathering context — is usually the single biggest source of value.</li>
+                            <li>Keep the human at the right point: automate reversible low-risk actions, gate high-impact ones with approval.</li>
+                            <li>Measure <strong>MTTR</strong> and quality metrics before and after — and feed them back to tune playbooks over time.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#soar</span>
+                        <span class="tag">#soc</span>
+                        <span class="tag">#automation</span>
+                        <span class="tag">#playbooks</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Modernise your SOC
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

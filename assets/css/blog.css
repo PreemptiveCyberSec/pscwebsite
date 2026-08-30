@@ -1,0 +1,284 @@
+/* ============================================
+   PREEMPTIVE — BLOG / ARTICLE STYLES
+   Extends the core design system for long-form
+   posts and theme-matched inline SVG diagrams.
+   ============================================ */
+
+.article {
+    padding: 30px 0 110px;
+    position: relative;
+    z-index: 1;
+}
+
+.article .container {
+    max-width: 820px;
+}
+
+/* Back to resources */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 34px;
+    transition: color 0.2s ease, gap 0.2s ease;
+}
+.back-link:hover { color: var(--neon); gap: 12px; }
+.back-link svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+/* Article meta row */
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+.article-meta .cat {
+    color: var(--neon);
+    text-shadow: 0 0 14px var(--neon-glow);
+}
+.article-meta .dot { color: var(--text-muted); opacity: 0.6; }
+
+.article h1 {
+    font-size: clamp(2rem, 4.4vw, 3.15rem);
+    line-height: 1.08;
+    margin-bottom: 22px;
+}
+
+.article-lead {
+    font-size: 1.16rem;
+    line-height: 1.75;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    font-weight: 400;
+}
+
+.article-byline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 30px 0 8px;
+    padding-top: 26px;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+.article-byline .avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--neon-soft);
+    border: 1px solid var(--border-strong);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--neon);
+    flex: none;
+}
+.article-byline strong { color: var(--text-primary); font-weight: 600; }
+
+/* ---------- Prose ---------- */
+.prose { margin-top: 14px; }
+
+.prose > p {
+    color: var(--text-secondary);
+    margin-bottom: 1.25em;
+    font-size: 1.02rem;
+}
+
+.prose h2 {
+    font-size: 1.62rem;
+    margin: 2.1em 0 0.7em;
+    padding-top: 0.4em;
+    position: relative;
+}
+.prose h2::before {
+    content: '';
+    display: block;
+    width: 34px; height: 2px;
+    background: var(--neon);
+    box-shadow: 0 0 14px var(--neon-glow);
+    margin-bottom: 18px;
+    border-radius: 2px;
+}
+
+.prose h3 {
+    font-size: 1.22rem;
+    margin: 1.7em 0 0.5em;
+    color: var(--text-primary);
+}
+
+.prose ul, .prose ol {
+    margin: 0 0 1.3em 1.1em;
+    color: var(--text-secondary);
+}
+.prose li { margin-bottom: 0.55em; padding-left: 6px; }
+.prose li::marker { color: var(--neon); }
+
+.prose a {
+    color: var(--neon);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-strong);
+    transition: border-color 0.2s ease, text-shadow 0.2s ease;
+}
+.prose a:hover { text-shadow: 0 0 12px var(--neon-glow); border-color: var(--neon); }
+
+.prose strong { color: var(--text-primary); font-weight: 600; }
+
+.prose code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    color: var(--mint-pale);
+    background: rgba(88, 245, 160, 0.07);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.12em 0.42em;
+}
+
+.prose pre {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    overflow-x: auto;
+    margin: 0 0 1.5em;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+.prose pre code {
+    background: none; border: none; padding: 0; color: inherit; font-size: inherit;
+}
+
+.prose blockquote {
+    border-left: 2px solid var(--neon);
+    background: var(--bg-card);
+    padding: 14px 22px;
+    margin: 0 0 1.5em;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--text-primary);
+    font-style: italic;
+}
+
+/* Key takeaways / callout box */
+.callout {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    margin: 2em 0;
+    position: relative;
+}
+.callout h4 {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--neon);
+    margin-bottom: 14px;
+}
+.callout ul { margin-bottom: 0; }
+
+/* ---------- Diagram figure ---------- */
+.diagram-figure {
+    margin: 2.4em 0;
+    background:
+        radial-gradient(ellipse 70% 90% at 50% 0%, rgba(88,245,160,0.05), transparent 70%),
+        var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 30px 26px 20px;
+    overflow: hidden;
+}
+.diagram-figure svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
+.diagram-caption {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+.diagram-caption b { color: var(--text-secondary); font-weight: 500; }
+
+/* Shared SVG diagram primitives (use as classes on SVG elements) */
+.dg-node { fill: var(--bg-card); stroke: var(--border-strong); stroke-width: 1.4; }
+.dg-node-accent { fill: var(--neon-soft); stroke: var(--neon); stroke-width: 1.4; }
+.dg-label { fill: var(--text-primary); font-family: var(--font-mono); font-size: 12px; }
+.dg-sub { fill: var(--text-secondary); font-family: var(--font-mono); font-size: 10px; }
+.dg-accent-text { fill: var(--neon); font-family: var(--font-mono); font-size: 12px; }
+.dg-flow { stroke: var(--neon); stroke-width: 1.6; fill: none; }
+.dg-flow-dim { stroke: var(--border-strong); stroke-width: 1.4; fill: none; }
+.dg-title { fill: var(--text-muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* Article footer nav */
+.article-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+.article-nav a {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--neon);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.2s ease;
+}
+.article-nav a:hover { gap: 12px; }
+
+/* Multi-link card actions (used on Talks cards) */
+.card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: 4px;
+}
+.card-links .card-link { font-size: 0.76rem; }
+.card-links .card-link::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--neon);
+    box-shadow: 0 0 8px var(--neon-glow);
+    margin-right: 2px;
+}
+
+/* Tags */
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; }
+.tag-row .tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 12px;
+    background: var(--bg-card);
+}
+
+@media (max-width: 640px) {
+    .article h1 { font-size: 1.9rem; }
+    .diagram-figure { padding: 20px 14px 14px; }
+}

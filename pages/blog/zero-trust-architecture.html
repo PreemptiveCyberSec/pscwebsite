@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trust Architecture: Never Trust, Always Verify — Preemptive Cyber Security</title>
+    <meta name="description" content="The NIST SP 800-207 model explained — policy decision and enforcement points, and continuous verification of identity, device posture, context and risk.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Architecture</span>
+                    <span class="dot">//</span>
+                    <span>2026-07-04</span>
+                    <span class="dot">//</span>
+                    <span>10 min read</span>
+                </div>
+
+                <h1>Zero Trust Architecture: Never Trust, Always Verify</h1>
+                <p class="article-lead">The old model trusted anything inside the network. Zero trust throws that assumption out: every request is authenticated, authorised, and evaluated on its own merits, every time — regardless of where it comes from. Here is how the architecture actually works.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>For decades, network security worked like a medieval castle: a hard perimeter around a soft interior. Once you were inside — on the corporate LAN or the VPN — you were largely trusted. That model collapses in a world of cloud services, remote work, and mobile devices, where there is no clean "inside" anymore. Zero trust replaces location-based trust with continuous, evidence-based verification of every access request.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 290" role="img" aria-label="A request flows from a user and device through a policy enforcement point to a policy decision point that evaluates identity, device posture, context and risk, before the resource is reached. The default is deny.">
+                            <text x="16" y="22" class="dg-title">Request evaluation flow</text>
+
+                            <!-- user + device -->
+                            <rect x="16" y="122" width="128" height="56" rx="8" class="dg-node"/>
+                            <text x="80" y="146" text-anchor="middle" class="dg-label">User + Device</text>
+                            <text x="80" y="164" text-anchor="middle" class="dg-sub">request</text>
+
+                            <!-- arrow -->
+                            <line x1="144" y1="150" x2="176" y2="150" class="dg-flow"/>
+                            <path d="M176 146 l8 4 -8 4 z" fill="var(--neon)"/>
+
+                            <!-- PEP -->
+                            <rect x="184" y="122" width="104" height="56" rx="8" class="dg-node-accent"/>
+                            <text x="236" y="146" text-anchor="middle" class="dg-accent-text">PEP</text>
+                            <text x="236" y="164" text-anchor="middle" class="dg-sub">enforcement</text>
+
+                            <!-- arrow -->
+                            <line x1="288" y1="150" x2="320" y2="150" class="dg-flow"/>
+                            <path d="M320 146 l8 4 -8 4 z" fill="var(--neon)"/>
+
+                            <!-- PDP box with signals -->
+                            <rect x="328" y="62" width="204" height="176" rx="8" class="dg-node"/>
+                            <text x="430" y="86" text-anchor="middle" class="dg-accent-text">PDP</text>
+                            <text x="430" y="102" text-anchor="middle" class="dg-title">Policy Decision Point</text>
+                            <g>
+                                <rect x="344" y="114" width="172" height="26" rx="6" class="dg-node-accent"/>
+                                <text x="430" y="131" text-anchor="middle" class="dg-sub">Identity</text>
+                            </g>
+                            <g>
+                                <rect x="344" y="146" width="172" height="26" rx="6" class="dg-node-accent"/>
+                                <text x="430" y="163" text-anchor="middle" class="dg-sub">Device Posture</text>
+                            </g>
+                            <g>
+                                <rect x="344" y="178" width="172" height="26" rx="6" class="dg-node-accent"/>
+                                <text x="430" y="195" text-anchor="middle" class="dg-sub">Context</text>
+                            </g>
+                            <g>
+                                <rect x="344" y="210" width="172" height="26" rx="6" class="dg-node-accent"/>
+                                <text x="430" y="227" text-anchor="middle" class="dg-sub">Risk</text>
+                            </g>
+
+                            <!-- arrow to resource -->
+                            <line x1="532" y1="150" x2="576" y2="150" class="dg-flow"/>
+                            <path d="M576 146 l8 4 -8 4 z" fill="var(--neon)"/>
+
+                            <!-- resource -->
+                            <rect x="584" y="122" width="130" height="56" rx="8" class="dg-node"/>
+                            <text x="649" y="154" text-anchor="middle" class="dg-label">Resource</text>
+
+                            <text x="430" y="262" text-anchor="middle" class="dg-accent-text">deny by default</text>
+
+                            <text x="16" y="270" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> Every request passes through the enforcement point and is granted only after the decision point evaluates identity, device, context and risk — otherwise it is denied.</figcaption>
+                    </figure>
+
+                    <h2>What zero trust actually means</h2>
+                    <p>Zero trust is a set of principles, not a product you can buy. Its core tenet is deceptively simple: never trust, always verify. No request is trusted because of its network origin. Instead, access is granted per-session, based on the strongest available evidence, and only to the specific resource requested — never to the network as a whole. The corollary is <strong>least privilege</strong>: an authenticated user gets exactly the access they need for that task, and nothing more.</p>
+
+                    <h2>The NIST SP 800-207 model</h2>
+                    <p>The most rigorous reference is <a href="https://www.nist.gov/">NIST</a> Special Publication 800-207, which defines zero trust architecture in vendor-neutral terms. It frames access as a decision made for every request, informed by dynamic policy and continuously reassessed. Two logical components sit at its heart, and understanding them is the key to the whole model.</p>
+
+                    <h2>Policy decision and enforcement points</h2>
+                    <p>The <strong>Policy Enforcement Point (PEP)</strong> sits directly on the path of the request. It is the gate: it either allows the connection to the resource or blocks it. The <strong>Policy Decision Point (PDP)</strong> is the brain: it evaluates the request against policy and tells the PEP what to do. Separating the two matters — the enforcement point can be lightweight and distributed, close to each resource, while the decision logic stays centralised and consistent.</p>
+                    <h3>Why the split matters operationally</h3>
+                    <p>Because the PDP renders a fresh decision for each request, policy can change instantly and take effect everywhere. Revoke a user, and the next request is denied. Detect a compromised device, and its sessions can be cut mid-stream. There is no standing trust to exploit between decisions.</p>
+
+                    <h2>The signals that drive a decision</h2>
+                    <p>A zero trust decision is only as good as the signals feeding it. Four categories matter most. <strong>Identity</strong> — who is making the request, proven with strong, phishing-resistant authentication. <strong>Device posture</strong> — is the endpoint managed, patched, and free of known compromise? <strong>Context</strong> — the time, location, network, and the sensitivity of the resource requested. <strong>Risk</strong> — a real-time score derived from behavioural analytics and threat intelligence. The PDP combines these into a single allow-or-deny outcome, and can demand step-up authentication when confidence is low.</p>
+
+                    <blockquote>Zero trust is not authentication at the front door and free rein thereafter. It is continuous verification — every request re-evaluated against current evidence.</blockquote>
+
+                    <h2>Deny by default</h2>
+                    <p>The default posture is denial. Access is granted only when policy is affirmatively satisfied; anything unmatched, unrecognised, or ambiguous is refused. This inverts the legacy model, where connectivity was implicit and blocking was the exception. Combined with micro-segmentation — dividing the environment into small zones so that a foothold in one does not grant access to the rest — deny-by-default sharply limits how far an attacker who does get in can move.</p>
+
+                    <h2>A journey, not a switch</h2>
+                    <p>No organisation flips to zero trust overnight. In practice it is an incremental programme: start by putting strong identity and device checks in front of the most sensitive applications, replace flat network access with per-application access, and expand coverage outward as telemetry and confidence grow. Each step reduces implicit trust, and the architecture matures without a disruptive big-bang cutover.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Zero trust replaces location-based trust with per-request, evidence-based verification.</li>
+                            <li>NIST SP 800-207 splits the model into a Policy Enforcement Point (the gate) and a Policy Decision Point (the brain).</li>
+                            <li>Decisions draw on four signal types: identity, device posture, context, and risk.</li>
+                            <li>Verification is continuous — access is re-evaluated for every request, and the default is deny.</li>
+                            <li>Adoption is incremental: protect the crown jewels first, then expand coverage over time.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#zero-trust</span>
+                        <span class="tag">#nist</span>
+                        <span class="tag">#identity</span>
+                        <span class="tag">#access</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Plan your zero trust rollout
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

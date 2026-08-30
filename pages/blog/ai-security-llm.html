@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Security: Attacking and Defending LLM Systems — Preemptive Cyber Security</title>
+    <meta name="description" content="The OWASP LLM Top 10 world — prompt injection, data poisoning, model extraction, sensitive-information disclosure and insecure output handling — and the defensive controls that contain them.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">AI Security</span>
+                    <span class="dot">//</span>
+                    <span>2026-04-18</span>
+                    <span class="dot">//</span>
+                    <span>12 min read</span>
+                </div>
+
+                <h1>AI Security: Attacking and Defending LLM Systems</h1>
+                <p class="article-lead">Large language models have moved from novelty to core infrastructure, and with them comes a new attack surface that traditional application security does not fully cover. The OWASP Top 10 for LLM applications gives us a shared vocabulary — prompt injection, data poisoning, model extraction and more. This is a practitioner's map of those risks and the controls that contain them.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>When an application embeds a language model, it inherits a peculiar property: the same channel carries both data and instructions, and the model cannot reliably tell one from the other. That single fact is the root of most LLM security problems. The <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">OWASP Top 10 for LLM Applications</a> organises the resulting risks into a checklist that security teams can actually work through. Below we take the most consequential entries, explain the mechanism, and pair each with the defensive control that matters most.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 400" role="img" aria-label="An LLM system at the centre ringed by five threat nodes pointing inward, surrounded by an outer ring of defensive controls.">
+                            <text x="16" y="24" class="dg-title">LLM threat model &amp; defensive ring</text>
+                            <!-- outer defensive ring (dim) -->
+                            <g class="dg-node" >
+                                <rect x="300" y="44" width="160" height="34" rx="8"/>
+                            </g>
+                            <text x="380" y="66" text-anchor="middle" class="dg-sub">Input Validation</text>
+                            <rect x="588" y="150" width="150" height="34" rx="8" class="dg-node"/>
+                            <text x="663" y="172" text-anchor="middle" class="dg-sub">Output Filtering</text>
+                            <rect x="560" y="300" width="170" height="34" rx="8" class="dg-node"/>
+                            <text x="645" y="322" text-anchor="middle" class="dg-sub">Least-Privilege Tools</text>
+                            <rect x="30" y="300" width="150" height="34" rx="8" class="dg-node"/>
+                            <text x="105" y="322" text-anchor="middle" class="dg-sub">Monitoring</text>
+                            <rect x="22" y="150" width="150" height="34" rx="8" class="dg-node"/>
+                            <text x="97" y="172" text-anchor="middle" class="dg-sub">Human-in-loop</text>
+                            <!-- threat ring (accent) -->
+                            <rect x="308" y="118" width="150" height="40" rx="8" class="dg-node-accent"/>
+                            <text x="383" y="143" text-anchor="middle" class="dg-accent-text" font-size="11">Prompt Injection</text>
+                            <rect x="500" y="180" width="140" height="40" rx="8" class="dg-node-accent"/>
+                            <text x="570" y="205" text-anchor="middle" class="dg-accent-text" font-size="11">Data Poisoning</text>
+                            <rect x="470" y="252" width="150" height="40" rx="8" class="dg-node-accent"/>
+                            <text x="545" y="277" text-anchor="middle" class="dg-accent-text" font-size="11">Model Extraction</text>
+                            <rect x="150" y="252" width="160" height="40" rx="8" class="dg-node-accent"/>
+                            <text x="230" y="272" text-anchor="middle" class="dg-accent-text" font-size="11">Sensitive</text>
+                            <text x="230" y="286" text-anchor="middle" class="dg-sub">Disclosure</text>
+                            <rect x="122" y="180" width="150" height="40" rx="8" class="dg-node-accent"/>
+                            <text x="197" y="200" text-anchor="middle" class="dg-accent-text" font-size="11">Insecure Output</text>
+                            <text x="197" y="214" text-anchor="middle" class="dg-sub">Handling</text>
+                            <!-- centre -->
+                            <circle cx="383" cy="215" r="52" class="dg-node-accent"/>
+                            <text x="383" y="211" text-anchor="middle" class="dg-label">LLM</text>
+                            <text x="383" y="227" text-anchor="middle" class="dg-sub">System</text>
+                            <!-- arrows inward -->
+                            <g class="dg-flow" fill="var(--neon)" stroke="none">
+                                <path d="M383 168 l-4 -9 8 0 z"/>
+                            </g>
+                            <g class="dg-flow">
+                                <line x1="383" y1="158" x2="383" y2="170"/>
+                                <line x1="500" y1="205" x2="432" y2="212"/>
+                                <line x1="470" y1="268" x2="420" y2="245"/>
+                                <line x1="310" y1="268" x2="350" y2="248"/>
+                                <line x1="272" y1="205" x2="335" y2="212"/>
+                            </g>
+                            <text x="16" y="388" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The LLM system sits at the centre of an inward-pointing threat ring; the outer ring of controls — validation, output filtering, least-privilege tools, monitoring — is what keeps the threats from reaching it.</figcaption>
+                    </figure>
+
+                    <h2>Prompt injection — the defining LLM risk</h2>
+                    <p><strong>Prompt injection</strong> exploits the model's inability to separate trusted instructions from untrusted input. In the <em>direct</em> form, a user crafts input that overrides the application's system instructions. The more dangerous <em>indirect</em> form hides instructions inside content the model later ingests — a web page, an email, a document in a retrieval pipeline — so that merely processing attacker-controlled data hijacks the model's behaviour.</p>
+                    <h3>Defending against injection</h3>
+                    <p>There is no single filter that fully solves this, so defence is architectural. Treat all model input as untrusted; keep privileged instructions out of reach of user-influenced text; constrain what the model is allowed to <em>do</em> rather than just what it is told; and require human confirmation for consequential actions. The mindset shift is to stop trusting the model's output as if it came from your own code.</p>
+
+                    <h2>Insecure output handling</h2>
+                    <p>The mirror image of injection is trusting what the model produces. If model output flows unchecked into a browser, a shell, a database query, or another system, then classic web vulnerabilities — cross-site scripting, command or SQL injection — reappear, now driven by text an attacker may have influenced. <strong>The control is old and reliable</strong>: encode, escape, and validate model output at every boundary exactly as you would any other untrusted data. An LLM is not a trusted component.</p>
+
+                    <blockquote>Treat the model as a confused deputy: powerful, eager to help, and unable to tell your instructions from an attacker's. Every control follows from that assumption.</blockquote>
+
+                    <h2>Training-data poisoning</h2>
+                    <p>Models learn from data, and if an adversary can influence that data — during pre-training, fine-tuning, or through a retrieval corpus — they can plant biases, backdoors, or degraded behaviour that surface later. <strong>Data poisoning</strong> is a supply-chain problem: the mitigations are provenance and integrity for training sources, vetting of third-party datasets and models, anomaly detection over training data, and clear separation between trusted and community-sourced content.</p>
+
+                    <h2>Sensitive-information disclosure</h2>
+                    <p>Models can leak. They may reproduce sensitive material memorised from training data, or reveal confidential context supplied earlier in a session or through retrieval. <strong>Sensitive-information disclosure</strong> is contained by minimising what the model is ever exposed to: scrub secrets from training and prompt context, apply least-privilege to any data the model can retrieve, and filter outputs for sensitive patterns before they reach a user. The safest secret is the one the model was never given.</p>
+
+                    <h2>Model extraction and abuse</h2>
+                    <p>A model exposed through an API is an asset that can be probed. <strong>Model extraction</strong> attempts to reconstruct a proprietary model's behaviour, or infer properties of its training data, through large volumes of carefully chosen queries. Related abuses include denial-of-wallet, where an attacker drives up inference costs. Rate limiting, query monitoring for extraction-like patterns, and authentication that ties usage to accountable identities are the practical defences.</p>
+
+                    <h2>Excessive agency</h2>
+                    <p>As LLMs are wired to tools — sending email, calling APIs, executing code — the blast radius of a successful injection grows. <strong>Excessive agency</strong> is the risk of granting a model more capability, autonomy, or permission than the use case requires. The remedy is squarely a security-engineering one: give each tool the narrowest possible scope, prefer read-only where you can, and insert human approval in front of any irreversible or high-impact action. Least privilege applies to models exactly as it does to service accounts.</p>
+
+                    <h2>Building a defensive posture</h2>
+                    <p>Read across these entries and a coherent posture appears. Validate everything going in; never trust what comes out; lock down the data and tools the model touches; and monitor the whole system for the abuse patterns above. None of these is exotic — they are the familiar disciplines of input validation, output encoding, least privilege, supply-chain integrity, and logging, applied to a component that happens to speak natural language. Organisations should threat-model their LLM features as deliberately as any other critical system, and test them with the same rigour, drawing on resources from <a href="https://owasp.org/">OWASP</a> and emerging AI risk frameworks from bodies such as NIST.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>The core flaw is that an LLM <strong>cannot separate instructions from data</strong> — every control follows from that.</li>
+                            <li><strong>Prompt injection</strong> (direct and indirect) is the defining risk; defend it architecturally, not with a single filter.</li>
+                            <li>Never trust model output — <strong>encode and validate it</strong> at every downstream boundary.</li>
+                            <li><strong>Data poisoning</strong> and <strong>sensitive disclosure</strong> are supply-chain and data-minimisation problems.</li>
+                            <li>Apply <strong>least privilege</strong> to model tools and use the <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">OWASP LLM Top 10</a> as your checklist.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#ai-security</span>
+                        <span class="tag">#llm</span>
+                        <span class="tag">#owasp</span>
+                        <span class="tag">#ml</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Secure your AI systems
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

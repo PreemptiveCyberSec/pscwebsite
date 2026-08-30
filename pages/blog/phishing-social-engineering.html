@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Phishing &amp; Social Engineering — Preemptive Cyber Security</title>
+    <meta name="description" content="Pretexting, MFA-fatigue and adversary-in-the-middle phishing that steals live session tokens — and the layered defences, from phishing-resistant MFA to awareness and email authentication, that stop them.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Social Eng</span>
+                    <span class="dot">//</span>
+                    <span>2026-04-11</span>
+                    <span class="dot">//</span>
+                    <span>9 min read</span>
+                </div>
+
+                <h1>Modern Phishing &amp; Social Engineering</h1>
+                <p class="article-lead">Phishing stopped being about bad spelling and fake lottery wins years ago. Today's operators run polished pretexts, wear down defenders with MFA-fatigue, and use adversary-in-the-middle proxies that steal live session tokens — walking straight past multi-factor authentication. Understanding the modern kill chain is the first step to defending against it.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Social engineering endures because it targets the one component you cannot patch: human judgement under pressure. What has changed is the sophistication of the machinery around that human. The industry once reassured itself that multi-factor authentication (MFA) had solved credential phishing; adversary-in-the-middle techniques have quietly made much of that reassurance obsolete. This article walks the modern phishing kill chain and, at each step, names the layered control that blunts it. Guidance from <a href="https://www.cisa.gov/">CISA</a> underpins much of the defensive advice here.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 300" role="img" aria-label="A phishing attack flow from lure to click to adversary-in-the-middle proxy to MFA relay to account takeover, with a defensive control node beneath each step.">
+                            <text x="16" y="24" class="dg-title">AiTM phishing kill chain &amp; layered defences</text>
+                            <!-- attack flow -->
+                            <line x1="130" y1="86" x2="700" y2="86" class="dg-flow"/>
+                            <g class="dg-flow" fill="var(--neon)" stroke="none">
+                                <path d="M188 82 l9 4 -9 4 z"/>
+                                <path d="M328 82 l9 4 -9 4 z"/>
+                                <path d="M468 82 l9 4 -9 4 z"/>
+                                <path d="M608 82 l9 4 -9 4 z"/>
+                            </g>
+                            <g>
+                                <rect x="24" y="62" width="118" height="48" rx="8" class="dg-node"/>
+                                <text x="83" y="84" text-anchor="middle" class="dg-label">Lure</text>
+                                <text x="83" y="100" text-anchor="middle" class="dg-sub">email / SMS</text>
+                            </g>
+                            <g>
+                                <rect x="164" y="62" width="118" height="48" rx="8" class="dg-node"/>
+                                <text x="223" y="84" text-anchor="middle" class="dg-label">Click</text>
+                                <text x="223" y="100" text-anchor="middle" class="dg-sub">fake portal</text>
+                            </g>
+                            <g>
+                                <rect x="304" y="62" width="118" height="48" rx="8" class="dg-node"/>
+                                <text x="363" y="82" text-anchor="middle" class="dg-label">AiTM Proxy</text>
+                                <text x="363" y="98" text-anchor="middle" class="dg-sub">cred + token</text>
+                            </g>
+                            <g>
+                                <rect x="444" y="62" width="118" height="48" rx="8" class="dg-node"/>
+                                <text x="503" y="84" text-anchor="middle" class="dg-label">MFA Relay</text>
+                                <text x="503" y="100" text-anchor="middle" class="dg-sub">real-time</text>
+                            </g>
+                            <g>
+                                <rect x="584" y="62" width="130" height="48" rx="8" class="dg-node"/>
+                                <text x="649" y="82" text-anchor="middle" class="dg-label">Account</text>
+                                <text x="649" y="98" text-anchor="middle" class="dg-sub">takeover</text>
+                            </g>
+                            <!-- connectors down -->
+                            <g class="dg-flow-dim">
+                                <line x1="83" y1="110" x2="83" y2="176"/>
+                                <line x1="223" y1="110" x2="223" y2="176"/>
+                                <line x1="363" y1="110" x2="363" y2="176"/>
+                                <line x1="503" y1="110" x2="503" y2="176"/>
+                                <line x1="649" y1="110" x2="649" y2="176"/>
+                            </g>
+                            <!-- defensive controls -->
+                            <g>
+                                <rect x="20" y="178" width="126" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="83" y="199" text-anchor="middle" class="dg-accent-text" font-size="11">DMARC</text>
+                                <text x="83" y="215" text-anchor="middle" class="dg-sub">+ filtering</text>
+                            </g>
+                            <g>
+                                <rect x="160" y="178" width="126" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="223" y="199" text-anchor="middle" class="dg-accent-text" font-size="11">Awareness</text>
+                                <text x="223" y="215" text-anchor="middle" class="dg-sub">report button</text>
+                            </g>
+                            <g>
+                                <rect x="300" y="178" width="126" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="363" y="199" text-anchor="middle" class="dg-accent-text" font-size="11">FIDO2 /</text>
+                                <text x="363" y="215" text-anchor="middle" class="dg-sub">passkeys</text>
+                            </g>
+                            <g>
+                                <rect x="440" y="178" width="126" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="503" y="199" text-anchor="middle" class="dg-accent-text" font-size="11">Conditional</text>
+                                <text x="503" y="215" text-anchor="middle" class="dg-sub">access</text>
+                            </g>
+                            <g>
+                                <rect x="586" y="178" width="128" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="650" y="199" text-anchor="middle" class="dg-accent-text" font-size="11">Session</text>
+                                <text x="650" y="215" text-anchor="middle" class="dg-sub">monitoring</text>
+                            </g>
+                            <text x="380" y="262" text-anchor="middle" class="dg-sub">no single control stops every step — the stack does</text>
+                            <text x="16" y="284" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The adversary-in-the-middle phishing kill chain. Each attacker step has a defensive control beneath it; the layers together, not any single one, break the chain.</figcaption>
+                    </figure>
+
+                    <h2>Pretexting — the human setup</h2>
+                    <p>Every effective social-engineering attack begins with a <strong>pretext</strong>: a believable story that gives the target a reason to act. A finance clerk receives an urgent invoice from a known supplier; an employee gets a calendar notice about a mandatory security update; a help-desk agent is called by a panicked "executive" locked out before a board meeting. Modern pretexts are researched from public sources — org charts, social media, press releases — and increasingly polished with generative AI, which has stripped away the grammar mistakes that once gave phishing away.</p>
+                    <h3>Why authority and urgency work</h3>
+                    <p>Pretexts lean on predictable psychological levers: authority, urgency, scarcity, and the desire to be helpful. Naming these levers in awareness training is more durable than teaching staff to spot specific scams, because the levers do not change even as the stories do.</p>
+
+                    <h2>MFA fatigue — exhausting the human</h2>
+                    <p>Once an attacker has a valid password (from a breach dump, reuse, or an earlier phish), some MFA implementations become the weak point. In an <strong>MFA-fatigue</strong> attack, the adversary triggers a flood of push notifications, betting the victim will eventually approve one out of annoyance or confusion. The countermeasure is straightforward and effective: replace simple approve/deny push with <strong>number matching</strong>, cap repeated prompts, and alert on bursts of denied MFA requests, which are a reliable indicator of an attack in progress.</p>
+
+                    <blockquote>The moment a login prompt appears out of nowhere, the correct action is suspicion, not approval. A push you did not initiate is an alert, not an inconvenience.</blockquote>
+
+                    <h2>Adversary-in-the-middle — defeating MFA</h2>
+                    <p>The most consequential shift in phishing is <strong>adversary-in-the-middle</strong> (AiTM). Rather than harvest a static password, the attacker stands up a reverse proxy between the victim and the real login page. The victim sees a pixel-perfect portal, enters their credentials, and completes the genuine MFA challenge — because the proxy is relaying every step to the real service in real time. The prize is not the password but the <strong>session token</strong> the service issues afterward. With that token, the attacker resumes an already-authenticated session and never has to satisfy MFA again.</p>
+                    <p>This is why "we have MFA" is no longer a complete answer. Traditional one-time codes and push approvals are phishable precisely because they can be relayed through the proxy along with everything else.</p>
+
+                    <h2>The control that actually breaks AiTM</h2>
+                    <p>The decisive defence is <strong>phishing-resistant MFA</strong> — FIDO2 security keys and passkeys built on WebAuthn. These bind the authentication cryptographically to the legitimate site's origin, so a credential presented to an attacker's proxy domain simply will not verify. There is no code for the victim to read out and no approval to relay; the browser and authenticator refuse to authenticate to the wrong origin. <a href="https://www.cisa.gov/">CISA</a> and other authorities now explicitly recommend phishing-resistant MFA for exactly this reason.</p>
+
+                    <h2>Layered defence — the stack, not the silver bullet</h2>
+                    <p>No single control catches every step, so defence is deliberately layered along the kill chain shown in Figure 1:</p>
+                    <ul>
+                        <li><strong>Email authentication</strong> — SPF, DKIM, and a DMARC policy set to reject, plus modern filtering, stop a large share of lures before they land.</li>
+                        <li><strong>Awareness and easy reporting</strong> — a trained workforce with a one-click "report phish" button turns every employee into a sensor.</li>
+                        <li><strong>Phishing-resistant MFA</strong> — FIDO2 and passkeys neutralise credential and token theft at the authentication step.</li>
+                        <li><strong>Conditional access</strong> — device-compliance, location, and risk signals block logins that do not fit the user's normal pattern even if a token is stolen.</li>
+                        <li><strong>Session monitoring</strong> — detecting impossible travel, anomalous token use, and unfamiliar sign-in properties catches takeover after the fact and shortens dwell time.</li>
+                    </ul>
+                    <p>Each layer assumes the ones before it may fail. That assumption is the whole philosophy of defence in depth: an attacker who slips past filtering still faces phishing-resistant MFA, and one who somehow obtains a token still faces conditional access and session analytics.</p>
+
+                    <h2>Testing the human layer safely</h2>
+                    <p>Finally, the human layer deserves the same rigour as the technical one. Authorised social-engineering assessments — run ethically, with care for staff wellbeing and clear rules of engagement — reveal where pretexts land and where reporting breaks down, and they measure whether awareness training is actually changing behaviour. The goal is never to shame employees but to strengthen the organisation's collective reflexes before a real adversary tests them.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Modern phishing relies on <strong>pretexting</strong>, exploiting authority and urgency rather than obvious tells.</li>
+                            <li><strong>MFA fatigue</strong> is defeated by number matching, prompt caps, and alerting on denied-request bursts.</li>
+                            <li><strong>Adversary-in-the-middle</strong> steals live session tokens and walks past traditional MFA.</li>
+                            <li><strong>Phishing-resistant MFA</strong> (FIDO2 / passkeys) is the control that actually breaks AiTM, by binding auth to origin.</li>
+                            <li>Defence is a <strong>layered stack</strong> — email auth, awareness, phishing-resistant MFA, conditional access, and session monitoring.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#phishing</span>
+                        <span class="tag">#social-engineering</span>
+                        <span class="tag">#mfa</span>
+                        <span class="tag">#awareness</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Run a phishing assessment
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

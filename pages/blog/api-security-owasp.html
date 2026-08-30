@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Security: The OWASP API Top 10 in the Real World — Preemptive Cyber Security</title>
+    <meta name="description" content="Object-level authorization (BOLA), broken authentication, excessive data exposure, and rate limiting — the OWASP API Top 10 risks that matter most, and how to close them.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">AppSec</span>
+                    <span class="dot">//</span>
+                    <span>2026-06-06</span>
+                    <span class="dot">//</span>
+                    <span>10 min read</span>
+                </div>
+
+                <h1>API Security: The OWASP API Top 10 in the Real World</h1>
+                <p class="article-lead">APIs now carry the majority of enterprise traffic, and attackers have followed the data. The vulnerabilities that dominate real API breaches are rarely exotic — they are authorization mistakes hiding behind clean-looking endpoints. Here is how the OWASP API Top 10 plays out in practice, and where to put your defences.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>The <a href="https://owasp.org/API-Security/">OWASP API Security Top 10</a> exists because API vulnerabilities behave differently from the classic web application flaws most tools were built to catch. A modern API exposes hundreds of granular endpoints, each accepting structured objects and each making its own authorization decision. When those decisions are inconsistent — and they usually are — an attacker with a valid account can reach data that was never meant for them. This piece walks the request lifecycle and maps the highest-impact risks to the exact point where they should be caught.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 260" role="img" aria-label="An API request lifecycle from client through an API gateway performing authentication and rate limiting, to a service performing authorization and BOLA checks, to a data store, with OWASP API risk labels mapped under the relevant hops.">
+                            <text x="16" y="24" class="dg-title">API request lifecycle</text>
+                            <!-- nodes -->
+                            <rect x="10" y="70" width="140" height="52" rx="8" class="dg-node"/>
+                            <text x="80" y="92" text-anchor="middle" class="dg-label">Client</text>
+                            <text x="80" y="108" text-anchor="middle" class="dg-sub">token / request</text>
+
+                            <rect x="210" y="70" width="150" height="52" rx="8" class="dg-node"/>
+                            <text x="285" y="90" text-anchor="middle" class="dg-label">API Gateway</text>
+                            <text x="285" y="105" text-anchor="middle" class="dg-sub">authn · rate limit</text>
+
+                            <rect x="420" y="70" width="150" height="52" rx="8" class="dg-node"/>
+                            <text x="495" y="90" text-anchor="middle" class="dg-label">Service</text>
+                            <text x="495" y="105" text-anchor="middle" class="dg-sub">authz · BOLA check</text>
+
+                            <rect x="630" y="70" width="120" height="52" rx="8" class="dg-node-accent"/>
+                            <text x="690" y="92" text-anchor="middle" class="dg-accent-text">Data Store</text>
+                            <text x="690" y="108" text-anchor="middle" class="dg-sub">records</text>
+
+                            <!-- flow arrows -->
+                            <line x1="150" y1="96" x2="205" y2="96" class="dg-flow"/>
+                            <path d="M205 92 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="360" y1="96" x2="415" y2="96" class="dg-flow"/>
+                            <path d="M415 92 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="570" y1="96" x2="625" y2="96" class="dg-flow"/>
+                            <path d="M625 92 l8 4 -8 4 z" fill="var(--neon)"/>
+
+                            <!-- checkpoint labels -->
+                            <line x1="285" y1="122" x2="285" y2="150" class="dg-flow-dim"/>
+                            <text x="285" y="168" text-anchor="middle" class="dg-sub">API2 · broken authn</text>
+                            <text x="285" y="184" text-anchor="middle" class="dg-sub">API4 · no rate limit</text>
+
+                            <line x1="495" y1="122" x2="495" y2="150" class="dg-flow-dim"/>
+                            <text x="495" y="168" text-anchor="middle" class="dg-sub">API1 · BOLA</text>
+                            <text x="495" y="184" text-anchor="middle" class="dg-sub">API5 · function authz</text>
+
+                            <line x1="690" y1="122" x2="690" y2="150" class="dg-flow-dim"/>
+                            <text x="690" y="168" text-anchor="middle" class="dg-sub">API3 · excessive</text>
+                            <text x="690" y="184" text-anchor="middle" class="dg-sub">data exposure</text>
+
+                            <text x="600" y="244" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The request lifecycle with OWASP API risks mapped to the hop that owns each control. Authentication belongs at the edge; authorization must live in the service, next to the data.</figcaption>
+                    </figure>
+
+                    <h2>API1 — Broken Object Level Authorization (BOLA)</h2>
+                    <p>BOLA is consistently the number-one API risk, and for good reason: it is easy to introduce and invisible to most scanners. It occurs when an endpoint uses an identifier supplied by the caller — <code>/orders/1043</code> — to fetch a record, but never checks that the record actually belongs to the authenticated user. Change the number, get someone else's order. The request is perfectly authenticated and perfectly malicious.</p>
+                    <h3>Getting it right</h3>
+                    <p>Object-level authorization must be enforced <strong>in the service, on every object access</strong>, by comparing the resource's owner against the caller's identity from the token — not from any value the client can influence. Prefer unpredictable identifiers (UUIDs) as defence in depth, but never rely on them as the control. Centralise the ownership check so it cannot be forgotten on the next endpoint someone adds.</p>
+
+                    <h2>API2 — Broken Authentication</h2>
+                    <p>Authentication flaws at the API layer include accepting unsigned or weakly signed tokens, failing to validate token expiry and audience, allowing credential stuffing against login endpoints, and leaking long-lived API keys in mobile apps or repositories. Because APIs are machine-to-machine, a single leaked key can be replayed indefinitely. Validate tokens rigorously at the gateway, rotate secrets, and treat authentication endpoints as high-value targets deserving their own monitoring.</p>
+
+                    <h2>API3 — Broken Object Property Level Authorization</h2>
+                    <p>Formerly split into "excessive data exposure" and "mass assignment," this risk is about returning or accepting the wrong <em>fields</em>. On the response side, APIs often serialise a full database object and rely on the client to display only some of it — so <code>password_hash</code> or <code>is_admin</code> travels over the wire to anyone who reads the raw response. On the request side, binding incoming JSON directly to a model lets a caller set fields they should never control. The fix is explicit, allow-listed schemas for both directions — never serialise or bind whole objects.</p>
+
+                    <blockquote>The recurring theme across the API Top 10 is trust misplaced in the client. Every value the client sends is attacker-controlled, and every field you return is something the attacker can read.</blockquote>
+
+                    <h2>API4 — Unrestricted Resource Consumption</h2>
+                    <p>Without rate limiting and resource quotas, a single caller can exhaust CPU, memory, or third-party billing — an availability and cost problem as much as a security one. APIs that trigger expensive operations (SMS sending, file processing, large result sets) are especially exposed. Enforce per-client rate limits and request-size caps at the gateway, and apply stricter limits to sensitive operations like authentication and password reset to blunt brute-force attempts.</p>
+
+                    <h2>API5 — Broken Function Level Authorization</h2>
+                    <p>Where BOLA is about <em>which records</em> a user can reach, function-level authorization is about <em>which operations</em> they can invoke. Administrative endpoints frequently rely on being unlisted rather than being protected, so a regular user who guesses <code>/admin/users</code> or swaps a <code>GET</code> for a <code>DELETE</code> gets in. Deny by default, and derive an endpoint's required role from a policy, not from whether the UI happens to show a button.</p>
+
+                    <h2>Building it into the pipeline</h2>
+                    <p>The controls above only hold if they are verified continuously. Maintain an accurate API inventory — undocumented "shadow" and deprecated "zombie" endpoints are where breaches hide. Generate tests directly from your OpenAPI specification, add authorization test cases that attempt cross-tenant access with a second valid account, and run these checks in CI so a regression fails the build rather than the customer. Security testing that mirrors the request lifecycle above catches the flaws that generic scanners miss.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>BOLA is the dominant API risk — enforce object ownership checks in the service on every access, using identity from the token.</li>
+                            <li>Authentication belongs at the edge; authorization belongs next to the data. Don't confuse the two.</li>
+                            <li>Never serialise or bind whole objects — use explicit allow-listed schemas in both directions.</li>
+                            <li>Rate limits protect availability, cost, and credentials; apply them everywhere and tighten them on sensitive endpoints.</li>
+                            <li>Keep an accurate API inventory and test authorization in CI with a second real account to catch cross-tenant flaws.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#api</span>
+                        <span class="tag">#owasp</span>
+                        <span class="tag">#appsec</span>
+                        <span class="tag">#bola</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Test your APIs
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

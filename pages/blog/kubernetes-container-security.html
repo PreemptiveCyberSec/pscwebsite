@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes &amp; Container Security from Build to Runtime — Preemptive Cyber Security</title>
+    <meta name="description" content="Securing the full container lifecycle — image scanning, admission control, pod and node hardening, network policy, RBAC and secrets, and runtime detection.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Cloud Native</span>
+                    <span class="dot">//</span>
+                    <span>2026-05-30</span>
+                    <span class="dot">//</span>
+                    <span>11 min read</span>
+                </div>
+
+                <h1>Kubernetes &amp; Container Security from Build to Runtime</h1>
+                <p class="article-lead">Container security is not a single control you bolt on before shipping — it is a chain of decisions that starts with the base image and does not end until the workload is torn down. A weakness anywhere in that chain is the one an attacker will use, so the whole lifecycle has to be defended together.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Kubernetes gives teams speed and elasticity, but it also introduces a deep stack of trust boundaries — the image, the admission pipeline, the pod, the node, the network, the API server, and the running process. Each layer has its own failure modes, and securing one while ignoring the others buys little. The most useful way to think about it is as a pipeline flowing from build to runtime, applying the right control at each stage. This article walks that stack layer by layer and shows how the controls reinforce one another.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 400" role="img" aria-label="A vertical layered stack of container security controls from image and registry scanning at the top, through admission control, pod and node hardening, network policy, RBAC and secrets, down to runtime monitoring at the bottom, with a side arrow indicating flow from build to runtime.">
+                            <text x="16" y="24" class="dg-title">Build-to-runtime stack</text>
+
+                            <!-- side build->runtime arrow -->
+                            <line x1="700" y1="55" x2="700" y2="355" class="dg-flow"/>
+                            <path d="M696 355 l4 8 4 -8 z" fill="var(--neon)"/>
+                            <text x="726" y="120" text-anchor="middle" class="dg-sub" transform="rotate(90 726 120)">build</text>
+                            <text x="726" y="290" text-anchor="middle" class="dg-sub" transform="rotate(90 726 290)">runtime</text>
+
+                            <!-- layer 1 -->
+                            <rect x="120" y="50" width="440" height="46" rx="8" class="dg-node"/>
+                            <text x="340" y="70" text-anchor="middle" class="dg-label">Image &amp; Registry</text>
+                            <text x="340" y="86" text-anchor="middle" class="dg-sub">scan · sign · minimal base</text>
+                            <!-- layer 2 -->
+                            <rect x="120" y="105" width="440" height="46" rx="8" class="dg-node"/>
+                            <text x="340" y="125" text-anchor="middle" class="dg-label">Admission Control</text>
+                            <text x="340" y="141" text-anchor="middle" class="dg-sub">policy gate · verify signatures</text>
+                            <!-- layer 3 -->
+                            <rect x="120" y="160" width="440" height="46" rx="8" class="dg-node"/>
+                            <text x="340" y="180" text-anchor="middle" class="dg-label">Pod / Node</text>
+                            <text x="340" y="196" text-anchor="middle" class="dg-sub">non-root · drop caps · seccomp</text>
+                            <!-- layer 4 -->
+                            <rect x="120" y="215" width="440" height="46" rx="8" class="dg-node"/>
+                            <text x="340" y="235" text-anchor="middle" class="dg-label">Network Policy</text>
+                            <text x="340" y="251" text-anchor="middle" class="dg-sub">default deny · segmentation</text>
+                            <!-- layer 5 -->
+                            <rect x="120" y="270" width="440" height="46" rx="8" class="dg-node"/>
+                            <text x="340" y="290" text-anchor="middle" class="dg-label">RBAC &amp; Secrets</text>
+                            <text x="340" y="306" text-anchor="middle" class="dg-sub">least privilege · encrypt at rest</text>
+                            <!-- layer 6 (accent) -->
+                            <rect x="120" y="325" width="440" height="46" rx="8" class="dg-node-accent"/>
+                            <text x="340" y="345" text-anchor="middle" class="dg-accent-text">Runtime Monitoring</text>
+                            <text x="340" y="361" text-anchor="middle" class="dg-sub">detect anomalies · respond</text>
+
+                            <text x="16" y="384" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The container security stack as a build-to-runtime pipeline. Early layers keep bad workloads out; the accented runtime layer catches what the earlier gates missed.</figcaption>
+                    </figure>
+
+                    <h2>Image and registry: start with less</h2>
+                    <p>Every container inherits the sins of its base image. The single highest-leverage decision is to start from a <strong>minimal or distroless base</strong> — fewer packages means a smaller attack surface and far fewer CVEs to triage. Scan images for known vulnerabilities in the pipeline and fail the build on critical findings, generate a software bill of materials so you can answer "are we affected?" in minutes rather than days, and cryptographically <strong>sign</strong> images so their provenance can be verified later. Never bake secrets into image layers; they persist in the history even after being "removed."</p>
+
+                    <h2>Admission control: the gate that says no</h2>
+                    <p>Scanning is worthless if unscanned images can still be deployed. Admission controllers are the enforcement point where the cluster decides whether a workload may run at all. A policy engine evaluates every incoming manifest against your rules — reject unsigned images, block containers requesting <code>privileged</code> mode or host mounts, and require resource limits. This is also where you enforce the successor to Pod Security Policies, the built-in <strong>Pod Security Admission</strong> standards (privileged, baseline, restricted). Admission control turns your written policy into something the cluster mechanically obeys.</p>
+
+                    <h3>Policy as code</h3>
+                    <p>Express these rules as code and version them alongside your infrastructure. When policy lives in Git, changes are reviewable, testable, and auditable — and you can run the same checks in CI so a non-compliant manifest is caught before it ever reaches the cluster.</p>
+
+                    <h2>Pod and node hardening</h2>
+                    <p>Assume a container will eventually be compromised, and shrink what that buys the attacker. Run containers as a <strong>non-root user</strong> with a read-only root filesystem, drop all Linux capabilities and add back only what is genuinely needed, and apply a seccomp profile to restrict the syscalls available. Disable privilege escalation. On the node, keep the kubelet and container runtime patched, and protect the node's credentials — a compromised node with broad permissions is a fast path to the rest of the cluster.</p>
+
+                    <blockquote>The container boundary is a convenience, not a hard security wall. Treat every pod as if the process inside it is already hostile, and design so that a breakout still lands the attacker somewhere tightly constrained.</blockquote>
+
+                    <h2>Network policy: default deny</h2>
+                    <p>By default, every pod in a Kubernetes cluster can talk to every other pod — flat, open, and ideal for lateral movement. <strong>Network policies</strong> replace that with explicit allow-lists: start from default-deny and permit only the connections each workload actually needs. This segmentation means a compromised frontend cannot reach the database directly, and a foothold in one namespace does not automatically reach another. It is one of the highest-value controls and one of the most commonly skipped.</p>
+
+                    <h2>RBAC and secrets</h2>
+                    <p>Kubernetes RBAC governs who — and which service accounts — can do what against the API server. Over-permissioned service accounts are a leading cause of cluster-wide compromise: a token mounted into a pod with broad rights hands the attacker the keys to the cluster. Grant least privilege, avoid wildcard permissions, and don't auto-mount service account tokens into pods that don't call the API. For secrets, enable <strong>encryption at rest</strong> for etcd, prefer an external secrets manager over raw Kubernetes Secrets where possible, and keep secrets out of environment variables and image layers.</p>
+
+                    <h2>Runtime monitoring: catching what got through</h2>
+                    <p>Preventive controls are necessary but never sufficient — some risk always reaches production. Runtime security watches running containers for behaviour that shouldn't happen: a shell spawning inside a web-server container, an unexpected outbound connection, a process reading sensitive files, or a container trying to write to its read-only filesystem. Tools built on kernel-level visibility, such as the CNCF project Falco, turn these signals into alerts and, where appropriate, automated response. The <a href="https://www.cisa.gov/">CISA</a> and NSA Kubernetes Hardening Guidance is an excellent reference for tying these layers together into a coherent baseline.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Container security is a build-to-runtime pipeline — a gap in any layer is the one that gets used.</li>
+                            <li>Start from minimal, signed images and scan them in CI; provenance and a small surface pay off everywhere downstream.</li>
+                            <li>Admission control enforces policy mechanically — reject privileged pods and unsigned images before they run.</li>
+                            <li>Default-deny network policy and least-privilege RBAC contain a compromise to a single blast radius.</li>
+                            <li>Runtime monitoring is the safety net that catches the workloads your earlier gates missed.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#kubernetes</span>
+                        <span class="tag">#containers</span>
+                        <span class="tag">#cloud-native</span>
+                        <span class="tag">#rbac</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Assess your cluster
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

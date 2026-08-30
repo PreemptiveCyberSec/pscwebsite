@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2 Frameworks: Architecture &amp; Detection — Preemptive Cyber Security</title>
+    <meta name="description" content="How command-and-control frameworks are structured — operator console, team server, redirectors and beacon channels — and the network and host artefacts defenders use to catch them.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Red Team</span>
+                    <span class="dot">//</span>
+                    <span>2026-05-02</span>
+                    <span class="dot">//</span>
+                    <span>12 min read</span>
+                </div>
+
+                <h1>C2 Frameworks: Architecture &amp; Detection</h1>
+                <p class="article-lead">Command-and-control is the nervous system of an intrusion. If a defender understands how a C2 framework is laid out — the operator console, the team server, the redirectors, and the beacon that talks back over HTTPS or DNS — the places to hunt for it become obvious. This is an architectural and detection-focused view for blue teams and authorised red teamers.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>An implant that cannot reach its operator is inert. Sooner or later every intrusion has to establish a control channel, and that necessity is one of the defender's greatest gifts: control traffic crosses the network, where it can be recorded, baselined, and hunted long after host-level evasion has done its work. To exploit that gift you need a working model of how a command-and-control (C2) framework is built. The <a href="https://attack.mitre.org/tactics/TA0011/">Command and Control tactic</a> in MITRE ATT&amp;CK catalogues the techniques; here we assemble them into an architecture and point at where each piece is visible.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 340" role="img" aria-label="A command-and-control architecture: operator console to team server to redirectors, then over HTTPS or DNS to a beacon inside a target network, with detection points annotated.">
+                            <text x="16" y="24" class="dg-title">C2 architecture &amp; detection points</text>
+                            <!-- operator side -->
+                            <g>
+                                <rect x="30" y="60" width="130" height="48" rx="8" class="dg-node"/>
+                                <text x="95" y="82" text-anchor="middle" class="dg-label">Operator</text>
+                                <text x="95" y="98" text-anchor="middle" class="dg-sub">console</text>
+                            </g>
+                            <g>
+                                <rect x="30" y="140" width="130" height="48" rx="8" class="dg-node"/>
+                                <text x="95" y="162" text-anchor="middle" class="dg-label">Team Server</text>
+                                <text x="95" y="178" text-anchor="middle" class="dg-sub">C2 backend</text>
+                            </g>
+                            <g>
+                                <rect x="30" y="220" width="130" height="48" rx="8" class="dg-node"/>
+                                <text x="95" y="242" text-anchor="middle" class="dg-label">Redirectors</text>
+                                <text x="95" y="258" text-anchor="middle" class="dg-sub">CDN / proxy</text>
+                            </g>
+                            <line x1="95" y1="108" x2="95" y2="140" class="dg-flow"/>
+                            <line x1="95" y1="188" x2="95" y2="220" class="dg-flow"/>
+                            <!-- channel -->
+                            <line x1="160" y1="244" x2="470" y2="244" class="dg-flow"/>
+                            <g class="dg-flow" fill="var(--neon)" stroke="none">
+                                <path d="M300 240 l9 4 -9 4 z"/>
+                            </g>
+                            <rect x="250" y="212" width="140" height="26" rx="6" class="dg-node-accent"/>
+                            <text x="320" y="229" text-anchor="middle" class="dg-accent-text" font-size="11">HTTPS / DNS</text>
+                            <!-- target network boundary -->
+                            <rect x="470" y="50" width="270" height="240" rx="12" fill="none" stroke="var(--border-strong)" stroke-width="1.4" stroke-dasharray="6 5"/>
+                            <text x="486" y="72" class="dg-title">Target Network</text>
+                            <g>
+                                <rect x="540" y="200" width="130" height="60" rx="8" class="dg-node-accent"/>
+                                <text x="605" y="226" text-anchor="middle" class="dg-accent-text" font-size="11">Beacon</text>
+                                <text x="605" y="242" text-anchor="middle" class="dg-sub">implant</text>
+                            </g>
+                            <line x1="470" y1="244" x2="540" y2="230" class="dg-flow"/>
+                            <!-- detection annotations -->
+                            <text x="486" y="110" class="dg-sub">Detection points:</text>
+                            <text x="486" y="130" class="dg-accent-text" font-size="11">• Beacon interval + jitter</text>
+                            <text x="486" y="150" class="dg-accent-text" font-size="11">• JA3 / TLS fingerprint</text>
+                            <text x="486" y="170" class="dg-accent-text" font-size="11">• DNS volume + entropy</text>
+                            <text x="16" y="320" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> A typical C2 architecture. The operator never talks to the target directly — redirectors sit between the team server and the beacon, but the channel's rhythm and fingerprint still give it away.</figcaption>
+                    </figure>
+
+                    <h2>The operator console and team server</h2>
+                    <p>At the back of every framework is the human. The <strong>operator console</strong> is the client the red teamer (or adversary) sits at; it connects to a <strong>team server</strong>, the backend that actually manages implants, queues tasks, and stores results. Splitting the two lets a team share a single engagement and keeps the sensitive backend off the operator's laptop. Defensively this pair is rarely visible from inside the victim network — it lives on infrastructure the attacker controls — so it is not usually where you hunt. It matters mostly for threat intelligence and takedown work, where fingerprinting exposed team servers on the internet is a live discipline.</p>
+
+                    <h2>Redirectors — the layer that hides the backend</h2>
+                    <p>Between the team server and the target sits one or more <strong>redirectors</strong>: content-delivery networks, reverse proxies, or compromised web servers that forward beacon traffic to the real backend. Their purpose is resilience and deniability — if a defender blocks the address a beacon is calling, they have only burned a disposable redirector, not the operator's infrastructure. "Domain fronting" and CDN abuse are variations on this idea, making malicious traffic appear to terminate at a reputable domain.</p>
+
+                    <h3>Why redirectors do not save the attacker</h3>
+                    <p>Redirectors disguise <em>where</em> the traffic ends up, but they cannot disguise the <em>behaviour</em> of the beacon that generates it. The rhythm, volume, and fingerprint of the call-outs remain, and those are what modern network detection keys on.</p>
+
+                    <h2>The beacon channel</h2>
+                    <p>The <strong>beacon</strong> is the implant's outbound heartbeat. Rather than hold an open connection — which is easy to spot — it "checks in" on a schedule, asks whether the operator has tasks, runs them, and returns results. Two carriers dominate:</p>
+                    <ul>
+                        <li><strong>HTTPS</strong> — blends into the ocean of normal web traffic and encrypts its contents, so payload inspection alone is blind to it.</li>
+                        <li><strong>DNS</strong> — abuses name resolution to smuggle small amounts of data in queries and responses, useful where only DNS is allowed to egress.</li>
+                    </ul>
+
+                    <blockquote>A beacon's greatest strength — looking like ordinary traffic — is also its weakness. Ordinary traffic is irregular and human; a beacon is periodic and mechanical, and that machine-like rhythm is exactly what analytics are tuned to find.</blockquote>
+
+                    <h2>Detecting the beacon rhythm</h2>
+                    <p>The most durable network detection is <strong>beacon analysis</strong>. Even with random <em>jitter</em> added to the check-in interval, repeated connections to the same destination cluster around a statistical period that stands out from genuine browsing. Long-lived, low-and-slow connections to a single external host, with regular timing and consistent request sizes, are the signature of a heartbeat. Baselining per-host egress and scoring destinations by connection regularity surfaces these without ever decrypting a byte.</p>
+
+                    <h2>TLS and JA3 fingerprints</h2>
+                    <p>Encryption hides content, not metadata. The way a client negotiates a TLS session — the ordered set of ciphers, extensions, and parameters it offers — forms a fingerprint (commonly captured as a <strong>JA3</strong> hash) that is characteristic of the library the beacon was built with. When that fingerprint does not match any legitimate browser or application on the host, or matches a known-tool profile, it is a high-confidence lead. Pairing JA3 with the destination and the beacon rhythm turns three weak signals into one strong alert.</p>
+
+                    <h2>DNS anomalies</h2>
+                    <p>DNS-based channels betray themselves through volume and shape. A host issuing an unusually high number of queries, requesting long or high-entropy subdomains, or repeatedly resolving a single rarely-seen domain is a strong indicator of tunnelling. <a href="https://www.cisa.gov/">CISA</a> and other bodies publish guidance on monitoring recursive resolvers precisely because DNS is both a common exfiltration path and a well-instrumented one.</p>
+
+                    <h2>Bringing it together for the blue team</h2>
+                    <p>No single indicator is conclusive — jitter defeats naive interval matching, a spoofed fingerprint can mimic a browser, and low-volume DNS hides in the noise. The answer is correlation: score each host on beacon regularity, fingerprint anomaly, destination reputation, and DNS behaviour, and alert when several align. Authorised red-team engagements exist to exercise exactly this pipeline, driving real beacons through your controls so the SOC can confirm the analytics fire before a genuine adversary tests them.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>C2 splits into <strong>operator console, team server, redirectors, and beacon</strong> — only the beacon and its channel are usually visible from inside the network.</li>
+                            <li>Redirectors hide the backend's location but never the beacon's <strong>behaviour</strong>.</li>
+                            <li>Beacons are periodic and mechanical; <strong>rhythm and jitter analysis</strong> is the most durable detection.</li>
+                            <li>Encryption hides content but not metadata — <strong>JA3/TLS fingerprints</strong> and <strong>DNS anomalies</strong> remain.</li>
+                            <li>Correlate weak signals into strong alerts, and validate the pipeline with authorised red teaming.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#c2</span>
+                        <span class="tag">#command-control</span>
+                        <span class="tag">#beacon</span>
+                        <span class="tag">#detection</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Hunt for C2 in your network
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

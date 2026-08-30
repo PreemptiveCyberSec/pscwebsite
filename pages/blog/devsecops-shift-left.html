@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevSecOps: Shifting Security Left in the Pipeline — Preemptive Cyber Security</title>
+    <meta name="description" content="How security becomes automated gates and shared culture across the CI/CD pipeline — SAST, SCA, DAST, IaC scanning, secrets detection, and runtime protection.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">DevSecOps</span>
+                    <span class="dot">//</span>
+                    <span>2026-08-22</span>
+                    <span class="dot">//</span>
+                    <span>10 min read</span>
+                </div>
+
+                <h1>DevSecOps: Shifting Security Left in the Pipeline</h1>
+                <p class="article-lead">Security that waits for a final audit arrives too late and too expensive. DevSecOps moves it left — into the developer's editor, the pull request, and the build — as automated gates and a shared responsibility, not a gate-keeper at the end of the road.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>For years, security lived at the end of the software delivery lifecycle: a penetration test a week before launch, a findings report, and a scramble to fix issues that were baked in months earlier. The economics of that model are brutal — a design flaw caught in code review costs minutes, while the same flaw caught in production costs incident response, downtime, and reputational damage. DevSecOps rejects the late-audit model entirely. It distributes security controls across every stage of the pipeline, automates them so they run on every commit, and treats the results as first-class signals that developers own. The phrase "shift left" simply means moving those controls as close as possible to the moment code is written.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 260" role="img" aria-label="A horizontal CI/CD pipeline of six stages — Code, Build, Test, Release, Deploy, Operate — each with an automated security gate beneath it.">
+                            <text x="16" y="22" class="dg-title">Security gates across the pipeline</text>
+                            <!-- pipeline stage boxes -->
+                            <g>
+                                <rect x="15" y="52" width="110" height="46" rx="8" class="dg-node"/>
+                                <text x="70" y="80" text-anchor="middle" class="dg-label">Code</text>
+                            </g>
+                            <g>
+                                <rect x="139" y="52" width="110" height="46" rx="8" class="dg-node"/>
+                                <text x="194" y="80" text-anchor="middle" class="dg-label">Build</text>
+                            </g>
+                            <g>
+                                <rect x="263" y="52" width="110" height="46" rx="8" class="dg-node"/>
+                                <text x="318" y="80" text-anchor="middle" class="dg-label">Test</text>
+                            </g>
+                            <g>
+                                <rect x="387" y="52" width="110" height="46" rx="8" class="dg-node"/>
+                                <text x="442" y="80" text-anchor="middle" class="dg-label">Release</text>
+                            </g>
+                            <g>
+                                <rect x="511" y="52" width="110" height="46" rx="8" class="dg-node"/>
+                                <text x="566" y="80" text-anchor="middle" class="dg-label">Deploy</text>
+                            </g>
+                            <g>
+                                <rect x="635" y="52" width="110" height="46" rx="8" class="dg-node"/>
+                                <text x="690" y="80" text-anchor="middle" class="dg-label">Operate</text>
+                            </g>
+                            <!-- arrows between stages -->
+                            <g class="dg-flow" fill="var(--neon)" stroke="none">
+                                <path d="M127 75 l10 -5 0 10 z"/>
+                                <path d="M251 75 l10 -5 0 10 z"/>
+                                <path d="M375 75 l10 -5 0 10 z"/>
+                                <path d="M499 75 l10 -5 0 10 z"/>
+                                <path d="M623 75 l10 -5 0 10 z"/>
+                            </g>
+                            <!-- connectors down to gates -->
+                            <g class="dg-flow-dim">
+                                <line x1="70" y1="98" x2="70" y2="150"/>
+                                <line x1="194" y1="98" x2="194" y2="150"/>
+                                <line x1="318" y1="98" x2="318" y2="150"/>
+                                <line x1="442" y1="98" x2="442" y2="150"/>
+                                <line x1="566" y1="98" x2="566" y2="150"/>
+                                <line x1="690" y1="98" x2="690" y2="150"/>
+                            </g>
+                            <!-- security gate nodes -->
+                            <g>
+                                <rect x="15" y="150" width="110" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="70" y="172" text-anchor="middle" class="dg-accent-text" font-size="11">Secrets</text>
+                                <text x="70" y="188" text-anchor="middle" class="dg-sub">pre-commit</text>
+                            </g>
+                            <g>
+                                <rect x="139" y="150" width="110" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="194" y="172" text-anchor="middle" class="dg-accent-text" font-size="11">SCA + SAST</text>
+                                <text x="194" y="188" text-anchor="middle" class="dg-sub">deps &amp; code</text>
+                            </g>
+                            <g>
+                                <rect x="263" y="150" width="110" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="318" y="172" text-anchor="middle" class="dg-accent-text" font-size="11">DAST</text>
+                                <text x="318" y="188" text-anchor="middle" class="dg-sub">running app</text>
+                            </g>
+                            <g>
+                                <rect x="387" y="150" width="110" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="442" y="172" text-anchor="middle" class="dg-accent-text" font-size="11">IaC scan</text>
+                                <text x="442" y="188" text-anchor="middle" class="dg-sub">config drift</text>
+                            </g>
+                            <g>
+                                <rect x="511" y="150" width="110" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="566" y="172" text-anchor="middle" class="dg-accent-text" font-size="11">Signing</text>
+                                <text x="566" y="188" text-anchor="middle" class="dg-sub">provenance</text>
+                            </g>
+                            <g>
+                                <rect x="635" y="150" width="110" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="690" y="172" text-anchor="middle" class="dg-accent-text" font-size="11">Runtime</text>
+                                <text x="690" y="188" text-anchor="middle" class="dg-sub">RASP</text>
+                            </g>
+                            <text x="16" y="240" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> Every pipeline stage carries its own automated security gate — defence in depth expressed as continuous checks rather than a single end-of-line audit.</figcaption>
+                    </figure>
+
+                    <h2>Secrets detection at the earliest edge</h2>
+                    <p>The cheapest bug to fix is the one that never reaches the repository. Hard-coded API keys, database passwords, and cloud credentials are among the most common — and most damaging — mistakes, because once a secret is committed it lives forever in Git history even after it is "removed." A pre-commit hook or a server-side push protection scans diffs for high-entropy strings and known credential formats, blocking them before they land. When a secret does slip through, the only safe response is rotation: treat the value as compromised and revoke it, rather than quietly deleting the line.</p>
+
+                    <h2>SCA — you are mostly running other people's code</h2>
+                    <p>A modern application is overwhelmingly third-party. Software Composition Analysis inventories every direct and transitive dependency, cross-references them against vulnerability databases, and flags components with known CVEs or incompatible licences. The output that matters is a <strong>software bill of materials</strong> (SBOM) — a machine-readable manifest of what your artefact actually contains. When the next widely-exploited library flaw is disclosed, an SBOM answers "are we affected, and where?" in minutes instead of days.</p>
+
+                    <h2>SAST — reading the source for dangerous patterns</h2>
+                    <p>Static Application Security Testing analyses your own source code without executing it, tracing how untrusted input flows into sensitive sinks. It is strong at catching injection, unsafe deserialisation, path traversal, and weak cryptography early. Its weakness is noise: naive SAST drowns teams in false positives. The discipline is tuning — suppressing rules that do not apply to your stack, and wiring findings directly into the pull request so a developer sees them in context, next to the line they just wrote.</p>
+
+                    <blockquote>A security tool that a developer has to leave their workflow to check is a security tool that gets ignored. The gate belongs where the work already happens.</blockquote>
+
+                    <h2>DAST — testing the application as an attacker sees it</h2>
+                    <p>Dynamic Application Security Testing takes the opposite view: it exercises a running instance of the application from the outside, with no knowledge of the source. It excels at issues that only appear at runtime — authentication and session flaws, misconfigured security headers, and injection reachable through the live interface. Because it needs a deployed target, DAST typically runs against an ephemeral staging environment spun up in the pipeline, giving realistic coverage without touching production.</p>
+
+                    <h2>Infrastructure as Code scanning</h2>
+                    <p>When infrastructure is defined in Terraform, CloudFormation, or Kubernetes manifests, misconfiguration becomes a code problem — which means it can be caught with code tooling. IaC scanners inspect these definitions for public storage buckets, over-permissive security groups, unencrypted volumes, and containers running as root, <em>before</em> the resources are ever provisioned. This is one of the highest-leverage shift-left controls, because a single bad default replicated across an estate is far cheaper to fix in a template than across hundreds of live resources.</p>
+
+                    <h2>Signing, provenance, and runtime protection</h2>
+                    <p>As the artefact moves toward production, the concern shifts to integrity. Signing build outputs and generating provenance attestations lets consumers verify that an image was produced by your pipeline from the expected source, hardening the supply chain against tampering. Once deployed, runtime protection — RASP and behavioural monitoring — watches the live workload for exploitation attempts that slipped past every earlier gate. Observability closes the loop: production signals feed back into the backlog, and detection rules mapped to frameworks like <a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a> keep the model current.</p>
+
+                    <h3>The cultural shift is the hard part</h3>
+                    <p>None of these tools matter if security remains "someone else's job." The defining move in DevSecOps is organisational: developers own the findings their code produces, security engineers act as enablers who build the guardrails, and gates are calibrated so that a genuinely critical result blocks a merge while lower-severity noise informs without obstructing. Threat modelling early, security champions embedded in teams, and blameless retrospectives turn security from a checkpoint into a shared habit.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Shifting left means embedding automated security <strong>gates</strong> at every pipeline stage, not bolting on a final audit.</li>
+                            <li>SCA and SBOMs answer "are we affected?" fast; SAST and DAST are complementary, catching different bug classes.</li>
+                            <li>IaC scanning stops misconfiguration before infrastructure is ever provisioned — one of the highest-leverage controls.</li>
+                            <li>Signing and runtime protection defend the supply chain and the deployed workload after code ships.</li>
+                            <li>Tooling without a culture of shared ownership fails; developers must own the findings their code produces.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#devsecops</span>
+                        <span class="tag">#cicd</span>
+                        <span class="tag">#sast</span>
+                        <span class="tag">#automation</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Secure your pipeline
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

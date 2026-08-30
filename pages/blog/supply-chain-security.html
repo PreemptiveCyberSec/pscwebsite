@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Supply Chain Attacks &amp; the Role of SBOM — Preemptive Cyber Security</title>
+    <meta name="description" content="Dependency and build-system risk, notable attack patterns, and how SBOM, provenance and SLSA restore trust in the software you ship.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Supply Chain</span>
+                    <span class="dot">//</span>
+                    <span>2026-06-20</span>
+                    <span class="dot">//</span>
+                    <span>10 min read</span>
+                </div>
+
+                <h1>Software Supply Chain Attacks &amp; the Role of SBOM</h1>
+                <p class="article-lead">You wrote a fraction of the code you ship. The rest arrived through dependencies, build tools, and package registries you implicitly trust. Attackers know this — and increasingly compromise the supply chain rather than your application directly. SBOM and provenance are how you get that trust back.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Modern software is assembled, not written. A typical application is a thin layer of first-party code sitting atop hundreds of open-source packages, each of which pulls in packages of its own. That dependency tree is enormously productive — and it is also an attack surface. Compromise a single widely used component, and the malicious code inherits the trust of every application that depends on it, propagating downstream to users who never had a chance to inspect it.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 300" role="img" aria-label="An application depends on direct packages, one of which pulls a compromised transitive dependency. The malicious code propagates upstream into the app, but an SBOM and provenance verification gate sits between the app and its users.">
+                            <text x="16" y="22" class="dg-title">Dependency propagation &amp; the SBOM gate</text>
+
+                            <!-- app root -->
+                            <rect x="100" y="40" width="140" height="46" rx="8" class="dg-node"/>
+                            <text x="170" y="68" text-anchor="middle" class="dg-label">Application</text>
+
+                            <!-- tree edges -->
+                            <g class="dg-flow-dim">
+                                <line x1="170" y1="86" x2="74" y2="124"/>
+                                <line x1="170" y1="86" x2="190" y2="124"/>
+                                <line x1="170" y1="86" x2="306" y2="124"/>
+                                <line x1="306" y1="168" x2="306" y2="210"/>
+                            </g>
+
+                            <!-- direct deps -->
+                            <g>
+                                <rect x="24" y="124" width="100" height="44" rx="8" class="dg-node"/>
+                                <text x="74" y="151" text-anchor="middle" class="dg-sub">Direct dep A</text>
+                            </g>
+                            <g>
+                                <rect x="140" y="124" width="100" height="44" rx="8" class="dg-node"/>
+                                <text x="190" y="151" text-anchor="middle" class="dg-sub">Direct dep B</text>
+                            </g>
+                            <g>
+                                <rect x="256" y="124" width="100" height="44" rx="8" class="dg-node"/>
+                                <text x="306" y="151" text-anchor="middle" class="dg-sub">Direct dep C</text>
+                            </g>
+
+                            <!-- compromised transitive dep -->
+                            <rect x="238" y="210" width="136" height="48" rx="8" style="fill:rgba(255,107,107,0.14);stroke:var(--danger);stroke-width:1.5"/>
+                            <text x="306" y="230" text-anchor="middle" class="dg-sub" style="fill:var(--danger)">Transitive dep</text>
+                            <text x="306" y="246" text-anchor="middle" style="fill:var(--danger);font-family:var(--font-mono);font-size:11px">compromised</text>
+
+                            <!-- red propagation upstream -->
+                            <path d="M300 210 C 264 176, 214 128, 196 90" fill="none" stroke="var(--danger)" stroke-width="1.6" stroke-dasharray="4 4"/>
+                            <path d="M196 90 l-1 9 6 -4 z" fill="var(--danger)"/>
+                            <text x="150" y="182" text-anchor="middle" class="dg-sub" style="fill:var(--danger)">propagates upstream</text>
+
+                            <!-- app to gate -->
+                            <line x1="240" y1="63" x2="428" y2="120" class="dg-flow"/>
+                            <path d="M428 120 l-9 -1 3 -8 z" fill="var(--neon)"/>
+
+                            <!-- SBOM gate -->
+                            <rect x="430" y="70" width="146" height="150" rx="8" class="dg-node-accent"/>
+                            <text x="503" y="132" text-anchor="middle" class="dg-accent-text">SBOM ·</text>
+                            <text x="503" y="152" text-anchor="middle" class="dg-accent-text">Verify</text>
+                            <text x="503" y="172" text-anchor="middle" class="dg-accent-text">Provenance</text>
+                            <text x="503" y="204" text-anchor="middle" class="dg-title">checkpoint</text>
+
+                            <!-- gate to users -->
+                            <line x1="576" y1="145" x2="620" y2="145" class="dg-flow"/>
+                            <path d="M620 141 l8 4 -8 4 z" fill="var(--neon)"/>
+
+                            <!-- users -->
+                            <rect x="628" y="120" width="110" height="50" rx="8" class="dg-node"/>
+                            <text x="683" y="150" text-anchor="middle" class="dg-label">Users</text>
+
+                            <text x="16" y="282" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> A compromised transitive dependency rides upstream into the application — an SBOM and provenance check is the gate that must catch it before it reaches users.</figcaption>
+                    </figure>
+
+                    <h2>Why the supply chain is the target</h2>
+                    <p>Attacking an organisation's own code is hard and yields one victim. Attacking a component that thousands of organisations depend on is efficient: one compromise, many victims, all of whom trusted the component implicitly. This asymmetry is why supply chain attacks have moved from novelty to mainstream. The attacker no longer needs to breach your perimeter — they wait for you to pull their code in, willingly, as part of your next build.</p>
+
+                    <h2>Dependency risk: direct and transitive</h2>
+                    <p>The dependencies you choose deliberately are only the top layer. Each of those pulls in its own dependencies, and those pull in more — the <strong>transitive</strong> dependencies that make up the bulk of the tree and that almost nobody reviews. In Figure 1, the compromised package is not one the developers selected; it arrived several levels down, invisible in the manifest they actually read. Its malicious code nonetheless propagates upward into the application and outward to users.</p>
+                    <h3>Common dependency attack patterns</h3>
+                    <p>Attackers seed the tree in several ways. <strong>Typosquatting</strong> publishes a malicious package with a name close to a popular one, hoping for a mistyped install. <strong>Dependency confusion</strong> exploits build tools that prefer a public package over a private one of the same name. <strong>Account takeover</strong> of a legitimate maintainer lets an attacker publish a poisoned update that flows straight into everyone's next build. And <strong>protestware</strong> or maintainer burnout can turn a trusted package hostile without any external attacker at all.</p>
+
+                    <h2>Build-system risk</h2>
+                    <p>Dependencies are only half the story. The <strong>build system</strong> — the CI/CD pipeline that compiles, tests, and packages your software — is itself a high-value target. If an attacker can inject a step into the build, they can tamper with the final artifact even when every source file and dependency is clean. Because the output is signed and distributed through trusted channels, that tampering is exceptionally hard for downstream consumers to detect. Securing the build means treating pipeline definitions as sensitive code, isolating build environments, and minimising the credentials any single build step can reach.</p>
+
+                    <h2>SBOM: a bill of materials for software</h2>
+                    <p>You cannot protect what you cannot enumerate. A <strong>Software Bill of Materials (SBOM)</strong> is a complete, machine-readable inventory of every component in a piece of software — direct and transitive — with versions and relationships. When a new vulnerability is disclosed in a common library, an SBOM turns the frantic question "are we affected?" into a database lookup. Standard formats such as SPDX and CycloneDX make SBOMs portable across tools, and guidance from <a href="https://www.cisa.gov/sbom">CISA</a> has driven their adoption as a baseline expectation for software producers.</p>
+
+                    <blockquote>An SBOM does not make software secure. It makes software <em>accountable</em> — and accountability is the precondition for every response that follows.</blockquote>
+
+                    <h2>Provenance and SLSA</h2>
+                    <p>An inventory tells you what is inside; <strong>provenance</strong> tells you where it came from and how it was built. Provenance is verifiable metadata that links an artifact back to its source and its build process, so a consumer can confirm the binary they received was produced from the expected source by the expected pipeline — not swapped or tampered with in transit. The <strong>SLSA</strong> framework (Supply-chain Levels for Software Artifacts) formalises this as a ladder of increasing assurance, from simply generating provenance up to fully hardened, tamper-resistant builds. Each rung raises the bar an attacker must clear to forge a trusted artifact.</p>
+
+                    <h2>Operationalising supply chain security</h2>
+                    <p>Putting this into practice is a pipeline concern, not a one-off audit. Generate an SBOM automatically as part of every build, and store it alongside the artifact. Continuously scan those SBOMs against vulnerability feeds so a newly disclosed flaw surfaces the affected releases immediately. Verify provenance before deploying, and pin dependencies to specific, reviewed versions rather than floating ranges. Together these controls form the gate in Figure 1 — the checkpoint that stands between a compromised component and the users who would otherwise inherit the risk.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Supply chain attacks are efficient: one compromised component inherits the trust of every dependent application.</li>
+                            <li>Transitive dependencies make up most of the tree and are rarely reviewed — that is where compromise hides.</li>
+                            <li>The build system is a first-class target; tampering there survives even clean source and dependencies.</li>
+                            <li>An SBOM turns "are we affected?" into a lookup, and provenance proves an artifact's origin and integrity.</li>
+                            <li>SLSA provides a graduated model for build integrity; automate SBOM, scanning, and provenance in the pipeline.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#supply-chain</span>
+                        <span class="tag">#sbom</span>
+                        <span class="tag">#slsa</span>
+                        <span class="tag">#dependencies</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Secure your build pipeline
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team — Preemptive Cyber Security</title>
+    <meta name="description" content="Meet the security researchers and practitioners behind Preemptive Cyber Security.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <style>
+        /* Clickable team card */
+        .team-card.clickable {
+            font-family: inherit;
+            color: inherit;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .team-more {
+            margin-top: 16px;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            letter-spacing: 0.06em;
+            color: var(--neon);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s ease, text-shadow 0.2s ease;
+        }
+        .team-card.clickable:hover .team-more {
+            gap: 11px;
+            text-shadow: 0 0 12px var(--neon-glow);
+        }
+        .modal .modal-overview + p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <span class="eyebrow">Team</span>
+            <h1>The people behind<br><span class="gradient-text">the protection.</span></h1>
+            <p>Researchers, breakers, and defenders — presenting at Black Hat, DEF CON, and OWASP.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <div class="team-grid" data-stagger>
+                    <button class="card team-card clickable bio-card" data-bio="viral" aria-haspopup="dialog">
+                        <div class="team-avatar"><div class="team-avatar-inner">VM</div></div>
+                        <h3>Viral Maniar</h3>
+                        <span class="team-role">MANAGING DIRECTOR · PRINCIPAL CONSULTANT</span>
+                        <p class="team-bio">Offensive security specialist leading Preemptive's offensive &amp; defensive services.</p>
+                        <span class="team-more">Read bio &rarr;</span>
+                    </button>
+                    <div class="card team-card">
+                        <div class="team-avatar"><div class="team-avatar-inner">MC</div></div>
+                        <h3>Mike Chen</h3>
+                        <span class="team-role">LEAD PENETRATION TESTER</span>
+                        <p class="team-bio">Web app and API specialist. Multiple CVEs to his name.</p>
+                    </div>
+                    <div class="card team-card">
+                        <div class="team-avatar"><div class="team-avatar-inner">LG</div></div>
+                        <h3>Lisa Garcia</h3>
+                        <span class="team-role">SECURITY RESEARCHER</span>
+                        <p class="team-bio">Published researcher in cryptography and zero-day discovery.</p>
+                    </div>
+                    <button class="card team-card clickable bio-card" data-bio="shabnam" aria-haspopup="dialog">
+                        <div class="team-avatar"><div class="team-avatar-inner">SS</div></div>
+                        <h3>Shabnam Sharma</h3>
+                        <span class="team-role">PRODUCT OWNER · DEVSECOPS ADVISOR</span>
+                        <p class="team-bio">Product owner &amp; DevSecOps advisor — aligning technology, product, and sales.</p>
+                        <span class="team-more">Read bio &rarr;</span>
+                    </button>
+                    <button class="card team-card clickable bio-card" data-bio="harsh" aria-haspopup="dialog">
+                        <div class="team-avatar"><div class="team-avatar-inner">HM</div></div>
+                        <h3>Harsh Maniar</h3>
+                        <span class="team-role">FINANCIAL ADVISOR · CLIENT SUCCESS MANAGER</span>
+                        <p class="team-bio">Finance &amp; fintech expertise, focused on client success and value delivery.</p>
+                        <span class="team-more">Read bio &rarr;</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top: 0;">
+            <div class="container">
+                <div class="cta-panel reveal">
+                    <h2>Want to join us?</h2>
+                    <p>We're always looking for people who break things responsibly.</p>
+                    <a href="careers.html" class="btn btn-primary">
+                        See open roles
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#offensive">Offensive Security</a></li>
+                        <li><a href="services.html#defensive">Defensive Security</a></li>
+                        <li><a href="services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="resources.html">Blog</a></li>
+                        <li><a href="resources.html">Tools</a></li>
+                        <li><a href="resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="privacy.html">Privacy</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bio modal -->
+    <div class="modal-backdrop" id="bio-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Team member biography">
+        <div class="modal">
+            <div class="modal-inner">
+                <button class="modal-close" id="bio-close" aria-label="Close">&times;</button>
+                <div id="bio-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        (function () {
+            const BIOS = {
+                viral: {
+                    initials: 'VM',
+                    name: 'Viral Maniar',
+                    role: 'MANAGING DIRECTOR · PRINCIPAL CONSULTANT',
+                    paras: [
+                        'Viral Maniar is a Principal Consultant and an offensive security specialist at Preemptive, responsible for leading the organisation’s offensive and defensive security services within the information security team. He also operates his boutique cybersecurity firm, Preemptive Cybersecurity based in Australia, delivering both offensive and defensive security consulting services.',
+                        'With over thirteen years of experience in cybersecurity consulting, Viral has worked with a wide range of organisations across APJ. His expertise includes internal and external infrastructure testing, application penetration testing, vulnerability assessments, wireless security assessments, social engineering, red teaming, API testing, thick and thin client testing, and cloud security architecture reviews.',
+                        'Viral has spoken at prominent industry conferences such as Black Hat, ROOTCON DEFCON and (ISC)². He is also an active participant in bug bounty programs and has received recognition for responsibly disclosing security vulnerabilities. Outside of his professional work, Viral enjoys building security tools and contributes to multiple projects on GitHub. He can be found on X at @ManiarViral and @PreemptiveCyber.'
+                    ]
+                },
+                shabnam: {
+                    initials: 'SS',
+                    name: 'Shabnam Sharma',
+                    role: 'PRODUCT OWNER · DEVSECOPS &amp; PRODUCT ADVISOR',
+                    paras: [
+                        'Shabnam is a diversely-skilled information technology professional with over a decade of experience across multinational companies and small-to-medium businesses in Australia. She is currently a Product Owner at a major power supply company in Melbourne and supports Preemptive Cyber Security with DevSecOps cycles and product building.',
+                        'Shabnam has extensive experience building a culture of empowerment and collaboration, and creates an environment that enables alignment between technology, product, and sales.'
+                    ]
+                },
+                harsh: {
+                    initials: 'HM',
+                    name: 'Harsh Maniar',
+                    role: 'FINANCIAL ADVISOR · CLIENT SUCCESS MANAGER',
+                    paras: [
+                        'Harsh Maniar is Financial Advisor and Client Success Manager for Preemptive Cyber Security. Harsh brings several years of experience in accounting and deep expertise in datacenter management, finance, and fintech — building and running world-class client success teams is his passion. He is passionate about helping clients maximise the value they see from the investment they’ve made with our penetration testing services.',
+                        'Harsh holds a Master of International Finance, majoring in Accountancy with a sub-major in Applied Finance and Investment, from Deakin University in Melbourne.'
+                    ]
+                }
+            };
+
+            const modal = document.getElementById('bio-modal');
+            const body = document.getElementById('bio-body');
+            const closeBtn = document.getElementById('bio-close');
+            let lastFocus = null;
+
+            function open(key) {
+                const b = BIOS[key];
+                if (!b) return;
+                body.innerHTML =
+                    '<div class="team-avatar" style="margin: 0 0 22px;"><div class="team-avatar-inner">' + b.initials + '</div></div>' +
+                    '<span class="modal-eyebrow">Team / Advisor</span>' +
+                    '<h2>' + b.name + '</h2>' +
+                    '<p class="team-role" style="margin-bottom: 24px;">' + b.role + '</p>' +
+                    '<p class="modal-overview">' + b.paras[0] + '</p>' +
+                    b.paras.slice(1).map(p => '<p style="color: var(--text-secondary);">' + p + '</p>').join('');
+                lastFocus = document.activeElement;
+                modal.classList.add('open');
+                document.body.classList.add('modal-open');
+                modal.setAttribute('aria-hidden', 'false');
+                closeBtn.focus();
+            }
+            function close() {
+                modal.classList.remove('open');
+                document.body.classList.remove('modal-open');
+                modal.setAttribute('aria-hidden', 'true');
+                if (lastFocus) lastFocus.focus();
+            }
+
+            document.querySelectorAll('.bio-card').forEach(card => {
+                card.addEventListener('click', () => open(card.dataset.bio));
+            });
+            closeBtn.addEventListener('click', close);
+            modal.addEventListener('click', e => { if (e.target === modal) close(); });
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && modal.classList.contains('open')) close();
+            });
+        })();
+    </script>
+</body>
+</html>

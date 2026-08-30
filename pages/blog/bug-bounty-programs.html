@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Bug Bounty Program That Works — Preemptive Cyber Security</title>
+    <meta name="description" content="Scope design, triage, severity and reward, coordinated disclosure, and how a program matures from a vulnerability disclosure policy to a paid bounty.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">AppSec</span>
+                    <span class="dot">//</span>
+                    <span>2026-03-14</span>
+                    <span class="dot">//</span>
+                    <span>9 min read</span>
+                </div>
+
+                <h1>Building a Bug Bounty Program That Works</h1>
+                <p class="article-lead">A bug bounty is not a magic pipeline that turns money into security. It is an operational commitment — to clear scope, fast triage, fair rewards, and honest disclosure. Get those right and researchers become an extension of your team; get them wrong and you get noise, frustration, and reputational risk.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>A bug bounty program invites external security researchers to find and report vulnerabilities, usually in exchange for recognition or payment. Done well, it gives you continuous testing from a diverse pool of talent that no in-house team could match. Done badly, it drowns a small team in low-quality submissions, alienates the researchers you most want to attract, and can even expose you to legal risk. The difference is almost entirely operational — and it starts long before the first report arrives.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 320" role="img" aria-label="A triage funnel from researcher to submission to triage to validation, branching off to duplicate or invalid on the side, and continuing to severity and reward, fix, and disclose on the main path.">
+                            <text x="16" y="24" class="dg-title">Submission triage funnel</text>
+
+                            <!-- main path -->
+                            <g>
+                                <rect x="24" y="60" width="118" height="46" rx="8" class="dg-node"/>
+                                <text x="83" y="80" text-anchor="middle" class="dg-label">Researcher</text>
+                                <text x="83" y="96" text-anchor="middle" class="dg-sub">finds issue</text>
+                            </g>
+                            <g>
+                                <rect x="166" y="60" width="118" height="46" rx="8" class="dg-node"/>
+                                <text x="225" y="80" text-anchor="middle" class="dg-label">Submission</text>
+                                <text x="225" y="96" text-anchor="middle" class="dg-sub">report + PoC</text>
+                            </g>
+                            <g>
+                                <rect x="308" y="60" width="118" height="46" rx="8" class="dg-node"/>
+                                <text x="367" y="80" text-anchor="middle" class="dg-label">Triage</text>
+                                <text x="367" y="96" text-anchor="middle" class="dg-sub">first review</text>
+                            </g>
+                            <g>
+                                <rect x="450" y="60" width="118" height="46" rx="8" class="dg-node-accent"/>
+                                <text x="509" y="80" text-anchor="middle" class="dg-accent-text">Validate</text>
+                                <text x="509" y="96" text-anchor="middle" class="dg-sub">reproduce</text>
+                            </g>
+
+                            <!-- arrows main top row -->
+                            <g fill="var(--neon)">
+                                <line x1="142" y1="83" x2="162" y2="83" class="dg-flow"/><path d="M160 79 l8 4 -8 4 z"/>
+                                <line x1="284" y1="83" x2="304" y2="83" class="dg-flow"/><path d="M302 79 l8 4 -8 4 z"/>
+                                <line x1="426" y1="83" x2="446" y2="83" class="dg-flow"/><path d="M444 79 l8 4 -8 4 z"/>
+                            </g>
+
+                            <!-- reject branch (dim) up/off to side -->
+                            <line x1="509" y1="60" x2="509" y2="34" class="dg-flow-dim"/>
+                            <path d="M505 36 l4 -8 4 8 z" fill="var(--border-strong)"/>
+                            <g>
+                                <rect x="600" y="14" width="140" height="40" rx="8" class="dg-node"/>
+                                <text x="670" y="32" text-anchor="middle" class="dg-sub">Duplicate / Invalid</text>
+                                <text x="670" y="46" text-anchor="middle" class="dg-sub">closed with reason</text>
+                            </g>
+                            <line x1="568" y1="34" x2="598" y2="34" class="dg-flow-dim"/>
+                            <path d="M596 30 l8 4 -8 4 z" fill="var(--border-strong)"/>
+
+                            <!-- validate down to reward -->
+                            <line x1="509" y1="106" x2="509" y2="140" class="dg-flow"/>
+                            <path d="M505 138 l4 8 4 -8 z" fill="var(--neon)"/>
+
+                            <!-- bottom accent path -->
+                            <g>
+                                <rect x="430" y="144" width="158" height="46" rx="8" class="dg-node-accent"/>
+                                <text x="509" y="164" text-anchor="middle" class="dg-accent-text">Severity &amp; Reward</text>
+                                <text x="509" y="180" text-anchor="middle" class="dg-sub">CVSS · payout</text>
+                            </g>
+                            <g>
+                                <rect x="270" y="144" width="118" height="46" rx="8" class="dg-node-accent"/>
+                                <text x="329" y="171" text-anchor="middle" class="dg-accent-text">Fix</text>
+                            </g>
+                            <g>
+                                <rect x="110" y="144" width="118" height="46" rx="8" class="dg-node-accent"/>
+                                <text x="169" y="171" text-anchor="middle" class="dg-accent-text">Disclose</text>
+                            </g>
+                            <g fill="var(--neon)">
+                                <line x1="430" y1="167" x2="392" y2="167" class="dg-flow"/><path d="M394 163 l-8 4 8 4 z"/>
+                                <line x1="270" y1="167" x2="232" y2="167" class="dg-flow"/><path d="M234 163 l-8 4 8 4 z"/>
+                            </g>
+
+                            <text x="16" y="300" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The lifecycle of a report — the dim branch closes duplicates and invalids; the accent path leads to reward, fix, and disclosure.</figcaption>
+                    </figure>
+
+                    <h2>Scope is the contract</h2>
+                    <p>Everything begins with scope — the definition of what researchers may test and how. A good scope lists the in-scope assets explicitly, names the systems that are off-limits, and forbids techniques that could cause harm: no denial-of-service, no automated scanning that degrades production, no social engineering of staff, no accessing other users' data beyond what is needed to prove a bug. Crucially, scope also provides a <strong>safe harbour</strong> — a promise that good-faith research within the rules will not be met with legal action. Without that assurance, the best researchers simply will not participate.</p>
+                    <p>Vague scope is the most common early mistake. If researchers cannot tell what is in bounds, you will receive reports about assets you do not own, findings in third-party services, and issues you have consciously accepted — each one costing triage time and goodwill.</p>
+
+                    <h2>Triage is the bottleneck</h2>
+                    <p>Once submissions arrive, triage determines whether the program lives or dies. Every report needs a fast first response acknowledging receipt, an initial assessment of whether it is plausible and in scope, and then <strong>validation</strong> — reproducing the issue to confirm it is real. This is where duplicates and invalid reports are filtered out, and doing it respectfully matters: a researcher whose valid finding is wrongly dismissed, or who waits weeks for any reply, will tell their peers.</p>
+                    <blockquote>Response time is the currency of a bounty program. Researchers reward the teams that reward them — with speed, clarity, and respect for the work.</blockquote>
+                    <p>Triage volume is easy to underestimate. A public program can attract a flood of submissions, many of them low quality or automated. Teams that launch without the capacity to triage quickly end up with a backlog that poisons their reputation in the researcher community. This is why many organisations start private and scale deliberately.</p>
+
+                    <h2>Severity and reward</h2>
+                    <p>A validated bug must be rated and, if you pay, priced. Severity is usually anchored to a framework such as CVSS, but the reward should reflect <strong>business impact</strong>, not just the raw score — a medium-severity flaw on your payment system may matter more than a high-severity one on a marketing microsite. Publish a reward table so expectations are set in advance, and be consistent: researchers compare notes, and perceived unfairness spreads faster than any single payout.</p>
+                    <h3>Rewards are not only money</h3>
+                    <p>Recognition matters. Public thanks, a hall of fame, swag, and prompt communication all build the relationship. Many researchers value a responsive, respectful program over a marginally larger cheque from one that treats them as adversaries.</p>
+
+                    <h2>Coordinated disclosure</h2>
+                    <p>Every finding ends in a decision about disclosure. The modern norm is <strong>coordinated disclosure</strong>: the issue is kept confidential while you remediate, then — by mutual agreement — details may be published so the wider community learns from it. Agree the timeline up front, honour it, and give credit. Trying to suppress disclosure indefinitely, or reneging on an agreed publication, is the fastest way to lose the trust the whole model depends on.</p>
+
+                    <h2>Maturity: from VDP to paid bounty</h2>
+                    <p>Programs should grow, not launch fully formed. The natural first step is a <strong>vulnerability disclosure policy (VDP)</strong> — a simple, published "see something, say something" channel with a security contact and a safe-harbour statement, but no payment. A VDP costs little, signals openness, and gives you a legitimate way to receive the reports that will arrive whether you invite them or not. Guidance such as the <a href="https://www.cisa.gov/">CISA</a> material on coordinated disclosure is a sound reference for drafting one.</p>
+                    <p>From a working VDP you can graduate to a <strong>private bounty</strong> — inviting a small, vetted group of researchers and paying for findings, with volume you can control. As your triage muscle and remediation velocity mature, you widen the pool and eventually open a <strong>public bounty</strong>. Each step should follow evidence that you can handle the previous one: a public program launched before you can triage is a commitment you cannot keep, and researchers will notice.</p>
+
+                    <h2>The program is a relationship</h2>
+                    <p>Underneath the mechanics, a bug bounty is a long-term relationship with a community. The organisations that succeed treat researchers as partners — communicating quickly, paying fairly, disclosing honestly, and improving their own remediation so the same classes of bug stop recurring. Do that, and the program compounds: better researchers, better findings, and a security posture that genuinely improves over time.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Clear <strong>scope with safe harbour</strong> is the foundation — ambiguity generates noise and legal risk.</li>
+                            <li><strong>Triage speed</strong> makes or breaks the program; acknowledge fast, validate fairly, close duplicates with respect.</li>
+                            <li>Reward by <strong>business impact</strong>, publish the table, and stay consistent — researchers compare notes.</li>
+                            <li>Practise <strong>coordinated disclosure</strong>: agree timelines, honour them, give credit.</li>
+                            <li>Mature deliberately from VDP to private to public — never open a program you cannot operationally sustain.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#bug-bounty</span>
+                        <span class="tag">#vdp</span>
+                        <span class="tag">#triage</span>
+                        <span class="tag">#appsec</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Design your program
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

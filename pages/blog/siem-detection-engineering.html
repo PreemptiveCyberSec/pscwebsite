@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building an Effective SIEM: Detection Engineering — Preemptive Cyber Security</title>
+    <meta name="description" content="The log pipeline, normalization to a schema, correlation rules, detection-as-code, and taming alert fatigue through disciplined tuning.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Blue Team</span>
+                    <span class="dot">//</span>
+                    <span>2026-07-25</span>
+                    <span class="dot">//</span>
+                    <span>10 min read</span>
+                </div>
+
+                <h1>Building an Effective SIEM: Detection Engineering</h1>
+                <p class="article-lead">A SIEM is only as good as the detections running on top of it. Collecting logs is the easy part; turning them into high-fidelity, maintainable alerts that a SOC can actually act on is the discipline of detection engineering.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Plenty of organisations buy a Security Information and Event Management platform, point every log source at it, and declare themselves covered. Months later the SOC is drowning in alerts, most of them noise, and real intrusions slip through unnoticed. The platform was never the problem. A SIEM is a pipeline and a query engine; the value lives in the engineering that shapes raw logs into trustworthy detections. Treating that work as a deliberate practice — with a data pipeline, a schema, version-controlled rules, and a tuning loop — is what separates a SIEM that protects an organisation from one that merely bills for storage.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 250" role="img" aria-label="A detection pipeline from Sources through Collect and Parse, Normalize to a schema, Correlate with rules, Alert, and SOC Triage, with a dashed feedback loop from triage back to the rules to tune and reduce false positives.">
+                            <text x="16" y="22" class="dg-title">Detection pipeline</text>
+                            <!-- pipeline boxes -->
+                            <g>
+                                <rect x="15" y="60" width="110" height="52" rx="8" class="dg-node"/>
+                                <text x="70" y="90" text-anchor="middle" class="dg-label">Sources</text>
+                            </g>
+                            <g>
+                                <rect x="139" y="60" width="110" height="52" rx="8" class="dg-node"/>
+                                <text x="194" y="84" text-anchor="middle" class="dg-sub">Collect /</text>
+                                <text x="194" y="97" text-anchor="middle" class="dg-sub">Parse</text>
+                            </g>
+                            <g>
+                                <rect x="263" y="60" width="110" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="318" y="84" text-anchor="middle" class="dg-accent-text" font-size="11">Normalize</text>
+                                <text x="318" y="98" text-anchor="middle" class="dg-sub">schema</text>
+                            </g>
+                            <g>
+                                <rect x="387" y="60" width="110" height="52" rx="8" class="dg-node-accent"/>
+                                <text x="442" y="84" text-anchor="middle" class="dg-accent-text" font-size="11">Correlate</text>
+                                <text x="442" y="98" text-anchor="middle" class="dg-sub">rules</text>
+                            </g>
+                            <g>
+                                <rect x="511" y="60" width="110" height="52" rx="8" class="dg-node"/>
+                                <text x="566" y="90" text-anchor="middle" class="dg-label">Alert</text>
+                            </g>
+                            <g>
+                                <rect x="635" y="60" width="110" height="52" rx="8" class="dg-node"/>
+                                <text x="690" y="84" text-anchor="middle" class="dg-sub">SOC</text>
+                                <text x="690" y="97" text-anchor="middle" class="dg-sub">Triage</text>
+                            </g>
+                            <!-- forward arrows -->
+                            <g class="dg-flow" fill="var(--neon)" stroke="none">
+                                <path d="M127 84 l10 -5 0 10 z"/>
+                                <path d="M251 84 l10 -5 0 10 z"/>
+                                <path d="M375 84 l10 -5 0 10 z"/>
+                                <path d="M499 84 l10 -5 0 10 z"/>
+                                <path d="M623 84 l10 -5 0 10 z"/>
+                            </g>
+                            <!-- feedback loop from SOC Triage back to Correlate/Rules -->
+                            <path d="M690 112 C 690 175, 442 175, 442 114" class="dg-flow" stroke-dasharray="5 5"/>
+                            <path d="M442 114 l-4 -9 8 0 z" fill="var(--neon)"/>
+                            <text x="566" y="168" text-anchor="middle" class="dg-sub">tune · reduce false positives</text>
+                            <text x="16" y="230" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The detection pipeline — and the feedback loop from SOC triage back into the rules that keeps signal high and noise low.</figcaption>
+                    </figure>
+
+                    <h2>The log pipeline</h2>
+                    <p>Everything starts with getting the right data in reliably. Sources span the estate: endpoint detection agents, authentication and directory services, firewalls and proxies, cloud provider audit logs, DNS, and application logs. Two decisions dominate here. First, <strong>collection</strong> — how logs are shipped, buffered against outages, and delivered without loss. Second, and more strategic, <strong>coverage</strong>: rather than ingesting everything and paying to store noise, mature teams choose sources deliberately against the threats they need to detect. A useful anchor is the <a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a> framework — asking, for each technique you care about, which data source would reveal it, and confirming that source is actually flowing.</p>
+
+                    <h2>Parsing and normalization</h2>
+                    <p>Raw logs arrive in a chaos of formats — syslog, JSON, key-value, vendor-specific blobs — each naming the same concept differently. One product calls it <code>src_ip</code>, another <code>source.address</code>, a third <code>ClientIP</code>. Parsing extracts the fields; <strong>normalization</strong> maps them onto a single common schema so that "source IP address" means one thing everywhere. This is the highest-leverage, least glamorous work in the whole pipeline.</p>
+
+                    <h3>Why a schema changes everything</h3>
+                    <p>Once every source populates a shared schema — the industry has converged on models like the Elastic Common Schema and the Open Cybersecurity Schema Framework — a detection can be written once and apply across every product that feeds that field. Without normalization, you write and maintain a separate rule for every vendor's log format, and analysts waste incidents translating field names in their heads. A good schema is what makes detections portable and investigations fast.</p>
+
+                    <blockquote>Every hour spent on normalization is repaid many times over in detections you only have to write once and investigations you no longer have to translate.</blockquote>
+
+                    <h2>Correlation and detection rules</h2>
+                    <p>With clean, normalized data, you can write detections. These range from simple matches — a single log line that is inherently suspicious — to <strong>correlation</strong> rules that combine events across sources and time: a failed-login burst <em>followed by</em> a success <em>followed by</em> access to a sensitive share tells a story no single event can. Good detections are grounded in adversary behaviour rather than fragile indicators; a rule keyed to a specific malware hash dies the moment the attacker recompiles, while a rule keyed to the <em>technique</em> survives. Mapping your rule set to ATT&amp;CK also exposes your blind spots: it makes visible which techniques you can detect and which you cannot.</p>
+
+                    <h2>Detection-as-code</h2>
+                    <p>The practice that has most transformed this discipline is treating detections like software. Rules live in version control, are written in a structured, portable format, go through peer review before deployment, and are tested against known-good and known-bad data so a change cannot silently break coverage. <strong>Detection-as-code</strong> brings the whole engineering toolkit — history, rollback, code review, CI testing — to security content. It turns a pile of undocumented rules that only one person understands into a maintainable, auditable asset the whole team can evolve with confidence.</p>
+
+                    <h2>Taming alert fatigue</h2>
+                    <p>The failure mode that quietly kills SIEM programmes is alert fatigue. When analysts face hundreds of low-quality alerts a day, they start ignoring them, and the one real detection buried in the flood gets closed without a look. The fix is not more alerts — it is fewer, better ones, driven by the feedback loop in Figure 1. Every alert a SOC analyst triages produces a verdict: true positive, false positive, or benign-true-positive. That verdict must flow back into the rules. A detection firing mostly false positives gets tuned — its logic tightened, known-good activity excluded, its threshold adjusted — or retired. This closed loop, run continuously, is what keeps signal high and the SOC's attention where it belongs.</p>
+
+                    <h3>Measuring what matters</h3>
+                    <p>To tune deliberately you have to measure. Track each rule's true-positive and false-positive rates, the volume it generates, and whether it has ever caught something real. A rule that has fired ten thousand times and never once mattered is not coverage — it is noise wearing a badge, and honest metrics give you the license to remove it.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>A SIEM's value is in detection engineering, not in the volume of logs collected.</li>
+                            <li>Choose log sources deliberately against the threats you need to detect — coverage over completeness.</li>
+                            <li>Normalizing every source to a shared <strong>schema</strong> makes detections portable and investigations fast.</li>
+                            <li>Base rules on adversary behaviour and manage them as <strong>detection-as-code</strong> — versioned, reviewed, and tested.</li>
+                            <li>Close the loop: feed SOC triage verdicts back into the rules to tune out false positives and beat alert fatigue.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#siem</span>
+                        <span class="tag">#detection-engineering</span>
+                        <span class="tag">#blue-team</span>
+                        <span class="tag">#soc</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Level up your SOC
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparing for Post-Quantum Cryptography — Preemptive Cyber Security</title>
+    <meta name="description" content="Harvest-now-decrypt-later risk, the NIST post-quantum standards, crypto-agility, and a phased migration from classical to quantum-resistant cryptography.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Crypto</span>
+                    <span class="dot">//</span>
+                    <span>2026-03-07</span>
+                    <span class="dot">//</span>
+                    <span>10 min read</span>
+                </div>
+
+                <h1>Preparing for Post-Quantum Cryptography</h1>
+                <p class="article-lead">A cryptographically relevant quantum computer does not exist yet — but the data it would decrypt is being collected today. That single asymmetry, "harvest now, decrypt later," is why post-quantum migration is a present-tense problem, not a future one, and why the work should already be on your roadmap.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Most of the cryptography protecting the internet — the key exchange and digital signatures behind TLS, VPNs, code signing, and PKI — rests on a small set of hard mathematical problems: integer factorisation and discrete logarithms. A sufficiently large, fault-tolerant quantum computer running Shor's algorithm could solve those problems efficiently, breaking RSA and elliptic-curve cryptography outright. Symmetric cryptography like AES fares better; Grover's algorithm weakens it, but doubling key sizes restores the margin. The acute risk is concentrated in the public-key algorithms we rely on for key establishment and signatures.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 300" role="img" aria-label="A migration timeline with five stages from inventory to full post-quantum cryptography, and a separate accent arrow labelled harvest now decrypt later pointing at today's encrypted data.">
+                            <text x="16" y="24" class="dg-title">PQC migration timeline</text>
+
+                            <!-- baseline -->
+                            <line x1="70" y1="150" x2="700" y2="150" class="dg-flow-dim"/>
+
+                            <!-- stage nodes -->
+                            <g>
+                                <rect x="24" y="126" width="118" height="48" rx="8" class="dg-node"/>
+                                <text x="83" y="147" text-anchor="middle" class="dg-label">Inventory</text>
+                                <text x="83" y="163" text-anchor="middle" class="dg-sub">crypto in use</text>
+                            </g>
+                            <g>
+                                <rect x="166" y="126" width="118" height="48" rx="8" class="dg-node"/>
+                                <text x="225" y="147" text-anchor="middle" class="dg-label">Assess Risk</text>
+                                <text x="225" y="163" text-anchor="middle" class="dg-sub">data lifetime</text>
+                            </g>
+                            <g>
+                                <rect x="308" y="126" width="118" height="48" rx="8" class="dg-node"/>
+                                <text x="367" y="147" text-anchor="middle" class="dg-label">Crypto-Agility</text>
+                                <text x="367" y="163" text-anchor="middle" class="dg-sub">swap-ready</text>
+                            </g>
+                            <g>
+                                <rect x="450" y="126" width="118" height="48" rx="8" class="dg-node-accent"/>
+                                <text x="509" y="147" text-anchor="middle" class="dg-accent-text">Hybrid</text>
+                                <text x="509" y="163" text-anchor="middle" class="dg-sub">classical + PQC</text>
+                            </g>
+                            <g>
+                                <rect x="592" y="126" width="118" height="48" rx="8" class="dg-node-accent"/>
+                                <text x="651" y="147" text-anchor="middle" class="dg-accent-text">Full PQC</text>
+                                <text x="651" y="163" text-anchor="middle" class="dg-sub">quantum-safe</text>
+                            </g>
+
+                            <!-- arrows between stages -->
+                            <g fill="var(--neon)">
+                                <line x1="142" y1="150" x2="162" y2="150" class="dg-flow"/><path d="M160 146 l8 4 -8 4 z"/>
+                                <line x1="284" y1="150" x2="304" y2="150" class="dg-flow"/><path d="M302 146 l8 4 -8 4 z"/>
+                                <line x1="426" y1="150" x2="446" y2="150" class="dg-flow"/><path d="M444 146 l8 4 -8 4 z"/>
+                                <line x1="568" y1="150" x2="588" y2="150" class="dg-flow"/><path d="M586 146 l8 4 -8 4 z"/>
+                            </g>
+
+                            <!-- today's data + harvest arrow -->
+                            <g>
+                                <rect x="24" y="234" width="200" height="44" rx="8" class="dg-node"/>
+                                <text x="124" y="254" text-anchor="middle" class="dg-label">Today's encrypted data</text>
+                                <text x="124" y="270" text-anchor="middle" class="dg-sub">recorded now, stored for later</text>
+                            </g>
+                            <path d="M330 210 C 260 220, 200 224, 130 232" class="dg-flow"/>
+                            <path d="M126 228 l4 9 6 -6 z" fill="var(--neon)"/>
+                            <text x="336" y="208" class="dg-accent-text">Harvest-Now, Decrypt-Later</text>
+
+                            <text x="16" y="290" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The phased path to quantum-safe — while the "harvest now, decrypt later" arrow siphons today's traffic against a future break.</figcaption>
+                    </figure>
+
+                    <h2>Harvest now, decrypt later</h2>
+                    <p>The reason this cannot wait for the hardware to arrive is an adversary strategy known as <strong>harvest now, decrypt later</strong>. An attacker records encrypted traffic today — VPN sessions, TLS connections, exfiltrated ciphertext — and simply stores it, betting that a future quantum computer will unlock it. For data with a long confidentiality lifetime, the threat is already live: anything that must stay secret for ten or twenty years, such as state secrets, health records, or intellectual property, is exposed the moment it crosses a network that an adversary can capture.</p>
+                    <blockquote>The clock that matters is not "when will a quantum computer exist" but "how long must this data stay secret, plus how long migration will take." If those two exceed the time until a break, you are already late.</blockquote>
+                    <p>This framing, sometimes called Mosca's inequality, is the heart of the urgency. Migration across a large enterprise takes years; long-lived secrets need to outlast that. Subtract one from the other and, for many organisations, the safe start date was already in the past.</p>
+
+                    <h2>The NIST post-quantum standards</h2>
+                    <p>After a multi-year public competition, the U.S. National Institute of Standards and Technology finalised the first post-quantum cryptography standards in 2024. They are built on mathematics believed to resist both classical and quantum attack — chiefly structured lattices. The headline standards are <strong>ML-KEM</strong> (FIPS 203, a key-encapsulation mechanism derived from CRYSTALS-Kyber) for key establishment, and <strong>ML-DSA</strong> (FIPS 204, derived from CRYSTALS-Dilithium) together with <strong>SLH-DSA</strong> (FIPS 205, the hash-based SPHINCS+) for digital signatures. Publishing standards is what turns "quantum-resistant" from a research topic into something vendors can implement and organisations can require. The current guidance lives at <a href="https://www.nist.gov/">nist.gov</a>.</p>
+                    <p>These algorithms are not drop-in replacements at the byte level. Their keys and signatures are larger, their performance characteristics differ, and they interact with protocols and hardware in new ways. That is precisely why the migration is an engineering programme rather than a configuration change.</p>
+
+                    <h2>Crypto-agility: the real objective</h2>
+                    <p>The most important lesson from past algorithm transitions — deprecating MD5, SHA-1, or short RSA keys — is that they are painful mostly because cryptography is hard-coded and scattered. The strategic goal of post-quantum preparation is therefore <strong>crypto-agility</strong>: the ability to change cryptographic algorithms across your estate quickly, ideally without re-architecting the systems that use them.</p>
+                    <h3>What agility looks like in practice</h3>
+                    <p>Agile systems reference cryptography through abstractions rather than baking specific algorithms into application code. They negotiate algorithms rather than assuming them, they maintain an accurate inventory of where cryptography is used, and they can roll a new algorithm out through configuration and updates. Building this capability pays off regardless of the quantum timeline — it makes every future transition, for any reason, dramatically cheaper.</p>
+
+                    <h2>A phased migration</h2>
+                    <p>A sound programme moves through the stages in Figure 1 rather than attempting a single cutover.</p>
+                    <p><strong>Inventory</strong> comes first: you cannot migrate cryptography you cannot see. Discover where public-key cryptography is used — in TLS, VPNs, code signing, secrets management, embedded devices, and third-party products. <strong>Assess risk</strong> next, prioritising by the confidentiality lifetime of the data each system protects; long-lived secrets crossing capturable networks are the front line. Then <strong>build crypto-agility</strong> so that algorithms can be swapped without rewrites.</p>
+                    <p>The rollout itself favours a <strong>hybrid</strong> stage, where a classical algorithm and a post-quantum one are combined so that the connection stays secure as long as <em>either</em> holds. Hybrid mode hedges against implementation flaws in the still-young PQC algorithms while delivering quantum resistance today, which is why standards bodies and browsers have adopted it as the pragmatic first move. Only once the post-quantum algorithms and their implementations are proven at scale does <strong>full PQC</strong> become the sensible end state.</p>
+
+                    <h2>Starting now, sensibly</h2>
+                    <p>None of this requires panic, and it does not require ripping out working cryptography overnight. It requires starting the unglamorous groundwork: inventory, risk assessment by data lifetime, and the architectural work of crypto-agility. Those steps have value on their own, they are the long pole in the tent, and they position you to adopt the standards smoothly as the ecosystem matures. The organisations that begin the inventory today are the ones that will migrate calmly rather than scramble later.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li><strong>Harvest now, decrypt later</strong> makes this a present risk for any data with a long confidentiality lifetime.</li>
+                            <li>NIST has standardised PQC algorithms — <strong>ML-KEM</strong> for key exchange, <strong>ML-DSA</strong> and <strong>SLH-DSA</strong> for signatures.</li>
+                            <li>The strategic goal is <strong>crypto-agility</strong> — the ability to swap algorithms without re-architecting.</li>
+                            <li>Migrate in phases: inventory, assess by data lifetime, build agility, run <strong>hybrid</strong>, then full PQC.</li>
+                            <li>Start the inventory now — it is the long pole, and beginning early turns migration into a plan, not a scramble.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#pqc</span>
+                        <span class="tag">#cryptography</span>
+                        <span class="tag">#nist</span>
+                        <span class="tag">#migration</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Plan your PQC migration
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Directory Attack Paths &amp; Hardening — Preemptive Cyber Security</title>
+    <meta name="description" content="How attackers move from a low-privilege foothold to Domain Admin — Kerberoasting, AS-REP roasting, credential theft, DCSync — and how tiering and hardening break those paths.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Red Team</span>
+                    <span class="dot">//</span>
+                    <span>2026-06-13</span>
+                    <span class="dot">//</span>
+                    <span>12 min read</span>
+                </div>
+
+                <h1>Active Directory Attack Paths &amp; Hardening</h1>
+                <p class="article-lead">In most enterprise breaches, the attacker does not need a zero-day. They need a single valid credential and a directory that trusts too much. Active Directory turns one low-privilege foothold into a chain of small, legitimate-looking steps that ends at Domain Admin — and understanding that chain is the first step to breaking it.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Active Directory has been the identity backbone of the enterprise for over two decades, and its design assumptions show their age. It is built to make resources discoverable and access frictionless — exactly the properties an attacker exploits. This article walks the classic path from an ordinary domain user to full domain compromise, explains the mechanisms behind each hop from a defender's perspective, and shows how tiering and targeted hardening remove the edges an attacker depends on. Everything here is framed for detection and defence — the goal is to recognise these techniques in your own environment, not to run them.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 300" role="img" aria-label="An attack-path graph showing directed edges from a low-privilege user foothold through Kerberoasting, a service account, lateral movement, local admin, and DCSync, ending at a highlighted Domain Admin node.">
+                            <text x="16" y="24" class="dg-title">Attack path graph</text>
+                            <!-- edges -->
+                            <line x1="130" y1="90" x2="250" y2="90" class="dg-flow"/>
+                            <path d="M250 86 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="370" y1="90" x2="490" y2="90" class="dg-flow"/>
+                            <path d="M490 86 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="560" y1="113" x2="560" y2="165" class="dg-flow"/>
+                            <path d="M556 165 l4 8 4 -8 z" fill="var(--neon)"/>
+                            <line x1="490" y1="190" x2="370" y2="190" class="dg-flow"/>
+                            <path d="M370 194 l8 -4 0 8 z" fill="var(--neon)"/>
+                            <line x1="250" y1="190" x2="130" y2="190" class="dg-flow"/>
+                            <path d="M130 194 l8 -4 0 8 z" fill="var(--neon)"/>
+                            <line x1="70" y1="167" x2="70" y2="243" class="dg-flow"/>
+                            <path d="M66 243 l4 8 4 -8 z" fill="var(--neon)"/>
+
+                            <!-- node 1: Foothold -->
+                            <rect x="10" y="67" width="120" height="46" rx="8" class="dg-node"/>
+                            <text x="70" y="86" text-anchor="middle" class="dg-label">Foothold</text>
+                            <text x="70" y="102" text-anchor="middle" class="dg-sub">low-priv user</text>
+                            <!-- node 2: Kerberoast -->
+                            <rect x="250" y="67" width="120" height="46" rx="8" class="dg-node"/>
+                            <text x="310" y="86" text-anchor="middle" class="dg-label">Kerberoast</text>
+                            <text x="310" y="102" text-anchor="middle" class="dg-sub">request SPN TGS</text>
+                            <text x="190" y="80" text-anchor="middle" class="dg-sub">SPN</text>
+                            <text x="190" y="94" text-anchor="middle" class="dg-sub">enum</text>
+                            <!-- node 3: Service Account -->
+                            <rect x="490" y="67" width="120" height="46" rx="8" class="dg-node"/>
+                            <text x="550" y="86" text-anchor="middle" class="dg-label">Service Acct</text>
+                            <text x="550" y="102" text-anchor="middle" class="dg-sub">cracked hash</text>
+                            <text x="430" y="80" text-anchor="middle" class="dg-sub">offline</text>
+                            <text x="430" y="94" text-anchor="middle" class="dg-sub">crack</text>
+                            <!-- node 4: Lateral Movement -->
+                            <rect x="490" y="167" width="120" height="46" rx="8" class="dg-node"/>
+                            <text x="550" y="186" text-anchor="middle" class="dg-label">Lateral Move</text>
+                            <text x="550" y="202" text-anchor="middle" class="dg-sub">reuse creds</text>
+                            <!-- node 5: Local Admin -->
+                            <rect x="250" y="167" width="120" height="46" rx="8" class="dg-node"/>
+                            <text x="310" y="186" text-anchor="middle" class="dg-label">Local Admin</text>
+                            <text x="310" y="202" text-anchor="middle" class="dg-sub">dump LSASS</text>
+                            <text x="430" y="182" text-anchor="middle" class="dg-sub">PtH</text>
+                            <!-- node 6: DCSync -->
+                            <rect x="10" y="167" width="120" height="46" rx="8" class="dg-node"/>
+                            <text x="70" y="186" text-anchor="middle" class="dg-label">DCSync</text>
+                            <text x="70" y="202" text-anchor="middle" class="dg-sub">replicate NTDS</text>
+                            <text x="190" y="182" text-anchor="middle" class="dg-sub">repl</text>
+                            <text x="190" y="196" text-anchor="middle" class="dg-sub">rights</text>
+                            <!-- node 7: Domain Admin (accent) -->
+                            <rect x="10" y="247" width="150" height="46" rx="8" class="dg-node-accent"/>
+                            <text x="85" y="266" text-anchor="middle" class="dg-accent-text">Domain Admin</text>
+                            <text x="85" y="282" text-anchor="middle" class="dg-sub">full compromise</text>
+
+                            <text x="16" y="280" class="dg-title" text-anchor="start"></text>
+                            <text x="600" y="284" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> A representative attack path. Each edge is a distinct technique; hardening any one edge can sever the chain before it reaches the accented Domain Admin node.</figcaption>
+                    </figure>
+
+                    <h2>The foothold: one valid credential</h2>
+                    <p>Almost every internal compromise starts with a single authenticated context — a phished password, a credential sprayed against a login portal, or a token lifted from a workstation. Crucially, this account rarely needs any privilege at all. A standard domain user can query the directory, enumerate group memberships, list service accounts, and read the access-control relationships between objects. That read access is the attacker's map. The defensive lesson is that "just a normal user" is not a safe baseline — the directory hands out reconnaissance for free.</p>
+
+                    <h2>Kerberoasting: turning read access into an offline crack</h2>
+                    <p>Kerberos issues service tickets (TGS) encrypted with the password hash of the account that owns the target service's SPN. Any authenticated user can request a ticket for any service principal name, then take that ticket offline and attempt to crack it — no interaction with the service required, and no failed-logon noise. Accounts with weak, human-set passwords fall quickly. The reason this works is that service accounts are frequently exempt from the password policies applied to people, and are set to never expire.</p>
+                    <h3>Breaking the edge</h3>
+                    <p>Use <strong>group Managed Service Accounts (gMSAs)</strong>, which rotate 120-character random passwords automatically and are effectively uncrackable. Where a gMSA is not possible, enforce 25+ character passphrases on service accounts and monitor for anomalous volumes of TGS requests using RC4 encryption — a strong signal of roasting.</p>
+
+                    <h2>AS-REP roasting: the pre-authentication gap</h2>
+                    <p>Kerberos normally requires pre-authentication — proof you know the password before the KDC responds. Accounts flagged with "do not require Kerberos pre-authentication" skip that step, and the KDC will return an AS-REP encrypted with the account's key to <em>anyone</em> who asks. That response is crackable offline just like a Kerberoast ticket. This setting is a legacy compatibility relic; the defence is simply to audit for it and remove it. There is almost never a legitimate modern reason to leave pre-authentication disabled.</p>
+
+                    <h2>Credential theft and lateral movement</h2>
+                    <p>Once an attacker lands on a host as local administrator — often via a cracked service account that was over-permissioned — they can harvest credentials cached in memory, in the LSASS process, or in the local SAM. Windows single sign-on means secrets for other users and services frequently sit in memory on shared hosts. With a harvested hash or ticket, the attacker performs <strong>pass-the-hash</strong> or <strong>pass-the-ticket</strong> to authenticate elsewhere without ever knowing the plaintext, moving host to host wherever those credentials are honoured.</p>
+
+                    <blockquote>The single most damaging pattern we find is a Domain Admin whose credentials are cached on a workstation. One compromised laptop then equals the whole domain — no exploit required, just reused trust.</blockquote>
+
+                    <h2>DCSync: impersonating a domain controller</h2>
+                    <p>An account holding the directory replication rights (<em>Replicating Directory Changes</em> and <em>Replicating Directory Changes All</em>) can ask a domain controller to replicate account secrets — including the KRBTGT hash and every user's NTLM hash — using the same protocol DCs use among themselves. This is <strong>DCSync</strong>, and it needs no code to run on the DC itself, which is why it evades many endpoint controls. Possession of the KRBTGT hash enables forged "golden tickets" granting arbitrary access that survives password resets. Audit exactly which principals hold replication rights; the list should be short and contain no surprises.</p>
+
+                    <h2>Tiering: the structural fix</h2>
+                    <p>Individual hardening steps close individual edges, but the durable defence is <strong>administrative tiering</strong>. Microsoft's tiered model separates identities by the sensitivity of what they control: Tier 0 (domain controllers, AD, and the accounts that manage them), Tier 1 (servers and applications), and Tier 2 (workstations). The rule is that credentials never flow downward — a Tier 0 admin never logs on to a Tier 2 workstation, so their credentials are never cached where a lower-tier compromise can reach them. This breaks the "one laptop equals the domain" pattern at its root.</p>
+                    <p>Complement tiering with the <a href="https://www.cisa.gov/">CISA</a>-endorsed essentials: enforce phishing-resistant MFA, disable RC4 where possible, deploy the protected-users group and LAPS for local administrator passwords, and use attack-path mapping tools to visualise your own graph the way an attacker would. If you can see the edges, you can cut them.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>A single non-privileged credential gives an attacker the reconnaissance to plan the entire path.</li>
+                            <li>Kerberoasting and AS-REP roasting exploit weak service-account passwords and legacy settings — gMSAs and audits close both.</li>
+                            <li>Cached credentials plus single sign-on make lateral movement trivial; treat every cached secret as a liability.</li>
+                            <li>DCSync and golden tickets follow from over-broad replication rights — audit exactly who holds them.</li>
+                            <li>Administrative tiering is the structural defence: keep privileged credentials out of reach of lower-trust hosts.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#active-directory</span>
+                        <span class="tag">#kerberos</span>
+                        <span class="tag">#red-team</span>
+                        <span class="tag">#hardening</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Harden your directory
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfakes &amp; the New Identity Threat Landscape — Preemptive Cyber Security</title>
+    <meta name="description" content="How synthetic media and voice cloning are weaponised for fraud and social engineering — and the defences that hold up: liveness detection, C2PA provenance, and stronger identity verification.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">AI Security</span>
+                    <span class="dot">//</span>
+                    <span>2026-02-28</span>
+                    <span class="dot">//</span>
+                    <span>9 min read</span>
+                </div>
+
+                <h1>Deepfakes &amp; the New Identity Threat Landscape</h1>
+                <p class="article-lead">For decades, "is this person who they claim to be?" was answered by a face on a video call or a familiar voice on the phone. Generative AI has quietly dismantled both of those assumptions. Synthetic media is now cheap, fast, and convincing enough to defraud businesses — which means identity itself has to be re-engineered.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>A deepfake is synthetic media — video, audio, or imagery — generated or manipulated by a machine-learning model so that it depicts a real person doing or saying something they never did. The underlying techniques are not new; what changed is accessibility. Face-swapping, lip-sync, and voice cloning that once demanded a research lab and hours of reference footage now run from consumer tools with only seconds of a target's audio. That collapse in cost is why deepfakes stopped being a novelty and became a business risk — most acutely for the identity checks that underpin authentication, payments, and executive trust.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 300" role="img" aria-label="Two-row diagram. The top threat row flows from source data through a generative model to deepfake media and on to fraud and impersonation. The deepfake media then feeds a bottom defence row of detection — artifact analysis, liveness, and provenance — which resolves to verify or reject.">
+                            <text x="16" y="22" class="dg-title">Generation vs. detection</text>
+
+                            <!-- THREAT ROW -->
+                            <text x="16" y="52" class="dg-title">Threat pipeline</text>
+                            <g>
+                                <rect x="16" y="64" width="150" height="46" rx="8" class="dg-node"/>
+                                <text x="91" y="85" text-anchor="middle" class="dg-label">Source</text>
+                                <text x="91" y="100" text-anchor="middle" class="dg-sub">voice / face samples</text>
+                            </g>
+                            <g>
+                                <rect x="216" y="64" width="150" height="46" rx="8" class="dg-node"/>
+                                <text x="291" y="85" text-anchor="middle" class="dg-label">Generative</text>
+                                <text x="291" y="100" text-anchor="middle" class="dg-sub">model / GAN</text>
+                            </g>
+                            <g>
+                                <rect x="416" y="64" width="150" height="46" rx="8" class="dg-node-accent"/>
+                                <text x="491" y="85" text-anchor="middle" class="dg-accent-text">Deepfake</text>
+                                <text x="491" y="100" text-anchor="middle" class="dg-sub">synthetic media</text>
+                            </g>
+                            <g>
+                                <rect x="616" y="64" width="128" height="46" rx="8" class="dg-node"/>
+                                <text x="680" y="85" text-anchor="middle" class="dg-label">Fraud</text>
+                                <text x="680" y="100" text-anchor="middle" class="dg-sub">impersonation</text>
+                            </g>
+                            <line x1="166" y1="87" x2="210" y2="87" class="dg-flow"/>
+                            <path d="M210 83 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="366" y1="87" x2="410" y2="87" class="dg-flow"/>
+                            <path d="M410 83 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="566" y1="87" x2="610" y2="87" class="dg-flow"/>
+                            <path d="M610 83 l8 4 -8 4 z" fill="var(--neon)"/>
+
+                            <!-- feed down into defence -->
+                            <path d="M491 110 C 491 150, 380 150, 380 178" class="dg-flow-dim" stroke-dasharray="4 5"/>
+                            <path d="M380 178 l-4 -8 8 0 z" fill="var(--neon)"/>
+                            <text x="500" y="150" class="dg-sub">captured at verification</text>
+
+                            <!-- DEFENCE ROW -->
+                            <text x="16" y="200" class="dg-title">Defence pipeline</text>
+                            <g>
+                                <rect x="16" y="212" width="150" height="60" rx="8" class="dg-node-accent"/>
+                                <text x="91" y="238" text-anchor="middle" class="dg-accent-text">Detection</text>
+                                <text x="91" y="255" text-anchor="middle" class="dg-sub">signals engine</text>
+                            </g>
+                            <g>
+                                <rect x="216" y="212" width="150" height="60" rx="8" class="dg-node"/>
+                                <text x="291" y="234" text-anchor="middle" class="dg-label">Artifact</text>
+                                <text x="291" y="249" text-anchor="middle" class="dg-sub">frequency /</text>
+                                <text x="291" y="262" text-anchor="middle" class="dg-sub">blend analysis</text>
+                            </g>
+                            <g>
+                                <rect x="386" y="212" width="150" height="60" rx="8" class="dg-node"/>
+                                <text x="461" y="238" text-anchor="middle" class="dg-label">Liveness</text>
+                                <text x="461" y="255" text-anchor="middle" class="dg-sub">challenge / depth</text>
+                            </g>
+                            <g>
+                                <rect x="556" y="212" width="150" height="60" rx="8" class="dg-node"/>
+                                <text x="631" y="238" text-anchor="middle" class="dg-label">Provenance</text>
+                                <text x="631" y="255" text-anchor="middle" class="dg-sub">C2PA signature</text>
+                            </g>
+                            <line x1="166" y1="242" x2="210" y2="242" class="dg-flow"/>
+                            <path d="M210 238 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="366" y1="242" x2="380" y2="242" class="dg-flow-dim"/>
+                            <line x1="536" y1="242" x2="550" y2="242" class="dg-flow-dim"/>
+
+                            <text x="16" y="280" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The same media that powers fraud becomes the input to defence — detection combines artifact analysis, liveness, and provenance to verify or reject.</figcaption>
+                    </figure>
+
+                    <h2>How synthetic identity attacks actually land</h2>
+                    <p>The most damaging cases are not viral hoaxes; they are targeted, low-volume attacks against a single high-value decision. A cloned executive voice instructs a finance officer to release an urgent payment. A live video call — with a real-time face-swap of a senior leader — pressures a junior staff member to bypass a control "just this once." A synthetic face is presented to a remote onboarding flow to open an account under a stolen identity. In each case the deepfake does not need to be flawless; it only needs to survive the few seconds of human or automated scrutiny that stand between the attacker and the action.</p>
+
+                    <h3>Why our instincts fail</h3>
+                    <p>Humans are poor deepfake detectors. We anchor on voice familiarity and facial gestalt, exactly the signals generative models reproduce best. Worse, the social-engineering wrapper — urgency, authority, secrecy — is engineered to suppress the very skepticism that might catch an artefact. Treating "I recognised their voice" as proof of identity is now a control failure, not a reasonable judgement.</p>
+
+                    <h2>Where organisations get hit hardest</h2>
+                    <p>Three surfaces absorb most of the damage. The first is <strong>finance and payment operations</strong>, where a cloned voice or a live video impersonation of an authority figure short-circuits approval controls. The second is <strong>remote identity onboarding</strong> — account opening, KYC, and remote proofing flows that rely on a selfie or a short video to bind a real person to a new credential; a synthetic face injected into that flow lets an attacker onboard under a stolen or fabricated identity at scale. The third is the <strong>help desk and account-recovery path</strong>, historically the softest link in identity, where an attacker who sounds like the account holder can talk their way past a reset. Mapping which of your workflows trust a face or a voice — and treating each as a candidate for compromise — is the first practical step.</p>
+
+                    <h2>Detection: artefacts, but a moving target</h2>
+                    <p>Technical detection looks for the fingerprints a generator leaves behind: inconsistent lighting and reflections, unnatural blink and micro-expression timing, blending seams around the hairline and jaw, frequency-domain artefacts invisible to the eye, and physiological signals like the subtle colour shifts of a real pulse that many models fail to reproduce. These detectors are genuinely useful, but they live in an arms race — every generator improvement erodes yesterday's tell. Detection should therefore be treated as one weighted signal in a broader decision, never as a single gate that a "clean" score can open.</p>
+
+                    <h2>Liveness: proving a real person is present</h2>
+                    <p>Liveness detection asks a different, more durable question: not "is this media fake?" but "is a live human physically present right now?" <strong>Passive liveness</strong> analyses depth, texture, and micro-movement from a normal capture without asking the user to do anything. <strong>Active liveness</strong> issues an unpredictable challenge — turn your head, follow a moving prompt, respond to a randomised code — that a pre-rendered or injected video cannot satisfy in real time. The strongest deployments also defend the <em>capture path</em> itself, because a determined attacker will try to bypass the camera and inject a synthetic stream straight into the application. Certification against standards such as ISO/IEC 30107 for presentation-attack detection gives a defensible baseline.</p>
+
+                    <blockquote>Detection asks whether the pixels are fake. Liveness asks whether a person is really there. Provenance asks where the media came from. You want all three — no single one is sufficient.</blockquote>
+
+                    <h2>Provenance: signing the truth at the source</h2>
+                    <p>Chasing fakes is a losing game if you only ever inspect the output. Provenance flips the model: instead of proving media is fake, prove which media is authentic. The <a href="https://c2pa.org/">C2PA</a> standard — Content Credentials — attaches a cryptographically signed manifest to media at the point of capture or creation, recording the device, the edits applied, and a tamper-evident chain of custody. Any later modification breaks the signature. Provenance will not stop a determined forger from producing unsigned content, but it lets trusted sources make verifiable claims, so that "no credential" becomes a meaningful warning rather than the silent default.</p>
+
+                    <h2>Rebuilding identity verification</h2>
+                    <p>The strategic response is to stop treating a face or a voice as an authenticator. Bind sensitive actions to something an attacker cannot clone in the moment: phishing-resistant, hardware-backed credentials such as passkeys and FIDO2 security keys, which prove possession of a device rather than resemblance to a person. Re-architect high-risk workflows — payment changes, credential resets, executive instructions — around <strong>out-of-band verification</strong> through a separate, pre-established channel and a callback to a known-good number. And enforce policy that no urgent request, however convincing the voice or face, overrides the control. The technology is only half the fix; the process discipline is the other half.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Deepfakes are now cheap and fast enough for <strong>targeted fraud</strong> — a single cloned voice or face against one high-value decision.</li>
+                            <li>Human recognition of a voice or face is no longer evidence of identity; treat it as a control failure.</li>
+                            <li>Artefact <strong>detection</strong> is useful but an arms race — weight it as one signal, never a single gate.</li>
+                            <li><strong>Liveness</strong> proves a real person is present now; <strong>provenance</strong> (C2PA) proves where authentic media came from.</li>
+                            <li>Bind sensitive actions to phishing-resistant credentials and out-of-band verification — process discipline matters as much as the tech.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#deepfake</span>
+                        <span class="tag">#ai-security</span>
+                        <span class="tag">#identity</span>
+                        <span class="tag">#verification</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Harden your identity verification
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

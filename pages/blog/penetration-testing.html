@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Modern Penetration Testing Methodology — Preemptive Cyber Security</title>
+    <meta name="description" content="How a real-world penetration test unfolds — from scoping and reconnaissance through exploitation, post-exploitation, and reporting.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Penetration Testing</span>
+                    <span class="dot">//</span>
+                    <span>2026-08-28</span>
+                    <span class="dot">//</span>
+                    <span>12 min read</span>
+                </div>
+
+                <h1>The Modern Penetration Testing Methodology</h1>
+                <p class="article-lead">A penetration test is not a vulnerability scan with a nicer PDF. It is a structured, goal-oriented simulation of a real adversary — and its value comes from method, not from tooling. Here is how a rigorous engagement actually unfolds, phase by phase.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Every organisation that commissions a penetration test is really asking one question: <em>if a capable attacker targeted us today, what could they actually do?</em> Answering that honestly requires a repeatable methodology that mirrors how intrusions happen in the wild, while staying safe, scoped, and legally authorised. The industry has converged on a lifecycle — reflected in standards like the <a href="https://owasp.org/">OWASP</a> Testing Guide, PTES, and NIST SP 800-115 — that we walk through below.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 250" role="img" aria-label="The seven phases of a penetration test shown as a horizontal flow, looping back from reporting to scoping.">
+                            <text x="16" y="24" class="dg-title">Engagement lifecycle</text>
+                            <!-- flow line -->
+                            <line x1="60" y1="120" x2="700" y2="120" class="dg-flow-dim"/>
+                            <!-- phase nodes -->
+                            <g>
+                                <circle cx="70" cy="120" r="9" class="dg-node-accent"/>
+                                <text x="70" y="150" text-anchor="middle" class="dg-sub">01</text>
+                                <text x="70" y="168" text-anchor="middle" class="dg-accent-text" font-size="10">Scope</text>
+                            </g>
+                            <g>
+                                <circle cx="175" cy="120" r="9" class="dg-node-accent"/>
+                                <text x="175" y="150" text-anchor="middle" class="dg-sub">02</text>
+                                <text x="175" y="168" text-anchor="middle" class="dg-accent-text" font-size="10">Recon</text>
+                            </g>
+                            <g>
+                                <circle cx="280" cy="120" r="9" class="dg-node-accent"/>
+                                <text x="280" y="150" text-anchor="middle" class="dg-sub">03</text>
+                                <text x="280" y="168" text-anchor="middle" class="dg-accent-text" font-size="10">Enumerate</text>
+                            </g>
+                            <g>
+                                <circle cx="385" cy="120" r="9" class="dg-node-accent"/>
+                                <text x="385" y="150" text-anchor="middle" class="dg-sub">04</text>
+                                <text x="385" y="168" text-anchor="middle" class="dg-accent-text" font-size="10">Exploit</text>
+                            </g>
+                            <g>
+                                <circle cx="490" cy="120" r="9" class="dg-node-accent"/>
+                                <text x="490" y="150" text-anchor="middle" class="dg-sub">05</text>
+                                <text x="490" y="168" text-anchor="middle" class="dg-accent-text" font-size="10">Post-Ex</text>
+                            </g>
+                            <g>
+                                <circle cx="595" cy="120" r="9" class="dg-node-accent"/>
+                                <text x="595" y="150" text-anchor="middle" class="dg-sub">06</text>
+                                <text x="595" y="168" text-anchor="middle" class="dg-accent-text" font-size="10">Report</text>
+                            </g>
+                            <g>
+                                <circle cx="700" cy="120" r="9" class="dg-node-accent"/>
+                                <text x="700" y="150" text-anchor="middle" class="dg-sub">07</text>
+                                <text x="700" y="168" text-anchor="middle" class="dg-accent-text" font-size="10">Retest</text>
+                            </g>
+                            <!-- arrowheads along the line -->
+                            <g class="dg-flow" fill="var(--neon)" stroke="none">
+                                <path d="M120 116 l8 4 -8 4 z"/>
+                                <path d="M225 116 l8 4 -8 4 z"/>
+                                <path d="M330 116 l8 4 -8 4 z"/>
+                                <path d="M435 116 l8 4 -8 4 z"/>
+                                <path d="M540 116 l8 4 -8 4 z"/>
+                                <path d="M645 116 l8 4 -8 4 z"/>
+                            </g>
+                            <!-- feedback loop -->
+                            <path d="M700 111 C 700 60, 70 60, 70 109" class="dg-flow" stroke-dasharray="4 5"/>
+                            <path d="M70 109 l-4 -8 8 0 z" fill="var(--neon)"/>
+                            <text x="385" y="52" text-anchor="middle" class="dg-sub">findings feed the next cycle</text>
+                            <text x="16" y="230" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The penetration testing lifecycle — a loop, not a line. Retest findings inform the next engagement's scope.</figcaption>
+                    </figure>
+
+                    <h2>Phase 1 — Scoping &amp; Rules of Engagement</h2>
+                    <p>Nothing begins until scope is agreed in writing. This defines the targets (IP ranges, domains, applications), the testing windows, prohibited actions (no denial-of-service, no social engineering unless explicitly authorised), and the emergency contacts. A signed authorisation — the "get out of jail" letter — is non-negotiable. Good scoping also sets the <strong>threat model</strong>: are we simulating an external opportunist, a malicious insider, or an assumed-breach scenario?</p>
+
+                    <h2>Phase 2 — Reconnaissance</h2>
+                    <p>Reconnaissance builds a map of the target's exposure. <strong>Passive recon</strong> uses open sources — DNS records, certificate transparency logs, code repositories, breached-credential datasets, and job postings that reveal the tech stack — without touching the target. <strong>Active recon</strong> then probes directly: port scanning, service banner grabbing, and web crawling. The goal is to understand the attack surface before making noise.</p>
+
+                    <h2>Phase 3 — Enumeration &amp; Vulnerability Analysis</h2>
+                    <p>Here the tester turns a list of live services into a list of plausible attack paths. Every open port is interrogated, every application is fingerprinted, and default or weak credentials are tested. Automated scanners provide breadth, but the real value is manual analysis: chaining low-severity findings into a meaningful path, and discarding the false positives that scanners inevitably produce.</p>
+
+                    <h2>Phase 4 — Exploitation</h2>
+                    <p>Exploitation is the phase most people picture, yet it is often the shortest. A validated vulnerability is exercised to prove impact — gaining a foothold, retrieving data, or bypassing a control. The discipline here is <em>controlled</em> exploitation: proving the issue is real without destabilising production systems. A single confirmed remote code execution is worth more than a hundred theoretical CVEs from a scanner.</p>
+
+                    <blockquote>The measure of a good test is not how many vulnerabilities were found, but whether the ones that matter were proven to be exploitable — and clearly explained.</blockquote>
+
+                    <h2>Phase 5 — Post-Exploitation &amp; Lateral Movement</h2>
+                    <p>Once inside, the tester answers the question that keeps executives awake: <em>how far does this go?</em> This means privilege escalation, harvesting credentials, pivoting to internal systems, and demonstrating access to the "crown jewels" — the data or systems whose compromise would genuinely hurt the business. Every step is documented for the timeline that will appear in the report.</p>
+
+                    <h3>Maintaining discipline under access</h3>
+                    <p>Post-exploitation is where restraint matters most. Testers avoid touching data they were not authorised to reach, clean up artefacts they introduce, and never use production credentials beyond what is needed to prove impact. The objective is evidence, not damage.</p>
+
+                    <h2>Phase 6 — Reporting</h2>
+                    <p>The report is the product. Two audiences must be served: an <strong>executive summary</strong> that translates risk into business terms, and a <strong>technical section</strong> with reproduction steps, evidence, affected assets, CVSS-scored severity, and concrete remediation guidance. A finding without a clear, actionable fix is only half-finished.</p>
+
+                    <h2>Phase 7 — Remediation &amp; Retest</h2>
+                    <p>A test that ends at the report leaves value on the table. After the client remediates, a focused retest verifies the fixes actually closed the holes — and confirms they did not open new ones. Those results then feed the scope of the next engagement, closing the loop shown in Figure 1.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Penetration testing is a <strong>methodology</strong>, not a tool — the phases matter more than any single scanner.</li>
+                            <li>Written scope and authorisation come before any packet is sent.</li>
+                            <li>Exploitation should be controlled and evidence-driven, never destructive.</li>
+                            <li>The report — with prioritised, actionable remediation — is the real deliverable.</li>
+                            <li>Retesting closes the loop and proves risk was actually reduced.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#pentest</span>
+                        <span class="tag">#offensive-security</span>
+                        <span class="tag">#methodology</span>
+                        <span class="tag">#red-team</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Scope an engagement
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

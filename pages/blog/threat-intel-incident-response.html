@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Threat Intelligence Lifecycle Meets Incident Response — Preemptive Cyber Security</title>
+    <meta name="description" content="How the cyber threat intelligence lifecycle produces intelligence that drives incident response, and how IR findings feed back into CTI — two loops, and the PICERL model.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Threat Intel</span>
+                    <span class="dot">//</span>
+                    <span>2026-08-08</span>
+                    <span class="dot">//</span>
+                    <span>12 min read</span>
+                </div>
+
+                <h1>The Threat Intelligence Lifecycle Meets Incident Response</h1>
+                <p class="article-lead">Threat intelligence and incident response are often run as separate disciplines by separate teams. Their real power appears when you wire them together — one loop producing the intelligence that guides response, the other feeding hard-won findings straight back into it.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Cyber threat intelligence (CTI) is not a feed of indicators you subscribe to and forget. It is a <em>process</em> — a structured cycle that turns raw data into decisions. Incident response (IR) is likewise a disciplined cycle, not an ad-hoc scramble. The most effective security programmes recognise that these two cycles are gears that mesh: intelligence tells responders what to look for and how an adversary behaves, and every investigation produces new observations that refine the intelligence. Run in isolation, each is useful. Coupled, they compound.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 400" role="img" aria-label="Two interlocking cycles — the CTI lifecycle on the left and the PICERL incident response model on the right — connected by an IOCs and TTPs arrow one way and a new intel arrow back.">
+                            <text x="16" y="22" class="dg-title">Two loops, one feedback engine</text>
+                            <!-- CTI loop guide -->
+                            <circle cx="185" cy="205" r="120" class="dg-flow-dim" stroke-dasharray="4 6"/>
+                            <text x="185" y="200" text-anchor="middle" class="dg-title">CTI</text>
+                            <text x="185" y="216" text-anchor="middle" class="dg-sub">lifecycle</text>
+                            <!-- CTI nodes -->
+                            <g>
+                                <rect x="139" y="68" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="185" y="89" text-anchor="middle" class="dg-sub">Direction</text>
+                            </g>
+                            <g>
+                                <rect x="243" y="128" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="289" y="149" text-anchor="middle" class="dg-sub">Collection</text>
+                            </g>
+                            <g>
+                                <rect x="243" y="248" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="289" y="269" text-anchor="middle" class="dg-sub">Processing</text>
+                            </g>
+                            <g>
+                                <rect x="139" y="308" width="92" height="34" rx="8" class="dg-node-accent"/>
+                                <text x="185" y="329" text-anchor="middle" class="dg-accent-text" font-size="10">Analysis</text>
+                            </g>
+                            <g>
+                                <rect x="35" y="248" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="81" y="264" text-anchor="middle" class="dg-sub">Dissem-</text>
+                                <text x="81" y="276" text-anchor="middle" class="dg-sub">ination</text>
+                            </g>
+                            <g>
+                                <rect x="35" y="128" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="81" y="149" text-anchor="middle" class="dg-sub">Feedback</text>
+                            </g>
+                            <!-- IR loop guide -->
+                            <circle cx="575" cy="205" r="120" class="dg-flow-dim" stroke-dasharray="4 6"/>
+                            <text x="575" y="200" text-anchor="middle" class="dg-title">IR · PICERL</text>
+                            <text x="575" y="216" text-anchor="middle" class="dg-sub">lifecycle</text>
+                            <!-- IR nodes -->
+                            <g>
+                                <rect x="529" y="68" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="575" y="89" text-anchor="middle" class="dg-sub">Prepare</text>
+                            </g>
+                            <g>
+                                <rect x="633" y="128" width="92" height="34" rx="8" class="dg-node-accent"/>
+                                <text x="679" y="149" text-anchor="middle" class="dg-accent-text" font-size="10">Identify</text>
+                            </g>
+                            <g>
+                                <rect x="633" y="248" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="679" y="269" text-anchor="middle" class="dg-sub">Contain</text>
+                            </g>
+                            <g>
+                                <rect x="529" y="308" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="575" y="329" text-anchor="middle" class="dg-sub">Eradicate</text>
+                            </g>
+                            <g>
+                                <rect x="425" y="248" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="471" y="269" text-anchor="middle" class="dg-sub">Recover</text>
+                            </g>
+                            <g>
+                                <rect x="425" y="128" width="92" height="34" rx="8" class="dg-node"/>
+                                <text x="471" y="149" text-anchor="middle" class="dg-sub">Lessons</text>
+                            </g>
+                            <!-- connecting arrows -->
+                            <line x1="335" y1="165" x2="425" y2="165" class="dg-flow"/>
+                            <path d="M425 165 l-9 -4 0 8 z" fill="var(--neon)"/>
+                            <text x="380" y="158" text-anchor="middle" class="dg-accent-text" font-size="10">IOCs / TTPs</text>
+                            <line x1="425" y1="245" x2="335" y2="245" class="dg-flow"/>
+                            <path d="M335 245 l9 -4 0 8 z" fill="var(--neon)"/>
+                            <text x="380" y="262" text-anchor="middle" class="dg-sub">new intel</text>
+                            <text x="16" y="380" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The CTI lifecycle (left) and the PICERL response model (right), meshed by intelligence flowing into response and fresh observations flowing back.</figcaption>
+                    </figure>
+
+                    <h2>The CTI lifecycle</h2>
+                    <p>The intelligence cycle is a well-established model with six recurring phases. <strong>Direction</strong> sets the priority intelligence requirements — the questions leadership actually needs answered, such as "which threat actors target our sector?" <strong>Collection</strong> gathers raw data from technical feeds, open sources, dark-web monitoring, internal telemetry, and sharing communities. <strong>Processing</strong> normalises and enriches that raw data into a usable form: deduplicating, translating, correlating. <strong>Analysis</strong> is the phase that creates value — turning processed data into assessments with context and confidence. <strong>Dissemination</strong> delivers those assessments to the right consumers in the right format, from a machine-readable indicator feed for the SIEM to a written brief for executives. <strong>Feedback</strong> closes the loop, capturing whether the intelligence answered the question so the next cycle improves.</p>
+
+                    <h3>Strategic, operational, and tactical</h3>
+                    <p>Intelligence is produced at three altitudes. <strong>Strategic</strong> intelligence informs long-term risk decisions and is consumed by leadership. <strong>Operational</strong> intelligence describes specific campaigns and adversary intent, useful to defenders planning their posture. <strong>Tactical</strong> intelligence is the granular material — indicators of compromise and adversary tactics, techniques, and procedures (TTPs) — that plugs directly into detection and response. It is this tactical layer that most directly feeds the IR team.</p>
+
+                    <h2>The PICERL response model</h2>
+                    <p>Incident response follows its own cycle, most commonly taught as <strong>PICERL</strong> — the SANS six-step model. <strong>Preparation</strong> builds the capability before an incident: playbooks, tooling, logging, and trained people. <strong>Identification</strong> detects and validates that an incident is genuinely occurring. <strong>Containment</strong> limits the blast radius, often in a short-term form first (isolate the host) and a longer-term form after (rebuild cleanly). <strong>Eradication</strong> removes the adversary's foothold — malware, persistence mechanisms, and compromised credentials. <strong>Recovery</strong> restores systems to normal operation with heightened monitoring to catch a return. <strong>Lessons Learned</strong> — the step teams most often skip — conducts an honest retrospective that improves preparation for next time.</p>
+
+                    <blockquote>An incident that ends without a lessons-learned review has taught the adversary more than it taught you. The retrospective is where an incident pays for itself.</blockquote>
+
+                    <h2>Where the gears mesh</h2>
+                    <p>The coupling runs in both directions, and both matter. Intelligence flows <em>into</em> response: when the IR team confirms an intrusion, tactical CTI tells them which TTPs to expect next, which indicators to hunt for across the estate, and which threat actor's playbook they may be facing. Mapping observed behaviour to a common framework like <a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a> gives both teams a shared vocabulary — an analyst can say "we saw T1059 followed by T1053" and everyone knows exactly what happened and what typically comes next.</p>
+
+                    <h3>Findings flow back as new intelligence</h3>
+                    <p>The return path is just as important and more often neglected. Every incident produces first-hand observations no external feed could give you: the exact malware hashes, the command-and-control infrastructure, the specific technique variations this adversary used against <em>your</em> environment. Fed back into the CTI collection and analysis phases, these become high-fidelity, internally-sourced indicators and detections. Over time an organisation builds a body of intelligence about the threats that actually target it — far more valuable than generic feeds — and each response makes the next one faster.</p>
+
+                    <h2>The frameworks that bind them</h2>
+                    <p>Shared models are what let the two teams speak the same language. Beyond <a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a>'s catalogue of tactics and techniques, the <strong>Diamond Model</strong> gives analysts a way to describe an intrusion in terms of adversary, capability, infrastructure, and victim — pivoting from one known facet to discover the others. The <strong>Cyber Kill Chain</strong> frames an intrusion as a sequence of stages, helping responders reason about how early they can intervene. None of these frameworks is a rulebook to follow slavishly; their value is as a common structure that turns an analyst's observation into something the whole team, and partner organisations, immediately understand. Adopting one consistently across both the CTI and IR functions removes the translation tax that otherwise slows every hand-off.</p>
+
+                    <h2>Making the loop real</h2>
+                    <p>Turning this from a diagram into practice takes a few deliberate choices. Intelligence must be disseminated in forms the IR team can consume immediately — indicators pushed to detection tooling, TTPs mapped to detections, not PDFs nobody opens mid-incident. IR must have a defined, low-friction path to submit findings back to the intelligence function, ideally as part of the lessons-learned step so it is never forgotten. And both should share a platform and a taxonomy so an indicator seen in one place is recognised everywhere. When that plumbing exists, the two lifecycles stop being separate programmes and become a single, self-improving engine.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>CTI is a six-phase cycle — Direction, Collection, Processing, Analysis, Dissemination, Feedback — not a passive feed.</li>
+                            <li>PICERL structures response: Prepare, Identify, Contain, Eradicate, Recover, and the often-skipped Lessons Learned.</li>
+                            <li>Tactical intelligence — IOCs and TTPs — flows into IR to guide detection, hunting, and containment.</li>
+                            <li>IR findings flow back as high-fidelity, internally-sourced intelligence about the threats that actually target you.</li>
+                            <li>A shared framework like MITRE ATT&amp;CK and low-friction plumbing turn two cycles into one self-improving engine.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#threat-intel</span>
+                        <span class="tag">#incident-response</span>
+                        <span class="tag">#ir</span>
+                        <span class="tag">#mitre</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Build your IR capability
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

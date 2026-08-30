@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDR, Telemetry &amp; Evasion: Know Your Sensors — Preemptive Cyber Security</title>
+    <meta name="description" content="What telemetry an EDR actually collects — kernel callbacks, ETW, AMSI, userland hooks and network sensors — the broad categories of evasion, and why layered behavioural detection beats single-sensor bypasses.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">Red Team</span>
+                    <span class="dot">//</span>
+                    <span>2026-04-25</span>
+                    <span class="dot">//</span>
+                    <span>11 min read</span>
+                </div>
+
+                <h1>EDR, Telemetry &amp; Evasion: Know Your Sensors</h1>
+                <p class="article-lead">An endpoint detection and response product is not one thing — it is a bundle of sensors, each watching a different layer of the operating system and feeding a correlation engine. Understanding what each sensor sees is what separates a team that can be blinded by a single trick from one whose defence degrades gracefully. This is a sensor-by-sensor tour for defenders.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Every conversation about "EDR bypass" that treats the EDR as a monolith is starting from the wrong place. An <abbr title="Endpoint Detection and Response">EDR</abbr> is a collection of independent telemetry sources — some in the kernel, some in userland, some on the wire — whose outputs are stitched together into a picture of what a process is doing. The strategic question for a defender is not "can this one sensor be evaded?" (almost any single sensor can) but "if it is, what still sees the activity?" This article names the major sensors, explains the broad families of evasion at a conceptual level, and makes the case for defence in depth. It maps naturally onto the <a href="https://attack.mitre.org/tactics/TA0005/">Defense Evasion tactic</a> in MITRE ATT&amp;CK.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 360" role="img" aria-label="A vertical stack of telemetry sensors — kernel callbacks, ETW, AMSI, userland hooks and network — all feeding a central EDR correlation node, with an evasion attempt aimed at individual sensors while others still report.">
+                            <text x="16" y="24" class="dg-title">Layered EDR telemetry — bypassing one leaves the rest</text>
+                            <!-- sensor stack -->
+                            <g>
+                                <rect x="40" y="52" width="170" height="42" rx="8" class="dg-node"/>
+                                <text x="125" y="78" text-anchor="middle" class="dg-label">Kernel Callbacks</text>
+                            </g>
+                            <g>
+                                <rect x="40" y="108" width="170" height="42" rx="8" class="dg-node"/>
+                                <text x="125" y="134" text-anchor="middle" class="dg-label">ETW</text>
+                            </g>
+                            <g>
+                                <rect x="40" y="164" width="170" height="42" rx="8" class="dg-node"/>
+                                <text x="125" y="190" text-anchor="middle" class="dg-label">AMSI</text>
+                            </g>
+                            <g>
+                                <rect x="40" y="220" width="170" height="42" rx="8" class="dg-node"/>
+                                <text x="125" y="246" text-anchor="middle" class="dg-label">Userland Hooks</text>
+                            </g>
+                            <g>
+                                <rect x="40" y="276" width="170" height="42" rx="8" class="dg-node"/>
+                                <text x="125" y="302" text-anchor="middle" class="dg-label">Network Sensor</text>
+                            </g>
+                            <!-- feed lines to correlation -->
+                            <g class="dg-flow">
+                                <line x1="210" y1="73" x2="500" y2="180"/>
+                                <line x1="210" y1="129" x2="500" y2="185"/>
+                                <line x1="210" y1="185" x2="500" y2="190"/>
+                                <line x1="210" y1="241" x2="500" y2="195"/>
+                                <line x1="210" y1="297" x2="500" y2="200"/>
+                            </g>
+                            <g class="dg-flow" fill="var(--neon)" stroke="none">
+                                <path d="M494 184 l8 4 -8 4 z"/>
+                            </g>
+                            <!-- correlation node -->
+                            <g>
+                                <rect x="500" y="150" width="160" height="80" rx="10" class="dg-node-accent"/>
+                                <text x="580" y="184" text-anchor="middle" class="dg-accent-text" font-size="12">EDR /</text>
+                                <text x="580" y="202" text-anchor="middle" class="dg-accent-text" font-size="12">Correlation</text>
+                            </g>
+                            <!-- evasion node -->
+                            <g>
+                                <rect x="330" y="288" width="150" height="46" rx="8" class="dg-node"/>
+                                <text x="405" y="309" text-anchor="middle" class="dg-sub">Evasion attempt</text>
+                                <text x="405" y="324" text-anchor="middle" class="dg-sub">targets one sensor</text>
+                            </g>
+                            <g class="dg-flow-dim">
+                                <line x1="330" y1="300" x2="212" y2="241" stroke-dasharray="4 4"/>
+                                <line x1="330" y1="311" x2="212" y2="185" stroke-dasharray="4 4"/>
+                            </g>
+                            <text x="16" y="348" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> Sensors feed one correlation engine. An evasion attempt can blind a sensor or two (dim arrows), but the untouched sensors keep reporting — which is why layered detection survives single-point bypasses.</figcaption>
+                    </figure>
+
+                    <h2>Kernel callbacks — the ground truth</h2>
+                    <p>The operating-system kernel offers registered <strong>callback</strong> notifications: the EDR asks to be told when a process is created, when a thread starts, when an image (a DLL or driver) is loaded, and when certain handles are opened. Because these fire from inside the kernel, they are difficult for userland malware to suppress and represent some of the highest-integrity telemetry an EDR has. Process-creation events in particular, with full command lines and parent-child lineage, are the backbone of most behavioural detections.</p>
+
+                    <h2>ETW — the event firehose</h2>
+                    <p>Event Tracing for Windows (<strong>ETW</strong>) is a built-in, high-volume instrumentation framework. Providers across the OS and .NET runtime emit structured events — assembly loads, network activity, PowerShell script blocks, and much more — that an EDR subscribes to. ETW gives extraordinary breadth, which is exactly why it is a target for tampering. The defensive counter is to treat a <em>gap</em> in an expected ETW stream as itself suspicious: when a normally chatty provider suddenly goes quiet on a host, that silence is a signal.</p>
+
+                    <h2>AMSI — inspecting content at runtime</h2>
+                    <p>The Anti-Malware Scan Interface (<strong>AMSI</strong>) lets scripting engines and other applications submit content — a script about to be interpreted, a macro, a buffer — to the installed anti-malware product for inspection at the moment it is used, defeating simple on-disk obfuscation. Because AMSI runs in the same process as the script it inspects, it is a frequent tampering target; and, as with ETW, the manipulation of AMSI is often noisier than the payload it was meant to hide.</p>
+
+                    <h2>Userland hooks — visibility inside the process</h2>
+                    <p>Many EDRs inject a monitoring module into user processes that <strong>hooks</strong> key API functions, redirecting them through the sensor so calls can be inspected before they reach the OS. This gives fine-grained visibility into what a process asks the system to do. It is also the most exposed sensor: it lives in memory the target process controls.</p>
+
+                    <h3>Why unhooking is loud</h3>
+                    <p>Techniques that restore or bypass these hooks — reloading a clean copy of a system library, or calling into the kernel by a route that skips the hooked functions — can indeed blind the userland sensor. But they leave their own marks: an anomalous fresh mapping of a core system DLL, or system calls issued from an address that is not inside the module that should own them. A mature EDR watches for the <em>act of unhooking</em>, not just for the calls the hooks were meant to catch. This is the recurring lesson: evasion converts one signal into a different, often rarer, one.</p>
+
+                    <blockquote>Blinding a sensor is never free. The manipulation needed to silence one telemetry source almost always trips another — the defender's job is to make sure a second sensor is watching.</blockquote>
+
+                    <h2>Network sensors — the layer the host cannot touch</h2>
+                    <p>Finally, telemetry gathered off the host — at a firewall, proxy, or network tap — sits entirely outside the endpoint the attacker has compromised. No amount of userland or even kernel manipulation on the victim changes what the wire records. Beaconing rhythm, unusual egress, and TLS or DNS anomalies (covered in our C2 article) are visible here regardless of on-host evasion, which is why network detection is such a valuable backstop.</p>
+
+                    <h2>The three families of evasion</h2>
+                    <p>Stripped of specifics, host-level evasion falls into three conceptual families:</p>
+                    <ul>
+                        <li><strong>Blinding</strong> — tampering with a sensor so it stops reporting (unhooking, disabling a provider). Detectable as the tamper action itself, or as a suspicious telemetry gap.</li>
+                        <li><strong>Avoidance</strong> — choosing execution paths a given sensor does not observe. Detectable when a second sensor covers the same activity from another angle.</li>
+                        <li><strong>Blending</strong> — imitating legitimate activity so events look benign. Countered by behavioural baselining and cross-event correlation rather than any single rule.</li>
+                    </ul>
+                    <p>Notice that the counter to every family is the same: <em>more than one sensor, correlated</em>. No individual family survives a defence that refuses to rely on a single point of observation.</p>
+
+                    <h2>Designing for graceful degradation</h2>
+                    <p>The practical takeaway for a blue team is to architect detection so that losing one sensor does not lose the detection. Pair kernel-integrity telemetry with network analytics; treat provider silence and unhooking as first-class alerts; and use authorised red teaming to deliberately blind sensors one at a time and confirm the others still fire. A detection strategy that degrades gracefully under partial evasion is worth far more than any product's marketing about a single unbeatable sensor.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>An EDR is <strong>many sensors feeding one engine</strong> — kernel callbacks, ETW, AMSI, userland hooks, and network telemetry.</li>
+                            <li>Kernel and network telemetry are the hardest for host-level evasion to touch — anchor detections there.</li>
+                            <li>Blinding a sensor produces its own signal; <strong>treat tampering and telemetry gaps as alerts</strong>.</li>
+                            <li>Evasion reduces to blinding, avoidance, and blending — all defeated by <strong>correlated, multi-sensor</strong> detection.</li>
+                            <li>Use authorised red teaming to prove your detection degrades gracefully under partial evasion.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#edr</span>
+                        <span class="tag">#telemetry</span>
+                        <span class="tag">#evasion</span>
+                        <span class="tag">#detection</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Assess your EDR coverage
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

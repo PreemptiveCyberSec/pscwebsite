@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Surface Management: Seeing What Attackers See — Preemptive Cyber Security</title>
+    <meta name="description" content="Why point-in-time scans miss the real exposure, and how continuous attack surface management discovers external, cloud, identity and shadow-IT assets before attackers do.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">ASM</span>
+                    <span class="dot">//</span>
+                    <span>2026-07-18</span>
+                    <span class="dot">//</span>
+                    <span>9 min read</span>
+                </div>
+
+                <h1>Attack Surface Management: Seeing What Attackers See</h1>
+                <p class="article-lead">Attackers do not work from your asset register. They enumerate everything you have exposed to the internet — including the systems you forgot about, never inventoried, or a third party stood up on your behalf. Attack surface management is the discipline of seeing that same picture first.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Most breaches do not begin with a zero-day. They begin with an asset nobody was watching — a forgotten staging server, an expired certificate on a subdomain, an object storage bucket left readable, a marketing microsite spun up outside change control. The organisation's defenders were competent; they simply did not know the asset existed. Attack Surface Management (ASM) exists to close that gap between what you think you run and what is actually reachable from the internet.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 360" role="img" aria-label="Five source categories — external IPs and domains, cloud assets, identity and SaaS, shadow IT and third parties — feed a central asset inventory, which drives a continuous loop of discover, classify, prioritise and remediate.">
+                            <text x="16" y="22" class="dg-title">Continuous exposure discovery</text>
+
+                            <!-- source nodes -->
+                            <g>
+                                <rect x="16" y="52" width="176" height="42" rx="8" class="dg-node"/>
+                                <text x="104" y="78" text-anchor="middle" class="dg-label">External IPs &amp; Domains</text>
+                            </g>
+                            <g>
+                                <rect x="16" y="112" width="176" height="42" rx="8" class="dg-node"/>
+                                <text x="104" y="138" text-anchor="middle" class="dg-label">Cloud Assets</text>
+                            </g>
+                            <g>
+                                <rect x="16" y="172" width="176" height="42" rx="8" class="dg-node"/>
+                                <text x="104" y="198" text-anchor="middle" class="dg-label">Identity &amp; SaaS</text>
+                            </g>
+                            <g>
+                                <rect x="16" y="232" width="176" height="42" rx="8" class="dg-node"/>
+                                <text x="104" y="258" text-anchor="middle" class="dg-label">Shadow IT</text>
+                            </g>
+                            <g>
+                                <rect x="16" y="292" width="176" height="42" rx="8" class="dg-node"/>
+                                <text x="104" y="318" text-anchor="middle" class="dg-label">Third-party</text>
+                            </g>
+
+                            <!-- converging feeds into inventory -->
+                            <g class="dg-flow-dim">
+                                <line x1="192" y1="73" x2="286" y2="188"/>
+                                <line x1="192" y1="133" x2="286" y2="190"/>
+                                <line x1="192" y1="193" x2="286" y2="193"/>
+                                <line x1="192" y1="253" x2="286" y2="196"/>
+                                <line x1="192" y1="313" x2="286" y2="198"/>
+                            </g>
+                            <g fill="var(--neon)" stroke="none">
+                                <path d="M286 189 l-9 -1 5 -7 z"/>
+                                <path d="M286 190 l-9 1 4 -8 z"/>
+                                <path d="M286 193 l-9 -3 0 7 z"/>
+                                <path d="M286 196 l-9 3 4 -8 z"/>
+                                <path d="M286 199 l-9 4 5 -7 z"/>
+                            </g>
+
+                            <!-- central inventory -->
+                            <rect x="288" y="163" width="152" height="66" rx="8" class="dg-node-accent"/>
+                            <text x="364" y="190" text-anchor="middle" class="dg-accent-text">Asset</text>
+                            <text x="364" y="208" text-anchor="middle" class="dg-accent-text">Inventory</text>
+
+                            <!-- inventory to loop -->
+                            <line x1="440" y1="196" x2="500" y2="196" class="dg-flow"/>
+                            <line x1="500" y1="196" x2="500" y2="112" class="dg-flow"/>
+                            <path d="M500 112 l-4 9 8 0 z" fill="var(--neon)"/>
+
+                            <!-- lifecycle loop nodes -->
+                            <g>
+                                <rect x="482" y="70" width="118" height="42" rx="8" class="dg-node"/>
+                                <text x="541" y="96" text-anchor="middle" class="dg-label">Discover</text>
+                            </g>
+                            <g>
+                                <rect x="622" y="70" width="118" height="42" rx="8" class="dg-node"/>
+                                <text x="681" y="96" text-anchor="middle" class="dg-label">Classify</text>
+                            </g>
+                            <g>
+                                <rect x="622" y="188" width="118" height="42" rx="8" class="dg-node"/>
+                                <text x="681" y="214" text-anchor="middle" class="dg-label">Prioritize</text>
+                            </g>
+                            <g>
+                                <rect x="482" y="188" width="118" height="42" rx="8" class="dg-node"/>
+                                <text x="541" y="214" text-anchor="middle" class="dg-label">Remediate</text>
+                            </g>
+
+                            <!-- clockwise arrows -->
+                            <line x1="600" y1="91" x2="622" y2="91" class="dg-flow"/>
+                            <path d="M622 91 l-9 -4 0 8 z" fill="var(--neon)"/>
+                            <line x1="681" y1="112" x2="681" y2="188" class="dg-flow"/>
+                            <path d="M681 188 l-4 -9 8 0 z" fill="var(--neon)"/>
+                            <line x1="622" y1="209" x2="600" y2="209" class="dg-flow"/>
+                            <path d="M600 209 l9 -4 0 8 z" fill="var(--neon)"/>
+                            <line x1="541" y1="188" x2="541" y2="112" class="dg-flow"/>
+                            <path d="M541 112 l-4 9 8 0 z" fill="var(--neon)"/>
+
+                            <text x="611" y="156" text-anchor="middle" class="dg-sub">continuous</text>
+
+                            <text x="16" y="340" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> Every exposure source feeds one authoritative inventory, which drives a never-ending discover–classify–prioritise–remediate loop.</figcaption>
+                    </figure>
+
+                    <h2>Why point-in-time scans are not enough</h2>
+                    <p>The traditional model is a quarterly or annual scan against a known list of IP ranges. It produces a tidy report and a false sense of coverage. The problem is twofold. First, the input is your own asset list — so anything missing from that list is invisible to the scan by definition. Second, the internet-facing estate is not static. Cloud resources are created and destroyed by the hour, DNS records change, developers publish new endpoints, and SaaS integrations appear the moment someone signs up with a corporate email. A snapshot taken in March tells you almost nothing about the surface an attacker meets in September.</p>
+                    <p>Adversaries, by contrast, scan the entire IPv4 space and certificate transparency logs continuously. Newly exposed services are found and probed within minutes to hours. If your discovery cadence is measured in months while theirs is measured in minutes, you are structurally behind.</p>
+
+                    <h2>The five faces of your attack surface</h2>
+                    <p>A modern attack surface is not a single perimeter. It spans several domains, each with its own discovery technique and blind spots.</p>
+                    <h3>External, cloud, identity, shadow IT and third parties</h3>
+                    <p><strong>External IPs and domains</strong> are the classic perimeter — web servers, VPN concentrators, mail gateways, and every subdomain that resolves. <strong>Cloud assets</strong> add ephemeral compute, storage buckets, managed databases, and API gateways that often sit outside traditional network scanning. <strong>Identity and SaaS</strong> exposure covers federated logins, OAuth grants, and the tenants of third-party applications where your data actually lives. <strong>Shadow IT</strong> is everything provisioned without the security team's knowledge — a departmental app, a proof-of-concept left running, a personal cloud account used for work. <strong>Third-party</strong> exposure extends the surface to suppliers and hosting partners whose compromise becomes your incident.</p>
+
+                    <h2>From discovery to inventory</h2>
+                    <p>Discovery techniques mirror an attacker's reconnaissance: enumerating certificate transparency logs, resolving and brute-forcing DNS, fingerprinting services, mapping cloud provider ranges, and pivoting from known assets to related ones through shared infrastructure and WHOIS data. The output of discovery is not a report; it is a continuously updated <strong>inventory</strong> — the single authoritative record of everything reachable, enriched with ownership, technology, and hosting context.</p>
+
+                    <h2>Classify and prioritise: exploitability over volume</h2>
+                    <p>An inventory of ten thousand assets is noise until it is classified. Classification tags each asset with what it is, who owns it, what data it touches, and how exposed it is. Prioritisation then answers the only question that matters operationally: which of these should we fix first? A default-credential admin panel on a forgotten host outranks a missing security header on the marketing site, regardless of raw CVSS counts.</p>
+
+                    <blockquote>The goal of attack surface management is not to find the most issues. It is to find the issue an attacker would exploit next — and to have already removed it.</blockquote>
+
+                    <h2>Continuous, not periodic</h2>
+                    <p>Because the surface changes constantly, ASM only works as a continuous loop. Discovery runs on a rolling basis; new assets are classified as they appear; prioritisation re-ranks as exploitability changes; and remediation feeds back into discovery to confirm the exposure is gone. This is the loop on the right of Figure 1 — deliberately drawn without a start or an end.</p>
+
+                    <h2>Operationalising ASM</h2>
+                    <p>Turning ASM from a tool into an outcome requires ownership. Every discovered asset needs an accountable owner, or it will drift back into shadow IT. Findings must route into the existing remediation workflow rather than a separate spreadsheet. And the programme should measure time-to-discovery and time-to-remediation, not just the size of the inventory — because the whole point is to shrink the window in which an unknown asset can be exploited.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Point-in-time scans only cover assets you already know about — the dangerous ones are the assets you do not.</li>
+                            <li>The attack surface spans external, cloud, identity/SaaS, shadow IT, and third-party domains, each with distinct blind spots.</li>
+                            <li>Discovery feeds one authoritative inventory; without it, everything downstream is guesswork.</li>
+                            <li>Prioritise by exploitability and business impact, not by raw vulnerability counts.</li>
+                            <li>ASM is a continuous loop — measure time-to-discovery and time-to-remediation, not inventory size.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#asm</span>
+                        <span class="tag">#attack-surface</span>
+                        <span class="tag">#exposure</span>
+                        <span class="tag">#recon</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Map your attack surface
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

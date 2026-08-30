@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT &amp; OT Security: Defending Cyber-Physical Systems — Preemptive Cyber Security</title>
+    <meta name="description" content="The Purdue reference model, network segmentation, insecure legacy protocols, and why safety and availability dominate the security of cyber-physical systems.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">OT Security</span>
+                    <span class="dot">//</span>
+                    <span>2026-03-21</span>
+                    <span class="dot">//</span>
+                    <span>11 min read</span>
+                </div>
+
+                <h1>IoT &amp; OT Security: Defending Cyber-Physical Systems</h1>
+                <p class="article-lead">In an office, a breach costs data. On a plant floor, it can stop a turbine, spoil a batch, or endanger a person. Operational technology inverts the priorities of IT security — and defending it starts with understanding the layered architecture that keeps the physical world at arm's length from the internet.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>Operational technology (OT) is the hardware and software that monitors and controls physical processes — the industrial control systems (ICS) running factories, utilities, pipelines, and building services. Alongside it sits the sprawling world of the Internet of Things (IoT): connected sensors and devices that increasingly bridge the physical and digital. Both are <strong>cyber-physical</strong> systems, where a security failure produces a physical consequence, and that changes everything about how they must be defended.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 400" role="img" aria-label="The Purdue reference model as six stacked horizontal levels from enterprise IT at the top down to field devices at the bottom, with the DMZ segmentation boundary highlighted between IT and OT.">
+                            <text x="16" y="24" class="dg-title">Purdue reference model</text>
+
+                            <!-- Level 5/4 -->
+                            <g>
+                                <rect x="150" y="40" width="460" height="46" rx="8" class="dg-node"/>
+                                <text x="380" y="60" text-anchor="middle" class="dg-label">Level 5 / 4 — Enterprise IT</text>
+                                <text x="380" y="76" text-anchor="middle" class="dg-sub">business systems, email, internet</text>
+                            </g>
+
+                            <!-- Level 3.5 DMZ (highlighted boundary) -->
+                            <g>
+                                <rect x="120" y="98" width="520" height="46" rx="8" class="dg-node-accent"/>
+                                <text x="380" y="118" text-anchor="middle" class="dg-accent-text">Level 3.5 — Industrial DMZ</text>
+                                <text x="380" y="134" text-anchor="middle" class="dg-sub">segmentation boundary · brokers all IT ↔ OT traffic</text>
+                            </g>
+
+                            <!-- Level 3 -->
+                            <g>
+                                <rect x="150" y="156" width="460" height="42" rx="8" class="dg-node"/>
+                                <text x="380" y="174" text-anchor="middle" class="dg-label">Level 3 — Operations / MES</text>
+                                <text x="380" y="190" text-anchor="middle" class="dg-sub">site management, historians</text>
+                            </g>
+
+                            <!-- Level 2 -->
+                            <g>
+                                <rect x="150" y="208" width="460" height="42" rx="8" class="dg-node"/>
+                                <text x="380" y="226" text-anchor="middle" class="dg-label">Level 2 — SCADA / HMI</text>
+                                <text x="380" y="242" text-anchor="middle" class="dg-sub">supervisory control, operator screens</text>
+                            </g>
+
+                            <!-- Level 1 -->
+                            <g>
+                                <rect x="150" y="260" width="460" height="42" rx="8" class="dg-node"/>
+                                <text x="380" y="278" text-anchor="middle" class="dg-label">Level 1 — PLC / Controllers</text>
+                                <text x="380" y="294" text-anchor="middle" class="dg-sub">logic that drives the process</text>
+                            </g>
+
+                            <!-- Level 0 -->
+                            <g>
+                                <rect x="150" y="312" width="460" height="42" rx="8" class="dg-node"/>
+                                <text x="380" y="330" text-anchor="middle" class="dg-label">Level 0 — Field Devices</text>
+                                <text x="380" y="346" text-anchor="middle" class="dg-sub">sensors, actuators, physical process</text>
+                            </g>
+
+                            <text x="628" y="66" class="dg-sub">IT</text>
+                            <text x="628" y="290" class="dg-sub">OT</text>
+
+                            <text x="16" y="380" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The Purdue model — the highlighted DMZ at Level 3.5 is the boundary that keeps enterprise IT from talking directly to the process.</figcaption>
+                    </figure>
+
+                    <h2>The Purdue model as a mental map</h2>
+                    <p>The Purdue Enterprise Reference Architecture organises an industrial environment into levels, from the physical process at the bottom to enterprise business systems at the top. At <strong>Level 0</strong> are field devices — the sensors and actuators touching the process itself. <strong>Level 1</strong> holds the controllers, chiefly programmable logic controllers (PLCs), that execute the control logic. <strong>Level 2</strong> is supervisory control: the SCADA systems and human-machine interfaces (HMIs) operators watch. <strong>Level 3</strong> covers site-wide operations and manufacturing execution. Above that sits enterprise IT at <strong>Levels 4 and 5</strong>.</p>
+                    <p>The model is not a product or a standard to certify against — it is a way of thinking about where a system sits and what should be allowed to talk to it. Its enduring value is the principle that lower levels are more sensitive, closer to physical harm, and should be progressively more isolated from the internet-facing top.</p>
+
+                    <h2>Segmentation and the industrial DMZ</h2>
+                    <p>The single most important control in the model is the boundary between IT and OT, formalised as the <strong>Level 3.5 industrial DMZ</strong>. In a well-designed environment, enterprise systems never talk directly to control systems. Instead, all traffic is brokered through the DMZ — data historians replicate upward, jump hosts mediate remote access, and no flow crosses without passing an inspection point. This segmentation is what contains an incident: a compromise of the corporate network should not be able to reach a PLC.</p>
+                    <blockquote>Flat networks are the original sin of OT security. When enterprise IT and the plant floor share one broadcast domain, a phishing email becomes a threat to the physical process.</blockquote>
+                    <p>Many historic industrial incidents trace back to exactly this: a boundary that was assumed to exist but did not, or a "temporary" connection that quietly bypassed the DMZ. Verifying segmentation — proving that the paths which should be blocked really are — is often the highest-value work in an OT assessment.</p>
+
+                    <h2>Insecure legacy protocols</h2>
+                    <p>Industrial protocols such as Modbus, DNP3, and their siblings were designed decades ago for isolated, trusted networks. Many carry no authentication and no encryption by default: a device accepts a command because it arrived on the wire, not because the sender proved who they were. On a segmented network this was tolerable; exposed to a broader network, it means anyone who can reach a controller can potentially instruct it.</p>
+                    <p>Because these protocols and the equipment running them can remain in service for twenty or thirty years, "just patch it" is rarely available. The realistic defence is <strong>compensating controls</strong>: strict segmentation, allow-listed communications, protocol-aware monitoring, and read-only access wherever control is not genuinely needed. You protect the fragile device by controlling what can reach it, not by hardening the device itself.</p>
+
+                    <h2>Why availability and safety dominate</h2>
+                    <p>IT security is usually framed by the CIA triad — confidentiality, integrity, availability — in that order. OT inverts it. Here <strong>availability and safety</strong> come first, then integrity, and confidentiality last. A control system that stops is a production outage or a safety event; a plant does not care much whether a temperature reading was secret, but it cares enormously that the reading is correct and that the system keeps running.</p>
+                    <h3>Testing without breaking</h3>
+                    <p>This reordering reshapes the assessment itself. An aggressive scan that would be routine on an IT network can crash a fragile PLC, and crashing a PLC can stop a process. OT testing is therefore conservative by necessity — favouring passive traffic analysis, working on test benches or during planned maintenance windows, and coordinating closely with the engineers who run the plant. The goal is to understand risk without becoming the incident. Guidance from agencies such as <a href="https://www.cisa.gov/">CISA</a> reflects this cautious, safety-first posture.</p>
+
+                    <h2>IoT: the same problem at scale</h2>
+                    <p>Consumer and enterprise IoT devices bring these issues into every building. They ship with default credentials, expose management interfaces, run firmware that is rarely updated, and often phone home to cloud services outside the operator's control. Individually modest, they matter because they multiply and because they frequently sit on networks with no segmentation at all. The defensive playbook echoes OT: inventory what you have, isolate devices onto their own segments, change defaults, and monitor for the behaviour that signals compromise.</p>
+
+                    <h2>A defender's priorities</h2>
+                    <p>Securing cyber-physical systems is less about exotic exploits and more about architecture and discipline. Know every asset you operate, enforce the segmentation the Purdue model describes, wrap fragile legacy equipment in compensating controls, and always put safety and availability ahead of the reflexes learned in IT. Do that, and the physical process stays where it belongs — insulated from the noise of the connected world.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>The <strong>Purdue model</strong> maps sensitivity to level — the closer to the physical process, the more isolation it needs.</li>
+                            <li>The <strong>Level 3.5 DMZ</strong> is the make-or-break control; enterprise IT should never talk directly to controllers.</li>
+                            <li>Legacy protocols often lack authentication and encryption — protect them with segmentation and monitoring, not patching.</li>
+                            <li>OT inverts the CIA triad: <strong>availability and safety come first</strong>, confidentiality last.</li>
+                            <li>Test conservatively — aggressive IT-style scanning can crash fragile controllers and cause a real outage.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#iot</span>
+                        <span class="tag">#ot</span>
+                        <span class="tag">#ics</span>
+                        <span class="tag">#purdue</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Secure your OT environment
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

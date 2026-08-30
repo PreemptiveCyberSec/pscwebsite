@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Contract &amp; Web3 Security — Preemptive Cyber Security</title>
+    <meta name="description" content="The smart-contract attack surface — reentrancy, oracle manipulation, access-control flaws, and integer issues — and the audit and testing pipeline that catches them before deployment.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../resources.html">Resources</a></li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">AppSec</span>
+                    <span class="dot">//</span>
+                    <span>2026-02-07</span>
+                    <span class="dot">//</span>
+                    <span>10 min read</span>
+                </div>
+
+                <h1>Smart Contract &amp; Web3 Security</h1>
+                <p class="article-lead">In most software, a bug means a patch. In a smart contract, a bug can mean an irreversible, eight-figure loss — because the code is public, immutable once deployed, and holds real value that anyone on earth can try to take. Web3 security is application security with the safety nets removed.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>A smart contract is a program deployed to a blockchain that executes exactly as written, autonomously, whenever its conditions are met. That determinism is the whole point — and the whole problem. The code is visible to every attacker, it usually cannot be changed after deployment, and it frequently custodies significant funds. There is no firewall to hide behind, no WAF to buffer a mistake, and no "roll back the database" after an exploit clears the vault. Understanding the attack surface, and the pipeline that hardens against it, is therefore non-negotiable before any contract touches mainnet.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 340" role="img" aria-label="A smart-contract attack-surface map. A central smart-contract node is surrounded by four threat nodes: reentrancy, oracle manipulation, access control, and integer overflow. Below runs a five-stage pipeline strip: develop, test, audit, deploy, monitor.">
+                            <text x="16" y="22" class="dg-title">Attack surface &amp; hardening pipeline</text>
+
+                            <!-- central node -->
+                            <g>
+                                <rect x="300" y="120" width="160" height="60" rx="8" class="dg-node-accent"/>
+                                <text x="380" y="146" text-anchor="middle" class="dg-accent-text">Smart Contract</text>
+                                <text x="380" y="163" text-anchor="middle" class="dg-sub">immutable · holds value</text>
+                            </g>
+
+                            <!-- threat nodes -->
+                            <g>
+                                <rect x="70" y="40" width="150" height="46" rx="8" class="dg-node"/>
+                                <text x="145" y="61" text-anchor="middle" class="dg-label">Reentrancy</text>
+                                <text x="145" y="76" text-anchor="middle" class="dg-sub">via external call</text>
+                            </g>
+                            <g>
+                                <rect x="540" y="40" width="150" height="46" rx="8" class="dg-node"/>
+                                <text x="615" y="61" text-anchor="middle" class="dg-label">Oracle</text>
+                                <text x="615" y="76" text-anchor="middle" class="dg-sub">price manipulation</text>
+                            </g>
+                            <g>
+                                <rect x="70" y="214" width="150" height="46" rx="8" class="dg-node"/>
+                                <text x="145" y="235" text-anchor="middle" class="dg-label">Access Control</text>
+                                <text x="145" y="250" text-anchor="middle" class="dg-sub">missing / weak</text>
+                            </g>
+                            <g>
+                                <rect x="540" y="214" width="150" height="46" rx="8" class="dg-node"/>
+                                <text x="615" y="231" text-anchor="middle" class="dg-label">Integer</text>
+                                <text x="615" y="246" text-anchor="middle" class="dg-sub">over/underflow</text>
+                            </g>
+
+                            <!-- connectors to threats (red-ish dim) -->
+                            <line x1="220" y1="63" x2="300" y2="130" class="dg-flow-dim"/>
+                            <path d="M300 130 l-8 0 3 -6 z" fill="var(--neon)"/>
+                            <line x1="540" y1="63" x2="460" y2="130" class="dg-flow-dim"/>
+                            <path d="M460 130 l8 0 -3 -6 z" fill="var(--neon)"/>
+                            <line x1="220" y1="237" x2="300" y2="170" class="dg-flow-dim"/>
+                            <path d="M300 170 l-8 0 3 6 z" fill="var(--neon)"/>
+                            <line x1="540" y1="237" x2="460" y2="170" class="dg-flow-dim"/>
+                            <path d="M460 170 l8 0 -3 6 z" fill="var(--neon)"/>
+
+                            <!-- pipeline strip -->
+                            <text x="16" y="292" class="dg-title">Hardening pipeline</text>
+                            <g>
+                                <rect x="16" y="300" width="128" height="30" rx="8" class="dg-node"/>
+                                <text x="80" y="319" text-anchor="middle" class="dg-sub">Develop</text>
+                            </g>
+                            <g>
+                                <rect x="168" y="300" width="128" height="30" rx="8" class="dg-node"/>
+                                <text x="232" y="319" text-anchor="middle" class="dg-sub">Test</text>
+                            </g>
+                            <g>
+                                <rect x="320" y="300" width="128" height="30" rx="8" class="dg-node-accent"/>
+                                <text x="384" y="319" text-anchor="middle" class="dg-accent-text" font-size="11">Audit</text>
+                            </g>
+                            <g>
+                                <rect x="472" y="300" width="128" height="30" rx="8" class="dg-node"/>
+                                <text x="536" y="319" text-anchor="middle" class="dg-sub">Deploy</text>
+                            </g>
+                            <g>
+                                <rect x="624" y="300" width="120" height="30" rx="8" class="dg-node"/>
+                                <text x="684" y="319" text-anchor="middle" class="dg-sub">Monitor</text>
+                            </g>
+                            <line x1="144" y1="315" x2="166" y2="315" class="dg-flow"/>
+                            <path d="M166 311 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="296" y1="315" x2="318" y2="315" class="dg-flow"/>
+                            <path d="M318 311 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="448" y1="315" x2="470" y2="315" class="dg-flow"/>
+                            <path d="M470 311 l8 4 -8 4 z" fill="var(--neon)"/>
+                            <line x1="600" y1="315" x2="622" y2="315" class="dg-flow"/>
+                            <path d="M622 311 l8 4 -8 4 z" fill="var(--neon)"/>
+
+                            <text x="620" y="20" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> Four dominant threat classes ring the contract; a develop → test → audit → deploy → monitor pipeline hardens against them.</figcaption>
+                    </figure>
+
+                    <h2>Reentrancy: the classic that keeps returning</h2>
+                    <p>Reentrancy remains the most infamous smart-contract flaw, and variants still drain funds years after the pattern was first understood. It occurs when a contract makes an external call — sending value to another address — <em>before</em> it has updated its own internal state. A malicious recipient contract can use that moment to call back into the original function repeatedly, each time seeing the stale, un-updated balance, and withdraw far more than it was owed. The defence is a discipline, not a library: follow the <strong>checks-effects-interactions</strong> pattern — validate conditions, update state, and only then make external calls — and add a reentrancy guard for functions that cannot avoid an external interaction.</p>
+
+                    <h2>Oracle manipulation: garbage in, exploit out</h2>
+                    <p>Contracts that need real-world data — the price of an asset, most commonly — rely on oracles. If a contract naively reads a price from a single on-chain source, such as the spot ratio of a liquidity pool, an attacker can distort that source for the length of a single transaction. Using a flash loan to momentarily skew a pool's balance, they make the contract value collateral or mint tokens at a fabricated price, then extract the difference — all atomically. The mitigation is to never trust a single, manipulable spot price: use time-weighted averages, aggregate across independent, well-secured oracle networks, and add sanity bounds that reject implausible movements.</p>
+
+                    <blockquote>Immutability is the double edge of Web3: it is what makes contracts trustworthy, and what makes their bugs permanent. You cannot patch your way out — you have to be right before you deploy.</blockquote>
+
+                    <h2>Access control: who is allowed to do this?</h2>
+                    <p>Some of the largest losses trace not to exotic cryptography but to a missing modifier. A privileged function — one that withdraws funds, upgrades the contract, or changes ownership — left without a proper authorisation check is an open door. Related failures include uninitialised ownership after deployment, over-broad admin roles, and upgrade mechanisms that a single compromised key can abuse. Apply least privilege rigorously: use well-reviewed role-based access-control libraries, gate every state-changing privileged function, protect upgrade and ownership functions behind multi-signature control, and confirm initialisation happens atomically with deployment.</p>
+
+                    <h3>Integer overflow and arithmetic edge cases</h3>
+                    <p>Older contracts were plagued by integer overflow and underflow, where a value wrapping past its maximum or below zero produced absurd balances an attacker could exploit. Modern Solidity reverts on overflow by default, which closes the classic case — but arithmetic risk did not disappear. Unchecked blocks, casts between integer sizes, precision loss in division, and rounding that favours the wrong party remain live hazards. Reason carefully about every calculation that touches value, and test the boundaries explicitly.</p>
+
+                    <h2>The wider Web3 surface</h2>
+                    <p>The contract itself is only part of the picture. Real losses also come from the surrounding ecosystem: front-end interfaces that can be hijacked to trick users into signing malicious transactions, wallet approvals granted too broadly and never revoked, and cross-chain bridges — among the most catastrophic targets, since they concentrate value and combine complex logic with off-chain relayers. Composability is Web3's superpower and its systemic risk: because contracts freely call one another, a flaw in one protocol can cascade into every protocol that integrates it, and an economic assumption that holds in isolation can break when combined with a lending market or a flash-loan facility. Threat modelling has to extend past your own code to the dependencies and the humans who sign transactions.</p>
+
+                    <h2>The audit and testing pipeline</h2>
+                    <p>Because you cannot patch after the fact, assurance must be front-loaded into a layered pipeline. During <strong>development</strong>, use battle-tested libraries such as those from <a href="https://www.openzeppelin.com/">OpenZeppelin</a> rather than hand-rolling primitives. In <strong>testing</strong>, aim for exhaustive unit coverage, then go further: <em>fuzzing</em> throws vast randomised inputs at the contract to surface edge cases, <em>invariant testing</em> asserts properties that must always hold ("total supply never exceeds the cap"), and <em>static analysis</em> flags known dangerous patterns automatically. The <strong>audit</strong> stage brings independent expert human review — the irreplaceable step where specialists reason about economic and cross-contract logic that tools miss. Ahead of or after audit, a <em>bug bounty</em> invites the wider security community to probe under incentive.</p>
+
+                    <h3>Deploy and monitor</h3>
+                    <p>Security does not end at deployment. Stage releases through testnets, consider a phased rollout with value caps, and keep tested emergency controls — a pause mechanism, an incident runbook — ready. Then <strong>monitor</strong> continuously: watch on-chain activity for anomalous transactions, sudden outflows, and oracle deviations, so that if something does go wrong, you detect and respond in minutes rather than reading about it on social media.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>Smart-contract code is <strong>public and immutable</strong> — bugs are permanent and directly monetisable, so assurance must be front-loaded.</li>
+                            <li><strong>Reentrancy</strong> is defeated by checks-effects-interactions plus a guard, not by luck.</li>
+                            <li><strong>Oracle manipulation</strong> beats naive spot prices — use TWAPs, aggregated feeds, and sanity bounds.</li>
+                            <li>Many of the biggest losses are simple <strong>access-control</strong> gaps — gate every privileged function and protect upgrades with multi-sig.</li>
+                            <li>Layer the pipeline: trusted libraries, fuzzing and invariant tests, independent audit, and continuous on-chain monitoring.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#web3</span>
+                        <span class="tag">#smart-contracts</span>
+                        <span class="tag">#solidity</span>
+                        <span class="tag">#audit</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Audit your smart contracts
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
