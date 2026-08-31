@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw and the Agent Attack Surface: How Autonomous AI Assistants Get Owned — Preemptive Cyber Security</title>
+    <meta name="description" content="A technical breakdown of how attackers exploit OpenClaw and similar autonomous AI agents — exposed gateways, one-click RCE, token theft, prompt injection — with architecture diagrams and a hardening blueprint.">
+    <meta name="theme-color" content="#030806">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/openclaw-agent-security.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="OpenClaw and the Agent Attack Surface: How Autonomous AI Assistants Get Owned">
+    <meta property="og:description" content="Exposed gateways, one-click RCE, token theft and prompt injection — how attackers exploit autonomous AI agents, and how to defend them.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/openclaw-agent-security.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "OpenClaw and the Agent Attack Surface: How Autonomous AI Assistants Get Owned",
+      "description": "A technical breakdown of how attackers exploit OpenClaw and similar autonomous AI agents, with architecture diagrams and a hardening blueprint.",
+      "datePublished": "2026-08-31",
+      "dateModified": "2026-08-31",
+      "author": {
+        "@type": "Person",
+        "name": "Viral Maniar",
+        "jobTitle": "Managing Director & Principal Consultant",
+        "url": "https://preemptivecybersec.com/pages/team.html"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Preemptive Cyber Security",
+        "url": "https://preemptivecybersec.com/"
+      },
+      "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/openclaw-agent-security.html",
+      "keywords": "OpenClaw, AI agent security, prompt injection, CVE-2026-25253, agent runtime, autonomous agents"
+    }
+    </script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">AI Agent Security</span>
+                    <span class="dot">//</span>
+                    <span>2026-08-31</span>
+                    <span class="dot">//</span>
+                    <span>18 min read</span>
+                </div>
+
+                <h1>OpenClaw and the Agent Attack Surface</h1>
+                <p class="article-lead">In under a month, a personal AI assistant went from a weekend project to more than a hundred thousand internet-exposed instances — most of them holding shell access, API keys, and a mailbox. This is how attackers take them over, drawn out at the protocol level, and what a defensible deployment actually looks like.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p><a href="https://github.com/openclaw">OpenClaw</a> is the clearest example yet of a category we would call the <strong>personal agent runtime</strong>: software that connects a large language model to your messaging apps on one side and your operating system on the other, then lets it act autonomously in between. Send it a WhatsApp message, and it can read your email, clone a repository, run a shell command, drive a browser, and reply — unattended.</p>
+
+                    <p>It is genuinely useful, which is why it reached 100,000 GitHub stars faster than any comparable open-source project. It is also, from a security architecture perspective, close to a worst case: a remote-code-execution service, deliberately built, wired to untrusted input channels, holding long-lived credentials for everything it touches, and installed by people who are not systems administrators.</p>
+
+                    <p>This article is not a takedown of one project. OpenClaw simply got popular first, so it got scrutinised first. Every finding below generalises to the wider class — self-hosted agent gateways, MCP servers with tool access, autonomous coding agents, and the "just point it at your inbox" assistants arriving weekly. If you understand how this one falls over, you can assess the next one in an afternoon.</p>
+
+                    <h2>What the architecture actually looks like</h2>
+
+                    <p>Before you can reason about the attack surface, you need an accurate mental model. Most people picture a chatbot. What is really running is a broker sitting between untrusted input and privileged execution.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 372" role="img" aria-label="High-level OpenClaw architecture: untrusted message channels on the left feed into a central gateway on port 18789, which talks to an LLM provider above and to node hosts providing shell, filesystem, browser and plugin execution on the right.">
+                            <defs>
+                                <marker id="f1-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 z" style="fill:var(--neon)"/>
+                                </marker>
+                                <marker id="f1-arr" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M10 0 L0 5 L10 10 z" style="fill:var(--neon)"/>
+                                </marker>
+                                <marker id="f1-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 z" style="fill:var(--border-strong)"/>
+                                </marker>
+                            </defs>
+                            <text x="16" y="22" class="dg-title">Figure 1 — the broker in the middle</text>
+
+                            <!-- LLM provider -->
+                            <rect x="295" y="44" width="180" height="46" rx="6" class="dg-node"/>
+                            <text x="385" y="66" text-anchor="middle" class="dg-label">LLM Provider API</text>
+                            <text x="385" y="82" text-anchor="middle" class="dg-sub">sees the entire context window</text>
+
+                            <!-- gateway -->
+                            <rect x="278" y="152" width="214" height="132" rx="8" class="dg-node-accent"/>
+                            <text x="385" y="176" text-anchor="middle" class="dg-accent-text">OpenClaw Gateway</text>
+                            <text x="385" y="198" text-anchor="middle" class="dg-sub">:18789/tcp — Control UI</text>
+                            <text x="385" y="216" text-anchor="middle" class="dg-sub">auth · session authority</text>
+                            <text x="385" y="234" text-anchor="middle" class="dg-sub">tool orchestration</text>
+                            <text x="385" y="252" text-anchor="middle" class="dg-sub">config store + API keys</text>
+                            <text x="385" y="270" text-anchor="middle" class="dg-sub">device pairing registry</text>
+
+                            <!-- left: channels -->
+                            <text x="38" y="142" class="dg-title">Untrusted ingress</text>
+                            <rect x="34" y="152" width="162" height="30" rx="5" class="dg-node"/>
+                            <text x="115" y="171" text-anchor="middle" class="dg-sub">WhatsApp / Telegram</text>
+                            <rect x="34" y="190" width="162" height="30" rx="5" class="dg-node"/>
+                            <text x="115" y="209" text-anchor="middle" class="dg-sub">Slack / Discord</text>
+                            <rect x="34" y="228" width="162" height="30" rx="5" class="dg-node"/>
+                            <text x="115" y="247" text-anchor="middle" class="dg-sub">Email / IMAP</text>
+                            <rect x="34" y="266" width="162" height="30" rx="5" class="dg-node"/>
+                            <text x="115" y="285" text-anchor="middle" class="dg-sub">Web pages / documents</text>
+
+                            <line x1="225" y1="167" x2="225" y2="281" class="dg-flow-dim"/>
+                            <line x1="196" y1="167" x2="223" y2="167" class="dg-flow-dim"/>
+                            <line x1="196" y1="205" x2="223" y2="205" class="dg-flow-dim"/>
+                            <line x1="196" y1="243" x2="223" y2="243" class="dg-flow-dim"/>
+                            <line x1="196" y1="281" x2="223" y2="281" class="dg-flow-dim"/>
+                            <line x1="225" y1="222" x2="272" y2="222" class="dg-flow" marker-end="url(#f1-ar)"/>
+
+                            <!-- right: nodes -->
+                            <text x="553" y="142" class="dg-title">Node hosts — execution</text>
+                            <rect x="553" y="152" width="172" height="30" rx="5" class="dg-node"/>
+                            <text x="639" y="171" text-anchor="middle" class="dg-sub">Shell — system.run</text>
+                            <rect x="553" y="190" width="172" height="30" rx="5" class="dg-node"/>
+                            <text x="639" y="209" text-anchor="middle" class="dg-sub">Filesystem read/write</text>
+                            <rect x="553" y="228" width="172" height="30" rx="5" class="dg-node"/>
+                            <text x="639" y="247" text-anchor="middle" class="dg-sub">Headless browser</text>
+                            <rect x="553" y="266" width="172" height="30" rx="5" class="dg-node"/>
+                            <text x="639" y="285" text-anchor="middle" class="dg-sub">Skills / plugins</text>
+
+                            <line x1="524" y1="167" x2="524" y2="281" class="dg-flow-dim"/>
+                            <line x1="492" y1="222" x2="522" y2="222" class="dg-flow" marker-end="url(#f1-ar)"/>
+                            <line x1="526" y1="167" x2="551" y2="167" class="dg-flow-dim" marker-end="url(#f1-ard)"/>
+                            <line x1="526" y1="205" x2="551" y2="205" class="dg-flow-dim" marker-end="url(#f1-ard)"/>
+                            <line x1="526" y1="243" x2="551" y2="243" class="dg-flow-dim" marker-end="url(#f1-ard)"/>
+                            <line x1="526" y1="281" x2="551" y2="281" class="dg-flow-dim" marker-end="url(#f1-ard)"/>
+
+                            <!-- llm link -->
+                            <line x1="385" y1="150" x2="385" y2="92" class="dg-flow" marker-end="url(#f1-arr)" marker-start="url(#f1-ar)"/>
+
+                            <text x="380" y="330" text-anchor="middle" class="dg-sub" style="fill:var(--danger)">Everything on the left is attacker-reachable input. Everything on the right is code execution.</text>
+                            <text x="380" y="350" text-anchor="middle" class="dg-sub">The gateway is the only thing standing between them.</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The gateway brokers untrusted input into privileged execution. Traditional appsec asks "can an attacker reach the execution path?" Here, reaching it is the product's advertised feature — the only question is <em>who</em> gets to drive.</figcaption>
+                    </figure>
+
+                    <p>Three properties make this architecture unusually unforgiving:</p>
+
+                    <ul>
+                        <li><strong>The security boundary is a single process.</strong> There is no privilege separation between "read a Telegram message" and "run a shell command". One authentication check gates both.</li>
+                        <li><strong>Credentials are aggregated by design.</strong> To be useful, the agent holds tokens for email, GitHub, cloud consoles and calendars simultaneously. Compromising the gateway compromises all of them at once.</li>
+                        <li><strong>The operator is usually not an administrator.</strong> These tools are installed by developers, analysts and enthusiasts on laptops — outside change management, outside the asset inventory, outside the patch cycle.</li>
+                    </ul>
+
+                    <h2>The exposure problem, in numbers</h2>
+
+                    <p>The default gateway port, <code>18789/tcp</code>, is identical across every deployment — which makes internet-wide enumeration trivial. Multiple research teams scanned for it, and the counts vary sharply by methodology and scan window: <a href="https://www.bitsight.com/blog/openclaw-ai-security-risks-exposed-instances">Bitsight</a> identified more than 30,000 distinct instances between 27 January and 8 February 2026; <a href="https://www.infosecurity-magazine.com/news/researchers-40000-exposed-openclaw/">SecurityScorecard</a> reported 40,214 in February; other trackers have since put the figure above 200,000.</p>
+
+                    <p>Treat any single number with suspicion — they measure different things over different windows. The proportions are the alarming part. In SecurityScorecard's dataset, roughly <strong>63% of observed deployments were vulnerable</strong>, 12,812 were exploitable for remote code execution, and <strong>93.4% of publicly reachable instances carried a critical authentication bypass</strong>. Exposure clustered not only in technology but in healthcare, finance, government and insurance.</p>
+
+                    <p>Three default-configuration decisions drive most of this:</p>
+
+                    <ul>
+                        <li><strong>Bind mode.</strong> The gateway offers loopback, LAN (<code>0.0.0.0</code>) and VPN binding. Users who want to reach their assistant from a phone pick LAN — the documentation's warning to "use only if you trust the network" does not convey that this means the public internet behind most home routers with UPnP.</li>
+                        <li><strong>Trivial credentials are accepted.</strong> The gateway requires a password or token for non-local connections but enforces no complexity — researchers confirmed a single character such as <code>a</code> is a valid credential.</li>
+                        <li><strong>An explicit safety-off switch.</strong> <code>gateway.controlUi.allowInsecureAuth</code> disables device identity verification. It exists to work around "localhost only" friction, and forum answers recommend it freely.</li>
+                    </ul>
+
+                    <h2>Where the trust model breaks</h2>
+
+                    <p>Exposure alone would be bad enough. What turns it into reliable compromise is a chain of authority decisions inside the gateway that each looked reasonable in isolation. Figure 2 traces a request from browser to shell and marks where each disclosed vulnerability lands.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 476" role="img" aria-label="Vertical request pipeline from Control UI through WebSocket connect, authentication, session authority, RPC dispatch and finally node host command execution, with four disclosed CVEs annotated against the stages they affect.">
+                            <defs>
+                                <marker id="f2-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 z" style="fill:var(--neon)"/>
+                                </marker>
+                            </defs>
+                            <text x="16" y="22" class="dg-title">Figure 2 — request path and where authority is lost</text>
+
+                            <!-- pipeline -->
+                            <rect x="40" y="46" width="300" height="46" rx="6" class="dg-node"/>
+                            <text x="190" y="68" text-anchor="middle" class="dg-label">Control UI (browser)</text>
+                            <text x="190" y="84" text-anchor="middle" class="dg-sub">reads gatewayUrl from query string</text>
+
+                            <rect x="40" y="116" width="300" height="46" rx="6" class="dg-node"/>
+                            <text x="190" y="138" text-anchor="middle" class="dg-label">WebSocket connect → :18789</text>
+                            <text x="190" y="154" text-anchor="middle" class="dg-sub">stored token sent in connect payload</text>
+
+                            <rect x="40" y="186" width="300" height="46" rx="6" class="dg-node"/>
+                            <text x="190" y="208" text-anchor="middle" class="dg-label">Authentication</text>
+                            <text x="190" y="224" text-anchor="middle" class="dg-sub">password / token · loopback exempt from limits</text>
+
+                            <rect x="40" y="256" width="300" height="46" rx="6" class="dg-node"/>
+                            <text x="190" y="278" text-anchor="middle" class="dg-label">Session authority</text>
+                            <text x="190" y="294" text-anchor="middle" class="dg-sub">operator.admin bound to the connection</text>
+
+                            <rect x="40" y="326" width="300" height="46" rx="6" class="dg-node"/>
+                            <text x="190" y="348" text-anchor="middle" class="dg-label">RPC dispatch — node.invoke</text>
+                            <text x="190" y="364" text-anchor="middle" class="dg-sub">approval fields trusted from the client</text>
+
+                            <rect x="40" y="396" width="300" height="46" rx="6" class="dg-node-accent"/>
+                            <text x="190" y="418" text-anchor="middle" class="dg-accent-text">Node host — system.run</text>
+                            <text x="190" y="434" text-anchor="middle" class="dg-sub">arbitrary commands as the host user</text>
+
+                            <line x1="190" y1="92" x2="190" y2="114" class="dg-flow" marker-end="url(#f2-ar)"/>
+                            <line x1="190" y1="162" x2="190" y2="184" class="dg-flow" marker-end="url(#f2-ar)"/>
+                            <line x1="190" y1="232" x2="190" y2="254" class="dg-flow" marker-end="url(#f2-ar)"/>
+                            <line x1="190" y1="302" x2="190" y2="324" class="dg-flow" marker-end="url(#f2-ar)"/>
+                            <line x1="190" y1="372" x2="190" y2="394" class="dg-flow" marker-end="url(#f2-ar)"/>
+
+                            <!-- CVE annotations -->
+                            <text x="420" y="36" class="dg-title">Disclosed failure points</text>
+
+                            <rect x="416" y="116" width="322" height="46" rx="6" class="dg-node" style="stroke:var(--danger);stroke-dasharray:4 3"/>
+                            <text x="430" y="138" class="dg-label" style="fill:var(--danger)">CVE-2026-25253 — 1-click RCE</text>
+                            <text x="430" y="154" class="dg-sub">token exfiltrated to attacker gateway · CVSS 8.8</text>
+
+                            <rect x="416" y="186" width="322" height="46" rx="6" class="dg-node" style="stroke:var(--danger);stroke-dasharray:4 3"/>
+                            <text x="430" y="208" class="dg-label" style="fill:var(--danger)">ClawJacked — loopback brute force</text>
+                            <text x="430" y="224" class="dg-sub">no rate limit from localhost · auto device pairing</text>
+
+                            <rect x="416" y="256" width="322" height="46" rx="6" class="dg-node" style="stroke:var(--danger);stroke-dasharray:4 3"/>
+                            <text x="430" y="278" class="dg-label" style="fill:var(--danger)">CVE-2026-53821 — authority bypass</text>
+                            <text x="430" y="294" class="dg-sub">operator.admin obtained on a live WebSocket</text>
+
+                            <rect x="416" y="326" width="322" height="46" rx="6" class="dg-node" style="stroke:var(--danger);stroke-dasharray:4 3"/>
+                            <text x="430" y="348" class="dg-label" style="fill:var(--danger)">CVE-2026-28466 — authz bypass</text>
+                            <text x="430" y="364" class="dg-sub">client-controlled approval fields reach system.run</text>
+
+                            <line x1="342" y1="139" x2="412" y2="139" class="dg-flow-dim" style="stroke-dasharray:3 3"/>
+                            <line x1="342" y1="209" x2="412" y2="209" class="dg-flow-dim" style="stroke-dasharray:3 3"/>
+                            <line x1="342" y1="279" x2="412" y2="279" class="dg-flow-dim" style="stroke-dasharray:3 3"/>
+                            <line x1="342" y1="349" x2="412" y2="349" class="dg-flow-dim" style="stroke-dasharray:3 3"/>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 2.</b> Four independent disclosures, four consecutive stages of the same pipeline. Each was patched quickly; the pattern — authority granted early and never re-verified — is the durable lesson.</figcaption>
+                    </figure>
+
+                    <h3>CVE-2026-25253 — one click, full compromise</h3>
+
+                    <p>The highest-impact issue needs no exposed port at all. The Control UI accepts a <code>gatewayUrl</code> parameter from the query string, trusts it without validation, and auto-connects on page load — sending the stored gateway token in the connect payload. An attacker who gets a victim to click a crafted link receives that token at a server they control, then replays it against the victim's real gateway.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 300" role="img" aria-label="Swimlane diagram of the CVE-2026-25253 attack: attacker crafts a link, victim browser auto-connects and leaks the token to the attacker's endpoint, and the attacker replays it against the real gateway to achieve code execution.">
+                            <defs>
+                                <marker id="f3-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 z" style="fill:var(--danger)"/>
+                                </marker>
+                            </defs>
+                            <text x="16" y="22" class="dg-title">Figure 3 — CVE-2026-25253 token exfiltration chain</text>
+
+                            <line x1="20" y1="118" x2="740" y2="118" class="dg-flow-dim" style="stroke-dasharray:2 4"/>
+                            <line x1="20" y1="198" x2="740" y2="198" class="dg-flow-dim" style="stroke-dasharray:2 4"/>
+
+                            <text x="20" y="62" class="dg-title">Attacker</text>
+                            <text x="20" y="142" class="dg-title">Victim browser</text>
+                            <text x="20" y="222" class="dg-title">Real gateway</text>
+
+                            <rect x="128" y="58" width="146" height="44" rx="6" class="dg-node"/>
+                            <text x="201" y="78" text-anchor="middle" class="dg-sub">1 — crafted link</text>
+                            <text x="201" y="93" text-anchor="middle" class="dg-sub" style="fill:var(--danger)">?gatewayUrl=wss://evil</text>
+
+                            <rect x="308" y="138" width="150" height="44" rx="6" class="dg-node"/>
+                            <text x="383" y="158" text-anchor="middle" class="dg-sub">2 — UI auto-connects</text>
+                            <text x="383" y="173" text-anchor="middle" class="dg-sub">no origin validation</text>
+
+                            <rect x="470" y="138" width="132" height="44" rx="6" class="dg-node"/>
+                            <text x="536" y="158" text-anchor="middle" class="dg-sub">3 — token sent</text>
+                            <text x="536" y="173" text-anchor="middle" class="dg-sub">in connect payload</text>
+
+                            <rect x="618" y="58" width="126" height="44" rx="6" class="dg-node"/>
+                            <text x="681" y="78" text-anchor="middle" class="dg-sub">4 — token captured</text>
+                            <text x="681" y="93" text-anchor="middle" class="dg-sub">by attacker</text>
+
+                            <rect x="618" y="218" width="126" height="44" rx="6" class="dg-node" style="stroke:var(--danger)"/>
+                            <text x="681" y="238" text-anchor="middle" class="dg-sub" style="fill:var(--danger)">5 — replay</text>
+                            <text x="681" y="253" text-anchor="middle" class="dg-sub">system.run → RCE</text>
+
+                            <line x1="274" y1="86" x2="304" y2="150" class="dg-flow" style="stroke:var(--danger)" marker-end="url(#f3-ar)"/>
+                            <line x1="458" y1="160" x2="466" y2="160" class="dg-flow" style="stroke:var(--danger)" marker-end="url(#f3-ar)"/>
+                            <line x1="602" y1="152" x2="616" y2="104" class="dg-flow" style="stroke:var(--danger)" marker-end="url(#f3-ar)"/>
+                            <line x1="681" y1="102" x2="681" y2="216" class="dg-flow" style="stroke:var(--danger)" marker-end="url(#f3-ar)"/>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 3.</b> Fixed in v2026.1.29. Note that steps 2 and 3 require no interaction beyond opening a page — the victim's own browser performs the exfiltration.</figcaption>
+                    </figure>
+
+                    <h3>ClawJacked — the localhost exemption</h3>
+
+                    <p>The <a href="https://www.oasis.security/blog/openclaw-vulnerability">ClawJacked</a> chain is the most instructive, because every individual decision was defensible. Browsers do not apply cross-origin restrictions to WebSocket connections to <code>localhost</code>, so any website you visit can open a socket to your gateway. The gateway's rate limiter exempts loopback connections — reasonable, since loopback was assumed trusted. And device pairings from loopback are auto-approved without a user prompt, for the same reason.</p>
+
+                    <p>Chained: a malicious web page opens a WebSocket to your local gateway, brute-forces the password at hundreds of guesses per second with no lockout, silently registers itself as a trusted device, and then reads your configuration, enumerates connected nodes, and drives the agent. No plugin, no extension, no interaction beyond visiting a page. The lesson generalises past this product: <strong>"it's only bound to localhost" is not an access control</strong> when the victim runs a browser.</p>
+
+                    <h3>The authorisation pair</h3>
+
+                    <p><strong>CVE-2026-28466</strong> (fixed in 2026.2.14) let an authenticated attacker execute arbitrary commands on connected node hosts because approval fields inside <code>node.invoke</code> requests were taken from the client and forwarded to nodes unsanitised — the client could simply assert that a command had already been approved. <strong>CVE-2026-53821</strong> (fixed in 2026.5.18) let restricted Control UI clients prematurely obtain <code>operator.admin</code> authority on a live WebSocket connection and issue administrative RPCs.</p>
+
+                    <blockquote>Both are the same bug in different clothing: authority is decided once, early, and carried forward as a property of the connection rather than re-checked against the specific action being requested.</blockquote>
+
+                    <h2>Prompt injection: the vulnerability that has no patch</h2>
+
+                    <p>Everything above is fixed. This is not.</p>
+
+                    <p>An agent that reads content is an agent that can be instructed by that content. Because the LLM receives retrieved data and operator instructions in the same context window, with no cryptographic or structural distinction between them, text that <em>looks like</em> an instruction is an instruction. Researchers extracted OpenClaw's system prompt with an 84.6% success rate by simply asking the agent to convert its rules to JSON.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 322" role="img" aria-label="Indirect prompt injection flow: an attacker plants instructions in content, the agent ingests it during a normal task, the LLM cannot distinguish data from instructions, and a tool call results in credential exfiltration, lateral movement or data destruction.">
+                            <defs>
+                                <marker id="f4-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 z" style="fill:var(--neon)"/>
+                                </marker>
+                                <marker id="f4-ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 z" style="fill:var(--danger)"/>
+                                </marker>
+                            </defs>
+                            <text x="16" y="22" class="dg-title">Figure 4 — indirect prompt injection</text>
+
+                            <rect x="24" y="60" width="152" height="58" rx="6" class="dg-node"/>
+                            <text x="100" y="84" text-anchor="middle" class="dg-sub">Attacker plants text</text>
+                            <text x="100" y="101" text-anchor="middle" class="dg-sub">page · email · ticket · doc</text>
+
+                            <rect x="216" y="60" width="152" height="58" rx="6" class="dg-node"/>
+                            <text x="292" y="84" text-anchor="middle" class="dg-sub">Agent ingests it</text>
+                            <text x="292" y="101" text-anchor="middle" class="dg-sub">during a normal task</text>
+
+                            <rect x="408" y="60" width="160" height="58" rx="6" class="dg-node-accent"/>
+                            <text x="488" y="84" text-anchor="middle" class="dg-accent-text">Context window</text>
+                            <text x="488" y="101" text-anchor="middle" class="dg-sub">data = instructions</text>
+
+                            <rect x="608" y="60" width="130" height="58" rx="6" class="dg-node" style="stroke:var(--danger)"/>
+                            <text x="673" y="84" text-anchor="middle" class="dg-sub" style="fill:var(--danger)">Tool call fires</text>
+                            <text x="673" y="101" text-anchor="middle" class="dg-sub">with full authority</text>
+
+                            <line x1="176" y1="89" x2="212" y2="89" class="dg-flow" marker-end="url(#f4-ar)"/>
+                            <line x1="368" y1="89" x2="404" y2="89" class="dg-flow" marker-end="url(#f4-ar)"/>
+                            <line x1="568" y1="89" x2="604" y2="89" class="dg-flow" marker-end="url(#f4-ar)"/>
+
+                            <line x1="673" y1="118" x2="673" y2="186" class="dg-flow" style="stroke:var(--danger)"/>
+                            <line x1="150" y1="186" x2="673" y2="186" class="dg-flow" style="stroke:var(--danger)"/>
+                            <line x1="150" y1="186" x2="150" y2="212" class="dg-flow" style="stroke:var(--danger)" marker-end="url(#f4-ad)"/>
+                            <line x1="380" y1="186" x2="380" y2="212" class="dg-flow" style="stroke:var(--danger)" marker-end="url(#f4-ad)"/>
+                            <line x1="600" y1="186" x2="600" y2="212" class="dg-flow" style="stroke:var(--danger)" marker-end="url(#f4-ad)"/>
+
+                            <rect x="72" y="214" width="156" height="46" rx="6" class="dg-node"/>
+                            <text x="150" y="242" text-anchor="middle" class="dg-sub">Exfiltrate API keys</text>
+                            <rect x="302" y="214" width="156" height="46" rx="6" class="dg-node"/>
+                            <text x="380" y="242" text-anchor="middle" class="dg-sub">Pivot to connected apps</text>
+                            <rect x="522" y="214" width="156" height="46" rx="6" class="dg-node"/>
+                            <text x="600" y="242" text-anchor="middle" class="dg-sub">Destroy or encrypt data</text>
+
+                            <text x="380" y="294" text-anchor="middle" class="dg-sub">The model cannot separate "content to process" from "instructions to obey".</text>
+                            <text x="380" y="312" text-anchor="middle" class="dg-sub" style="fill:var(--danger)">This is architectural. No model update closes it — only constraining what the tools can do.</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 4.</b> Phishing for agents. The victim never sees the payload, because the payload was never addressed to the human.</figcaption>
+                    </figure>
+
+                    <p>The practical form is mundane. An attacker messages the bot directly on a connected channel. Or files a GitHub issue containing hidden instructions, knowing a coding agent will read it. Or emails an invoice with white-on-white text. When the agent processes that content in the course of an ordinary task, it executes the attacker's instructions with the operator's full authority — and, in most deployments, silently.</p>
+
+                    <p>Because this cannot be fixed at the model layer, it must be contained at the capability layer. That means the question stops being "can we prevent injection?" and becomes <strong>"what is the worst thing a successful injection can accomplish?"</strong> That reframing is the entire basis of a defensible design.</p>
+
+                    <h2>Supply chain: the plugin registry</h2>
+
+                    <p>Agent runtimes are extended through community plugins — "skills" — installed with a single command. Security teams have found disguised malware, credential stealers and remote-access payloads in official registries, with harmful packages reappearing under new names after removal. The install path typically pulls arbitrary code that runs in-process with the gateway's full privileges and its whole credential store. Every lesson from npm and PyPI typosquatting applies, minus a decade of ecosystem tooling.</p>
+
+                    <h2>Designing a deployment that can survive this</h2>
+
+                    <p>Banning the technology outright is a defensible policy for regulated environments, and some universities have already prohibited it on managed devices. For most organisations it is also unrealistic — the productivity gains are real, and prohibition drives usage onto unmanaged personal machines where you have no visibility at all. The workable position is a sanctioned, hardened pattern.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 424" role="img" aria-label="Hardened reference architecture with four zones: operator access over VPN with strong tokens, an isolated agent host with loopback binding, containerisation, read-only filesystem, human approval gate and signed plugins, controlled egress with an allowlist proxy and short-lived secrets, and a monitoring band feeding a SIEM.">
+                            <defs>
+                                <marker id="f5-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 z" style="fill:var(--neon)"/>
+                                </marker>
+                            </defs>
+                            <text x="16" y="22" class="dg-title">Figure 5 — hardened reference deployment</text>
+
+                            <!-- zone 1 -->
+                            <text x="24" y="46" class="dg-title">Operator access</text>
+                            <rect x="20" y="54" width="196" height="124" rx="8" class="dg-node" style="stroke-dasharray:5 4"/>
+                            <rect x="34" y="72" width="168" height="38" rx="5" class="dg-node-accent"/>
+                            <text x="118" y="95" text-anchor="middle" class="dg-sub">VPN / Tailscale only</text>
+                            <rect x="34" y="122" width="168" height="38" rx="5" class="dg-node"/>
+                            <text x="118" y="145" text-anchor="middle" class="dg-sub">64-char token + MFA</text>
+
+                            <!-- zone 2 -->
+                            <text x="254" y="46" class="dg-title">Isolated agent host</text>
+                            <rect x="250" y="54" width="266" height="286" rx="8" class="dg-node" style="stroke-dasharray:5 4"/>
+                            <rect x="264" y="72" width="238" height="38" rx="5" class="dg-node-accent"/>
+                            <text x="383" y="95" text-anchor="middle" class="dg-sub">bind 127.0.0.1:18789</text>
+                            <rect x="264" y="122" width="238" height="38" rx="5" class="dg-node"/>
+                            <text x="383" y="145" text-anchor="middle" class="dg-sub">container · non-root · seccomp</text>
+                            <rect x="264" y="172" width="238" height="38" rx="5" class="dg-node"/>
+                            <text x="383" y="195" text-anchor="middle" class="dg-sub">read-only FS · scoped mounts</text>
+                            <rect x="264" y="222" width="238" height="38" rx="5" class="dg-node"/>
+                            <text x="383" y="245" text-anchor="middle" class="dg-sub">human approval on system.run</text>
+                            <rect x="264" y="272" width="238" height="38" rx="5" class="dg-node"/>
+                            <text x="383" y="295" text-anchor="middle" class="dg-sub">signed / pinned plugins only</text>
+
+                            <!-- zone 3 -->
+                            <text x="554" y="46" class="dg-title">Controlled egress</text>
+                            <rect x="550" y="54" width="190" height="286" rx="8" class="dg-node" style="stroke-dasharray:5 4"/>
+                            <rect x="564" y="72" width="162" height="38" rx="5" class="dg-node"/>
+                            <text x="645" y="95" text-anchor="middle" class="dg-sub">egress allowlist proxy</text>
+                            <rect x="564" y="122" width="162" height="38" rx="5" class="dg-node"/>
+                            <text x="645" y="145" text-anchor="middle" class="dg-sub">short-lived secrets broker</text>
+                            <rect x="564" y="172" width="162" height="38" rx="5" class="dg-node"/>
+                            <text x="645" y="195" text-anchor="middle" class="dg-sub">LLM provider API</text>
+                            <rect x="564" y="222" width="162" height="38" rx="5" class="dg-node"/>
+                            <text x="645" y="245" text-anchor="middle" class="dg-sub">no lateral network reach</text>
+                            <rect x="564" y="272" width="162" height="38" rx="5" class="dg-node"/>
+                            <text x="645" y="295" text-anchor="middle" class="dg-sub">read-only integration scopes</text>
+
+                            <line x1="216" y1="130" x2="246" y2="130" class="dg-flow" marker-end="url(#f5-ar)"/>
+                            <line x1="516" y1="130" x2="546" y2="130" class="dg-flow" marker-end="url(#f5-ar)"/>
+                            <line x1="383" y1="340" x2="383" y2="360" class="dg-flow" marker-end="url(#f5-ar)"/>
+
+                            <!-- monitoring -->
+                            <rect x="20" y="362" width="720" height="48" rx="8" class="dg-node" style="stroke-dasharray:5 4"/>
+                            <text x="380" y="382" text-anchor="middle" class="dg-title">Monitoring</text>
+                            <text x="380" y="400" text-anchor="middle" class="dg-sub">asset inventory · gateway auth + node.invoke logs → SIEM · egress anomaly alerts · release watch</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 5.</b> The design goal is not preventing agent compromise — assume it happens. It is ensuring a compromised agent reaches nothing that matters and cannot act unobserved.</figcaption>
+                    </figure>
+
+                    <h3>Configuration baseline</h3>
+
+                    <p>Two settings account for the overwhelming majority of real-world exposure:</p>
+
+                    <pre><code># hardened gateway baseline
+gateway:
+  bind: 127.0.0.1              # never 0.0.0.0 — reach it over VPN instead
+  port: 18789
+  controlUi:
+    allowInsecureAuth: false   # never true, under any circumstances
+  auth:
+    token: "&lt;64 chars from a CSPRNG&gt;"   # not "a", not a passphrase
+</code></pre>
+
+                    <h3>Finding what is already running</h3>
+
+                    <p>Most organisations we work with discover their first agent runtime during an assessment, not through the asset register. Start with the fixed port — but pair it with endpoint telemetry, because the laptop deployments are the ones that will not answer a network scan:</p>
+
+                    <pre><code># network sweep of your own estate
+nmap -p 18789 --open -sV 10.0.0.0/8
+
+# endpoint inventory — process and listener check
+# (Windows) Get-NetTCPConnection -LocalPort 18789
+# (Linux)   ss -lntp | grep 18789
+</code></pre>
+
+                    <p>Then close the loop with egress telemetry: an internal host establishing sustained outbound sessions to an LLM provider API is a reliable indicator of an agent runtime, whether or not you ever find the listener.</p>
+
+                    <h3>The controls that matter, in order</h3>
+
+                    <ul>
+                        <li><strong>Never bind to <code>0.0.0.0</code>.</strong> Loopback plus VPN. This single control eliminates the internet-exposure population entirely.</li>
+                        <li><strong>Patch aggressively and watch releases.</strong> Four of the issues above were fixed within days of disclosure — one within 24 hours. The exposure window is created by operators who never update, not by slow maintainers.</li>
+                        <li><strong>Constrain the blast radius before you constrain the model.</strong> Read-only scopes, per-integration credentials, short-lived tokens from a broker rather than API keys in a config file. Assume injection succeeds; make it worthless.</li>
+                        <li><strong>Require human approval for irreversible actions.</strong> Shell execution, sending mail, deleting files, moving money. Approval fatigue is real, so scope the gate narrowly enough that it stays meaningful.</li>
+                        <li><strong>Segment the host.</strong> Container, non-root, no lateral reach to production, databases or corporate mail. Treat the agent host as a DMZ asset, because functionally that is what it is.</li>
+                        <li><strong>Pin and review plugins.</strong> No install-on-demand from public registries into a process holding your credential store.</li>
+                        <li><strong>Log to the SIEM.</strong> Authentication attempts, device pairings, <code>node.invoke</code> calls and egress destinations. Without these, a compromise is simply invisible.</li>
+                    </ul>
+
+                    <h2>How Preemptive helps</h2>
+
+                    <p>Agent runtimes fall between the cracks of a conventional testing programme. They are not quite applications, not quite infrastructure, and they are rarely in the asset register — so a standard scope misses them entirely. Our work in this area covers four things:</p>
+
+                    <ul>
+                        <li><strong>Agent discovery and exposure assessment.</strong> We enumerate agent runtimes across your internal estate and external perimeter — fixed-port sweeps, endpoint telemetry, egress analysis and attack-surface monitoring — and tell you what is reachable, from where, and holding which credentials.</li>
+                        <li><strong>Configuration review against a hardened baseline.</strong> Bind addresses, credential strength, insecure-auth flags, plugin provenance, integration scopes and version currency against the disclosed CVE set.</li>
+                        <li><strong>Adversarial testing of the agent itself.</strong> Indirect prompt injection through every ingested channel, tool-abuse chains, authority-escalation attempts against the gateway, and credential-exfiltration paths — testing the deployment as an attacker would, not as a scanner would.</li>
+                        <li><strong>Detection engineering and policy.</strong> SIEM content for gateway authentication, device pairing and tool invocation; egress baselines; and a sanctioned-use policy that gives your teams a supported path rather than driving the tools underground.</li>
+                    </ul>
+
+                    <p>If your organisation has adopted AI agents — or suspects it has, informally — the first step is knowing what is deployed and what it can reach. That is usually a short, high-yield engagement, and it almost always finds something.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>A personal agent runtime is a <strong>remote code execution service wired to untrusted input</strong> — assess it as infrastructure, not as a chatbot.</li>
+                            <li>A fixed default port and a LAN bind option produced tens of thousands of internet-exposed instances, most with critical authentication weaknesses.</li>
+                            <li>The disclosed CVEs share one root cause: <strong>authority granted early and never re-verified</strong> against the action being requested.</li>
+                            <li>"Bound to localhost" is not an access control — browsers reach loopback WebSockets from any page you visit.</li>
+                            <li><strong>Prompt injection has no patch.</strong> Contain it at the capability layer: least privilege, short-lived credentials, approval gates on irreversible actions.</li>
+                            <li>Patch velocity is not the problem — operator patch <em>adoption</em> is. Watch releases and update.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#ai-security</span>
+                        <span class="tag">#openclaw</span>
+                        <span class="tag">#prompt-injection</span>
+                        <span class="tag">#agent-security</span>
+                        <span class="tag">#misconfiguration</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Assess your agent deployment
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#training">Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

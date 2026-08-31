@@ -15,13 +15,39 @@ if (hamburger && navMenu) {
         navMenu.classList.toggle('active');
     });
 
-    navMenu.querySelectorAll('a').forEach(link => {
+    navMenu.querySelectorAll('a:not(.nav-dropdown-toggle)').forEach(link => {
         link.addEventListener('click', () => {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
         });
     });
 }
+
+// ---------- Nav dropdowns ----------
+// Desktop opens on hover (CSS). On mobile the toggle expands an inline
+// accordion instead of navigating, so the sub-items stay reachable.
+const isMobileNav = () => window.matchMedia('(max-width: 768px)').matches;
+
+document.querySelectorAll('.nav-dropdown > .nav-dropdown-toggle').forEach(toggle => {
+    const parent = toggle.parentElement;
+
+    toggle.addEventListener('click', (e) => {
+        if (!isMobileNav()) return;          // desktop: follow the link
+        e.preventDefault();
+        const open = parent.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+});
+
+// Reset accordion state when resizing back up to the desktop layout
+window.addEventListener('resize', () => {
+    if (isMobileNav()) return;
+    document.querySelectorAll('.nav-dropdown.open').forEach(d => {
+        d.classList.remove('open');
+        const t = d.querySelector('.nav-dropdown-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+    });
+});
 
 // ---------- Navbar border + scroll progress ----------
 const navbar = document.querySelector('.navbar');
