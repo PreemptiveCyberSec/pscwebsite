@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw 1.0 → 2.0: What Changes, and What Defenders Should Watch for Tomorrow — Preemptive Cyber Security</title>
+    <meta name="description" content="OpenClaw 2.0 re-architects the personal agent runtime — split planes, capability tokens, sandboxed executors and a hosted control plane. What genuinely improves, what does not, and the new attack surface security teams must prepare for.">
+    <meta name="theme-color" content="#030806">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="OpenClaw 1.0 → 2.0: What Changes, and What Defenders Should Watch for Tomorrow">
+    <meta property="og:description" content="The 2.0 redesign fixes the root cause of the 1.0 CVE chain — but moves the attack surface rather than removing it. A defender's field guide.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <style>
+        .prose table { width: 100%; border-collapse: collapse; margin: 0 0 1.6em; font-size: 0.9rem; }
+        .prose table thead th { text-align: left; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--neon); padding: 10px 12px; border-bottom: 1px solid var(--border-strong); }
+        .prose table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+        .prose table tbody tr:hover td { background: var(--bg-card); }
+        .prose table td strong { color: var(--text-primary); }
+        .table-scroll { overflow-x: auto; margin: 0 0 1.6em; }
+        .table-scroll table { margin: 0; }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "OpenClaw 1.0 → 2.0: What Changes, and What Defenders Should Watch for Tomorrow",
+      "description": "OpenClaw 2.0 re-architects the personal agent runtime. What genuinely improves, what does not, and the new attack surface security teams must prepare for.",
+      "datePublished": "2026-09-01",
+      "dateModified": "2026-09-01",
+      "author": {
+        "@type": "Person",
+        "name": "Viral Maniar",
+        "jobTitle": "Managing Director & Principal Consultant",
+        "url": "https://preemptivecybersec.com/pages/team.html"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Preemptive Cyber Security",
+        "url": "https://preemptivecybersec.com/"
+      },
+      "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html",
+      "keywords": "OpenClaw 2.0, AI agent security, capability tokens, agent-to-agent, prompt injection, policy engine, agent runtime"
+    }
+    </script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">AI Agent Security</span>
+                    <span class="dot">//</span>
+                    <span>2026-09-01</span>
+                    <span class="dot">//</span>
+                    <span>16 min read</span>
+                </div>
+
+                <h1>OpenClaw 1.0 → 2.0: What Changes, and What to Watch for Tomorrow</h1>
+                <p class="article-lead">OpenClaw 1.0 spent its first months as a case study in how autonomous agents get owned — a single-process broker wiring untrusted input straight to shell access. 2.0 is a genuine re-architecture that closes the root cause of that CVE chain. It also moves the attack surface somewhere new. This is what actually changes, what doesn't, and what security teams should be preparing for now.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>We pulled OpenClaw 1.0 apart at the protocol level in <a href="openclaw-agent-security.html">OpenClaw and the Agent Attack Surface</a>. The short version: a personal agent runtime that brokers messaging apps into operating-system execution, shipped with a fixed gateway port, a LAN-bind footgun, and a chain of disclosed vulnerabilities — one-click RCE, a loopback brute-force, and two authorisation bypasses — all sharing a single root cause: <strong>authority granted early and never re-verified against the action being requested.</strong> Prompt injection sat underneath all of it, unpatchable at the model layer.</p>
+
+                    <p>2.0 is the maintainers' answer to that scrutiny. It is a bigger change than a version bump usually implies, and much of it is genuinely good security engineering. But a redesign that fixes yesterday's bugs does not automatically fix tomorrow's — it changes <em>where</em> you have to look. A note on framing: 2.0 is still stabilising as it ships, so treat the specifics below as the announced direction. The durable analysis is not any single feature — it is how the attack surface <em>shifts</em>.</p>
+
+                    <h2>The core change: from one process to separated planes</h2>
+                    <p>1.0's defining property was that the security boundary was a single process. Reading a Telegram message and running a shell command lived behind one authentication check, in one address space, holding every credential at once. 2.0 breaks that apart into distinct planes with authority re-checked at each hop.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 400" role="img" aria-label="Side-by-side architecture: OpenClaw 1.0 is a single monolithic broker holding ingress, auth, orchestration, credentials and execution together; OpenClaw 2.0 splits into a control plane, a policy and guardrail engine, a capability broker issuing short-lived tokens, sandboxed tool executors, and a signed plugin registry, with per-action authorization re-checked between stages.">
+                            <defs>
+                                <marker id="o2-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--neon)"/></marker>
+                            </defs>
+                            <text x="16" y="22" class="dg-title">1.0 monolith vs 2.0 separated planes</text>
+
+                            <!-- 1.0 monolith -->
+                            <text x="24" y="52" class="dg-title">OpenClaw 1.0</text>
+                            <rect x="20" y="62" width="250" height="300" rx="8" class="dg-node" style="stroke:var(--danger);stroke-dasharray:5 4"/>
+                            <text x="145" y="86" text-anchor="middle" class="dg-label" style="fill:var(--danger)">Single-process broker</text>
+                            <rect x="40" y="104" width="210" height="34" rx="5" class="dg-node"/>
+                            <text x="145" y="125" text-anchor="middle" class="dg-sub">Untrusted ingress</text>
+                            <rect x="40" y="146" width="210" height="34" rx="5" class="dg-node"/>
+                            <text x="145" y="167" text-anchor="middle" class="dg-sub">Auth (once, at connect)</text>
+                            <rect x="40" y="188" width="210" height="34" rx="5" class="dg-node"/>
+                            <text x="145" y="209" text-anchor="middle" class="dg-sub">Tool orchestration</text>
+                            <rect x="40" y="230" width="210" height="34" rx="5" class="dg-node"/>
+                            <text x="145" y="251" text-anchor="middle" class="dg-sub">Credential store (all)</text>
+                            <rect x="40" y="272" width="210" height="34" rx="5" class="dg-node"/>
+                            <text x="145" y="293" text-anchor="middle" class="dg-sub">system.run — execution</text>
+                            <text x="145" y="336" text-anchor="middle" class="dg-sub" style="fill:var(--danger)">one boundary gates everything</text>
+
+                            <!-- arrow between -->
+                            <line x1="278" y1="212" x2="322" y2="212" class="dg-flow" marker-end="url(#o2-ar)"/>
+                            <text x="300" y="200" text-anchor="middle" class="dg-sub">2.0</text>
+
+                            <!-- 2.0 planes -->
+                            <text x="334" y="52" class="dg-title">OpenClaw 2.0</text>
+                            <rect x="330" y="62" width="416" height="300" rx="8" class="dg-node-accent" style="stroke-dasharray:5 4"/>
+                            <rect x="348" y="80" width="380" height="34" rx="5" class="dg-node"/>
+                            <text x="538" y="101" text-anchor="middle" class="dg-sub">Control plane — identity, sessions (often hosted)</text>
+                            <rect x="348" y="122" width="380" height="34" rx="5" class="dg-node-accent"/>
+                            <text x="538" y="143" text-anchor="middle" class="dg-accent-text" style="font-size:11px">Policy &amp; guardrail engine — per-action authz</text>
+                            <rect x="348" y="164" width="380" height="34" rx="5" class="dg-node"/>
+                            <text x="538" y="185" text-anchor="middle" class="dg-sub">Capability broker — short-lived, scoped tokens</text>
+                            <rect x="348" y="206" width="380" height="34" rx="5" class="dg-node"/>
+                            <text x="538" y="227" text-anchor="middle" class="dg-sub">Sandboxed tool executors — isolated per tool</text>
+                            <rect x="348" y="248" width="380" height="34" rx="5" class="dg-node"/>
+                            <text x="538" y="269" text-anchor="middle" class="dg-sub">Signed / pinned plugin registry</text>
+                            <rect x="348" y="290" width="380" height="34" rx="5" class="dg-node"/>
+                            <text x="538" y="311" text-anchor="middle" class="dg-sub">Secure defaults — loopback, strong tokens</text>
+                            <text x="538" y="346" text-anchor="middle" class="dg-sub">authority re-checked at every hop</text>
+
+                            <text x="16" y="388" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> 2.0's headline change is privilege separation: the policy engine re-authorises each action, and executors run sandboxed with short-lived capability tokens instead of a shared credential vault.</figcaption>
+                    </figure>
+
+                    <h2>What genuinely improves</h2>
+                    <p>Give credit where it is due — several of these changes retire whole vulnerability classes from the 1.0 era.</p>
+                    <ul>
+                        <li><strong>Per-action authorisation.</strong> The policy engine re-checks authority against the <em>specific</em> action, not the connection. That directly kills the "decide once, carry forward" root cause behind CVE-2026-53821 and CVE-2026-28466.</li>
+                        <li><strong>Capability tokens instead of a shared vault.</strong> Tools receive short-lived, narrowly scoped grants from a broker rather than reaching into one process holding every credential. A compromised executor no longer means every integration falls at once.</li>
+                        <li><strong>Sandboxed executors by default.</strong> Shell, browser and filesystem run isolated rather than in-process, so a single tool compromise is contained.</li>
+                        <li><strong>Secure defaults.</strong> Loopback binding and strong generated tokens out of the box — the two configuration decisions that produced the tens of thousands of internet-exposed 1.0 instances.</li>
+                        <li><strong>A signed plugin path.</strong> Provenance and pinning on the skills registry raise the bar on the supply-chain problem that plagued 1.0's install-on-demand model.</li>
+                    </ul>
+                    <blockquote>2.0 is what you get when a project takes its incident history seriously. The single-process broker — the thing that made 1.0 uniquely unforgiving — is gone.</blockquote>
+
+                    <h2>What does not change</h2>
+                    <p>Architecture cannot fix a problem that lives in the model. <strong>Prompt injection is still unpatched</strong>, because the LLM still receives retrieved data and operator instructions in one undifferentiated context window. 2.0's policy engine and sandboxing change the <em>consequences</em> of a successful injection — a very good thing — but they do not stop the model from being persuaded by content it reads. The defensive question remains the one from our 1.0 write-up: not "can we prevent injection?" but "what is the worst a successful injection can accomplish?"</p>
+                    <p>Two other constants: the operator is still usually not an administrator, and the runtime is still rarely in the asset register. Better defaults help, but shadow deployment is a governance problem, not an engineering one.</p>
+
+                    <h2>Where the attack surface moves</h2>
+                    <p>This is the part defenders should internalise. 2.0 does not remove attack surface so much as <em>relocate</em> it — from a single exposed port on a laptop to a distributed system with new trust relationships. Some of these are strictly better; all of them need fresh eyes.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 340" role="img" aria-label="The attack surface shifts from 1.0 concerns — internet-exposed port, weak token, loopback trust, single-process RCE, unsigned plugins — to 2.0 concerns — hosted control plane and tenant isolation, capability-token theft and replay, agent-to-agent trust, policy-engine bypass, increased autonomy with less human oversight, and an expanded tool and MCP ecosystem.">
+                            <defs>
+                                <marker id="o3-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--neon)"/></marker>
+                            </defs>
+                            <text x="16" y="22" class="dg-title">The surface moves — it does not vanish</text>
+
+                            <!-- 1.0 list -->
+                            <text x="24" y="54" class="dg-title" style="fill:var(--danger)">1.0 attack surface</text>
+                            <rect x="20" y="64" width="250" height="238" rx="8" class="dg-node" style="stroke-dasharray:5 4"/>
+                            <text x="40" y="94" class="dg-sub">• Internet-exposed :18789</text>
+                            <text x="40" y="122" class="dg-sub">• Trivial / single-char token</text>
+                            <text x="40" y="150" class="dg-sub">• "Localhost is trusted"</text>
+                            <text x="40" y="178" class="dg-sub">• Single-process RCE</text>
+                            <text x="40" y="206" class="dg-sub">• Shared credential vault</text>
+                            <text x="40" y="234" class="dg-sub">• Unsigned plugin registry</text>
+                            <text x="40" y="262" class="dg-sub">• Prompt injection</text>
+                            <text x="40" y="290" class="dg-sub" style="fill:var(--danger)">mostly patched / defaulted away</text>
+
+                            <!-- arrow -->
+                            <line x1="278" y1="180" x2="330" y2="180" class="dg-flow" marker-end="url(#o3-ar)"/>
+
+                            <!-- 2.0 list -->
+                            <text x="342" y="54" class="dg-title">2.0 attack surface</text>
+                            <rect x="338" y="64" width="408" height="238" rx="8" class="dg-node-accent" style="stroke-dasharray:5 4"/>
+                            <text x="358" y="94" class="dg-sub">• Hosted control plane — tenant isolation, account takeover</text>
+                            <text x="358" y="122" class="dg-sub">• Capability-token theft &amp; replay</text>
+                            <text x="358" y="150" class="dg-sub">• Agent-to-agent (A2A) trust &amp; delegation abuse</text>
+                            <text x="358" y="178" class="dg-sub">• Policy-engine bypass &amp; rule mis-config</text>
+                            <text x="358" y="206" class="dg-sub">• More autonomy, less human-in-the-loop</text>
+                            <text x="358" y="234" class="dg-sub">• Expanded tool / MCP ecosystem</text>
+                            <text x="358" y="262" class="dg-sub">• Long-term memory poisoning</text>
+                            <text x="358" y="290" class="dg-sub" style="fill:var(--neon)">prompt injection persists — now with more reach</text>
+
+                            <text x="16" y="330" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 2.</b> The 1.0 problems were largely about a laptop on the internet. The 2.0 problems are about distributed trust: hosted control planes, delegated capability tokens, and agents talking to agents.</figcaption>
+                    </figure>
+
+                    <h3>The five things to watch in 2.0</h3>
+                    <ul>
+                        <li><strong>The hosted control plane.</strong> If identity and orchestration move to a vendor cloud, you inherit a SaaS threat model — tenant isolation, account takeover, and a supply-chain dependency on the provider. A control-plane compromise is now a fleet-wide event, not a single laptop.</li>
+                        <li><strong>Capability tokens.</strong> Short-lived scoped tokens are a big improvement over a shared vault — <em>if</em> they cannot be stolen and replayed. Watch token lifetime, audience binding, and whether an injected agent can mint or broaden its own grants.</li>
+                        <li><strong>Agent-to-agent (A2A) trust.</strong> 2.0-class runtimes lean into multi-agent delegation. Every delegation edge is a new authority-transfer point, and "authority granted early and never re-verified" is exactly the bug that will resurface between agents if the delegation model is loose.</li>
+                        <li><strong>Policy-engine correctness.</strong> A guardrail engine is only as good as its rules. Mis-configuration, over-broad allow rules, and bypasses become the new high-value target — the single point that decides every action.</li>
+                        <li><strong>More autonomy, fewer prompts.</strong> As agents get more capable, the temptation is to remove the human approval gate for "routine" actions. That is precisely the mitigation that makes prompt injection survivable — do not trade it away for convenience.</li>
+                    </ul>
+
+                    <h2>1.0 vs 2.0 at a glance</h2>
+                    <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>Dimension</th><th>OpenClaw 1.0</th><th>OpenClaw 2.0</th><th>Net for defenders</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Boundary</strong></td><td>Single process</td><td>Separated planes</td><td>Better — contained blast radius</td></tr>
+                            <tr><td><strong>Authorisation</strong></td><td>Once, per connection</td><td>Per action (policy engine)</td><td>Better — kills the 1.0 root cause</td></tr>
+                            <tr><td><strong>Credentials</strong></td><td>Shared vault</td><td>Short-lived capability tokens</td><td>Better — but token hygiene is now critical</td></tr>
+                            <tr><td><strong>Execution</strong></td><td>In-process</td><td>Sandboxed executors</td><td>Better — isolation by default</td></tr>
+                            <tr><td><strong>Deployment</strong></td><td>Self-hosted laptop</td><td>Hosted control plane option</td><td>New — SaaS/tenant threat model</td></tr>
+                            <tr><td><strong>Multi-agent</strong></td><td>Minimal</td><td>A2A delegation</td><td>New — delegation abuse surface</td></tr>
+                            <tr><td><strong>Prompt injection</strong></td><td>Unpatched</td><td>Unpatched (better contained)</td><td>Unchanged — still architectural</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <h2>What to do now — before you roll 2.0 out</h2>
+                    <p>The migration from 1.0 to 2.0 is a golden window: you are touching the deployment anyway, so bake the controls in rather than bolting them on.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 150" role="img" aria-label="Readiness pipeline: inventory agent runtimes, re-baseline configuration for 2.0, enforce capability-token hygiene, test the policy engine, review agent-to-agent trust, and extend monitoring to the control plane and delegation events.">
+                            <text x="16" y="22" class="dg-title">2.0 readiness pipeline</text>
+                            <line x1="66" y1="80" x2="694" y2="80" class="dg-flow-dim"/>
+                            <g fill="var(--neon)" stroke="none"><path d="M690 76 l8 4 -8 4 z"/></g>
+                            <g><circle cx="66" cy="80" r="8" class="dg-node-accent"/><text x="66" y="60" text-anchor="middle" class="dg-sub">01</text><text x="66" y="104" text-anchor="middle" class="dg-accent-text" font-size="10">Inventory</text><text x="66" y="118" text-anchor="middle" class="dg-sub">find agents</text></g>
+                            <g><circle cx="192" cy="80" r="8" class="dg-node-accent"/><text x="192" y="60" text-anchor="middle" class="dg-sub">02</text><text x="192" y="104" text-anchor="middle" class="dg-accent-text" font-size="10">Re-baseline</text><text x="192" y="118" text-anchor="middle" class="dg-sub">2.0 config</text></g>
+                            <g><circle cx="318" cy="80" r="8" class="dg-node-accent"/><text x="318" y="60" text-anchor="middle" class="dg-sub">03</text><text x="318" y="104" text-anchor="middle" class="dg-accent-text" font-size="10">Token hygiene</text><text x="318" y="118" text-anchor="middle" class="dg-sub">scope · TTL</text></g>
+                            <g><circle cx="444" cy="80" r="8" class="dg-node-accent"/><text x="444" y="60" text-anchor="middle" class="dg-sub">04</text><text x="444" y="104" text-anchor="middle" class="dg-accent-text" font-size="10">Test policy</text><text x="444" y="118" text-anchor="middle" class="dg-sub">engine rules</text></g>
+                            <g><circle cx="570" cy="80" r="8" class="dg-node-accent"/><text x="570" y="60" text-anchor="middle" class="dg-sub">05</text><text x="570" y="104" text-anchor="middle" class="dg-accent-text" font-size="10">A2A trust</text><text x="570" y="118" text-anchor="middle" class="dg-sub">delegation</text></g>
+                            <g><circle cx="694" cy="80" r="8" class="dg-node-accent"/><text x="694" y="60" text-anchor="middle" class="dg-sub">06</text><text x="694" y="104" text-anchor="middle" class="dg-accent-text" font-size="10">Monitor</text><text x="694" y="118" text-anchor="middle" class="dg-sub">plane + logs</text></g>
+                            <g fill="var(--neon)" stroke="none"><path d="M120 76 l8 4 -8 4 z"/><path d="M246 76 l8 4 -8 4 z"/><path d="M372 76 l8 4 -8 4 z"/><path d="M498 76 l8 4 -8 4 z"/><path d="M624 76 l8 4 -8 4 z"/></g>
+                            <text x="16" y="140" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 3.</b> Treat the 1.0→2.0 migration as a security project, not an upgrade. Every stage is a control you can bake in while you are already touching the deployment.</figcaption>
+                    </figure>
+
+                    <div class="callout">
+                        <h4>Defender checklist for tomorrow</h4>
+                        <ul>
+                            <li><strong>Re-inventory.</strong> The fixed 1.0 port is fading as a signal — lean on endpoint telemetry and egress-to-LLM-provider patterns to find 2.0 deployments, including the hosted ones.</li>
+                            <li><strong>Treat the control plane as production.</strong> If it is hosted, apply your SaaS due diligence: tenant isolation, SSO, admin MFA, and a data-processing review.</li>
+                            <li><strong>Audit capability tokens.</strong> Short TTLs, tight scopes, audience binding, and no self-minting — verify an injected agent cannot broaden its own grants.</li>
+                            <li><strong>Test the policy engine like the target it is.</strong> Fuzz the rules, hunt allow-rule over-breadth, and confirm every irreversible action re-authorises.</li>
+                            <li><strong>Map agent-to-agent trust.</strong> Enumerate delegation edges and make sure authority is re-verified on transfer, not inherited.</li>
+                            <li><strong>Keep the human gate.</strong> Approval on shell, mail, deletion and money stays — autonomy is not a reason to remove the one control that makes injection survivable.</li>
+                            <li><strong>Extend the SIEM.</strong> Control-plane auth, capability-token issuance, delegation events and executor egress — not just the old gateway logs.</li>
+                        </ul>
+                    </div>
+
+                    <h2>How Preemptive helps</h2>
+                    <p>We assess agent runtimes as what they are — infrastructure that executes code on untrusted input. For teams moving to a 2.0-class deployment, that means a migration-time review of the new planes: control-plane and tenant-isolation testing, capability-token and policy-engine assessment, agent-to-agent trust modelling, indirect prompt-injection testing through every ingested channel, and detection engineering for the delegation and control-plane events your current SIEM content will miss. If you adopted 1.0 informally and are about to adopt 2.0 the same way, the highest-yield first step is still the simplest: find what you have, and prove what it can reach.</p>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>2.0 <strong>fixes the 1.0 root cause</strong> — the single-process broker and connection-level authority are gone, replaced by separated planes and per-action authorisation.</li>
+                            <li>It <strong>relocates the attack surface</strong> rather than removing it: hosted control planes, capability tokens, and agent-to-agent trust are the new frontier.</li>
+                            <li><strong>Prompt injection still has no patch</strong> — 2.0 contains its impact better, but the containment controls (least privilege, approval gates) must stay in place.</li>
+                            <li>Watch <strong>capability-token hygiene, policy-engine correctness, and A2A delegation</strong> — that is where "authority granted early and never re-verified" will try to resurface.</li>
+                            <li>Use the <strong>migration as a security project</strong>: inventory, re-baseline, and extend monitoring to the control plane before you scale 2.0 out.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#openclaw</span>
+                        <span class="tag">#ai-security</span>
+                        <span class="tag">#agent-security</span>
+                        <span class="tag">#prompt-injection</span>
+                        <span class="tag">#capability-tokens</span>
+                        <span class="tag">#a2a</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="openclaw-agent-security.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        Read the 1.0 breakdown
+                    </a>
+                    <a href="../contact.html">
+                        Assess your agent deployment
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#ai">AI Security</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
