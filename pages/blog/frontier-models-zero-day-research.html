@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontier Models for Zero-Day &amp; Vulnerability Research — Preemptive Cyber Security</title>
+    <meta name="description" content="A practitioner's guide to using frontier AI models for zero-day and n-day vulnerability research — model comparison, a multi-agent harness with per-class personas, Obsidian Vault integration, ROI and TP/FP rates, and local vs cloud labs.">
+    <meta name="theme-color" content="#030806">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <style>
+        /* Post-specific: comparison tables reuse the site tokens */
+        .prose table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 1.6em;
+            font-size: 0.9rem;
+        }
+        .prose table thead th {
+            text-align: left;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--neon);
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-strong);
+        }
+        .prose table td {
+            padding: 11px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            vertical-align: top;
+        }
+        .prose table tbody tr:hover td { background: var(--bg-card); }
+        .prose table td strong { color: var(--text-primary); }
+        .table-scroll { overflow-x: auto; margin: 0 0 1.6em; }
+        .table-scroll table { margin: 0; }
+        .pill { font-family: var(--font-mono); font-size: 0.7rem; padding: 2px 8px; border-radius: 100px; border: 1px solid var(--border-strong); color: var(--mint-pale); white-space: nowrap; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <div class="container">
+                <a href="../resources.html" class="back-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    ./resources / blog
+                </a>
+
+                <div class="article-meta">
+                    <span class="cat">AI Security · Research</span>
+                    <span class="dot">//</span>
+                    <span>2026-09-01</span>
+                    <span class="dot">//</span>
+                    <span>22 min read</span>
+                </div>
+
+                <h1>Frontier Models for Zero-Day &amp; Vulnerability Research</h1>
+                <p class="article-lead">Vulnerability research used to be a craft measured in months. Frontier models are collapsing that timeline — reading code, reasoning across call graphs, and drafting proof-of-concepts at a pace no human team can match. This is a full field guide: which models to use, how to wire them into a multi-agent harness with a persona per bug class, how to persist findings into an Obsidian knowledge base, and what the ROI, true-positive, and false-positive numbers actually look like when you run it in a lab.</p>
+
+                <div class="article-byline">
+                    <span class="avatar">VM</span>
+                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                </div>
+
+                <div class="prose">
+                    <p>At <strong>Preemptive Cyber Security</strong> we have spent the last year rebuilding our research workflow around large language models — not as a novelty, but as a force multiplier for the slow, expensive parts of finding bugs. The results have been striking, and so have the failure modes. This post distils what we have learned into something you can actually stand up in your own lab.</p>
+
+                    <h2>The changing world of vulnerability research</h2>
+                    <p>Two clocks govern security. <strong>MTTD</strong> — mean time to detect — is how long a weakness lives before someone finds it. <strong>MTTR</strong> — mean time to respond or remediate — is how long it takes to fix once known. For decades attackers and defenders fought over the gap between them. That gap is now measured in hours, not weeks: n-day exploitation routinely begins within a day of a public advisory, and the same models that help defenders trip-wire a codebase help adversaries weaponise a diff.</p>
+                    <p>The strategic shift is simple to state and hard to live with: <em>whoever compresses MTTD fastest sets the tempo.</em> If a frontier model can surface an exploitable flaw in your dependency before the vendor's advisory drops, you patch pre-emptively. If the adversary gets there first, you are already in an incident. Research is no longer a back-office function — it is the front line of the detect-to-remediate race.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 280" role="img" aria-label="Infographic: a timeline from vulnerability introduction through discovery, disclosure, patch, and exploitation, showing how frontier models compress the detection window and the shrinking gap between disclosure and n-day exploitation.">
+                            <text x="16" y="22" class="dg-title">The shrinking window — MTTD to MTTR</text>
+
+                            <!-- baseline timeline -->
+                            <line x1="40" y1="96" x2="720" y2="96" class="dg-flow-dim"/>
+                            <g fill="var(--neon)" stroke="none"><path d="M716 92 l8 4 -8 4 z"/></g>
+
+                            <!-- milestones -->
+                            <g>
+                                <circle cx="70" cy="96" r="7" class="dg-node"/>
+                                <text x="70" y="78" text-anchor="middle" class="dg-sub">bug born</text>
+                                <text x="70" y="120" text-anchor="middle" class="dg-sub">commit</text>
+                            </g>
+                            <g>
+                                <circle cx="250" cy="96" r="7" class="dg-node-accent"/>
+                                <text x="250" y="78" text-anchor="middle" class="dg-accent-text" font-size="11">discovery</text>
+                                <text x="250" y="120" text-anchor="middle" class="dg-sub">MTTD</text>
+                            </g>
+                            <g>
+                                <circle cx="430" cy="96" r="7" class="dg-node"/>
+                                <text x="430" y="78" text-anchor="middle" class="dg-sub">disclosure</text>
+                                <text x="430" y="120" text-anchor="middle" class="dg-sub">CVE / advisory</text>
+                            </g>
+                            <g>
+                                <circle cx="560" cy="96" r="7" class="dg-node"/>
+                                <text x="560" y="78" text-anchor="middle" class="dg-sub">patch</text>
+                                <text x="560" y="120" text-anchor="middle" class="dg-sub">MTTR</text>
+                            </g>
+                            <g>
+                                <circle cx="650" cy="96" r="7" class="dg-node-accent"/>
+                                <text x="650" y="78" text-anchor="middle" class="dg-accent-text" font-size="11">n-day</text>
+                                <text x="650" y="120" text-anchor="middle" class="dg-sub">exploited</text>
+                            </g>
+
+                            <!-- window brace: disclosure -> exploited -->
+                            <path d="M430 150 L430 160 L650 160 L650 150" class="dg-flow" fill="none"/>
+                            <text x="540" y="178" text-anchor="middle" class="dg-sub">exploitation window — now hours</text>
+
+                            <!-- the AI compression arrow: pulls discovery left -->
+                            <path d="M250 200 C 180 200, 120 200, 92 176" class="dg-flow" stroke-dasharray="4 5"/>
+                            <path d="M96 182 l-6 -6 8 -1 z" fill="var(--neon)"/>
+                            <rect x="250" y="188" width="230" height="46" rx="8" class="dg-node-accent"/>
+                            <text x="365" y="208" text-anchor="middle" class="dg-accent-text">Frontier models compress MTTD</text>
+                            <text x="365" y="224" text-anchor="middle" class="dg-sub">find the flaw before the advisory drops</text>
+
+                            <text x="16" y="266" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The whole game is pulling <b>discovery</b> to the left of <b>disclosure</b>. AI-assisted research shortens MTTD so you patch pre-emptively instead of racing n-day exploitation.</figcaption>
+                    </figure>
+
+                    <h2>How frontier models actually find bugs</h2>
+                    <p>A modern model does not "scan" in the classic sense. It <em>reads</em>. Given source, a decompilation, or a diff, it builds a mental model of data flow, spots where untrusted input reaches a dangerous sink, and reasons about the conditions to reach it. In practice its strengths and weaknesses are complementary to traditional tooling:</p>
+                    <ul>
+                        <li><strong>Where it excels:</strong> understanding unfamiliar code fast, explaining a suspicious pattern, triaging thousands of static-analysis hits, correlating a patch diff to root cause, drafting a PoC, and writing detection logic or a Semgrep/YARA rule from a described flaw.</li>
+                        <li><strong>Where it struggles:</strong> deep multi-step exploit primitives (heap grooming, precise ROP), long-range reasoning across huge codebases without help, and — critically — <strong>confidently hallucinating vulnerabilities that do not exist</strong>. Every finding needs verification.</li>
+                    </ul>
+                    <blockquote>Treat the model as a brilliant, tireless junior researcher with no fear of being wrong. Its output is a lead, never a conclusion.</blockquote>
+
+                    <h2>Comparing models for cybersecurity work</h2>
+                    <p>No single model wins on every axis. The right answer is usually a <em>portfolio</em>: a strong closed model for hard reasoning, an open-weight model for bulk triage you can run privately, and a security-tuned small model for cheap first-pass classification. The table below reflects how we weigh them for research use — capability tiers are directional, not benchmark gospel.</p>
+
+                    <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>Model class</th><th>Examples</th><th>Licence</th><th>Best for</th><th>Watch-outs</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Frontier closed</strong></td>
+                                <td>Claude Opus / Sonnet 5, GPT-series, Gemini</td>
+                                <td><span class="pill">Paid API</span></td>
+                                <td>Hardest reasoning, exploit logic, patch-diff root cause, agentic tool use</td>
+                                <td>Data leaves your boundary; per-token cost; rate limits</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Open-weight general</strong></td>
+                                <td>Llama, Qwen, DeepSeek, Mistral</td>
+                                <td><span class="pill">Open</span></td>
+                                <td>Private bulk triage, self-hosting, fine-tuning on your corpus</td>
+                                <td>Needs GPUs; weaker at long-range reasoning than frontier</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Security-tuned</strong></td>
+                                <td>Foundation-Sec, WhiteRabbitNeo-style tunes</td>
+                                <td><span class="pill">Open</span></td>
+                                <td>Cheap first-pass classification, CWE tagging, log/alert triage</td>
+                                <td>Narrower; still needs a stronger model to confirm</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code-specialist</strong></td>
+                                <td>Code-tuned open + closed variants</td>
+                                <td><span class="pill">Mixed</span></td>
+                                <td>Taint tracing, repo-scale comprehension, refactoring PoCs</td>
+                                <td>Context limits on very large repos; needs retrieval</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <h3>Open source vs paid — the honest trade</h3>
+                    <p>Paid frontier APIs give you the strongest reasoning with zero infrastructure, but every prompt — including proprietary or client source — leaves your control, and cost scales with volume. Open-weight models you host cost more up front (GPUs, ops) but keep sensitive code on-premises, run at a flat rate once provisioned, and can be fine-tuned on your own vulnerability corpus. For consultancy work under NDA, that data-residency property is often the deciding factor, which is why our research rigs lean on self-hosted models for anything touching client code and reserve frontier APIs for sanitised, high-difficulty problems.</p>
+
+                    <h2>The harness: many agents, one per bug class</h2>
+                    <p>A single "find the bugs" prompt underperforms badly. Vulnerability classes demand different mental models — a memory-corruption hunter thinks about lifetimes and bounds; a web hunter thinks about trust boundaries and encoding; an auth hunter thinks about state machines. So we build a <strong>harness</strong>: an orchestrator that fans work out to specialised agents, each with a tailored <em>persona</em>, system prompt, toolset, and model choice for its class.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 380" role="img" aria-label="Architecture: an orchestrator agent distributes a target codebase to five specialist agents — memory safety, injection and web, auth and logic, crypto, and deserialization and supply chain — each with its own persona and tools, feeding a verification and triage stage, then persisting confirmed findings to an Obsidian vault.">
+                            <text x="16" y="22" class="dg-title">Multi-agent research harness</text>
+
+                            <!-- Target -->
+                            <rect x="40" y="60" width="140" height="46" rx="8" class="dg-node"/>
+                            <text x="110" y="80" text-anchor="middle" class="dg-label">Target</text>
+                            <text x="110" y="96" text-anchor="middle" class="dg-sub">source · binary · diff</text>
+
+                            <!-- Orchestrator -->
+                            <rect x="300" y="56" width="160" height="54" rx="8" class="dg-node-accent"/>
+                            <text x="380" y="78" text-anchor="middle" class="dg-accent-text">Orchestrator</text>
+                            <text x="380" y="94" text-anchor="middle" class="dg-sub">route · budget · dedupe</text>
+
+                            <g class="dg-flow"><line x1="180" y1="83" x2="298" y2="83"/></g>
+                            <path d="M292 79 l8 4 -8 4 z" fill="var(--neon)"/>
+
+                            <!-- Specialist agents row -->
+                            <g>
+                                <rect x="20" y="170" width="135" height="60" rx="8" class="dg-node"/>
+                                <text x="87" y="190" text-anchor="middle" class="dg-label">Memory-safety</text>
+                                <text x="87" y="206" text-anchor="middle" class="dg-sub">UAF · overflow</text>
+                                <text x="87" y="220" text-anchor="middle" class="dg-sub">code model</text>
+                            </g>
+                            <g>
+                                <rect x="165" y="170" width="135" height="60" rx="8" class="dg-node"/>
+                                <text x="232" y="190" text-anchor="middle" class="dg-label">Injection / Web</text>
+                                <text x="232" y="206" text-anchor="middle" class="dg-sub">SQLi · XSS · SSRF</text>
+                                <text x="232" y="220" text-anchor="middle" class="dg-sub">frontier model</text>
+                            </g>
+                            <g>
+                                <rect x="310" y="170" width="135" height="60" rx="8" class="dg-node"/>
+                                <text x="377" y="190" text-anchor="middle" class="dg-label">Auth / Logic</text>
+                                <text x="377" y="206" text-anchor="middle" class="dg-sub">BOLA · state</text>
+                                <text x="377" y="220" text-anchor="middle" class="dg-sub">frontier model</text>
+                            </g>
+                            <g>
+                                <rect x="455" y="170" width="135" height="60" rx="8" class="dg-node"/>
+                                <text x="522" y="190" text-anchor="middle" class="dg-label">Crypto</text>
+                                <text x="522" y="206" text-anchor="middle" class="dg-sub">weak PRNG · IV</text>
+                                <text x="522" y="220" text-anchor="middle" class="dg-sub">frontier model</text>
+                            </g>
+                            <g>
+                                <rect x="600" y="170" width="140" height="60" rx="8" class="dg-node"/>
+                                <text x="670" y="190" text-anchor="middle" class="dg-label">Deserial. /</text>
+                                <text x="670" y="204" text-anchor="middle" class="dg-label">Supply chain</text>
+                                <text x="670" y="220" text-anchor="middle" class="dg-sub">code model</text>
+                            </g>
+
+                            <!-- orchestrator to agents -->
+                            <g class="dg-flow-dim">
+                                <line x1="360" y1="110" x2="90" y2="168"/>
+                                <line x1="368" y1="110" x2="232" y2="168"/>
+                                <line x1="380" y1="110" x2="377" y2="168"/>
+                                <line x1="392" y1="110" x2="522" y2="168"/>
+                                <line x1="400" y1="110" x2="668" y2="168"/>
+                            </g>
+
+                            <!-- Verify / triage -->
+                            <rect x="230" y="272" width="300" height="50" rx="8" class="dg-node-accent"/>
+                            <text x="380" y="292" text-anchor="middle" class="dg-accent-text">Verification &amp; triage</text>
+                            <text x="380" y="308" text-anchor="middle" class="dg-sub">reproduce · rank · dedupe · human review</text>
+
+                            <g class="dg-flow-dim">
+                                <line x1="87" y1="230" x2="300" y2="272"/>
+                                <line x1="232" y1="230" x2="330" y2="272"/>
+                                <line x1="377" y1="230" x2="380" y2="272"/>
+                                <line x1="522" y1="230" x2="440" y2="272"/>
+                                <line x1="670" y1="230" x2="470" y2="272"/>
+                            </g>
+
+                            <!-- to vault -->
+                            <rect x="300" y="340" width="160" height="30" rx="8" class="dg-node"/>
+                            <text x="380" y="360" text-anchor="middle" class="dg-sub">→ Obsidian Vault (findings)</text>
+                            <g class="dg-flow"><line x1="380" y1="322" x2="380" y2="338"/></g>
+                            <path d="M376 332 l4 8 4 -8 z" fill="var(--neon)"/>
+
+                            <text x="600" y="366" class="dg-title">Preemptive Cyber Security</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 2.</b> The orchestrator routes the target to a persona per vulnerability class, each on the model that suits it. Everything funnels through verification before a confirmed finding is written to the knowledge base.</figcaption>
+                    </figure>
+
+                    <h3>Designing a persona</h3>
+                    <p>Each agent is defined by four things: a <strong>system prompt</strong> that frames its worldview ("You are a memory-safety auditor; you care only about object lifetimes, bounds, and integer arithmetic…"), a <strong>toolset</strong> (grep/AST queries, a sandbox to run candidate PoCs, a symbolic helper), a <strong>model</strong> matched to the class, and an <strong>output contract</strong> — structured JSON with a CWE, a location, a confidence, and the reproduction steps. The output contract is what makes the pipeline verifiable and lets the orchestrator dedupe overlapping hits.</p>
+
+                    <h3>Standing the harness up — step by step</h3>
+                    <ol>
+                        <li><strong>Pick your runtime.</strong> An agent framework or a thin custom loop; either way you need tool-calling and per-agent system prompts.</li>
+                        <li><strong>Define the personas</strong> as config: name, class, system prompt, model, tools, and the JSON output schema.</li>
+                        <li><strong>Give agents safe tools</strong> — read-only code access, an AST/grep query tool, and an <em>isolated</em> sandbox for running candidate PoCs. Never let an agent execute untrusted code outside the sandbox.</li>
+                        <li><strong>Add the orchestrator</strong> to chunk the target (retrieval for big repos), fan out to the relevant personas, set a token/time budget, and collect results.</li>
+                        <li><strong>Insert a verification stage</strong> that re-runs each candidate, attempts reproduction in the sandbox, and drops anything unproven below a confidence threshold.</li>
+                        <li><strong>Persist confirmed findings</strong> to your knowledge base (next section) with full provenance — model, prompt, and evidence.</li>
+                    </ol>
+
+                    <h2>Wiring the harness into an Obsidian Vault</h2>
+                    <p>Findings are worthless if they evaporate at the end of a run. We route every confirmed lead into an <strong>Obsidian</strong> vault — a folder of Markdown notes — so research compounds: notes link to related CVEs, tag by CWE and target, and become queryable with Dataview. The agents read and write the vault through the <strong>Local REST API</strong> plugin, wrapped by an Obsidian MCP server so any MCP-capable client can treat the vault as a tool.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 250" role="img" aria-label="Integration flow: the research harness calls an Obsidian MCP server, which talks to the Obsidian Local REST API plugin over localhost, which reads and writes Markdown notes in the vault; Dataview then queries the notes.">
+                            <text x="16" y="22" class="dg-title">Obsidian Vault integration</text>
+
+                            <rect x="20" y="70" width="150" height="58" rx="8" class="dg-node"/>
+                            <text x="95" y="94" text-anchor="middle" class="dg-label">Research harness</text>
+                            <text x="95" y="112" text-anchor="middle" class="dg-sub">agents + orchestrator</text>
+
+                            <rect x="210" y="70" width="150" height="58" rx="8" class="dg-node-accent"/>
+                            <text x="285" y="90" text-anchor="middle" class="dg-accent-text">Obsidian MCP</text>
+                            <text x="285" y="106" text-anchor="middle" class="dg-sub">server (tools:</text>
+                            <text x="285" y="119" text-anchor="middle" class="dg-sub">read/write/search)</text>
+
+                            <rect x="400" y="70" width="150" height="58" rx="8" class="dg-node"/>
+                            <text x="475" y="90" text-anchor="middle" class="dg-label">Local REST API</text>
+                            <text x="475" y="106" text-anchor="middle" class="dg-sub">plugin · :27124</text>
+                            <text x="475" y="119" text-anchor="middle" class="dg-sub">API key</text>
+
+                            <rect x="590" y="70" width="150" height="58" rx="8" class="dg-node"/>
+                            <text x="665" y="90" text-anchor="middle" class="dg-label">The Vault</text>
+                            <text x="665" y="106" text-anchor="middle" class="dg-sub">Markdown notes</text>
+                            <text x="665" y="119" text-anchor="middle" class="dg-sub">frontmatter · tags</text>
+
+                            <g class="dg-flow">
+                                <line x1="170" y1="99" x2="208" y2="99"/>
+                                <line x1="360" y1="99" x2="398" y2="99"/>
+                                <line x1="550" y1="99" x2="588" y2="99"/>
+                            </g>
+                            <g fill="var(--neon)" stroke="none">
+                                <path d="M202 95 l8 4 -8 4 z"/>
+                                <path d="M392 95 l8 4 -8 4 z"/>
+                                <path d="M582 95 l8 4 -8 4 z"/>
+                            </g>
+                            <text x="189" y="62" text-anchor="middle" class="dg-sub">MCP</text>
+                            <text x="379" y="62" text-anchor="middle" class="dg-sub">HTTPS</text>
+                            <text x="569" y="62" text-anchor="middle" class="dg-sub">file I/O</text>
+
+                            <!-- Dataview query loop -->
+                            <rect x="400" y="175" width="150" height="44" rx="8" class="dg-node"/>
+                            <text x="475" y="195" text-anchor="middle" class="dg-label">Dataview</text>
+                            <text x="475" y="210" text-anchor="middle" class="dg-sub">query findings</text>
+                            <path d="M665 128 C 665 175, 552 197, 552 197" class="dg-flow" stroke-dasharray="4 5"/>
+                            <path d="M558 193 l-8 4 6 5 z" fill="var(--neon)"/>
+
+                            <!-- localhost boundary -->
+                            <rect x="14" y="150" width="736" height="1" fill="none"/>
+                            <text x="16" y="238" class="dg-title">Preemptive Cyber Security — localhost only</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 3.</b> Agents never touch vault files directly — they go through the MCP server and the Local REST API, keeping access controlled and auditable.</figcaption>
+                    </figure>
+
+                    <h3>Step-by-step: connect agents to your vault</h3>
+                    <ol>
+                        <li><strong>Create the vault.</strong> Install Obsidian, create a vault such as <code>vuln-research</code>, and add folders like <code>/findings</code>, <code>/targets</code>, and <code>/cwe</code>.</li>
+                        <li><strong>Install the Local REST API plugin.</strong> Settings → Community plugins → browse → <em>Local REST API</em> → install and enable. It listens on <code>https://127.0.0.1:27124</code>.</li>
+                        <li><strong>Copy the API key.</strong> In the plugin settings, copy the generated key and note the port. Keep the server bound to localhost.</li>
+                        <li><strong>Add an Obsidian MCP server.</strong> Install a community <em>obsidian-mcp</em> server and point it at the REST API URL and key, so it exposes tools like <code>read_note</code>, <code>create_note</code>, <code>search</code>, and <code>append</code>.</li>
+                        <li><strong>Register it with your MCP client / harness.</strong> Add the server to your client config (the same pattern as any MCP server: command + args, or an SSE/HTTP URL) and restart so the vault tools appear.</li>
+                        <li><strong>Define a finding template.</strong> Give the writer agent a Markdown template with YAML frontmatter — <code>target</code>, <code>cwe</code>, <code>severity</code>, <code>confidence</code>, <code>status</code>, <code>model</code> — plus body sections for evidence and repro. Consistent frontmatter is what makes Dataview dashboards work.</li>
+                        <li><strong>Verify round-trip.</strong> Ask the agent to write a test finding, confirm the note appears in the vault, then query it with a Dataview block. You now have a self-updating research knowledge base.</li>
+                    </ol>
+
+                    <div class="callout">
+                        <h4>Example finding frontmatter</h4>
+                        <ul>
+                            <li><code>target: acme-router-fw-2.3</code></li>
+                            <li><code>cwe: CWE-416 (Use-After-Free)</code></li>
+                            <li><code>severity: high</code> · <code>confidence: 0.7</code> · <code>status: unverified</code></li>
+                            <li><code>model: memory-safety-agent / code-model</code></li>
+                            <li>Body: root-cause, tainted-path, candidate PoC, links to <code>[[CWE-416]]</code> and prior <code>[[acme-router]]</code> notes.</li>
+                        </ul>
+                    </div>
+
+                    <h2>ROI, true positives, and false positives</h2>
+                    <p>The honest question every lead asks is: does this pay for itself, and can I trust it? Measure three things continuously — <strong>true-positive rate</strong> (confirmed real bugs ÷ flagged), <strong>false-positive rate</strong> (noise ÷ flagged), and <strong>yield per dollar</strong> (confirmed findings ÷ compute + analyst cost). The figures below are <em>directional</em> from our own lab runs, not industry benchmarks — your mileage depends heavily on target, prompts, and verification rigour.</p>
+
+                    <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>Stage</th><th>What it produces</th><th>Typical TP signal</th><th>FP behaviour</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Raw agent pass</strong></td><td>Many candidate leads, fast</td><td>High recall — catches most real issues</td><td>High FP; confident hallucinations common</td></tr>
+                            <tr><td><strong>+ Verification stage</strong></td><td>Reproduced / discarded</td><td>Real bugs survive reproduction</td><td>FP drops sharply once repro is required</td></tr>
+                            <tr><td><strong>+ Human review</strong></td><td>Report-ready findings</td><td>Precision approaches manual review</td><td>Residual FP mostly edge-case logic</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <p>The pattern is consistent: models give you <strong>recall for cheap and precision only after verification</strong>. A raw pass might flag ten "criticals" of which two are real — useless if you ship it, gold if you gate it behind automated reproduction and a human. The ROI comes not from replacing the researcher but from letting one researcher cover an order of magnitude more code, spending their time confirming and exploiting rather than reading boilerplate. Where it pays best: large dependency trees, diff-triage after upstream releases, and first-pass audits of unfamiliar code.</p>
+
+                    <h2>Local AI labs vs cloud-hosted</h2>
+                    <p>Where you run the models is a security decision as much as a cost one. A self-hosted lab keeps client code on-premises and runs at a flat rate; a cloud/API setup gives you frontier capability instantly but sends prompts off-box.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 250" role="img" aria-label="Comparison: a local AI lab keeps data on-premises with GPU hosting and flat running cost but requires ops and hardware, versus cloud-hosted APIs offering top capability and no infrastructure but with data egress and per-token cost.">
+                            <text x="16" y="22" class="dg-title">Local lab vs cloud-hosted</text>
+
+                            <!-- Local column -->
+                            <rect x="30" y="50" width="330" height="170" rx="10" class="dg-node"/>
+                            <text x="195" y="76" text-anchor="middle" class="dg-accent-text">Local AI lab</text>
+                            <text x="60" y="104" class="dg-sub">+ Code never leaves your network (NDA-safe)</text>
+                            <text x="60" y="126" class="dg-sub">+ Flat cost once GPUs are provisioned</text>
+                            <text x="60" y="148" class="dg-sub">+ Fine-tune on your own corpus</text>
+                            <text x="60" y="176" class="dg-sub">– GPU capex + ops burden</text>
+                            <text x="60" y="198" class="dg-sub">– Open weights trail frontier on hard reasoning</text>
+
+                            <!-- Cloud column -->
+                            <rect x="400" y="50" width="330" height="170" rx="10" class="dg-node"/>
+                            <text x="565" y="76" text-anchor="middle" class="dg-accent-text">Cloud / API</text>
+                            <text x="430" y="104" class="dg-sub">+ Strongest reasoning, zero infrastructure</text>
+                            <text x="430" y="126" class="dg-sub">+ Scales instantly; always latest models</text>
+                            <text x="430" y="148" class="dg-sub">+ No hardware to babysit</text>
+                            <text x="430" y="176" class="dg-sub">– Prompts (and client code) leave your boundary</text>
+                            <text x="430" y="198" class="dg-sub">– Per-token cost scales with volume</text>
+
+                            <text x="16" y="240" class="dg-title">Preemptive Cyber Security — hybrid is usually the answer</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 4.</b> The practical answer is hybrid: self-host for anything touching client code, and reach for frontier APIs on sanitised, high-difficulty problems.</figcaption>
+                    </figure>
+
+                    <p>A starter local lab is more approachable than it sounds: a workstation with a capable GPU (or a small multi-GPU box), an inference server for open-weight models, your harness, and the Obsidian vault — all on an isolated research network with no path to client production. Scale the GPUs as your throughput needs grow. Keep the frontier-API path for problems where the reasoning gap justifies sending sanitised inputs off-box, and log every external call for your own audit trail.</p>
+
+                    <h2>Doing this responsibly</h2>
+                    <p>Everything here is for <strong>authorised</strong> research — your own code, code you are contracted to test, or software with a clear vulnerability-disclosure programme. The same harness that helps you patch pre-emptively is dual-use, so the guardrails are not optional.</p>
+
+                    <div class="callout">
+                        <h4>Research guardrails</h4>
+                        <ul>
+                            <li><strong>Authorisation and scope</strong> before any target touches the harness — no unsanctioned code, no live third-party systems.</li>
+                            <li><strong>Sandboxed execution only</strong> for candidate PoCs; never run model-generated code on your host or network.</li>
+                            <li><strong>Coordinated disclosure</strong> for anything real — work with the vendor, respect embargoes, and never weaponise beyond proof.</li>
+                            <li><strong>Data residency</strong> — keep client and proprietary code on self-hosted models; log and sanitise anything sent to external APIs.</li>
+                            <li><strong>Human sign-off</strong> on every finding before it leaves the lab. The model proposes; a researcher disposes.</li>
+                        </ul>
+                    </div>
+
+                    <div class="callout">
+                        <h4>Key takeaways</h4>
+                        <ul>
+                            <li>The research edge now belongs to whoever <strong>compresses MTTD</strong> — frontier models pull discovery ahead of disclosure.</li>
+                            <li>Use a <strong>portfolio of models</strong>: frontier for hard reasoning, open-weight for private bulk triage, security-tuned for cheap first passes.</li>
+                            <li>Build a <strong>harness with a persona per bug class</strong> and a strict output contract — one prompt for everything underperforms.</li>
+                            <li>Persist findings to an <strong>Obsidian vault</strong> via the Local REST API + an MCP server so research compounds and stays queryable.</li>
+                            <li>Models buy <strong>recall cheaply and precision only after verification</strong> — gate every lead behind reproduction and a human.</li>
+                            <li>Go <strong>hybrid</strong>: self-host for client code, reach for frontier APIs on sanitised hard problems, and disclose responsibly.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="tag">#zero-day</span>
+                        <span class="tag">#vulnerability-research</span>
+                        <span class="tag">#ai-security</span>
+                        <span class="tag">#llm-agents</span>
+                        <span class="tag">#obsidian</span>
+                        <span class="tag">#mttr</span>
+                    </div>
+                </div>
+
+                <div class="article-nav">
+                    <a href="../resources.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        All articles
+                    </a>
+                    <a href="../contact.html">
+                        Talk to our research team
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="logo">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                    <p>360° protection against cyber threats. Offensive security, defensive operations, and training.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../team.html">Team</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../services.html#offensive">Offensive Security</a></li>
+                        <li><a href="../services.html#defensive">Defensive Security</a></li>
+                        <li><a href="../services.html#ai">AI Security</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../resources.html">Blog</a></li>
+                        <li><a href="../resources.html">Tools</a></li>
+                        <li><a href="../resources.html">Talks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Preemptive Cyber Security</p>
+                <ul class="footer-links">
+                    <li><a href="../privacy.html">Privacy</a></li>
+                    <li><a href="../terms.html">Terms</a></li>
+                    <li><a href="../cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
