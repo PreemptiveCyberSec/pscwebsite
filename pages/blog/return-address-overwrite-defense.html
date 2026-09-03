@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Address Overwrite: Defense — Preemptive Cyber Security</title>
+    <meta
+      name="description"
+      content="Defensive analysis of return-address overwrite, stack integrity, unwind anomalies, CET, crash evidence, and memory forensics."
+    >
+    <meta name="theme-color" content="#030806">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+  </head>
+  <body>
+    <main>
+      <article class="article">
+        <div class="container">
+          <a href="../resources.html" class="back-link"
+            >&larr; ./resources / blog</a
+          >
+          <div class="article-meta">
+            <span class="cat">Windows Defense · Stack Integrity</span
+            ><span class="dot">//</span><span>2026-09-13</span>
+          </div>
+          <h1>
+            Basic Return Address Overwrite: Detecting Broken Call-Return
+            Integrity
+          </h1>
+          <p class="article-lead">
+            A return address tells the processor where execution should continue
+            after a function completes. Overwriting it can redirect control flow
+            or distort stack-based telemetry. Defenders can compare machine
+            state, unwind metadata, module provenance, and hardware protection
+            results without reproducing the manipulation.
+          </p>
+          <div class="article-byline">
+            <span class="avatar">MC</span
+            ><span
+              >By <strong>Mark Chen</strong> · Security Researcher</span
+            >
+          </div>
+          <div class="prose">
+            <div class="callout">
+              <strong>Defensive scope</strong>
+              <p>
+                This article omits overwrite code, stack layouts for
+                exploitation, gadget selection, and control-flow redirection
+                instructions.
+              </p>
+            </div>
+            <h2>Normal call and return</h2>
+            <p>
+              A call transfers execution and records a return location.
+              Compilers also produce unwind metadata that helps Windows
+              reconstruct nonvolatile state and stack frames during exceptions
+              and diagnostics. A manipulated return can disagree with the
+              expected caller, fall outside a loaded image, skip a plausible
+              call site, or conflict with a hardware-maintained shadow stack on
+              systems using Intel CET-compatible protections.
+            </p>
+            <figure class="diagram-figure">
+              <svg
+                viewBox="0 0 740 225"
+                role="img"
+                aria-label="Comparison of expected call-return flow and an anomalous overwritten return address."
+              >
+                <text x="16" y="24" class="dg-title">
+                  Validate the return against multiple sources
+                </text>
+                <rect
+                  x="24"
+                  y="58"
+                  width="144"
+                  height="52"
+                  rx="7"
+                  class="dg-node"
+                />
+                <text x="96" y="80" text-anchor="middle" class="dg-label">
+                  Caller code
+                </text>
+                <text x="96" y="98" text-anchor="middle" class="dg-label">
+                  valid call site
+                </text>
+                <rect
+                  x="214"
+                  y="58"
+                  width="144"
+                  height="52"
+                  rx="7"
+                  class="dg-node-alt"
+                />
+                <text x="286" y="80" text-anchor="middle" class="dg-label">
+                  Stack return
+                </text>
+                <text x="286" y="98" text-anchor="middle" class="dg-label">
+                  address
+                </text>
+                <rect
+                  x="404"
+                  y="44"
+                  width="144"
+                  height="46"
+                  rx="7"
+                  class="dg-node"
+                />
+                <text x="476" y="72" text-anchor="middle" class="dg-label">
+                  Expected caller
+                </text>
+                <rect
+                  x="404"
+                  y="110"
+                  width="144"
+                  height="46"
+                  rx="7"
+                  class="dg-node-danger"
+                />
+                <text x="476" y="138" text-anchor="middle" class="dg-label">
+                  Anomalous target
+                </text>
+                <rect
+                  x="594"
+                  y="58"
+                  width="122"
+                  height="52"
+                  rx="7"
+                  class="dg-node-alt"
+                />
+                <text x="655" y="80" text-anchor="middle" class="dg-label">
+                  Unwind +
+                </text>
+                <text x="655" y="98" text-anchor="middle" class="dg-label">
+                  shadow stack
+                </text>
+                <line x1="168" y1="84" x2="214" y2="84" class="dg-line" />
+                <line x1="358" y1="84" x2="404" y2="67" class="dg-line" />
+                <line x1="358" y1="84" x2="404" y2="133" class="dg-line" />
+                <line x1="548" y1="67" x2="594" y2="80" class="dg-line" />
+                <line x1="548" y1="133" x2="594" y2="98" class="dg-line" />
+                <text x="24" y="194" class="dg-note">
+                  Check instruction bytes before return, image backing, unwind
+                  metadata, CET events, and writer history
+                </text>
+              </svg>
+              <figcaption>
+                A stack address becomes trustworthy only when code, metadata,
+                and hardware state support it.
+              </figcaption>
+            </figure>
+            <h2>Detection and investigation</h2>
+            <ul>
+              <li>
+                Return targets outside executable, image-backed regions or
+                inside recently changed pages.
+              </li>
+              <li>
+                Addresses not preceded by a plausible call instruction after
+                accounting for valid compiler patterns.
+              </li>
+              <li>
+                Unwind failures, implausible frame transitions, or stacks that
+                cross unrelated modules unexpectedly.
+              </li>
+              <li>
+                CET shadow-stack or control-protection exceptions where
+                supported.
+              </li>
+              <li>
+                Writes to active thread stacks followed by unusual execution or
+                process crashes.
+              </li>
+            </ul>
+            <p>
+              Tail calls, callbacks, exception dispatch, fibers, coroutines, JIT
+              code, and optimized binaries can make simple stack rules
+              inaccurate. Symbol quality, unwind metadata, architecture,
+              compiler, and runtime context matter.
+            </p>
+            <h2>Safe tooling and response</h2>
+            <p>
+              Collect crash dumps, memory, thread contexts, stacks, modules,
+              page protections, unwind data, and recent memory-write telemetry.
+              Use benign programs that intentionally corrupt a local canary and
+              terminate safely rather than redirecting execution.
+              <a href="https://github.com/microsoft/WinDbg-Samples"
+                >WinDbg samples</a
+              >,
+              <a href="https://github.com/volatilityfoundation/volatility3"
+                >Volatility 3</a
+              >,
+              <a href="https://github.com/NationalSecurityAgency/ghidra"
+                >Ghidra</a
+              >, and
+              <a href="https://github.com/hasherezade/pe-sieve">PE-sieve</a>
+              support analysis.
+            </p>
+            <h2>ATT&amp;CK, CVEs, and controls</h2>
+            <p>
+              Call-stack manipulation may support T1036 Masquerading or
+              T1562.001 Impair Defenses, while exploitation of a
+              memory-corruption flaw may map separately to T1203. Return-address
+              overwrite is a primitive, not a CVE; any underlying vulnerability
+              needs exact product evidence. Enable hardware-enforced stack
+              protection where compatible, exploit protection, CFG, modern
+              compiler mitigations, application control, rapid patching, and
+              high-quality crash collection.
+            </p>
+            <div class="article-tags">
+              <span>Call Stack</span><span>CET</span><span>Control Flow</span>
+            </div>
+            <div class="article-nav">
+              <a href="sleep-obfuscation-defense.html"
+                >&larr; Previous: Sleep Obfuscation</a
+              ><a href="active-call-stack-spoofing-defense.html"
+                >Next: Stack Spoofing &rarr;</a
+              >
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+    <footer>
+      <div class="container">
+        <div>
+          <span class="footer-logo">PSC<span class="accent">.</span></span>
+          <p>Security before compromise.</p>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Preemptive Cyber Security</span
+          ><span>Built for resilience.</span>
+        </div>
+      </div>
+    </footer>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>
