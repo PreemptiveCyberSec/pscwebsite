@@ -36,7 +36,7 @@
   </url>
   <url>
     <loc>https://preemptivecybersec.com/pages/resources.html</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -67,7 +67,86 @@
     <priority>0.3</priority>
   </url>
 
-  <!-- ===== Blog — 34 posts, newest first ===== -->
+  <!-- ===== Blog — 88 posts, newest first ===== -->
+  <url><loc>https://preemptivecybersec.com/pages/blog/command-line-spoofing-defense.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/fragmentation-ads-defense.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/file-attributes-locking-defense.html</loc><lastmod>2026-09-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/time-stomping-defense.html</loc><lastmod>2026-09-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html</loc><lastmod>2026-09-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/return-address-overwrite-defense.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/sleep-obfuscation-defense.html</loc><lastmod>2026-09-12</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/anti-debugging-techniques-defense.html</loc><lastmod>2026-09-11</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/anti-vm-techniques-defense.html</loc><lastmod>2026-09-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/etw-session-hijacking-defense.html</loc><lastmod>2026-09-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/nttraceevent-patching-defense.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/etw-patching-defense.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/etw-theory-defense.html</loc><lastmod>2026-09-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/amsi-architecture-bypass-theory-defense.html</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/msfvenom-vs-donut-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/crystalpalace-pic-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/reflective-dll-injection-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ghost-files-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/process-ghosting-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/special-apc-injection-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/module-stomping-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/kernel-callback-table-injection-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/win32k-callback-detouring-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/custom-userland-primitives-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html</loc><lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/winapi-native-api-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/api-hashing-iat-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/userland-hooking-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/hells-gate-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/diskbased-gate-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/indirect-syscalls-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/winapi-wrapper-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/xor-string-encryption-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/compile-time-string-encryption-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/layered-compile-time-string-encryption-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/reducing-entropy-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/xor-encrypted-payloads-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/aes-encrypted-payloads-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/speck-encrypted-payloads-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/rc4-encrypted-payloads-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/png-steganography-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html</loc><lastmod>2026-09-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/blog/windows-sids-integrity-levels-token-architecture.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/blog/pe-format-relocations-aslr.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/blog/peb-teb-process-thread-structures.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html</loc>
     <lastmod>2026-09-01</lastmod>
