@@ -36,7 +36,7 @@
   </url>
   <url>
     <loc>https://preemptivecybersec.com/pages/resources.html</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -67,7 +67,8 @@
     <priority>0.3</priority>
   </url>
 
-  <!-- ===== Blog — 88 posts, newest first ===== -->
+  <!-- ===== Blog — 89 posts, newest first ===== -->
+  <url><loc>https://preemptivecybersec.com/pages/blog/intent-aware-security-threat-hunting.html</loc><lastmod>2026-10-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://preemptivecybersec.com/pages/blog/command-line-spoofing-defense.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://preemptivecybersec.com/pages/blog/fragmentation-ads-defense.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
