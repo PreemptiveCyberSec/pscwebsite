@@ -1,0 +1,89 @@
+# Preemptive Cyber Security
+
+> Preemptive Cyber Security (PSC) is a cybersecurity consultancy delivering offensive security, defensive security, AI security, and hands-on training. PSC helps organizations identify attack paths, strengthen detection and response, secure applications and AI systems, and reduce risk before incidents become breaches.
+
+This file is a curated map of PSC's public company, service, and security research pages. Use the Services page for current capabilities, methodologies, frameworks, and deliverables. Use Resources for the complete research catalogue. Use individual articles for technical explanations, defensive guidance, architecture diagrams, ATT&CK context, and practical security recommendations.
+
+## Company and engagement
+
+- [Preemptive Cyber Security](https://preemptivecybersec.com/): Company homepage and high-level overview of PSC's offensive, defensive, AI security, and training disciplines.
+- [Services](https://preemptivecybersec.com/pages/services.html): Interactive catalogue of security services, assessment methodologies, frameworks, and deliverables. Use as the authoritative service-selection page.
+- [About PSC](https://preemptivecybersec.com/pages/about.html): Company approach, values, research background, and security mission.
+- [Security team](https://preemptivecybersec.com/pages/team.html): Security researchers and practitioners behind PSC.
+- [Contact PSC](https://preemptivecybersec.com/pages/contact.html): Request a scoped security assessment or discuss an organization's attack surface and security requirements.
+- [Careers](https://preemptivecybersec.com/pages/careers.html): Open roles and information about joining PSC's offensive and defensive security team.
+
+## Service disciplines
+
+- [Offensive Security](https://preemptivecybersec.com/pages/services.html#offensive): Adversary-driven testing across web applications, APIs, infrastructure, mobile and desktop applications, databases, wireless networks, hardware, IoT and OT, social engineering, physical security, red teaming, and adversarial simulation.
+- [Defensive Security](https://preemptivecybersec.com/pages/services.html#defensive): Application security programs, security operations, asset identification, architecture review, data leakage prevention, ransomware protection, threat assessment, risk analysis, configuration review, source-code review, password auditing, and policy review.
+- [AI Security](https://preemptivecybersec.com/pages/services.html#ai): Security for LLM applications, AI agents, orchestration layers, MCP servers and clients, agent-to-agent protocols, RAG pipelines, model supply chains, AI infrastructure, guardrails, governance, and adversarial testing.
+- [Training and Education](https://preemptivecybersec.com/pages/services.html#training): Hands-on courses in red-team social engineering, offensive tool development, OSINT and attack-surface management, mobile application security, threat intelligence, detection engineering, and proactive threat hunting.
+
+## Security research index
+
+- [Resources](https://preemptivecybersec.com/pages/resources.html): Complete index of PSC security research, tools, and conference material. Use this page to discover all published articles.
+- [XML sitemap](https://preemptivecybersec.com/sitemap.xml): Machine-readable index of current public pages and all published research URLs.
+
+## Threat detection, hunting, and incident response
+
+- [Intent-Aware Security for Threat Hunting](https://preemptivecybersec.com/pages/blog/intent-aware-security-threat-hunting.html): Framework for connecting identity, role, workflow, target, method, and outcome to identify malware and malicious behavior in corporate networks.
+- [Advanced EDR Architecture and Tiers of Detection](https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html): Endpoint visibility, prevention, behavioral detection, correlation, response, and telemetry-resilience architecture.
+- [Proactive Threat Hunting with MITRE ATT&CK](https://preemptivecybersec.com/pages/blog/threat-hunting-mitre-attack.html): Hypothesis-led hunting and ATT&CK-aligned detection development.
+- [SIEM Detection Engineering](https://preemptivecybersec.com/pages/blog/siem-detection-engineering.html): Building, tuning, validating, and operating useful security detections.
+- [SOC Automation and SOAR](https://preemptivecybersec.com/pages/blog/soc-automation-soar.html): Automation patterns for security operations and incident-response workflows.
+- [Threat Intelligence and Incident Response](https://preemptivecybersec.com/pages/blog/threat-intel-incident-response.html): Connecting the intelligence lifecycle to investigation, containment, and recovery.
+- [Purple Teaming](https://preemptivecybersec.com/pages/blog/purple-teaming.html): Collaborative adversary simulation for measuring and improving defensive coverage.
+- [Ransomware Defense in 2026](https://preemptivecybersec.com/pages/blog/ransomware-defense-2026.html): Double-extortion risks, precursor detection, resilience, and recovery controls.
+- [Zero Trust Architecture](https://preemptivecybersec.com/pages/blog/zero-trust-architecture.html): Identity, device, network, application, and data controls for continuous verification.
+
+## Windows security, malware, and evasion research
+
+- [Malware Analysis](https://preemptivecybersec.com/pages/blog/malware-analysis.html): Static, dynamic, behavioral, and memory-analysis workflow for suspicious software.
+- [EDR Evasion and Telemetry](https://preemptivecybersec.com/pages/blog/edr-evasion-telemetry.html): Defensive analysis of endpoint blind spots and resilient telemetry design.
+- [Anti-VM Techniques](https://preemptivecybersec.com/pages/blog/anti-vm-techniques-defense.html): Detecting environment-aware malware and sandbox-evasion behavior.
+- [Anti-Debugging Techniques](https://preemptivecybersec.com/pages/blog/anti-debugging-techniques-defense.html): Resilient reverse engineering through complementary static, memory, tracing, and behavioral evidence.
+- [Sleep Obfuscation](https://preemptivecybersec.com/pages/blog/sleep-obfuscation-defense.html): Detection of recurring dormant-memory transformations, timers, thread state, and network cadence.
+- [Active Call Stack Spoofing](https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html): Validating call stacks with call-site, unwind, memory-provenance, and thread-history evidence.
+- [PPID Spoofing](https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html): Separating reported parentage from creator identity, token context, and behavior.
+- [Command-Line Spoofing](https://preemptivecybersec.com/pages/blog/command-line-spoofing-defense.html): Comparing creation-time command lines, later process state, application evidence, and downstream effects.
+- [AMSI Architecture and Bypass Theory](https://preemptivecybersec.com/pages/blog/amsi-architecture-bypass-theory-defense.html): AMSI trust boundaries, inspection health, bypass classes, and layered defensive telemetry.
+- [ETW Theory](https://preemptivecybersec.com/pages/blog/etw-theory-defense.html): Event Tracing for Windows providers, sessions, consumers, trust boundaries, and collection resilience.
+- [Windows Tokens and Integrity Levels](https://preemptivecybersec.com/pages/blog/windows-sids-integrity-levels-token-architecture.html): SIDs, access tokens, privileges, UAC, impersonation, and Mandatory Integrity Control.
+- [Kernel and User-Mode System Calls](https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html): Windows execution boundaries and their relevance to telemetry and defense.
+
+## Penetration testing and application security
+
+- [Modern Penetration Testing Methodology](https://preemptivecybersec.com/pages/blog/penetration-testing.html): Scoping, reconnaissance, validation, exploitation, reporting, remediation, and retesting.
+- [API Security and the OWASP API Top 10](https://preemptivecybersec.com/pages/blog/api-security-owasp.html): Authorization, authentication, validation, resource abuse, inventory, and business-logic risks in APIs.
+- [Mobile Application Penetration Testing](https://preemptivecybersec.com/pages/blog/mobile-app-pentesting.html): Android and iOS testing across static, dynamic, storage, platform, and network layers.
+- [Active Directory Attack Paths and Hardening](https://preemptivecybersec.com/pages/blog/active-directory-attacks.html): Identity attack paths, privilege relationships, detection, and hardening in enterprise Windows environments.
+- [Attack Surface Management](https://preemptivecybersec.com/pages/blog/attack-surface-management.html): Continuous discovery, ownership, prioritization, and reduction of internet-facing exposure.
+- [OSINT Reconnaissance](https://preemptivecybersec.com/pages/blog/osint-reconnaissance.html): Open-source intelligence for understanding external exposure and adversary-visible information.
+- [Phishing and Social Engineering](https://preemptivecybersec.com/pages/blog/phishing-social-engineering.html): Human-targeted attack patterns, controlled assessment, detection, and resilience.
+- [Bug Bounty Programs](https://preemptivecybersec.com/pages/blog/bug-bounty-programs.html): Program design, scope, researcher workflows, triage, and remediation.
+- [Smart Contract and Web3 Security](https://preemptivecybersec.com/pages/blog/web3-smart-contract-security.html): Smart-contract risks, review approaches, and blockchain application security.
+
+## AI and agent security
+
+- [AI Security: Attacking and Defending LLM Systems](https://preemptivecybersec.com/pages/blog/ai-security-llm.html): Threat modelling, prompt attacks, data exposure, output handling, testing, and defensive architecture for LLM applications.
+- [Prompt Injection and LLM Agent Security](https://preemptivecybersec.com/pages/blog/prompt-injection-llm-agents.html): Direct and indirect prompt injection, tool abuse, trust boundaries, and mitigations for connected agents.
+- [OpenClaw Agent Security](https://preemptivecybersec.com/pages/blog/openclaw-agent-security.html): Secure architecture and operational controls for autonomous agent workflows.
+- [Burp and MCP for Authorized Testing](https://preemptivecybersec.com/pages/blog/burp-mcp-pentest.html): Security testing considerations where AI tooling and web assessment workflows meet.
+- [Frontier Models and Zero-Day Research](https://preemptivecybersec.com/pages/blog/frontier-models-zero-day-research.html): Responsible use of advanced AI models in vulnerability research and security validation.
+- [Deepfake Identity Threats](https://preemptivecybersec.com/pages/blog/deepfake-identity-threats.html): Identity verification, social engineering, fraud, and organizational defenses against synthetic media.
+
+## Cloud, DevSecOps, and infrastructure
+
+- [Cloud Security Posture Management](https://preemptivecybersec.com/pages/blog/cloud-security-posture.html): Asset visibility, misconfiguration detection, identity risk, prioritization, and cloud governance.
+- [DevSecOps and Shift-Left Security](https://preemptivecybersec.com/pages/blog/devsecops-shift-left.html): Integrating security controls and feedback into development and delivery pipelines.
+- [Software Supply Chain Security and SBOMs](https://preemptivecybersec.com/pages/blog/supply-chain-security.html): Dependency, build, provenance, integrity, and software bill-of-materials practices.
+- [Kubernetes and Container Security](https://preemptivecybersec.com/pages/blog/kubernetes-container-security.html): Build-to-runtime controls for images, clusters, workloads, identities, and network policy.
+- [IoT and OT Security](https://preemptivecybersec.com/pages/blog/iot-ot-security.html): Cyber-physical risk, segmentation, industrial protocols, embedded systems, and safety-conscious defense.
+- [Post-Quantum Cryptography](https://preemptivecybersec.com/pages/blog/post-quantum-cryptography.html): Crypto-agility, migration planning, inventory, and preparation for post-quantum standards.
+
+## Optional company and policy pages
+
+- [Privacy Policy](https://preemptivecybersec.com/pages/privacy.html): How PSC handles website and contact information.
+- [Terms of Use](https://preemptivecybersec.com/pages/terms.html): Terms governing use of the public website.
+- [Cookie Policy](https://preemptivecybersec.com/pages/cookies.html): Information about website cookies and related choices.
