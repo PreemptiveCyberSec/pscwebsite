@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intent-Aware Security for Threat Hunting — Preemptive Cyber Security</title>
+    <meta name="description" content="A practical framework for intent-aware threat hunting and malware detection using identity, role, workflow, sequence, target, and outcome context.">
+    <meta name="theme-color" content="#030806">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+</head>
+<body>
+<main><article class="article"><div class="container">
+    <a href="../resources.html" class="back-link">&larr; ./resources / blog</a>
+    <div class="article-meta"><span class="cat">Threat Hunting · Behavioral Detection</span><span class="dot">//</span><span>2026-10-03</span></div>
+    <h1>Intent-Aware Security: Hunting the Purpose Behind Corporate Network Activity</h1>
+    <p class="article-lead">Security telemetry records what happened. Intent-aware detection asks why this identity performed this sequence, against this target, at this time, and whether the action fits an approved business workflow. That context helps defenders distinguish administration from intrusion, automation from abuse, and mistakes from malware before isolated events become an incident.</p>
+    <div class="article-byline"><span class="avatar">VM</span><span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span></div>
+    <div class="prose">
+        <div class="callout"><strong>Defensive scope</strong><p>These scenarios support threat hunting, detection engineering, and incident response. They intentionally omit payloads, credential theft procedures, evasion steps, and destructive commands.</p></div>
+
+        <h2>Why activity alone is not enough</h2>
+        <p>Most corporate behavior is dual use. A shell can deploy software or launch malware. An archive can support a backup or stage stolen data. A remote-management tool can help an employee or give an intruder interactive access. Judging only an executable name or isolated event either misses abuse or creates excessive alerts.</p>
+        <p>Intent cannot be read directly from a process. It must be inferred from evidence: actor and role, device ownership, authentication path, approved ticket, application sequence, destination, data sensitivity, time, peer baseline, and resulting system changes. This does not claim certainty about a person's thoughts. It assesses whether the observed workflow is consistent with an authorized purpose.</p>
+
+        <h2>An evidence model for intent</h2>
+        <ul>
+            <li><strong>Who:</strong> Which human, service, workload, or automated agent initiated the action, and how strong is that identity evidence?</li>
+            <li><strong>Expected work:</strong> Does the action fit the actor's role, device, applications, assignment, and approved change window?</li>
+            <li><strong>Sequence:</strong> What occurred immediately before and after it across browser, endpoint, identity, email, network, and cloud systems?</li>
+            <li><strong>Target:</strong> Is the destination ordinary, privileged, sensitive, or newly observed?</li>
+            <li><strong>Method:</strong> Is the tool approved, signed, managed, and launched through the normal workflow?</li>
+            <li><strong>Outcome:</strong> Did the activity alter persistence, privileges, controls, credentials, data location, or recovery capability?</li>
+        </ul>
+        <figure class="diagram-figure"><svg viewBox="0 0 760 245" role="img" aria-label="Intent-aware detection pipeline combining identity, role, sequence, target, method, and outcome context.">
+            <text x="16" y="24" class="dg-title">From isolated events to an evidence-backed decision</text>
+            <rect x="20" y="55" width="112" height="48" rx="7" class="dg-node"/><text x="76" y="84" text-anchor="middle" class="dg-label">Identity</text>
+            <rect x="144" y="55" width="112" height="48" rx="7" class="dg-node"/><text x="200" y="84" text-anchor="middle" class="dg-label">Role</text>
+            <rect x="268" y="55" width="112" height="48" rx="7" class="dg-node"/><text x="324" y="84" text-anchor="middle" class="dg-label">Sequence</text>
+            <rect x="392" y="55" width="112" height="48" rx="7" class="dg-node"/><text x="448" y="84" text-anchor="middle" class="dg-label">Target</text>
+            <rect x="516" y="55" width="112" height="48" rx="7" class="dg-node"/><text x="572" y="84" text-anchor="middle" class="dg-label">Method</text>
+            <rect x="640" y="55" width="100" height="48" rx="7" class="dg-node"/><text x="690" y="84" text-anchor="middle" class="dg-label">Outcome</text>
+            <rect x="205" y="140" width="350" height="52" rx="7" class="dg-node-alt"/><text x="380" y="163" text-anchor="middle" class="dg-label">Workflow confidence + risk</text><text x="380" y="181" text-anchor="middle" class="dg-note">expected · mistaken · suspicious · malicious</text>
+            <line x1="76" y1="103" x2="250" y2="140" class="dg-line"/><line x1="200" y1="103" x2="285" y2="140" class="dg-line"/><line x1="324" y1="103" x2="340" y2="140" class="dg-line"/><line x1="448" y1="103" x2="420" y2="140" class="dg-line"/><line x1="572" y1="103" x2="475" y2="140" class="dg-line"/><line x1="690" y1="103" x2="510" y2="140" class="dg-line"/>
+            <rect x="170" y="210" width="130" height="30" rx="7" class="dg-node"/><text x="235" y="230" text-anchor="middle" class="dg-label">Observe</text>
+            <rect x="315" y="210" width="130" height="30" rx="7" class="dg-node"/><text x="380" y="230" text-anchor="middle" class="dg-label">Challenge</text>
+            <rect x="460" y="210" width="130" height="30" rx="7" class="dg-node-danger"/><text x="525" y="230" text-anchor="middle" class="dg-label">Contain</text>
+        </svg><figcaption>Intent is a confidence assessment assembled from corroborating evidence, not a label generated from one event.</figcaption></figure>
+
+        <h2>Example 1: Social engineering becomes script execution</h2>
+        <p>An employee visits a recently registered website after following a message or search result. The page instructs them to copy text, open a shell, paste it, and run it to solve an alleged problem. The shell is common; the sequence is not. Browser instructions are followed by pasted shell content, a new external connection, a downloaded artifact, and persistence-related activity.</p>
+        <figure class="diagram-figure"><svg viewBox="0 0 760 215" role="img" aria-label="Browser-to-shell social engineering sequence leading to malware behavior.">
+            <text x="16" y="24" class="dg-title">Example 1 · Browser persuasion to endpoint execution</text>
+            <rect x="20" y="65" width="128" height="52" rx="7" class="dg-node"/><text x="84" y="87" text-anchor="middle" class="dg-label">Message or</text><text x="84" y="105" text-anchor="middle" class="dg-label">search result</text>
+            <rect x="168" y="65" width="128" height="52" rx="7" class="dg-node"/><text x="232" y="87" text-anchor="middle" class="dg-label">Unfamiliar site</text><text x="232" y="105" text-anchor="middle" class="dg-note">copy instruction</text>
+            <rect x="316" y="65" width="128" height="52" rx="7" class="dg-node-danger"/><text x="380" y="87" text-anchor="middle" class="dg-label">User opens</text><text x="380" y="105" text-anchor="middle" class="dg-label">shell</text>
+            <rect x="464" y="65" width="128" height="52" rx="7" class="dg-node-danger"/><text x="528" y="87" text-anchor="middle" class="dg-label">External fetch</text><text x="528" y="105" text-anchor="middle" class="dg-note">rare destination</text>
+            <rect x="612" y="65" width="128" height="52" rx="7" class="dg-node-danger"/><text x="676" y="87" text-anchor="middle" class="dg-label">Persistence or</text><text x="676" y="105" text-anchor="middle" class="dg-label">payload start</text>
+            <line x1="148" y1="91" x2="168" y2="91" class="dg-line"/><line x1="296" y1="91" x2="316" y2="91" class="dg-line"/><line x1="444" y1="91" x2="464" y2="91" class="dg-line"/><line x1="592" y1="91" x2="612" y2="91" class="dg-line"/>
+            <rect x="180" y="156" width="400" height="40" rx="7" class="dg-node-alt"/><text x="380" y="181" text-anchor="middle" class="dg-label">Interrupt before fetch; explain and preserve evidence</text>
+        </svg><figcaption>The sequence establishes a coerced workflow that no isolated shell alert can fully explain.</figcaption></figure>
+        <p><strong>Hunt:</strong> Join browser origin, clipboard or paste telemetry where legally approved, shell start, parent process, command-line provenance, DNS age, network destination, download hash, and subsequent persistence. Increase confidence when a nontechnical role rarely uses a shell and no support workflow exists.</p>
+        <p><strong>Respond:</strong> Prevent the fetch or isolate the child process, retain the page URL and execution chain, notify the user clearly, and search for the same domain, file, or sequence across the fleet. Relevant ATT&amp;CK techniques include T1204 User Execution, T1059 Command and Scripting Interpreter, and T1105 Ingress Tool Transfer.</p>
+
+        <h2>Example 2: Administration or lateral movement?</h2>
+        <p>A systems engineer and a compromised finance user might both initiate remote access. Compare role, source device, privileged access path, ticket, target ownership, normal tool, authentication strength, and subsequent system changes.</p>
+        <figure class="diagram-figure"><svg viewBox="0 0 760 225" role="img" aria-label="Approved remote administration compared with suspicious lateral movement.">
+            <text x="16" y="24" class="dg-title">Example 2 · The same protocol, two different workflows</text>
+            <rect x="22" y="55" width="170" height="48" rx="7" class="dg-node"/><text x="107" y="84" text-anchor="middle" class="dg-label">Remote session event</text>
+            <rect x="250" y="42" width="178" height="42" rx="7" class="dg-node"/><text x="339" y="68" text-anchor="middle" class="dg-label">Admin role + PAW</text>
+            <rect x="250" y="102" width="178" height="42" rx="7" class="dg-node-danger"/><text x="339" y="128" text-anchor="middle" class="dg-label">Finance role + laptop</text>
+            <rect x="490" y="42" width="238" height="42" rx="7" class="dg-node-alt"/><text x="609" y="68" text-anchor="middle" class="dg-label">Ticket + approved target + MFA</text>
+            <rect x="490" y="102" width="238" height="42" rx="7" class="dg-node-danger"/><text x="609" y="128" text-anchor="middle" class="dg-label">New server + token anomaly + discovery</text>
+            <line x1="192" y1="79" x2="250" y2="63" class="dg-line"/><line x1="192" y1="79" x2="250" y2="123" class="dg-line"/><line x1="428" y1="63" x2="490" y2="63" class="dg-line"/><line x1="428" y1="123" x2="490" y2="123" class="dg-line"/>
+            <rect x="250" y="176" width="210" height="38" rx="7" class="dg-node-alt"/><text x="355" y="200" text-anchor="middle" class="dg-label">Allow + monitor</text><rect x="490" y="176" width="238" height="38" rx="7" class="dg-node-danger"/><text x="609" y="200" text-anchor="middle" class="dg-label">Challenge + contain</text>
+        </svg><figcaption>Identity, device, authorization, and outcome change the decision even when the protocol is identical.</figcaption></figure>
+        <p><strong>Hunt:</strong> Link source identity, device compliance, logon type, authentication, privileged group state, target, process ancestry, change record, and east-west flow. Find first-time source-target pairs, rapid fan-out, new service creation, or discovery after login.</p>
+        <p><strong>Respond:</strong> Require step-up authentication or an approved workstation for ambiguous sessions. Isolate and revoke tokens when context contradicts normal administration. Map to T1021 Remote Services, T1078 Valid Accounts, and T1018 Remote System Discovery.</p>
+
+        <h2>Example 3: Credential access inside a trusted process</h2>
+        <p>Malware may inject into a signed process or abuse a legitimate utility. The stronger question is whether that process, identity, and workflow have a valid reason to access credential-bearing memory, browser secrets, authentication databases, or sensitive registry locations.</p>
+        <figure class="diagram-figure"><svg viewBox="0 0 760 215" role="img" aria-label="Trusted process performing anomalous credential access after suspicious memory activity.">
+            <text x="16" y="24" class="dg-title">Example 3 · Trusted image, untrusted sequence</text>
+            <rect x="20" y="64" width="140" height="54" rx="7" class="dg-node"/><text x="90" y="87" text-anchor="middle" class="dg-label">Signed process</text><text x="90" y="105" text-anchor="middle" class="dg-note">normal baseline</text>
+            <rect x="204" y="64" width="140" height="54" rx="7" class="dg-node-danger"/><text x="274" y="87" text-anchor="middle" class="dg-label">Memory or</text><text x="274" y="105" text-anchor="middle" class="dg-label">module anomaly</text>
+            <rect x="388" y="64" width="154" height="54" rx="7" class="dg-node-danger"/><text x="465" y="87" text-anchor="middle" class="dg-label">Credential-bearing</text><text x="465" y="105" text-anchor="middle" class="dg-label">target accessed</text>
+            <rect x="586" y="64" width="154" height="54" rx="7" class="dg-node-danger"/><text x="663" y="87" text-anchor="middle" class="dg-label">Archive, network,</text><text x="663" y="105" text-anchor="middle" class="dg-label">or new logon</text>
+            <line x1="160" y1="91" x2="204" y2="91" class="dg-line"/><line x1="344" y1="91" x2="388" y2="91" class="dg-line"/><line x1="542" y1="91" x2="586" y2="91" class="dg-line"/>
+            <rect x="190" y="158" width="380" height="40" rx="7" class="dg-node-alt"/><text x="380" y="183" text-anchor="middle" class="dg-label">Correlate signer, memory, access, target, and effect</text>
+        </svg><figcaption>Trust in an image should not override contradictory runtime behavior.</figcaption></figure>
+        <p><strong>Hunt:</strong> Correlate process access rights, call stacks, private executable pages, unbacked modules, token state, target sensitivity, dump-like file creation, outbound connections, and follow-on authentication. Baseline password managers, security products, and authentication components.</p>
+        <p><strong>Respond:</strong> Isolate the process while preserving memory, revoke exposed credentials, inspect the initiating chain, and search for equivalent memory or handle patterns. Map to T1003 OS Credential Dumping, T1055 Process Injection, and T1555 Credentials from Password Stores.</p>
+
+        <h2>Example 4: Routine data work or exfiltration?</h2>
+        <p>Uploading files is normal. Risk depends on which data moved, who initiated it, whether the destination and application are approved, whether volume and timing fit the role, and whether the workflow followed a resignation, access dispute, malware alert, or mass collection sequence.</p>
+        <figure class="diagram-figure"><svg viewBox="0 0 760 220" role="img" aria-label="Sensitive files collected, archived, and moved to an unapproved destination.">
+            <text x="16" y="24" class="dg-title">Example 4 · Follow data from source to destination</text>
+            <rect x="20" y="66" width="132" height="54" rx="7" class="dg-node"/><text x="86" y="89" text-anchor="middle" class="dg-label">Sensitive</text><text x="86" y="107" text-anchor="middle" class="dg-label">repositories</text>
+            <rect x="172" y="66" width="132" height="54" rx="7" class="dg-node-danger"/><text x="238" y="89" text-anchor="middle" class="dg-label">Unusual bulk</text><text x="238" y="107" text-anchor="middle" class="dg-label">collection</text>
+            <rect x="324" y="66" width="132" height="54" rx="7" class="dg-node-danger"/><text x="390" y="89" text-anchor="middle" class="dg-label">Archive or</text><text x="390" y="107" text-anchor="middle" class="dg-label">format change</text>
+            <rect x="476" y="66" width="132" height="54" rx="7" class="dg-node-danger"/><text x="542" y="89" text-anchor="middle" class="dg-label">Unapproved app</text><text x="542" y="107" text-anchor="middle" class="dg-label">or AI service</text>
+            <rect x="628" y="66" width="112" height="54" rx="7" class="dg-node-danger"/><text x="684" y="89" text-anchor="middle" class="dg-label">External</text><text x="684" y="107" text-anchor="middle" class="dg-label">account</text>
+            <line x1="152" y1="93" x2="172" y2="93" class="dg-line"/><line x1="304" y1="93" x2="324" y2="93" class="dg-line"/><line x1="456" y1="93" x2="476" y2="93" class="dg-line"/><line x1="608" y1="93" x2="628" y2="93" class="dg-line"/>
+            <rect x="162" y="162" width="436" height="40" rx="7" class="dg-node-alt"/><text x="380" y="187" text-anchor="middle" class="dg-label">Classify → verify purpose → coach, challenge, or block</text>
+        </svg><figcaption>Destination approval matters, but collection history and business purpose complete the decision.</figcaption></figure>
+        <p><strong>Hunt:</strong> Join data classification, repository, access volume, archive creation, cloud identity, tenant ownership, destination reputation, peer baseline, and tightly governed HR risk signals. Distinguish accidental sharing from deliberate staging and malware-driven transfer.</p>
+        <p><strong>Respond:</strong> Warn low-risk users and offer an approved channel. For high-confidence exfiltration, block transfer, preserve staged files and the timeline, suspend sessions, and follow legal and HR governance. Map to T1074 Data Staged, T1560 Archive Collected Data, and T1567 Exfiltration Over Web Service.</p>
+
+        <h2>Example 5: Backup maintenance or ransomware preparation?</h2>
+        <p>Ransomware is easier to stop before encryption when defenders connect discovery, privilege changes, defense interference, recovery impairment, broad file access, and canary modification. A backup operator may legitimately touch recovery systems; an ordinary endpoint identity should not follow the same sequence.</p>
+        <figure class="diagram-figure"><svg viewBox="0 0 760 220" role="img" aria-label="Ransomware precursor sequence and an intervention before broad encryption.">
+            <text x="16" y="24" class="dg-title">Example 5 · Stop the precursor chain, not only encryption</text>
+            <rect x="20" y="64" width="126" height="54" rx="7" class="dg-node"/><text x="83" y="87" text-anchor="middle" class="dg-label">Share and</text><text x="83" y="105" text-anchor="middle" class="dg-label">backup discovery</text>
+            <rect x="165" y="64" width="126" height="54" rx="7" class="dg-node-danger"/><text x="228" y="87" text-anchor="middle" class="dg-label">Privilege or</text><text x="228" y="105" text-anchor="middle" class="dg-label">token anomaly</text>
+            <rect x="310" y="64" width="126" height="54" rx="7" class="dg-node-danger"/><text x="373" y="87" text-anchor="middle" class="dg-label">Defense</text><text x="373" y="105" text-anchor="middle" class="dg-label">interference</text>
+            <rect x="455" y="64" width="126" height="54" rx="7" class="dg-node-danger"/><text x="518" y="87" text-anchor="middle" class="dg-label">Recovery</text><text x="518" y="105" text-anchor="middle" class="dg-label">impairment</text>
+            <rect x="600" y="64" width="140" height="54" rx="7" class="dg-node-danger"/><text x="670" y="87" text-anchor="middle" class="dg-label">Rapid file</text><text x="670" y="105" text-anchor="middle" class="dg-label">modification</text>
+            <line x1="146" y1="91" x2="165" y2="91" class="dg-line"/><line x1="291" y1="91" x2="310" y2="91" class="dg-line"/><line x1="436" y1="91" x2="455" y2="91" class="dg-line"/><line x1="581" y1="91" x2="600" y2="91" class="dg-line"/>
+            <rect x="205" y="158" width="350" height="44" rx="7" class="dg-node-alt"/><text x="380" y="176" text-anchor="middle" class="dg-label">Contain before broad impact</text><text x="380" y="194" text-anchor="middle" class="dg-note">identity · endpoint · network · recovery</text>
+        </svg><figcaption>Role and maintenance context separate expected backup activity from an emerging impact chain.</figcaption></figure>
+        <p><strong>Hunt:</strong> Correlate privilege, backup access, change windows, service health, recovery changes, share enumeration, canary files, rename and entropy rates, extension diversity, and host fan-out. Weight precursor combinations more heavily than any one utility.</p>
+        <p><strong>Respond:</strong> Disable or challenge the initiating identity, isolate endpoints and segments, protect backup control planes, stop suspicious processes, and preserve volatile evidence. Map to T1486 Data Encrypted for Impact, T1490 Inhibit System Recovery, T1562.001 Impair Defenses, and T1135 Network Share Discovery.</p>
+
+        <h2>Building intent-aware detections</h2>
+        <ol>
+            <li><strong>Normalize entities:</strong> Give stable identifiers to people, service identities, devices, processes, sessions, files, datasets, and destinations.</li>
+            <li><strong>Preserve provenance:</strong> Retain raw values, source sensor, timestamp quality, delay, and transformations.</li>
+            <li><strong>Build activity graphs:</strong> Connect browser, process, identity, file, network, email, SaaS, and ticket events around a decision window.</li>
+            <li><strong>Model expected work:</strong> Document authorized roles, devices, tools, destinations, approvals, time windows, and outcomes.</li>
+            <li><strong>Score contradictions:</strong> Keep supporting and contradicting evidence visible. A signed binary reduces one risk dimension but cannot erase behavior.</li>
+            <li><strong>Act proportionately:</strong> Observe, enrich, notify, request justification, require stronger authentication, suspend a process, block transfer, revoke a session, or isolate a host.</li>
+            <li><strong>Measure outcomes:</strong> Track prevented impact, investigation time, overrides, false positives by role, missing telemetry, and policy drift.</li>
+        </ol>
+
+        <h2>Threat-hunting questions</h2>
+        <ul>
+            <li>Which users performed privileged workflows without the expected device, ticket, authentication, or management tool?</li>
+            <li>Which signed processes accessed sensitive targets after memory, module, parentage, or token anomalies?</li>
+            <li>Which browser sessions were immediately followed by shell execution, an external fetch, or persistence?</li>
+            <li>Which identities collected data across repositories and then used an external tenant or unapproved application?</li>
+            <li>Which endpoints combined defense impairment, recovery changes, credential access, and broad file operations?</li>
+            <li>Which automated agents acted outside their delegated tools, data boundaries, owner-approved tasks, or execution windows?</li>
+        </ul>
+
+        <h2>Data sources and open defensive tools</h2>
+        <p>Endpoint process, file, registry, memory, module, and network telemetry forms the base. Enrich it with identity events, email and browser context, DNS and proxy records, cloud audit logs, data classification, asset criticality, service-management approvals, and selective business context.</p>
+        <ul>
+            <li><a href="https://github.com/SigmaHQ/sigma">Sigma</a> for portable behavioral detection logic.</li>
+            <li><a href="https://github.com/Velocidex/velociraptor">Velociraptor</a> for endpoint collection, hunts, timelines, and response.</li>
+            <li><a href="https://github.com/zeek/zeek">Zeek</a> and <a href="https://github.com/OISF/suricata">Suricata</a> for network protocol and flow evidence.</li>
+            <li><a href="https://github.com/Yamato-Security/hayabusa">Hayabusa</a> for Windows event timelines.</li>
+            <li><a href="https://github.com/JPCERTCC/LogonTracer">LogonTracer</a> for authentication relationships.</li>
+            <li><a href="https://github.com/mitre-attack/attack-navigator">ATT&amp;CK Navigator</a> for hypotheses and coverage gaps.</li>
+        </ul>
+
+        <h2>Governance: context without surveillance</h2>
+        <p>Collect only telemetry required for defined security purposes, apply retention limits, separate security and employment decisions, protect business and HR context, and audit access. Analysts should see which evidence raised risk, which reduced it, and what uncertainty remains.</p>
+        <p>Provide a correction path. Test policies against historical telemetry before enforcement, introduce blocking gradually, monitor effects by role, and review models as work changes. Human review remains essential for insider-risk cases, ambiguous automation, and actions with employment or legal consequences.</p>
+
+        <h2>Final perspective</h2>
+        <p>Intent-aware security does not replace EDR, SIEM, identity protection, network monitoring, or data controls. It connects their evidence around a question those systems often leave unanswered: does this action make sense for this actor's authorized work? Preserving provenance, reconstructing sequences, modeling expected workflows, and intervening proportionately can expose malware and malicious behavior earlier without treating every powerful tool or unusual action as an attack.</p>
+
+        <div class="article-tags"><span>Intent-Aware Security</span><span>Threat Hunting</span><span>Behavioral Detection</span><span>Corporate Defense</span></div>
+        <div class="article-nav"><a href="command-line-spoofing-defense.html">&larr; Previous: Command-Line Spoofing</a><a href="../resources.html">All Resources &rarr;</a></div>
+    </div>
+</div></article></main>
+<footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div></footer>
+<script src="../../assets/js/main.js"></script>
+</body>
+</html>
