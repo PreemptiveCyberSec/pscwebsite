@@ -6,13 +6,27 @@
     <title>OpenClaw 1.0 → 2.0: What Changes, and What Defenders Should Watch for Tomorrow — Preemptive Cyber Security</title>
     <meta name="description" content="OpenClaw 2.0 re-architects the personal agent runtime — split planes, capability tokens, sandboxed executors and a hosted control plane. What genuinely improves, what does not, and the new attack surface security teams must prepare for.">
     <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
     <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="OpenClaw 1.0 → 2.0: What Changes, and What Defenders Should Watch for Tomorrow">
-    <meta property="og:description" content="The 2.0 redesign fixes the root cause of the 1.0 CVE chain — but moves the attack surface rather than removing it. A defender's field guide.">
+    <meta property="og:title" content="OpenClaw 1.0 → 2.0: What Changes, and What Defenders Should Watch for Tomorrow — Preemptive Cyber Security">
+    <meta property="og:description" content="OpenClaw 2.0 re-architects the personal agent runtime — split planes, capability tokens, sandboxed executors and a hosted control plane. What genuinely improves, what does not, and the new attack surface security teams must prepare for.">
     <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html">
     <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OpenClaw 1.0 → 2.0: What Changes, and What Defenders Should Watch for Tomorrow — Preemptive Cyber Security">
+    <meta name="twitter:description" content="OpenClaw 2.0 re-architects the personal agent runtime — split planes, capability tokens, sandboxed executors and a hosted control plane. What genuinely improves, what does not, and the new attack surface security teams must prepare for.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-01">
+    <meta property="article:modified_time" content="2026-09-01">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="AI Agent Security">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://api.fontshare.com">
@@ -30,43 +44,68 @@
         .table-scroll { overflow-x: auto; margin: 0 0 1.6em; }
         .table-scroll table { margin: 0; }
     </style>
-    <script type="application/ld+json">
+    <script type="application/ld+json" data-psc-structured-data>
     {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "OpenClaw 1.0 → 2.0: What Changes, and What Defenders Should Watch for Tomorrow",
-      "description": "OpenClaw 2.0 re-architects the personal agent runtime. What genuinely improves, what does not, and the new attack surface security teams must prepare for.",
-      "datePublished": "2026-09-01",
-      "dateModified": "2026-09-01",
-      "author": {
-        "@type": "Person",
-        "name": "Viral Maniar",
-        "jobTitle": "Managing Director & Principal Consultant",
-        "url": "https://preemptivecybersec.com/pages/team.html"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Preemptive Cyber Security",
-        "url": "https://preemptivecybersec.com/"
-      },
-      "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html",
-      "keywords": "OpenClaw 2.0, AI agent security, capability tokens, agent-to-agent, prompt injection, policy engine, agent runtime"
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html",
+                "headline": "OpenClaw 1.0 → 2.0: What Changes, and What to Watch for Tomorrow",
+                "description": "OpenClaw 2.0 re-architects the personal agent runtime — split planes, capability tokens, sandboxed executors and a hosted control plane. What genuinely improves, what does not, and the new attack surface security teams must prepare for.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-01",
+                "dateModified": "2026-09-01",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "AI Agent Security",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "OpenClaw 1.0 → 2.0: What Changes, and What to Watch for Tomorrow",
+                        "item": "https://preemptivecybersec.com/pages/blog/openclaw-1-to-2.html"
+                    }
+                ]
+            }
+        ]
     }
     </script>
 </head>
 <body>
-
     <nav class="navbar">
         <div class="container">
             <div class="nav-wrapper">
                 <a href="../../index.html" class="logo">
-                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
-                        <span class="logo-word">
-                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
-                            <span class="logo-tag">Know the Unknown</span>
-                        </span>
-                    </a>
-                <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
                 <ul class="nav-menu" id="nav-menu">
                     <li><a href="../services.html">Services</a></li>
                     <li><a href="../about.html">About</a></li>
@@ -89,10 +128,7 @@
     <main>
         <article class="article">
             <div class="container">
-                <a href="../resources.html" class="back-link">
-                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    ./resources / blog
-                </a>
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">OpenClaw 1.0 → 2.0: What Changes, and What to Watch for Tomorrow</li></ol></nav>
 
                 <div class="article-meta">
                     <span class="cat">AI Agent Security</span>
@@ -107,7 +143,7 @@
 
                 <div class="article-byline">
                     <span class="avatar">VM</span>
-                    <span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span>
+                    <span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> · Managing Director &amp; Principal Consultant</span>
                 </div>
 
                 <div class="prose">
@@ -367,7 +403,7 @@
                     <li><a href="../privacy.html">Privacy</a></li>
                     <li><a href="../terms.html">Terms</a></li>
                     <li><a href="../cookies.html">Cookies</a></li>
-                </ul>
+                <li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul>
             </div>
         </div>
     </footer>

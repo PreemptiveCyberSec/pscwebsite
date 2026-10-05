@@ -1,4 +1,122 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Primitive Process Injection: Defense — Preemptive Cyber Security</title><meta name="description" content="Learn the core process injection primitives, evidence chain, memory forensics, detection logic, and Windows hardening."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · Process Injection</span><span class="dot">//</span><span>2026-09-05</span></div><h1>Primitive Process Injection: A Defender's Baseline</h1><p class="article-lead">The simplest process-injection model combines cross-process access, target memory modification, and a transfer of execution. It remains valuable because more elaborate variants usually replace one stage rather than abolish the underlying need to influence another process.</p><div class="article-byline"><span class="avatar">MC</span><span>By <strong>Mike Chen</strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>This baseline is intentionally conceptual. It includes neither a callable sequence nor source code, payloads, target selection, or evasion advice.</p></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Primitive Process Injection: Defense — Preemptive Cyber Security</title><meta name="description" content="Learn the core process injection primitives, evidence chain, memory forensics, detection logic, and Windows hardening."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html",
+                "headline": "Primitive Process Injection: A Defender's Baseline",
+                "description": "Learn the core process injection primitives, evidence chain, memory forensics, detection logic, and Windows hardening.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-05",
+                "dateModified": "2026-09-05",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/mike-chen.html#person",
+                    "name": "Mike Chen",
+                    "url": "https://preemptivecybersec.com/pages/authors/mike-chen.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · Process Injection",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Primitive Process Injection: A Defender's Baseline",
+                        "item": "https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Primitive Process Injection: Defense — Preemptive Cyber Security">
+    <meta property="og:description" content="Learn the core process injection primitives, evidence chain, memory forensics, detection logic, and Windows hardening.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Primitive Process Injection: Defense — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Learn the core process injection primitives, evidence chain, memory forensics, detection logic, and Windows hardening.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-05">
+    <meta property="article:modified_time" content="2026-09-05">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/mike-chen.html">
+    <meta property="article:section" content="Windows Defense · Process Injection">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Primitive Process Injection: A Defender's Baseline</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · Process Injection</span><span class="dot">//</span><span>2026-09-05</span></div><h1>Primitive Process Injection: A Defender's Baseline</h1><p class="article-lead">The simplest process-injection model combines cross-process access, target memory modification, and a transfer of execution. It remains valuable because more elaborate variants usually replace one stage rather than abolish the underlying need to influence another process.</p><div class="article-byline"><span class="avatar">MC</span><span>By <strong><a href="../authors/mike-chen.html" rel="author">Mike Chen</a></strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>This baseline is intentionally conceptual. It includes neither a callable sequence nor source code, payloads, target selection, or evasion advice.</p></div>
 <h2>The minimal evidence chain</h2><p>A source process first needs authority over a target object. It then causes code or execution-relevant data to exist in the target, and finally influences a thread or callback to reach it. The exact APIs are less important than the security-relevant state changes: handle rights, memory ownership, page protection, writer identity, instruction pointer, and call stack.</p><figure class="diagram-figure"><svg viewBox="0 0 740 230" role="img" aria-label="Primitive process injection evidence chain and independent defensive sensors."><text x="16" y="24" class="dg-title">Baseline process-injection evidence</text><rect x="20" y="60" width="140" height="54" rx="7" class="dg-node-danger"/><text x="90" y="82" text-anchor="middle" class="dg-label">Source obtains</text><text x="90" y="101" text-anchor="middle" class="dg-label">target access</text><rect x="206" y="60" width="140" height="54" rx="7" class="dg-node-alt"/><text x="276" y="82" text-anchor="middle" class="dg-label">Target memory</text><text x="276" y="101" text-anchor="middle" class="dg-label">changes</text><rect x="392" y="60" width="140" height="54" rx="7" class="dg-node-danger"/><text x="462" y="82" text-anchor="middle" class="dg-label">Execution reaches</text><text x="462" y="101" text-anchor="middle" class="dg-label">new destination</text><rect x="578" y="60" width="140" height="54" rx="7" class="dg-node"/><text x="648" y="82" text-anchor="middle" class="dg-label">Behavior and</text><text x="648" y="101" text-anchor="middle" class="dg-label">response</text><line x1="160" y1="87" x2="206" y2="87" class="dg-line"/><line x1="346" y1="87" x2="392" y2="87" class="dg-line"/><line x1="532" y1="87" x2="578" y2="87" class="dg-line"/><text x="20" y="158" class="dg-note">Handle sensor</text><text x="206" y="158" class="dg-note">VAD/page sensor</text><text x="392" y="158" class="dg-note">Thread/stack sensor</text><text x="578" y="158" class="dg-note">Process/network sensor</text><text x="20" y="198" class="dg-note">Correlate within a bounded window; score source-target rarity, signer, privilege, and target sensitivity</text></svg><figcaption>Independent evidence at each stage makes the analytic resilient to API substitution.</figcaption></figure>
 <h2>What good telemetry records</h2><ul><li>Source and target process identities, signers, hashes, users, sessions, integrity levels, and ancestry.</li><li>Object access rights and whether that source-target pairing is normal.</li><li>Allocation type, backing file, protection transitions, writer, and resulting bytes.</li><li>Thread creation or control-flow changes, start address, instruction pointer, and stack.</li><li>Subsequent image loads, child processes, credential access, persistence, and networking.</li></ul>
 <h2>Detection logic and false positives</h2><p>Score a sequence rather than firing on a single remote handle or writable/executable page. Development tools, debuggers, profilers, accessibility software, anti-cheat components, and endpoint security agents may legitimately cross process boundaries. Validate publisher, deployment, target pairing, expected rights, and destination memory. Names alone are weak allowlist keys because they are easily copied.</p>
@@ -6,4 +124,4 @@
 <h2>GitHub tools and safe lab</h2><p>Use <a href="https://github.com/SigmaHQ/sigma">Sigma</a> for detection-as-code, <a href="https://github.com/SwiftOnSecurity/sysmon-config">SwiftOnSecurity’s Sysmon configuration</a> as a learning reference, <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a> for memory, and <a href="https://github.com/hasherezade/pe-sieve">PE-sieve</a> or <a href="https://github.com/fortra/moneta">Moneta</a> for suspicious mappings. Validate with synthetic SIEM events and approved debugger/profiler activity. Measure precision before enabling response automation.</p>
 <h2>ATT&amp;CK, CVEs, and hardening</h2><p>The parent technique is T1055 Process Injection; use a sub-technique only when evidence supports it. Primitive injection uses operating-system capabilities and is not itself a CVE. Any vulnerability used for initial access or privilege escalation requires separate attribution. Harden with WDAC/AppLocker, ASR, least privilege, Credential Guard, protected processes where supported, EDR tamper protection, administrative tiering, and sufficient raw telemetry retention.</p>
 <h2>Final perspective</h2><p>Primitive injection is the baseline against which complex variants should be compared. Ask what changed at each stage, who caused it, and whether the destination belongs to trusted code. That method turns a long catalog of technique names into a manageable evidence problem.</p>
-<div class="article-tags"><span>Process Injection</span><span>Detection Baseline</span><span>T1055</span></div><div class="article-nav"><a href="custom-userland-primitives-defense.html">&larr; Previous: Custom Primitives</a><a href="amsi-architecture-bypass-theory-defense.html">Next: AMSI Architecture &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<div class="article-tags"><span>Process Injection</span><span>Detection Baseline</span><span>T1055</span></div><div class="article-nav"><a href="custom-userland-primitives-defense.html">&larr; Previous: Custom Primitives</a><a href="amsi-architecture-bypass-theory-defense.html">Next: AMSI Architecture &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div><div class="container footer-rss" data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">Subscribe via RSS</a></div></footer><script src="../../assets/js/main.js"></script></body></html>

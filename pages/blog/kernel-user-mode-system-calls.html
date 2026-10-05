@@ -1,7 +1,125 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Kernel, User Mode, and System Calls — Preemptive Cyber Security</title><meta name="description" content="A practical security guide to Windows privilege rings, the kernel/user boundary, system calls, drivers, and defensive telemetry."><meta name="theme-color" content="#030806"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://api.fontshare.com"><link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/animations.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head>
-<body><nav class="navbar"><div class="container"><div class="nav-wrapper"><a href="../../index.html" class="logo"><span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span></a><button class="hamburger" id="hamburger" type="button" aria-label="Menu"><span></span><span></span><span></span></button><ul class="nav-menu" id="nav-menu"><li><a href="../services.html">Services</a></li><li><a href="../about.html">About</a></li><li><a href="../resources.html">Resources</a></li><li class="nav-cta"><a href="../contact.html">Get in touch</a></li></ul></div></div></nav><main><article class="article"><div class="container">
-<a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Security · Internals</span><span class="dot">//</span><span>2026-09-03</span><span class="dot">//</span><span>16 min read</span></div><h1>Kernel vs. User Mode: The Role of Windows System Calls</h1><p class="article-lead">Windows is intentionally divided into less-trusted application code and a privileged operating-system core. System calls are the tightly controlled crossing between those worlds. Understanding that boundary clarifies how applications access files and processes, why drivers are such high-value targets, and where defenders should collect evidence.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span></div>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Kernel, User Mode, and System Calls — Preemptive Cyber Security</title><meta name="description" content="A practical security guide to Windows privilege rings, the kernel/user boundary, system calls, drivers, and defensive telemetry."><meta name="theme-color" content="#030806"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://api.fontshare.com"><link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/animations.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html",
+                "headline": "Kernel vs. User Mode: The Role of Windows System Calls",
+                "description": "A practical security guide to Windows privilege rings, the kernel/user boundary, system calls, drivers, and defensive telemetry.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-03",
+                "dateModified": "2026-09-03",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Security · Internals",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Kernel vs. User Mode: The Role of Windows System Calls",
+                        "item": "https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Kernel, User Mode, and System Calls — Preemptive Cyber Security">
+    <meta property="og:description" content="A practical security guide to Windows privilege rings, the kernel/user boundary, system calls, drivers, and defensive telemetry.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kernel, User Mode, and System Calls — Preemptive Cyber Security">
+    <meta name="twitter:description" content="A practical security guide to Windows privilege rings, the kernel/user boundary, system calls, drivers, and defensive telemetry.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-03">
+    <meta property="article:modified_time" content="2026-09-03">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="Windows Security · Internals">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container">
+<nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Kernel vs. User Mode: The Role of Windows System Calls</li></ol></nav><div class="article-meta"><span class="cat">Windows Security · Internals</span><span class="dot">//</span><span>2026-09-03</span><span class="dot">//</span><span>16 min read</span></div><h1>Kernel vs. User Mode: The Role of Windows System Calls</h1><p class="article-lead">Windows is intentionally divided into less-trusted application code and a privileged operating-system core. System calls are the tightly controlled crossing between those worlds. Understanding that boundary clarifies how applications access files and processes, why drivers are such high-value targets, and where defenders should collect evidence.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> · Managing Director &amp; Principal Consultant</span></div>
 <div class="prose"><h2>The boundary is a security primitive</h2><p>On mainstream Windows systems, ordinary applications run in user mode (architecturally ring 3) and the Windows kernel runs in kernel mode (ring 0). User-mode code cannot directly read kernel memory, program hardware, or change page tables. Those restrictions contain application crashes and prevent a compromised application from simply taking over the machine. The kernel owns scheduling, virtual memory, object security, device I/O, and the reference monitor that enforces access checks.</p>
 <figure class="diagram-figure"><svg viewBox="0 0 760 310" role="img" aria-label="Windows architecture diagram with applications in user mode calling Win32 APIs and ntdll, crossing the system-call boundary to the kernel executive, object manager, memory manager, I/O manager, and signed drivers in kernel mode."><text x="16" y="24" class="dg-title">Windows execution boundary</text><rect x="25" y="48" width="710" height="102" rx="8" class="dg-node"/><text x="45" y="72" class="dg-accent-text">User mode (ring 3)</text><rect x="60" y="86" width="145" height="42" rx="6" class="dg-node"/><text x="132" y="112" text-anchor="middle" class="dg-label">Application</text><rect x="295" y="86" width="145" height="42" rx="6" class="dg-node"/><text x="367" y="112" text-anchor="middle" class="dg-label">Win32 / .NET APIs</text><rect x="530" y="86" width="145" height="42" rx="6" class="dg-node"/><text x="602" y="112" text-anchor="middle" class="dg-label">ntdll syscall stub</text><line x1="205" y1="107" x2="293" y2="107" class="dg-flow"/><line x1="440" y1="107" x2="528" y2="107" class="dg-flow"/><path d="M285 103 l8 4 -8 4 zM520 103 l8 4 -8 4 z" fill="var(--neon)"/><line x1="40" y1="174" x2="720" y2="174" class="dg-flow" stroke-dasharray="6 5"/><text x="380" y="166" text-anchor="middle" class="dg-accent-text">controlled system-call transition</text><rect x="25" y="194" width="710" height="90" rx="8" class="dg-node-accent"/><text x="45" y="218" class="dg-accent-text">Kernel mode (ring 0)</text><text x="90" y="250" class="dg-sub">Executive / Object Manager</text><text x="300" y="250" class="dg-sub">Memory + I/O Manager</text><text x="525" y="250" class="dg-sub">Kernel + signed drivers</text><line x1="602" y1="130" x2="602" y2="192" class="dg-flow"/><path d="M598 184 l4 8 4 -8 z" fill="var(--neon)"/><text x="16" y="302" class="dg-title">Preemptive Cyber Security</text></svg><figcaption class="diagram-caption"><b>Figure 1.</b> Applications request privileged work through documented APIs; the final transition into the kernel is mediated by a system call.</figcaption></figure>
 <h2>From a familiar API to a system service</h2><p>Consider an application opening a protected file. It usually calls a documented API such as <code>CreateFileW</code>. Supporting libraries validate or transform arguments, and <code>ntdll.dll</code> eventually prepares a system-service request such as <code>NtCreateFile</code>. The CPU performs a controlled transition, the kernel validates user pointers and requested access, resolves the object through the Object Manager, evaluates the security descriptor against the caller's token, and routes the operation through the I/O stack. A handle is returned only if those checks succeed.</p><p>The exact internal interfaces and system-service numbers are implementation details and vary by Windows release. Security products and developers should use documented Windows APIs, not hard-code syscall numbers or depend on internal structures. That keeps software compatible and avoids mistaking a version-specific detail for a security boundary.</p>
@@ -10,4 +128,4 @@
 <h2>Relevant CVEs: learn the pattern, patch the product</h2><p><strong>CVE-2021-1732</strong> was a Windows Win32k elevation-of-privilege vulnerability exploited in the wild. <strong>CVE-2024-21338</strong> was a Windows kernel elevation-of-privilege vulnerability where exploitation could lead to SYSTEM privileges. These are examples of boundary failure: a user-mode attacker turns a bug in a privileged component into kernel-level control. They are not a license to disable kernel protections. The operational response is to apply vendor updates promptly, maintain EDR visibility, and remove unneeded kernel attack surface.</p>
 <div class="callout"><h4>Defensive lab setup</h4><ol><li>Create a disposable Windows VM and snapshot it before experiments.</li><li>Install <a href="https://github.com/microsoft/Sysmon" target="_blank" rel="noopener">Sysmon</a> with a reviewed configuration and inspect process, image-load, and file events.</li><li>Use <a href="https://github.com/google/rekall" target="_blank" rel="noopener">Rekall</a> or Microsoft Sysinternals tools for observation, not modification, of the lab system.</li><li>Check Windows Security's Core isolation and the Microsoft vulnerable-driver blocklist status. Record the baseline before testing a compatibility change.</li></ol></div>
 <h2>Detection and hardening priorities</h2><ul><li><strong>Patch kernel and driver components quickly.</strong> Treat exploited-in-the-wild advisories as an exposure-management priority.</li><li><strong>Constrain driver loading.</strong> Use WDAC where feasible, retain the vulnerable-driver blocklist, and inventory new services and drivers.</li><li><strong>Protect credentials and isolation boundaries.</strong> Enable VBS and Credential Guard where hardware and application compatibility permit.</li><li><strong>Collect high-quality telemetry.</strong> Correlate process creation, image loads, service installation, code-integrity events, and unusual access-denied patterns.</li><li><strong>Do not rely on user-mode hooks alone.</strong> They can provide valuable visibility, but they are not the kernel's authorization boundary.</li></ul>
-<h2>A useful mental model</h2><p>User mode is where untrusted workload executes; kernel mode is where the system must make correct, security-sensitive decisions. A system call is a request, not a permission grant. Its value is in forcing the request through a narrow interface where Windows can validate context, access rights, and memory before performing privileged work.</p><div class="callout"><h4>Key takeaways</h4><ul><li>Ring 3 and ring 0 separate everyday applications from OS privilege.</li><li>System calls bridge the boundary, but the kernel still performs access checks and validation.</li><li>Drivers are high-impact code and deserve strict inventory, policy, and patch management.</li><li>Use CVEs to drive updates and hardening, not as a substitute for layered controls.</li></ul></div><div class="tag-row"><span class="tag">#windows-internals</span><span class="tag">#kernel-security</span><span class="tag">#system-calls</span><span class="tag">#drivers</span></div></div><div class="article-nav"><a href="../resources.html">&larr; All articles</a><a href="../contact.html">Assess your Windows estate &rarr;</a></div></div></article></main><footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<h2>A useful mental model</h2><p>User mode is where untrusted workload executes; kernel mode is where the system must make correct, security-sensitive decisions. A system call is a request, not a permission grant. Its value is in forcing the request through a narrow interface where Windows can validate context, access rights, and memory before performing privileged work.</p><div class="callout"><h4>Key takeaways</h4><ul><li>Ring 3 and ring 0 separate everyday applications from OS privilege.</li><li>System calls bridge the boundary, but the kernel still performs access checks and validation.</li><li>Drivers are high-impact code and deserve strict inventory, policy, and patch management.</li><li>Use CVEs to drive updates and hardening, not as a substitute for layered controls.</li></ul></div><div class="tag-row"><span class="tag">#windows-internals</span><span class="tag">#kernel-security</span><span class="tag">#system-calls</span><span class="tag">#drivers</span></div></div><div class="article-nav"><a href="../resources.html">&larr; All articles</a><a href="../contact.html">Assess your Windows estate &rarr;</a></div></div></article></main><footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul></div></div></footer><script src="../../assets/js/main.js"></script></body></html>

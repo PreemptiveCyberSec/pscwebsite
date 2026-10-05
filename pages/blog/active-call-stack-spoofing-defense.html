@@ -1,1 +1,119 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Active Call Stack Spoofing: Defense — Preemptive Cyber Security</title><meta name="description" content="Detect active call stack spoofing with return provenance, unwind validation, memory telemetry, and CET."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · Telemetry Integrity</span><span class="dot">//</span><span>2026-09-14</span></div><h1>Active Call Stack Spoofing: Validate the Story Behind the Frames</h1><p class="article-lead">Call stacks help explain who requested a sensitive operation. Active spoofing attempts to present trusted ancestry while execution is in progress, so defenders must validate frames against independent evidence.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>No synthetic-frame construction, context-switching sequence, stack layout, or working spoofing code is provided.</p></div><h2>A stack is evidence, not identity</h2><p>Trusted module names are insufficient. Each return should map to plausible executable code, agree with call-site bytes and unwind metadata, and fit the thread's memory and execution history.</p><figure class="diagram-figure"><svg viewBox="0 0 740 205" role="img" aria-label="Presented call stack cross-checked against independent evidence."><text x="16" y="24" class="dg-title">Cross-check every presented frame</text><rect x="24" y="62" width="150" height="58" rx="7" class="dg-node-danger"/><text x="99" y="88" text-anchor="middle" class="dg-label">Presented stack</text><text x="99" y="106" text-anchor="middle" class="dg-note">trusted names</text><rect x="260" y="42" width="190" height="40" rx="7" class="dg-node"/><text x="355" y="67" text-anchor="middle" class="dg-label">Call sites + unwind</text><rect x="260" y="94" width="190" height="40" rx="7" class="dg-node"/><text x="355" y="119" text-anchor="middle" class="dg-label">Page provenance</text><rect x="260" y="146" width="190" height="40" rx="7" class="dg-node"/><text x="355" y="171" text-anchor="middle" class="dg-label">Thread history</text><rect x="548" y="72" width="166" height="58" rx="7" class="dg-node-alt"/><text x="631" y="97" text-anchor="middle" class="dg-label">Confidence or</text><text x="631" y="115" text-anchor="middle" class="dg-label">contradiction</text><line x1="174" y1="91" x2="260" y2="62" class="dg-line"/><line x1="174" y1="91" x2="260" y2="114" class="dg-line"/><line x1="450" y1="114" x2="548" y2="101" class="dg-line"/></svg><figcaption>Independent sources turn a decorative stack into testable evidence.</figcaption></figure><h2>Detection and forensics</h2><ul><li>Flag return addresses without plausible call sites or valid unwind paths.</li><li>Correlate private executable memory, recent stack writes, and thread-context changes.</li><li>Compare user-mode frames with kernel, hardware, and control-flow telemetry.</li><li>Preserve raw stack bytes, contexts, mappings, symbols, unwind data, and CET events.</li></ul><p>Callbacks, fibers, exceptions, tail calls, JIT runtimes, and optimized code require application-aware baselines. Use <a href="https://github.com/microsoft/WinDbg-Samples">WinDbg samples</a>, <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a>, <a href="https://github.com/NationalSecurityAgency/ghidra">Ghidra</a>, and <a href="https://github.com/SigmaHQ/sigma">Sigma</a>. A safe lab can score synthetic event records containing consistent and inconsistent frame metadata.</p><h2>ATT&amp;CK and controls</h2><p>This may support T1036 Masquerading or T1562.001 Impair Defenses; it is not a CVE. Enable hardware-enforced stack protection where compatible, retain raw addresses, collect kernel evidence for critical events, restrict unsigned execution, and score stack anomalies with memory behavior.</p><div class="article-tags"><span>Stack Spoofing</span><span>CET</span><span>Telemetry</span></div><div class="article-nav"><a href="return-address-overwrite-defense.html">&larr; Previous: Return Address</a><a href="time-stomping-defense.html">Next: Time Stomping &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Active Call Stack Spoofing: Defense — Preemptive Cyber Security</title><meta name="description" content="Detect active call stack spoofing with return provenance, unwind validation, memory telemetry, and CET."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html",
+                "headline": "Active Call Stack Spoofing: Validate the Story Behind the Frames",
+                "description": "Detect active call stack spoofing with return provenance, unwind validation, memory telemetry, and CET.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-14",
+                "dateModified": "2026-09-14",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · Telemetry Integrity",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Active Call Stack Spoofing: Validate the Story Behind the Frames",
+                        "item": "https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Active Call Stack Spoofing: Defense — Preemptive Cyber Security">
+    <meta property="og:description" content="Detect active call stack spoofing with return provenance, unwind validation, memory telemetry, and CET.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Active Call Stack Spoofing: Defense — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Detect active call stack spoofing with return provenance, unwind validation, memory telemetry, and CET.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-14">
+    <meta property="article:modified_time" content="2026-09-14">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="Windows Defense · Telemetry Integrity">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Active Call Stack Spoofing: Validate the Story Behind the Frames</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · Telemetry Integrity</span><span class="dot">//</span><span>2026-09-14</span></div><h1>Active Call Stack Spoofing: Validate the Story Behind the Frames</h1><p class="article-lead">Call stacks help explain who requested a sensitive operation. Active spoofing attempts to present trusted ancestry while execution is in progress, so defenders must validate frames against independent evidence.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> · Managing Director &amp; Principal Consultant</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>No synthetic-frame construction, context-switching sequence, stack layout, or working spoofing code is provided.</p></div><h2>A stack is evidence, not identity</h2><p>Trusted module names are insufficient. Each return should map to plausible executable code, agree with call-site bytes and unwind metadata, and fit the thread's memory and execution history.</p><figure class="diagram-figure"><svg viewBox="0 0 740 205" role="img" aria-label="Presented call stack cross-checked against independent evidence."><text x="16" y="24" class="dg-title">Cross-check every presented frame</text><rect x="24" y="62" width="150" height="58" rx="7" class="dg-node-danger"/><text x="99" y="88" text-anchor="middle" class="dg-label">Presented stack</text><text x="99" y="106" text-anchor="middle" class="dg-note">trusted names</text><rect x="260" y="42" width="190" height="40" rx="7" class="dg-node"/><text x="355" y="67" text-anchor="middle" class="dg-label">Call sites + unwind</text><rect x="260" y="94" width="190" height="40" rx="7" class="dg-node"/><text x="355" y="119" text-anchor="middle" class="dg-label">Page provenance</text><rect x="260" y="146" width="190" height="40" rx="7" class="dg-node"/><text x="355" y="171" text-anchor="middle" class="dg-label">Thread history</text><rect x="548" y="72" width="166" height="58" rx="7" class="dg-node-alt"/><text x="631" y="97" text-anchor="middle" class="dg-label">Confidence or</text><text x="631" y="115" text-anchor="middle" class="dg-label">contradiction</text><line x1="174" y1="91" x2="260" y2="62" class="dg-line"/><line x1="174" y1="91" x2="260" y2="114" class="dg-line"/><line x1="450" y1="114" x2="548" y2="101" class="dg-line"/></svg><figcaption>Independent sources turn a decorative stack into testable evidence.</figcaption></figure><h2>Detection and forensics</h2><ul><li>Flag return addresses without plausible call sites or valid unwind paths.</li><li>Correlate private executable memory, recent stack writes, and thread-context changes.</li><li>Compare user-mode frames with kernel, hardware, and control-flow telemetry.</li><li>Preserve raw stack bytes, contexts, mappings, symbols, unwind data, and CET events.</li></ul><p>Callbacks, fibers, exceptions, tail calls, JIT runtimes, and optimized code require application-aware baselines. Use <a href="https://github.com/microsoft/WinDbg-Samples">WinDbg samples</a>, <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a>, <a href="https://github.com/NationalSecurityAgency/ghidra">Ghidra</a>, and <a href="https://github.com/SigmaHQ/sigma">Sigma</a>. A safe lab can score synthetic event records containing consistent and inconsistent frame metadata.</p><h2>ATT&amp;CK and controls</h2><p>This may support T1036 Masquerading or T1562.001 Impair Defenses; it is not a CVE. Enable hardware-enforced stack protection where compatible, retain raw addresses, collect kernel evidence for critical events, restrict unsigned execution, and score stack anomalies with memory behavior.</p><div class="article-tags"><span>Stack Spoofing</span><span>CET</span><span>Telemetry</span></div><div class="article-nav"><a href="return-address-overwrite-defense.html">&larr; Previous: Return Address</a><a href="time-stomping-defense.html">Next: Time Stomping &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div><div class="container footer-rss" data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">Subscribe via RSS</a></div></footer><script src="../../assets/js/main.js"></script></body></html>

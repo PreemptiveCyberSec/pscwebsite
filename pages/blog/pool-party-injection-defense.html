@@ -1,6 +1,124 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pool Party Injection: Detection — Preemptive Cyber Security</title><meta name="description" content="Defensive analysis of Windows thread-pool injection families, worker-factory telemetry, memory indicators, and response."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · Thread Pools</span><span class="dot">//</span><span>2026-09-05</span></div><h1>Pool Party Injections: Detecting Abused Work Queues</h1><p class="article-lead">“Pool Party” groups research variants that redirect Windows thread-pool machinery toward untrusted code. These techniques avoid depending on a conspicuous newly created remote thread, so defenders must inspect memory provenance, handle access, worker state, and callback execution together.</p><div class="article-byline"><span class="avatar">MC</span><span>By <strong>Mike Chen</strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>No thread-pool structure layouts, mutation instructions, or runnable examples are provided. The objective is detection and incident response.</p></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pool Party Injection: Detection — Preemptive Cyber Security</title><meta name="description" content="Defensive analysis of Windows thread-pool injection families, worker-factory telemetry, memory indicators, and response."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html",
+                "headline": "Pool Party Injections: Detecting Abused Work Queues",
+                "description": "Defensive analysis of Windows thread-pool injection families, worker-factory telemetry, memory indicators, and response.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-05",
+                "dateModified": "2026-09-05",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/mike-chen.html#person",
+                    "name": "Mike Chen",
+                    "url": "https://preemptivecybersec.com/pages/authors/mike-chen.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · Thread Pools",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Pool Party Injections: Detecting Abused Work Queues",
+                        "item": "https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Pool Party Injection: Detection — Preemptive Cyber Security">
+    <meta property="og:description" content="Defensive analysis of Windows thread-pool injection families, worker-factory telemetry, memory indicators, and response.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pool Party Injection: Detection — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Defensive analysis of Windows thread-pool injection families, worker-factory telemetry, memory indicators, and response.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-05">
+    <meta property="article:modified_time" content="2026-09-05">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/mike-chen.html">
+    <meta property="article:section" content="Windows Defense · Thread Pools">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Pool Party Injections: Detecting Abused Work Queues</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · Thread Pools</span><span class="dot">//</span><span>2026-09-05</span></div><h1>Pool Party Injections: Detecting Abused Work Queues</h1><p class="article-lead">“Pool Party” groups research variants that redirect Windows thread-pool machinery toward untrusted code. These techniques avoid depending on a conspicuous newly created remote thread, so defenders must inspect memory provenance, handle access, worker state, and callback execution together.</p><div class="article-byline"><span class="avatar">MC</span><span>By <strong><a href="../authors/mike-chen.html" rel="author">Mike Chen</a></strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>No thread-pool structure layouts, mutation instructions, or runnable examples are provided. The objective is detection and incident response.</p></div>
 <h2>Thread-pool architecture</h2><p>Windows thread pools coordinate reusable worker threads and queued work, timers, waits, I/O completions, and related callbacks. Research variants target different objects or queues, but share a defensive invariant: a process that should not administer another process obtains consequential access, influences executable data or callback state, and causes an existing worker to reach an unexpected address.</p><figure class="diagram-figure"><svg viewBox="0 0 730 220" role="img" aria-label="Thread-pool injection evidence from source process to target worker callback."><text x="16" y="24" class="dg-title">Follow ownership, queue state, and callback provenance</text><rect x="20" y="64" width="135" height="52" rx="7" class="dg-node-danger"/><text x="87" y="86" text-anchor="middle" class="dg-label">Unusual source</text><text x="87" y="104" text-anchor="middle" class="dg-label">process + handle</text><rect x="194" y="64" width="135" height="52" rx="7" class="dg-node-alt"/><text x="261" y="86" text-anchor="middle" class="dg-label">Target memory</text><text x="261" y="104" text-anchor="middle" class="dg-label">or pool object</text><rect x="368" y="64" width="135" height="52" rx="7" class="dg-node-alt"/><text x="435" y="86" text-anchor="middle" class="dg-label">Worker queue</text><text x="435" y="104" text-anchor="middle" class="dg-label">dispatch</text><rect x="542" y="64" width="166" height="52" rx="7" class="dg-node-danger"/><text x="625" y="86" text-anchor="middle" class="dg-label">Callback outside</text><text x="625" y="104" text-anchor="middle" class="dg-label">trusted image</text><line x1="155" y1="90" x2="194" y2="90" class="dg-line"/><line x1="329" y1="90" x2="368" y2="90" class="dg-line"/><line x1="503" y1="90" x2="542" y2="90" class="dg-line"/><text x="20" y="168" class="dg-note">Correlate: cross-process rights · object queries · remote writes · VAD history · worker stack · target role</text></svg><figcaption>The callback destination and the process that influenced it are more durable than a variant name.</figcaption></figure>
 <h2>Detection model</h2><ul><li>Flag rare cross-process access involving worker-factory, completion, timer, wait, or thread-pool-related objects.</li><li>Look for executable private memory or changed image pages in the target process.</li><li>Sample worker-thread stacks and identify callbacks outside signed, expected modules.</li><li>Correlate remote writes with subsequent activity on previously idle worker threads.</li><li>Weight high-value targets such as browsers, identity processes, and management agents more heavily.</li></ul><p>Internal pool structures vary by Windows release. Avoid brittle offsets in production logic unless a supported sensor owns version handling. Behavioral correlation is more maintainable.</p>
 <h2>Investigation and safe testing</h2><p>Preserve the source and target processes, open-handle relationships, VAD metadata, threads, stacks, modules, and timing. Determine whether the source is signed, expected to instrument the target, and prevalent in the environment. Use <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a>, <a href="https://github.com/fortra/moneta">Moneta</a>, <a href="https://github.com/hasherezade/pe-sieve">PE-sieve</a>, and <a href="https://github.com/SwiftOnSecurity/sysmon-config">SwiftOnSecurity's Sysmon configuration</a> as a Windows telemetry reference. For safe validation, create a benign local application that uses documented thread-pool APIs inside its own process, then verify the analytic does not confuse normal callbacks with cross-process manipulation.</p>
 <h2>ATT&amp;CK, CVEs, and controls</h2><p>The behavior maps broadly to T1055 Process Injection. Pool Party is a research taxonomy, not a CVE, and normal thread-pool facilities are not vulnerabilities. Apply application control, least privilege, credential isolation, protected-process capabilities where supported, memory and handle telemetry, and target-specific allowlists for legitimate debuggers, accessibility software, and security agents.</p>
-<div class="article-tags"><span>Thread Pool</span><span>Callbacks</span><span>T1055</span></div><div class="article-nav"><a href="process-ghosting-defense.html">&larr; Previous: Process Ghosting</a><a href="special-apc-injection-defense.html">Next: Special APC &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<div class="article-tags"><span>Thread Pool</span><span>Callbacks</span><span>T1055</span></div><div class="article-nav"><a href="process-ghosting-defense.html">&larr; Previous: Process Ghosting</a><a href="special-apc-injection-defense.html">Next: Special APC &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div><div class="container footer-rss" data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">Subscribe via RSS</a></div></footer><script src="../../assets/js/main.js"></script></body></html>

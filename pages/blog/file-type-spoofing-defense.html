@@ -1,1 +1,119 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>File Type Spoofing: Detection — Preemptive Cyber Security</title><meta name="description" content="How defenders detect file-type spoofing with extension, magic-byte, icon, and delivery-context validation."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/animations.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><nav class="navbar"><div class="container"><div class="nav-wrapper"><a href="../../index.html" class="logo"><span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span></a><button class="hamburger" id="hamburger" type="button" aria-label="Menu"><span></span><span></span><span></span></button><ul class="nav-menu" id="nav-menu"><li><a href="../services.html">Services</a></li><li><a href="../resources.html">Resources</a></li><li class="nav-cta"><a href="../contact.html">Get in touch</a></li></ul></div></div></nav><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Static Analysis · Windows Defense</span><span class="dot">//</span><span>2026-09-03</span><span class="dot">//</span><span>11 min read</span></div><h1>File Type Spoofing: Extensions, Icons, and Defense</h1><p class="article-lead">A file name and icon are user-interface claims, not proof of content. File-type spoofing exploits that gap to make an executable, shortcut, script, or archive look like a familiar document. Strong defenses validate actual type, delivery context, and execution behavior.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span></div><div class="prose"><h2>Where the user-interface model breaks</h2><p>Windows Explorer can hide known file extensions, and icons can be selected to resemble a PDF or document. Unicode control characters and compound file names may increase confusion. Email and download protection must therefore inspect MIME type, magic bytes, archive contents, Mark of the Web, signer, and destination path instead of trusting the displayed name.</p><figure class="diagram-figure"><svg viewBox="0 0 760 220" role="img" aria-label="File validation architecture compares displayed name and icon with magic bytes, MIME type, archive contents, Mark of the Web and signature before policy allows, blocks or quarantines a file."><text x="16" y="24" class="dg-title">Validate what a file is, not what it claims to be</text><rect x="30" y="75" width="145" height="55" rx="8" class="dg-node"/><text x="102" y="108" text-anchor="middle" class="dg-label">Name + icon</text><rect x="215" y="75" width="145" height="55" rx="8" class="dg-node"/><text x="287" y="108" text-anchor="middle" class="dg-label">Content type</text><rect x="400" y="75" width="145" height="55" rx="8" class="dg-node"/><text x="472" y="108" text-anchor="middle" class="dg-label">Source + trust</text><rect x="585" y="75" width="145" height="55" rx="8" class="dg-node-accent"/><text x="657" y="108" text-anchor="middle" class="dg-accent-text">Policy action</text><g class="dg-flow"><line x1="175" y1="102" x2="213" y2="102"/><line x1="360" y1="102" x2="398" y2="102"/><line x1="545" y1="102" x2="583" y2="102"/></g><text x="16" y="200" class="dg-title">Preemptive Cyber Security</text></svg><figcaption class="diagram-caption"><b>Figure 1.</b> Content validation and origin controls should outrank the name or icon a user sees.</figcaption></figure><h2>Safe validation workflow</h2><ol><li>Inspect file signatures and MIME type with approved gateway or endpoint tooling; compare them to the extension.</li><li>Check Mark of the Web, download source, signer, archive contents, and email authentication results.</li><li>Route suspicious attachments to a sandbox instead of opening them on a workstation.</li><li>Use <a href="https://github.com/NationalSecurityAgency/ghidra" target="_blank" rel="noopener">Ghidra</a> or a PE viewer only in an authorized analysis setting when a file is actually executable content.</li></ol><h2>Controls that reduce user exposure</h2><p>Configure Explorer to show file extensions, use Microsoft Defender SmartScreen and attachment filtering, block risky attachment types at the mail gateway, and apply application control to prevent untrusted executables and scripts from user-writable locations. Security awareness should teach users to report suspicious files, but it cannot replace technical validation.</p><h2>Vulnerability context</h2><p><strong>CVE-2024-21412</strong> was a Windows Internet Shortcut Files security-feature bypass exploited in the wild. It is a useful reminder that trust cues and attachment protections can be bypassed, so organizations must patch, constrain dangerous file associations, and monitor resulting process chains. File-type spoofing is a social-engineering pattern rather than the CVE itself.</p><div class="callout"><h4>Key takeaways</h4><ul><li>Extensions and icons are presentation metadata, not trustworthy evidence of file type.</li><li>Validate content, origin, signature, and execution chain before allowing risky files.</li><li>Pair user-facing controls with application control, gateway filtering, and rapid patching.</li></ul></div><div class="tag-row"><span class="tag">#phishing-defense</span><span class="tag">#file-analysis</span><span class="tag">#windows-defense</span></div></div><div class="article-nav"><a href="../resources.html">&larr; All articles</a><a href="../contact.html">Improve email and endpoint defense &rarr;</a></div></div></article></main><footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>File Type Spoofing: Detection — Preemptive Cyber Security</title><meta name="description" content="How defenders detect file-type spoofing with extension, magic-byte, icon, and delivery-context validation."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/animations.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html",
+                "headline": "File Type Spoofing: Extensions, Icons, and Defense",
+                "description": "How defenders detect file-type spoofing with extension, magic-byte, icon, and delivery-context validation.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-03",
+                "dateModified": "2026-09-03",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Static Analysis · Windows Defense",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "File Type Spoofing: Extensions, Icons, and Defense",
+                        "item": "https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="File Type Spoofing: Detection — Preemptive Cyber Security">
+    <meta property="og:description" content="How defenders detect file-type spoofing with extension, magic-byte, icon, and delivery-context validation.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="File Type Spoofing: Detection — Preemptive Cyber Security">
+    <meta name="twitter:description" content="How defenders detect file-type spoofing with extension, magic-byte, icon, and delivery-context validation.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-03">
+    <meta property="article:modified_time" content="2026-09-03">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="Static Analysis · Windows Defense">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">File Type Spoofing: Extensions, Icons, and Defense</li></ol></nav><div class="article-meta"><span class="cat">Static Analysis · Windows Defense</span><span class="dot">//</span><span>2026-09-03</span><span class="dot">//</span><span>11 min read</span></div><h1>File Type Spoofing: Extensions, Icons, and Defense</h1><p class="article-lead">A file name and icon are user-interface claims, not proof of content. File-type spoofing exploits that gap to make an executable, shortcut, script, or archive look like a familiar document. Strong defenses validate actual type, delivery context, and execution behavior.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> · Managing Director &amp; Principal Consultant</span></div><div class="prose"><h2>Where the user-interface model breaks</h2><p>Windows Explorer can hide known file extensions, and icons can be selected to resemble a PDF or document. Unicode control characters and compound file names may increase confusion. Email and download protection must therefore inspect MIME type, magic bytes, archive contents, Mark of the Web, signer, and destination path instead of trusting the displayed name.</p><figure class="diagram-figure"><svg viewBox="0 0 760 220" role="img" aria-label="File validation architecture compares displayed name and icon with magic bytes, MIME type, archive contents, Mark of the Web and signature before policy allows, blocks or quarantines a file."><text x="16" y="24" class="dg-title">Validate what a file is, not what it claims to be</text><rect x="30" y="75" width="145" height="55" rx="8" class="dg-node"/><text x="102" y="108" text-anchor="middle" class="dg-label">Name + icon</text><rect x="215" y="75" width="145" height="55" rx="8" class="dg-node"/><text x="287" y="108" text-anchor="middle" class="dg-label">Content type</text><rect x="400" y="75" width="145" height="55" rx="8" class="dg-node"/><text x="472" y="108" text-anchor="middle" class="dg-label">Source + trust</text><rect x="585" y="75" width="145" height="55" rx="8" class="dg-node-accent"/><text x="657" y="108" text-anchor="middle" class="dg-accent-text">Policy action</text><g class="dg-flow"><line x1="175" y1="102" x2="213" y2="102"/><line x1="360" y1="102" x2="398" y2="102"/><line x1="545" y1="102" x2="583" y2="102"/></g><text x="16" y="200" class="dg-title">Preemptive Cyber Security</text></svg><figcaption class="diagram-caption"><b>Figure 1.</b> Content validation and origin controls should outrank the name or icon a user sees.</figcaption></figure><h2>Safe validation workflow</h2><ol><li>Inspect file signatures and MIME type with approved gateway or endpoint tooling; compare them to the extension.</li><li>Check Mark of the Web, download source, signer, archive contents, and email authentication results.</li><li>Route suspicious attachments to a sandbox instead of opening them on a workstation.</li><li>Use <a href="https://github.com/NationalSecurityAgency/ghidra" target="_blank" rel="noopener">Ghidra</a> or a PE viewer only in an authorized analysis setting when a file is actually executable content.</li></ol><h2>Controls that reduce user exposure</h2><p>Configure Explorer to show file extensions, use Microsoft Defender SmartScreen and attachment filtering, block risky attachment types at the mail gateway, and apply application control to prevent untrusted executables and scripts from user-writable locations. Security awareness should teach users to report suspicious files, but it cannot replace technical validation.</p><h2>Vulnerability context</h2><p><strong>CVE-2024-21412</strong> was a Windows Internet Shortcut Files security-feature bypass exploited in the wild. It is a useful reminder that trust cues and attachment protections can be bypassed, so organizations must patch, constrain dangerous file associations, and monitor resulting process chains. File-type spoofing is a social-engineering pattern rather than the CVE itself.</p><div class="callout"><h4>Key takeaways</h4><ul><li>Extensions and icons are presentation metadata, not trustworthy evidence of file type.</li><li>Validate content, origin, signature, and execution chain before allowing risky files.</li><li>Pair user-facing controls with application control, gateway filtering, and rapid patching.</li></ul></div><div class="tag-row"><span class="tag">#phishing-defense</span><span class="tag">#file-analysis</span><span class="tag">#windows-defense</span></div></div><div class="article-nav"><a href="../resources.html">&larr; All articles</a><a href="../contact.html">Improve email and endpoint defense &rarr;</a></div></div></article></main><footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p></div></div><div class="container footer-rss" data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">Subscribe via RSS</a></div></footer><script src="../../assets/js/main.js"></script></body></html>

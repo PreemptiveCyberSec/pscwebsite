@@ -1,7 +1,125 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AMSI Write Raid: Defensive Analysis — Preemptive Cyber Security</title><meta name="description" content="Defensive analysis of write-oriented AMSI tampering using writer attribution, page history, telemetry gaps, and memory forensics."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · Memory Tampering</span><span class="dot">//</span><span>2026-09-07</span></div><h1>AMSI Write Raid: Detecting Low-Volume Memory Tampering</h1><p class="article-lead">“Write Raid” research highlights a defensive blind spot: a security-relevant change may consist of a very small write rather than a large injected region. Detection must retain protection history and writer context, then connect subtle memory mutations to inspection health and subsequent behavior.</p><div class="article-byline"><span class="avatar">LG</span><span>By <strong>Lisa Garcia</strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>This article does not document target locations, write values, discovery logic, or working bypasses. “Write Raid” is treated as a defensive research category, not as attribution from one indicator.</p></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AMSI Write Raid: Defensive Analysis — Preemptive Cyber Security</title><meta name="description" content="Defensive analysis of write-oriented AMSI tampering using writer attribution, page history, telemetry gaps, and memory forensics."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html",
+                "headline": "AMSI Write Raid: Detecting Low-Volume Memory Tampering",
+                "description": "Defensive analysis of write-oriented AMSI tampering using writer attribution, page history, telemetry gaps, and memory forensics.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-07",
+                "dateModified": "2026-09-07",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/lisa-garcia.html#person",
+                    "name": "Lisa Garcia",
+                    "url": "https://preemptivecybersec.com/pages/authors/lisa-garcia.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · Memory Tampering",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "AMSI Write Raid: Detecting Low-Volume Memory Tampering",
+                        "item": "https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AMSI Write Raid: Defensive Analysis — Preemptive Cyber Security">
+    <meta property="og:description" content="Defensive analysis of write-oriented AMSI tampering using writer attribution, page history, telemetry gaps, and memory forensics.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AMSI Write Raid: Defensive Analysis — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Defensive analysis of write-oriented AMSI tampering using writer attribution, page history, telemetry gaps, and memory forensics.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-07">
+    <meta property="article:modified_time" content="2026-09-07">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/lisa-garcia.html">
+    <meta property="article:section" content="Windows Defense · Memory Tampering">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">AMSI Write Raid: Detecting Low-Volume Memory Tampering</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · Memory Tampering</span><span class="dot">//</span><span>2026-09-07</span></div><h1>AMSI Write Raid: Detecting Low-Volume Memory Tampering</h1><p class="article-lead">“Write Raid” research highlights a defensive blind spot: a security-relevant change may consist of a very small write rather than a large injected region. Detection must retain protection history and writer context, then connect subtle memory mutations to inspection health and subsequent behavior.</p><div class="article-byline"><span class="avatar">LG</span><span>By <strong><a href="../authors/lisa-garcia.html" rel="author">Lisa Garcia</a></strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>This article does not document target locations, write values, discovery logic, or working bypasses. “Write Raid” is treated as a defensive research category, not as attribution from one indicator.</p></div>
 <h2>Why small writes matter</h2><p>Many memory detections emphasize new executable allocations or bulk cross-process copies. In-process tampering can instead modify a few bytes or a pointer in an already loaded security component. The resulting process may retain normal module names, signatures on disk, and ordinary ancestry. Page-level integrity, write provenance, and scan-health baselines become the decisive evidence.</p><figure class="diagram-figure"><svg viewBox="0 0 740 225" role="img" aria-label="Small memory write correlated with AMSI integrity and scan health evidence."><text x="16" y="24" class="dg-title">Small mutation, larger telemetry consequence</text><rect x="24" y="62" width="146" height="52" rx="7" class="dg-node"/><text x="97" y="84" text-anchor="middle" class="dg-label">Normal script host</text><text x="97" y="102" text-anchor="middle" class="dg-label">and AMSI image</text><rect x="218" y="62" width="146" height="52" rx="7" class="dg-node-danger"/><text x="291" y="84" text-anchor="middle" class="dg-label">Tiny write or</text><text x="291" y="102" text-anchor="middle" class="dg-label">pointer change</text><rect x="412" y="62" width="146" height="52" rx="7" class="dg-node-alt"/><text x="485" y="84" text-anchor="middle" class="dg-label">Scan volume or</text><text x="485" y="102" text-anchor="middle" class="dg-label">results diverge</text><rect x="606" y="62" width="110" height="52" rx="7" class="dg-node-danger"/><text x="661" y="84" text-anchor="middle" class="dg-label">Behavior</text><text x="661" y="102" text-anchor="middle" class="dg-label">continues</text><line x1="170" y1="88" x2="218" y2="88" class="dg-line"/><line x1="364" y1="88" x2="412" y2="88" class="dg-line"/><line x1="558" y1="88" x2="606" y2="88" class="dg-line"/><text x="24" y="164" class="dg-note">High-value fields: original bytes · new bytes · page state · writing thread · module · timestamp</text><text x="24" y="188" class="dg-note">Corroborate with script logs, child processes, identity events, file activity, and network telemetry</text></svg><figcaption>Mutation size is a poor proxy for security impact; the target and resulting loss of visibility matter more.</figcaption></figure>
 <h2>Detection model</h2><ul><li>Track writes and protection changes affecting AMSI-related pages or process control data.</li><li>Compare changed pages to the exact signed image after loader adjustments.</li><li>Identify the writing thread, its start module, stack, and preceding content source.</li><li>Measure scans per active script-host process and flag unexplained discontinuities.</li><li>Join integrity changes to PowerShell, WSH, Office, browser, and child-process telemetry.</li></ul><p>Do not treat any one-byte difference as malicious. Relocations, hotpatching, EDR instrumentation, profilers, and application compatibility can alter memory legitimately. The exact range, supported vendor behavior, signature chain, and event ordering determine severity.</p>
 <h2>Forensic workflow</h2><p>Preserve volatile memory and the raw endpoint timeline. Extract the affected region with surrounding bytes, the corresponding clean image, page protections, threads, modules, script content, and provider state. Determine whether the mutation occurred before the scan gap and whether execution flowed through the changed data or code. Search the enterprise for the same writer and mutation pattern while keeping behavior-based detections active.</p>
 <h2>Safe lab and tools</h2><p>Use a harmless test program with an explicitly mutable buffer to validate low-volume write telemetry. Generate synthetic health records representing scan interruption instead of changing AMSI. <a href="https://github.com/hasherezade/pe-sieve">PE-sieve</a>, <a href="https://github.com/fortra/moneta">Moneta</a>, <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a>, <a href="https://github.com/mandiant/capa">capa</a>, and <a href="https://github.com/SigmaHQ/sigma">Sigma</a> support triage and detection engineering.</p>
 <h2>ATT&amp;CK, CVEs, and controls</h2><p>The behavior aligns with T1562.001 Impair Defenses and may coexist with T1055 or T1059 depending on the complete chain. AMSI Write Raid describes a tampering approach, not a vulnerability, so it has no intrinsic CVE. Enforce application control, tamper protection, least privilege, script restrictions, ASR policy, current security-engine versions, and alerting on security-module integrity plus telemetry-health changes.</p>
-<div class="article-tags"><span>AMSI</span><span>Memory Writes</span><span>Telemetry Health</span></div><div class="article-nav"><a href="amsi-patching-defense.html">&larr; Previous: AMSI Patching</a><a href="etw-theory-defense.html">Next: ETW Theory &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<div class="article-tags"><span>AMSI</span><span>Memory Writes</span><span>Telemetry Health</span></div><div class="article-nav"><a href="amsi-patching-defense.html">&larr; Previous: AMSI Patching</a><a href="etw-theory-defense.html">Next: ETW Theory &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div><div class="container footer-rss" data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">Subscribe via RSS</a></div></footer><script src="../../assets/js/main.js"></script></body></html>

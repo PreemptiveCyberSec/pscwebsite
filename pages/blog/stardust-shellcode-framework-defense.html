@@ -1,7 +1,125 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Stardust Framework: Defensive Analysis — Preemptive Cyber Security</title><meta name="description" content="Defensive analysis of position-independent shellcode frameworks, memory evidence, telemetry, and safe research methods."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · Memory Analysis</span><span class="dot">//</span><span>2026-09-05</span></div><h1>Stardust Shellcode Framework: A Defender's Field Guide</h1><p class="article-lead">Stardust-style frameworks help developers organize position-independent native code. For defenders, the important lesson is not a repository fingerprint: self-contained code still has to discover APIs, manage data, obtain executable memory, and interact with the operating system.</p><div class="article-byline"><span class="avatar">MC</span><span>By <strong>Mike Chen</strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>No build instructions, loaders, payload code, or deployment guidance are included. Analyze only benign fixtures or evidence collected under authorization.</p></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Stardust Framework: Defensive Analysis — Preemptive Cyber Security</title><meta name="description" content="Defensive analysis of position-independent shellcode frameworks, memory evidence, telemetry, and safe research methods."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html",
+                "headline": "Stardust Shellcode Framework: A Defender's Field Guide",
+                "description": "Defensive analysis of position-independent shellcode frameworks, memory evidence, telemetry, and safe research methods.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-05",
+                "dateModified": "2026-09-05",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/mike-chen.html#person",
+                    "name": "Mike Chen",
+                    "url": "https://preemptivecybersec.com/pages/authors/mike-chen.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · Memory Analysis",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Stardust Shellcode Framework: A Defender's Field Guide",
+                        "item": "https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Stardust Framework: Defensive Analysis — Preemptive Cyber Security">
+    <meta property="og:description" content="Defensive analysis of position-independent shellcode frameworks, memory evidence, telemetry, and safe research methods.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stardust Framework: Defensive Analysis — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Defensive analysis of position-independent shellcode frameworks, memory evidence, telemetry, and safe research methods.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-05">
+    <meta property="article:modified_time" content="2026-09-05">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/mike-chen.html">
+    <meta property="article:section" content="Windows Defense · Memory Analysis">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Stardust Shellcode Framework: A Defender's Field Guide</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · Memory Analysis</span><span class="dot">//</span><span>2026-09-05</span></div><h1>Stardust Shellcode Framework: A Defender's Field Guide</h1><p class="article-lead">Stardust-style frameworks help developers organize position-independent native code. For defenders, the important lesson is not a repository fingerprint: self-contained code still has to discover APIs, manage data, obtain executable memory, and interact with the operating system.</p><div class="article-byline"><span class="avatar">MC</span><span>By <strong><a href="../authors/mike-chen.html" rel="author">Mike Chen</a></strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>No build instructions, loaders, payload code, or deployment guidance are included. Analyze only benign fixtures or evidence collected under authorization.</p></div>
 <h2>What the framework concept means</h2><p>Position-independent code (PIC) avoids assuming a fixed image base. A framework commonly separates a compact entry component, configuration or instance data, API discovery, and task-specific logic. That improves portability, but it also creates recognizable behavioral requirements. Windows still mediates object access, virtual memory, threads, files, registry keys, and network connections.</p><figure class="diagram-figure"><svg viewBox="0 0 720 210" role="img" aria-label="Position-independent code components and defender observation points."><text x="16" y="24" class="dg-title">PIC framework and observation layers</text><rect x="24" y="64" width="130" height="52" rx="7" class="dg-node"/><text x="89" y="86" text-anchor="middle" class="dg-label">Entry + data</text><text x="89" y="104" text-anchor="middle" class="dg-label">self-location</text><rect x="202" y="64" width="130" height="52" rx="7" class="dg-node-alt"/><text x="267" y="86" text-anchor="middle" class="dg-label">API and</text><text x="267" y="104" text-anchor="middle" class="dg-label">module discovery</text><rect x="380" y="64" width="130" height="52" rx="7" class="dg-node-danger"/><text x="445" y="86" text-anchor="middle" class="dg-label">Memory +</text><text x="445" y="104" text-anchor="middle" class="dg-label">execution</text><rect x="558" y="64" width="138" height="52" rx="7" class="dg-node"/><text x="627" y="86" text-anchor="middle" class="dg-label">Kernel, EDR,</text><text x="627" y="104" text-anchor="middle" class="dg-label">network evidence</text><line x1="154" y1="90" x2="202" y2="90" class="dg-line"/><line x1="332" y1="90" x2="380" y2="90" class="dg-line"/><line x1="510" y1="90" x2="558" y2="90" class="dg-line"/><text x="24" y="168" class="dg-note">Stable signals: private executable pages · non-image thread starts · runtime resolution · unusual call stacks</text></svg><figcaption>Implementation changes can remove static fingerprints, but they cannot remove every operating-system effect.</figcaption></figure>
 <h2>Static and memory clues</h2><p>Static triage may reveal compact code, embedded configuration, hashed constants, few imports, or routines that walk loaded modules. None is conclusive. In memory, ask whether a region is private or image-backed, how its protections changed, whether its bytes correspond to a known file, and whether thread instruction pointers or return addresses land there. Just-in-time runtimes and security products create legitimate exceptions, so signer, parent process, prevalence, and workload role must travel with the alert.</p>
 <h2>Detection strategy</h2><ul><li>Correlate executable private memory with the process that created or modified it.</li><li>Identify thread starts and sampled stacks outside trusted image mappings.</li><li>Baseline applications that legitimately resolve many APIs at runtime.</li><li>Join memory anomalies to file origin, identity, child processes, and destinations.</li><li>Alert on behavior sequences, not the framework name or a single byte pattern.</li></ul>
 <h2>Safe lab and GitHub tools</h2><p>Use a snapshot-backed VM and a harmless PIC demonstration that only returns a constant or writes a local test marker. Compare compiler output and memory maps without adding injection or networking. <a href="https://github.com/mandiant/capa">capa</a> and <a href="https://github.com/mandiant/flare-floss">FLOSS</a> support static triage; <a href="https://github.com/hasherezade/pe-sieve">PE-sieve</a>, <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a>, Sysmon, and WinDbg support memory and timeline validation. Record expected benign events before testing detections.</p>
 <h2>ATT&amp;CK, CVEs, and mitigation</h2><p>Observed use may map to T1055 Process Injection, T1027 Obfuscated Files or Information, or T1106 Native API. Stardust is a development pattern and framework, not a vulnerability; no CVE should be assigned merely because PIC is present. Mitigate with application control, least privilege, ASR rules, protected administrative workstations, memory telemetry, and rapid containment of anomalous processes while preserving volatile evidence.</p>
-<div class="article-tags"><span>PIC</span><span>Memory Forensics</span><span>Detection Engineering</span></div><div class="article-nav"><a href="msfvenom-vs-donut-defense.html">&larr; Previous: Msfvenom vs. Donut</a><a href="crystalpalace-pic-defense.html">Next: CrystalPalace PIC &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<div class="article-tags"><span>PIC</span><span>Memory Forensics</span><span>Detection Engineering</span></div><div class="article-nav"><a href="msfvenom-vs-donut-defense.html">&larr; Previous: Msfvenom vs. Donut</a><a href="crystalpalace-pic-defense.html">Next: CrystalPalace PIC &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div><div class="container footer-rss" data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">Subscribe via RSS</a></div></footer><script src="../../assets/js/main.js"></script></body></html>

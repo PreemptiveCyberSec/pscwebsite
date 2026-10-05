@@ -1,1 +1,117 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>IAT Hooking: Integrity Detection — Preemptive Cyber Security</title><meta name="description" content="Defensive analysis of Import Address Table integrity, legitimate instrumentation, and suspicious redirection."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · API Integrity</span><span class="dot">//</span><span>2026-09-04</span></div><h1>IAT Hooking: Integrity Detection and Triage</h1><p class="article-lead">An IAT entry normally points to an imported routine. Redirecting it can support testing and legitimate instrumentation, or it can be evidence of in-memory tampering. Investigation needs a trusted baseline and cross-source evidence.</p><div class="prose"><h2>Integrity findings require context</h2><p>A changed IAT entry is not sufficient to attribute maliciousness. Endpoint security products, compatibility tooling, debuggers, and approved application instrumentation can alter normal execution. Validate the loaded module, signer, memory protections, OS version, process role, and product inventory before escalating.</p><figure class="diagram-figure"><svg viewBox="0 0 700 180" role="img" aria-label="IAT entry and expected target are compared with loaded module provenance and runtime behavior to produce an integrity triage decision."><text x="16" y="22" class="dg-title">IAT integrity needs corroboration</text><rect x="35" y="65" width="145" height="45" rx="7" class="dg-node"/><text x="107" y="93" text-anchor="middle" class="dg-label">IAT entry</text><rect x="220" y="65" width="145" height="45" rx="7" class="dg-node"/><text x="292" y="93" text-anchor="middle" class="dg-label">Target module</text><rect x="405" y="65" width="145" height="45" rx="7" class="dg-node"/><text x="477" y="93" text-anchor="middle" class="dg-label">Signer + memory</text><rect x="590" y="65" width="110" height="45" rx="7" class="dg-node-accent"/><text x="645" y="93" text-anchor="middle" class="dg-accent-text">Triage</text></svg><figcaption class="diagram-caption"><b>Figure 1.</b> A trustworthy integrity alert validates the destination and the process context before response.</figcaption></figure><h2>Safe analyst setup</h2><p>Use an authorized lab and baseline expected modules with Process Explorer. Acquire memory only under an approved process and analyze it with <a href="https://github.com/volatilityfoundation/volatility3" target="_blank" rel="noopener">Volatility 3</a>. Compare findings with EDR image-load, process, and network events; preserve evidence before remediation.</p><h2>Controls and CVE context</h2><p>Enable EDR tamper protection, code integrity, application control, and least privilege. <strong>CVE-2022-21882</strong> was a Windows Win32k elevation-of-privilege vulnerability exploited in the wild, showing why untrusted in-process code and unpatched privilege boundaries amplify each other. Patch and investigate unexpected integrity changes quickly.</p><div class="callout"><h4>Key takeaways</h4><ul><li>IAT changes can be benign or suspicious; a baseline is essential.</li><li>Validate module trust, memory state, and runtime behavior together.</li><li>Use endpoint integrity controls and keep privilege-boundary patches current.</li></ul></div><div class="tag-row"><span class="tag">#iat</span><span class="tag">#integrity-monitoring</span><span class="tag">#edr</span></div></div></div></article></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>IAT Hooking: Integrity Detection — Preemptive Cyber Security</title><meta name="description" content="Defensive analysis of Import Address Table integrity, legitimate instrumentation, and suspicious redirection."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html",
+                "headline": "IAT Hooking: Integrity Detection and Triage",
+                "description": "Defensive analysis of Import Address Table integrity, legitimate instrumentation, and suspicious redirection.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-04",
+                "dateModified": "2026-09-04",
+                "author": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · API Integrity",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "IAT Hooking: Integrity Detection and Triage",
+                        "item": "https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="IAT Hooking: Integrity Detection — Preemptive Cyber Security">
+    <meta property="og:description" content="Defensive analysis of Import Address Table integrity, legitimate instrumentation, and suspicious redirection.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IAT Hooking: Integrity Detection — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Defensive analysis of Import Address Table integrity, legitimate instrumentation, and suspicious redirection.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-04">
+    <meta property="article:modified_time" content="2026-09-04">
+    <meta property="article:author" content="https://preemptivecybersec.com/#organization">
+    <meta property="article:section" content="Windows Defense · API Integrity">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">IAT Hooking: Integrity Detection and Triage</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · API Integrity</span><span class="dot">//</span><span>2026-09-04</span></div><h1>IAT Hooking: Integrity Detection and Triage</h1><p class="article-lead">An IAT entry normally points to an imported routine. Redirecting it can support testing and legitimate instrumentation, or it can be evidence of in-memory tampering. Investigation needs a trusted baseline and cross-source evidence.</p><div class="article-byline"><span class="avatar">PSC</span><span>By <strong><a href="../../index.html" rel="author">Preemptive Cyber Security Research</a></strong></span></div><div class="prose"><h2>Integrity findings require context</h2><p>A changed IAT entry is not sufficient to attribute maliciousness. Endpoint security products, compatibility tooling, debuggers, and approved application instrumentation can alter normal execution. Validate the loaded module, signer, memory protections, OS version, process role, and product inventory before escalating.</p><figure class="diagram-figure"><svg viewBox="0 0 700 180" role="img" aria-label="IAT entry and expected target are compared with loaded module provenance and runtime behavior to produce an integrity triage decision."><text x="16" y="22" class="dg-title">IAT integrity needs corroboration</text><rect x="35" y="65" width="145" height="45" rx="7" class="dg-node"/><text x="107" y="93" text-anchor="middle" class="dg-label">IAT entry</text><rect x="220" y="65" width="145" height="45" rx="7" class="dg-node"/><text x="292" y="93" text-anchor="middle" class="dg-label">Target module</text><rect x="405" y="65" width="145" height="45" rx="7" class="dg-node"/><text x="477" y="93" text-anchor="middle" class="dg-label">Signer + memory</text><rect x="590" y="65" width="110" height="45" rx="7" class="dg-node-accent"/><text x="645" y="93" text-anchor="middle" class="dg-accent-text">Triage</text></svg><figcaption class="diagram-caption"><b>Figure 1.</b> A trustworthy integrity alert validates the destination and the process context before response.</figcaption></figure><h2>Safe analyst setup</h2><p>Use an authorized lab and baseline expected modules with Process Explorer. Acquire memory only under an approved process and analyze it with <a href="https://github.com/volatilityfoundation/volatility3" target="_blank" rel="noopener">Volatility 3</a>. Compare findings with EDR image-load, process, and network events; preserve evidence before remediation.</p><h2>Controls and CVE context</h2><p>Enable EDR tamper protection, code integrity, application control, and least privilege. <strong>CVE-2022-21882</strong> was a Windows Win32k elevation-of-privilege vulnerability exploited in the wild, showing why untrusted in-process code and unpatched privilege boundaries amplify each other. Patch and investigate unexpected integrity changes quickly.</p><div class="callout"><h4>Key takeaways</h4><ul><li>IAT changes can be benign or suspicious; a baseline is essential.</li><li>Validate module trust, memory state, and runtime behavior together.</li><li>Use endpoint integrity controls and keep privilege-boundary patches current.</li></ul></div><div class="tag-row"><span class="tag">#iat</span><span class="tag">#integrity-monitoring</span><span class="tag">#edr</span></div></div></div></article></main>    <script src="../../assets/js/main.js"></script>
+</body></html>

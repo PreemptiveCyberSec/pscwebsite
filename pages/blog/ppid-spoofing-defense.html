@@ -1,1 +1,119 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PPID Spoofing: Defense — Preemptive Cyber Security</title><meta name="description" content="Detect PPID spoofing by separating reported parentage from creator identity, token provenance, handles, and process behavior."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · Process Creation</span><span class="dot">//</span><span>2026-09-18</span></div><h1>PPID Spoofing: Parentage Is Not Provenance</h1><p class="article-lead">A process may report a parent chosen through supported process-creation features. Defenders should distinguish the displayed parent from the actor that initiated creation and validate both against tokens, sessions, handles, timestamps, and behavior.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>This guide omits process-attribute code, access-right recipes, and operational parent-selection procedures.</p></div><h2>Three identities, not one</h2><p>The reported parent, creating process, and security context can differ for legitimate reasons including brokers, launchers, deployment systems, debuggers, and sandboxes. High-quality analytics preserve these fields instead of flattening them into a single tree edge.</p><figure class="diagram-figure"><svg viewBox="0 0 740 205" role="img" aria-label="Process creation graph distinguishing creator, reported parent, and child security context."><text x="16" y="24" class="dg-title">Preserve the complete creation relationship</text><rect x="24" y="56" width="164" height="54" rx="7" class="dg-node-danger"/><text x="106" y="79" text-anchor="middle" class="dg-label">Actual creator</text><text x="106" y="98" text-anchor="middle" class="dg-note">event + handle</text><rect x="24" y="132" width="164" height="54" rx="7" class="dg-node"/><text x="106" y="155" text-anchor="middle" class="dg-label">Reported parent</text><text x="106" y="174" text-anchor="middle" class="dg-note">tree relationship</text><rect x="286" y="88" width="168" height="62" rx="7" class="dg-node-alt"/><text x="370" y="114" text-anchor="middle" class="dg-label">New process</text><text x="370" y="134" text-anchor="middle" class="dg-note">token + session + image</text><rect x="552" y="88" width="164" height="62" rx="7" class="dg-node"/><text x="634" y="114" text-anchor="middle" class="dg-label">Behavioral</text><text x="634" y="134" text-anchor="middle" class="dg-note">consequences</text><line x1="188" y1="83" x2="286" y2="108" class="dg-line"/><line x1="188" y1="159" x2="286" y2="132" class="dg-line"/><line x1="454" y1="119" x2="552" y2="119" class="dg-line"/></svg><figcaption>A plausible process tree can still conflict with creator and token evidence.</figcaption></figure><h2>Detection and validation</h2><ul><li>Compare creator identity from endpoint or kernel telemetry with reported parent ID.</li><li>Find session, user, integrity, token, and timing contradictions.</li><li>Correlate access to the selected parent before child creation.</li><li>Score implausible parent-child pairs with unsigned images, unusual paths, or later injection.</li></ul><p>Preserve creation events, process GUIDs, start times, command lines, tokens, sessions, handles, modules, and network activity. PID reuse makes timestamps essential. Use <a href="https://github.com/microsoft/sysmonforlinux">Sysmon resources</a>, <a href="https://github.com/SigmaHQ/sigma">Sigma</a>, <a href="https://github.com/Velocidex/velociraptor">Velociraptor</a>, and <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a>. Test parsers with synthetic creation graphs.</p><h2>ATT&amp;CK and controls</h2><p>PPID spoofing maps to T1134.004 Parent PID Spoofing and is normally enabled by legitimate OS functionality, not a CVE. Collect kernel-backed creator fields, retain stable process identifiers, baseline launchers and brokers, restrict debug privileges, and combine ancestry with identity and behavior.</p><div class="article-tags"><span>PPID</span><span>T1134.004</span><span>Process Creation</span></div><div class="article-nav"><a href="fragmentation-ads-defense.html">&larr; Previous: Fragmentation &amp; ADS</a><a href="command-line-spoofing-defense.html">Next: Command Line Spoofing &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PPID Spoofing: Defense — Preemptive Cyber Security</title><meta name="description" content="Detect PPID spoofing by separating reported parentage from creator identity, token provenance, handles, and process behavior."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html",
+                "headline": "PPID Spoofing: Parentage Is Not Provenance",
+                "description": "Detect PPID spoofing by separating reported parentage from creator identity, token provenance, handles, and process behavior.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-18",
+                "dateModified": "2026-09-18",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · Process Creation",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "PPID Spoofing: Parentage Is Not Provenance",
+                        "item": "https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PPID Spoofing: Defense — Preemptive Cyber Security">
+    <meta property="og:description" content="Detect PPID spoofing by separating reported parentage from creator identity, token provenance, handles, and process behavior.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PPID Spoofing: Defense — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Detect PPID spoofing by separating reported parentage from creator identity, token provenance, handles, and process behavior.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-18">
+    <meta property="article:modified_time" content="2026-09-18">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="Windows Defense · Process Creation">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">PPID Spoofing: Parentage Is Not Provenance</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · Process Creation</span><span class="dot">//</span><span>2026-09-18</span></div><h1>PPID Spoofing: Parentage Is Not Provenance</h1><p class="article-lead">A process may report a parent chosen through supported process-creation features. Defenders should distinguish the displayed parent from the actor that initiated creation and validate both against tokens, sessions, handles, timestamps, and behavior.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> · Managing Director &amp; Principal Consultant</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>This guide omits process-attribute code, access-right recipes, and operational parent-selection procedures.</p></div><h2>Three identities, not one</h2><p>The reported parent, creating process, and security context can differ for legitimate reasons including brokers, launchers, deployment systems, debuggers, and sandboxes. High-quality analytics preserve these fields instead of flattening them into a single tree edge.</p><figure class="diagram-figure"><svg viewBox="0 0 740 205" role="img" aria-label="Process creation graph distinguishing creator, reported parent, and child security context."><text x="16" y="24" class="dg-title">Preserve the complete creation relationship</text><rect x="24" y="56" width="164" height="54" rx="7" class="dg-node-danger"/><text x="106" y="79" text-anchor="middle" class="dg-label">Actual creator</text><text x="106" y="98" text-anchor="middle" class="dg-note">event + handle</text><rect x="24" y="132" width="164" height="54" rx="7" class="dg-node"/><text x="106" y="155" text-anchor="middle" class="dg-label">Reported parent</text><text x="106" y="174" text-anchor="middle" class="dg-note">tree relationship</text><rect x="286" y="88" width="168" height="62" rx="7" class="dg-node-alt"/><text x="370" y="114" text-anchor="middle" class="dg-label">New process</text><text x="370" y="134" text-anchor="middle" class="dg-note">token + session + image</text><rect x="552" y="88" width="164" height="62" rx="7" class="dg-node"/><text x="634" y="114" text-anchor="middle" class="dg-label">Behavioral</text><text x="634" y="134" text-anchor="middle" class="dg-note">consequences</text><line x1="188" y1="83" x2="286" y2="108" class="dg-line"/><line x1="188" y1="159" x2="286" y2="132" class="dg-line"/><line x1="454" y1="119" x2="552" y2="119" class="dg-line"/></svg><figcaption>A plausible process tree can still conflict with creator and token evidence.</figcaption></figure><h2>Detection and validation</h2><ul><li>Compare creator identity from endpoint or kernel telemetry with reported parent ID.</li><li>Find session, user, integrity, token, and timing contradictions.</li><li>Correlate access to the selected parent before child creation.</li><li>Score implausible parent-child pairs with unsigned images, unusual paths, or later injection.</li></ul><p>Preserve creation events, process GUIDs, start times, command lines, tokens, sessions, handles, modules, and network activity. PID reuse makes timestamps essential. Use <a href="https://github.com/microsoft/sysmonforlinux">Sysmon resources</a>, <a href="https://github.com/SigmaHQ/sigma">Sigma</a>, <a href="https://github.com/Velocidex/velociraptor">Velociraptor</a>, and <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a>. Test parsers with synthetic creation graphs.</p><h2>ATT&amp;CK and controls</h2><p>PPID spoofing maps to T1134.004 Parent PID Spoofing and is normally enabled by legitimate OS functionality, not a CVE. Collect kernel-backed creator fields, retain stable process identifiers, baseline launchers and brokers, restrict debug privileges, and combine ancestry with identity and behavior.</p><div class="article-tags"><span>PPID</span><span>T1134.004</span><span>Process Creation</span></div><div class="article-nav"><a href="fragmentation-ads-defense.html">&larr; Previous: Fragmentation &amp; ADS</a><a href="command-line-spoofing-defense.html">Next: Command Line Spoofing &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div><div class="container footer-rss" data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">Subscribe via RSS</a></div></footer><script src="../../assets/js/main.js"></script></body></html>

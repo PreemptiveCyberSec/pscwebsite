@@ -1,7 +1,125 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Windows SIDs, Integrity Levels, and Tokens — Preemptive Cyber Security</title><meta name="description" content="A defensive guide to Windows security identifiers, access tokens, integrity levels, UAC, and authorization investigations."><meta name="theme-color" content="#030806"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://api.fontshare.com"><link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/animations.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head>
-<body><nav class="navbar"><div class="container"><div class="nav-wrapper"><a href="../../index.html" class="logo"><span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span></a><button class="hamburger" id="hamburger" type="button" aria-label="Menu"><span></span><span></span><span></span></button><ul class="nav-menu" id="nav-menu"><li><a href="../services.html">Services</a></li><li><a href="../about.html">About</a></li><li><a href="../resources.html">Resources</a></li><li class="nav-cta"><a href="../contact.html">Get in touch</a></li></ul></div></div></nav><main><article class="article"><div class="container">
-<a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · Identity</span><span class="dot">//</span><span>2026-09-03</span><span class="dot">//</span><span>16 min read</span></div><h1>Security Identifiers, Integrity Levels &amp; Token Architecture</h1><p class="article-lead">Windows authorization does not begin with a username. It begins with a security token: a runtime package of identities, groups, privileges, restrictions, and integrity level. SIDs identify principals; access control lists describe who may act; integrity levels add a second, directional boundary. Together, they explain why a process can access one object and is denied another.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span></div>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Windows SIDs, Integrity Levels, and Tokens — Preemptive Cyber Security</title><meta name="description" content="A defensive guide to Windows security identifiers, access tokens, integrity levels, UAC, and authorization investigations."><meta name="theme-color" content="#030806"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://api.fontshare.com"><link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/animations.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/windows-sids-integrity-levels-token-architecture.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/windows-sids-integrity-levels-token-architecture.html",
+                "headline": "Security Identifiers, Integrity Levels & Token Architecture",
+                "description": "A defensive guide to Windows security identifiers, access tokens, integrity levels, UAC, and authorization investigations.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-03",
+                "dateModified": "2026-09-03",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · Identity",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/windows-sids-integrity-levels-token-architecture.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Security Identifiers, Integrity Levels & Token Architecture",
+                        "item": "https://preemptivecybersec.com/pages/blog/windows-sids-integrity-levels-token-architecture.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/windows-sids-integrity-levels-token-architecture.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Windows SIDs, Integrity Levels, and Tokens — Preemptive Cyber Security">
+    <meta property="og:description" content="A defensive guide to Windows security identifiers, access tokens, integrity levels, UAC, and authorization investigations.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/windows-sids-integrity-levels-token-architecture.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Windows SIDs, Integrity Levels, and Tokens — Preemptive Cyber Security">
+    <meta name="twitter:description" content="A defensive guide to Windows security identifiers, access tokens, integrity levels, UAC, and authorization investigations.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-03">
+    <meta property="article:modified_time" content="2026-09-03">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="Windows Defense · Identity">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container">
+<nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Security Identifiers, Integrity Levels &amp; Token Architecture</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · Identity</span><span class="dot">//</span><span>2026-09-03</span><span class="dot">//</span><span>16 min read</span></div><h1>Security Identifiers, Integrity Levels &amp; Token Architecture</h1><p class="article-lead">Windows authorization does not begin with a username. It begins with a security token: a runtime package of identities, groups, privileges, restrictions, and integrity level. SIDs identify principals; access control lists describe who may act; integrity levels add a second, directional boundary. Together, they explain why a process can access one object and is denied another.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> · Managing Director &amp; Principal Consultant</span></div>
 <div class="prose"><h2>The authorization question Windows asks</h2><p>When a process requests an object such as a file, registry key, service, or named pipe, Windows evaluates the caller's access token against the object's security descriptor. The token describes <em>who the caller is</em> and what authority it carries. The descriptor describes <em>what the object permits</em>. This model is more reliable than assumptions based on account names, because the same user can run processes with different tokens, group memberships, privileges, or integrity levels.</p>
 <figure class="diagram-figure"><svg viewBox="0 0 760 285" role="img" aria-label="Windows access-check diagram: a process token containing user SID, group SIDs, privileges and integrity SID is compared by the security reference monitor with an object's DACL and mandatory integrity label to allow or deny access."><text x="16" y="24" class="dg-title">Windows access check: token meets security descriptor</text><rect x="25" y="58" width="275" height="168" rx="8" class="dg-node"/><text x="162" y="83" text-anchor="middle" class="dg-label">Process access token</text><text x="52" y="112" class="dg-sub">user SID: S-1-5-21-...</text><text x="52" y="136" class="dg-sub">group SIDs: Users, Admins, ...</text><text x="52" y="160" class="dg-sub">privileges: enabled / disabled</text><text x="52" y="184" class="dg-accent-text">integrity SID: Medium / High</text><line x1="302" y1="142" x2="440" y2="142" class="dg-flow"/><path d="M432 138 l8 4 -8 4 z" fill="var(--neon)"/><text x="370" y="129" text-anchor="middle" class="dg-sub">requested access</text><rect x="445" y="58" width="290" height="168" rx="8" class="dg-node-accent"/><text x="590" y="83" text-anchor="middle" class="dg-accent-text">Security Reference Monitor</text><text x="470" y="112" class="dg-sub">object owner + DACL (allow / deny)</text><text x="470" y="136" class="dg-sub">SACL: audit policy + integrity label</text><text x="470" y="160" class="dg-sub">token groups and privileges evaluated</text><text x="470" y="184" class="dg-sub">access granted, reduced, or denied</text><text x="16" y="266" class="dg-title">Preemptive Cyber Security</text></svg><figcaption class="diagram-caption"><b>Figure 1.</b> Windows compares the requester's actual token with the object's access rules and mandatory integrity policy, then grants only the requested rights that survive both checks.</figcaption></figure>
 <h2>SIDs: durable identities, not display names</h2><p>A Security Identifier (SID) is a variable-length value that identifies a security principal. A local account SID is scoped to its machine; a domain account SID incorporates the domain identifier plus a relative identifier (RID). Well-known SIDs identify built-in concepts such as <code>Everyone</code>, <code>Authenticated Users</code>, <code>LOCAL SYSTEM</code>, and the built-in Administrators group. Display names can be changed and localized; a SID is the value access checks use.</p><p>In an incident, resolve names for readability but preserve raw SIDs in evidence. A local administrator account on two machines may share a name yet be entirely different principals. Conversely, a renamed account retains its SID. SID history, nested groups, and orphaned ACL entries are all reasons to inspect authorization as data rather than as labels.</p>
@@ -11,4 +129,4 @@
 <h2>UAC and least privilege: design for the medium token</h2><p>UAC is most effective when applications do not need elevation for ordinary tasks. Design user-facing software to run at medium integrity, isolate truly administrative actions into narrow, auditable elevation points, and avoid instructing users to disable UAC. In enterprise environments, separate standard and administrative accounts for privileged work, use phishing-resistant authentication, and prevent admins from browsing or reading email with privileged tokens.</p>
 <h2>Vulnerability context: token flaws are boundary failures</h2><p><strong>CVE-2022-21882</strong> was a Windows Win32k elevation-of-privilege vulnerability exploited in the wild. <strong>CVE-2024-30088</strong> was a Windows kernel elevation-of-privilege vulnerability also reported as exploited in the wild. Such flaws matter because they can let a lower-privileged context gain authority that token and integrity policy should have constrained. The defender's response is not to distrust tokens; it is to patch affected systems, retain EDR visibility, and investigate unexpected high-integrity or SYSTEM processes.</p>
 <h2>Defender workflow: investigate the token, then the path</h2><ol><li><strong>Start with process context.</strong> Record executable path, hash, parent, command line, user SID, integrity level, and logon session.</li><li><strong>Inspect group and privilege state.</strong> Use Process Explorer or the supported <code>whoami /all</code> command in an authorized session to identify groups, integrity level, and enabled privileges.</li><li><strong>Review the object rule.</strong> Use <code>icacls</code> for file-system ACLs and appropriate management tools for services and registry keys. Look for broad write permissions on privileged paths.</li><li><strong>Correlate elevation.</strong> Connect process creation, UAC consent, service creation, scheduled tasks, and logon events. A high-integrity child without an expected elevation path deserves review.</li><li><strong>Fix the control plane.</strong> Remove unnecessary local-admin membership, reduce privileged group nesting, use LAPS for local accounts, and patch the operating system.</li></ol>
-<div class="callout"><h4>Key takeaways</h4><ul><li>SIDs are the identifiers Windows authorizes; names are a convenience layer.</li><li>Tokens carry the effective identity, groups, privileges, and integrity level of a process or thread.</li><li>MIC blocks lower-integrity code from writing upward, while DACLs still govern discretionary access.</li><li>Watch for unexplained high-integrity or SYSTEM process creation and preserve token evidence during triage.</li></ul></div><div class="tag-row"><span class="tag">#windows-defense</span><span class="tag">#identity</span><span class="tag">#access-control</span><span class="tag">#uac</span></div></div><div class="article-nav"><a href="../resources.html">&larr; All articles</a><a href="../contact.html">Assess your Windows estate &rarr;</a></div></div></article></main><footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<div class="callout"><h4>Key takeaways</h4><ul><li>SIDs are the identifiers Windows authorizes; names are a convenience layer.</li><li>Tokens carry the effective identity, groups, privileges, and integrity level of a process or thread.</li><li>MIC blocks lower-integrity code from writing upward, while DACLs still govern discretionary access.</li><li>Watch for unexplained high-integrity or SYSTEM process creation and preserve token evidence during triage.</li></ul></div><div class="tag-row"><span class="tag">#windows-defense</span><span class="tag">#identity</span><span class="tag">#access-control</span><span class="tag">#uac</span></div></div><div class="article-nav"><a href="../resources.html">&larr; All articles</a><a href="../contact.html">Assess your Windows estate &rarr;</a></div></div></article></main><footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul></div></div></footer><script src="../../assets/js/main.js"></script></body></html>

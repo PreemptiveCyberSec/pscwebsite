@@ -1,7 +1,125 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AMSI Patching: Integrity Detection — Preemptive Cyber Security</title><meta name="description" content="Detect AMSI patching through page integrity, protection history, writer attribution, telemetry health, and layered response."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · AMSI Integrity</span><span class="dot">//</span><span>2026-09-06</span></div><h1>AMSI Patching: Detecting In-Process Security Tampering</h1><p class="article-lead">AMSI patching attempts to alter code or control data inside an AMSI-integrated process so scanning fails, returns a benign result, or is skipped. Defenders should detect the mutation and its consequences without depending on one public patch sequence.</p><div class="article-byline"><span class="avatar">LG</span><span>By <strong>Lisa Garcia</strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>No patch bytes, target offsets, memory-writing code, or bypass commands are included. The examples are integrity-monitoring concepts for authorized environments.</p></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AMSI Patching: Integrity Detection — Preemptive Cyber Security</title><meta name="description" content="Detect AMSI patching through page integrity, protection history, writer attribution, telemetry health, and layered response."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html",
+                "headline": "AMSI Patching: Detecting In-Process Security Tampering",
+                "description": "Detect AMSI patching through page integrity, protection history, writer attribution, telemetry health, and layered response.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-06",
+                "dateModified": "2026-09-06",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/lisa-garcia.html#person",
+                    "name": "Lisa Garcia",
+                    "url": "https://preemptivecybersec.com/pages/authors/lisa-garcia.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · AMSI Integrity",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "AMSI Patching: Detecting In-Process Security Tampering",
+                        "item": "https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AMSI Patching: Integrity Detection — Preemptive Cyber Security">
+    <meta property="og:description" content="Detect AMSI patching through page integrity, protection history, writer attribution, telemetry health, and layered response.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AMSI Patching: Integrity Detection — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Detect AMSI patching through page integrity, protection history, writer attribution, telemetry health, and layered response.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-06">
+    <meta property="article:modified_time" content="2026-09-06">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/lisa-garcia.html">
+    <meta property="article:section" content="Windows Defense · AMSI Integrity">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">AMSI Patching: Detecting In-Process Security Tampering</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · AMSI Integrity</span><span class="dot">//</span><span>2026-09-06</span></div><h1>AMSI Patching: Detecting In-Process Security Tampering</h1><p class="article-lead">AMSI patching attempts to alter code or control data inside an AMSI-integrated process so scanning fails, returns a benign result, or is skipped. Defenders should detect the mutation and its consequences without depending on one public patch sequence.</p><div class="article-byline"><span class="avatar">LG</span><span>By <strong><a href="../authors/lisa-garcia.html" rel="author">Lisa Garcia</a></strong> · Security Researcher</span></div><div class="prose"><div class="callout"><strong>Defensive scope</strong><p>No patch bytes, target offsets, memory-writing code, or bypass commands are included. The examples are integrity-monitoring concepts for authorized environments.</p></div>
 <h2>What patching changes</h2><p>AMSI client logic is loaded into the address space of an integrated application. Its executable pages should normally correspond to the correct signed Windows image after expected relocations. Tampering can affect instructions, branch behavior, function pointers, or data used by the scan path. The details vary, but every successful mutation needs a writer, a changed region, and an observable impact on inspection.</p><figure class="diagram-figure"><svg viewBox="0 0 740 225" role="img" aria-label="AMSI patching detection using page integrity, writer identity, and telemetry health."><text x="16" y="24" class="dg-title">Triangulate the change, actor, and effect</text><rect x="20" y="58" width="150" height="54" rx="7" class="dg-node"/><text x="95" y="80" text-anchor="middle" class="dg-label">Signed AMSI image</text><text x="95" y="99" text-anchor="middle" class="dg-label">trusted baseline</text><rect x="216" y="58" width="150" height="54" rx="7" class="dg-node-danger"/><text x="291" y="80" text-anchor="middle" class="dg-label">Protection/write</text><text x="291" y="99" text-anchor="middle" class="dg-label">event in process</text><rect x="412" y="58" width="150" height="54" rx="7" class="dg-node-danger"/><text x="487" y="80" text-anchor="middle" class="dg-label">Changed code or</text><text x="487" y="99" text-anchor="middle" class="dg-label">control data</text><rect x="608" y="58" width="112" height="54" rx="7" class="dg-node-alt"/><text x="664" y="80" text-anchor="middle" class="dg-label">Scan path</text><text x="664" y="99" text-anchor="middle" class="dg-label">degrades</text><line x1="170" y1="85" x2="216" y2="85" class="dg-line"/><line x1="366" y1="85" x2="412" y2="85" class="dg-line"/><line x1="562" y1="85" x2="608" y2="85" class="dg-line"/><rect x="120" y="152" width="500" height="42" rx="7" class="dg-node"/><text x="370" y="178" text-anchor="middle" class="dg-label">Correlate writer + page diff + missing scans + later behavior</text></svg><figcaption>A byte difference is useful; the process that wrote it and the resulting telemetry gap make it actionable.</figcaption></figure>
 <h2>Integrity analysis without brittle signatures</h2><p>Compare in-memory executable pages with the exact on-disk image for the endpoint’s architecture and patch level. Account for relocations, supported hotpatches, security instrumentation, and copy-on-write state. Record page protections before and after modification, identify the writing thread and module where telemetry permits, and verify whether the changed range belongs to executable code or mutable data.</p><ul><li>Hash page-sized regions after normal loader fixups rather than entire modules blindly.</li><li>Resolve differences to functions and signed build metadata.</li><li>Prioritize changes followed by a drop in AMSI events or abnormal scan results.</li><li>Correlate with script-block logs, child processes, downloads, credentials, and networking.</li><li>Baseline legitimate profilers, EDR hooks, application compatibility, and hotpatch activity.</li></ul>
 <h2>Response workflow</h2><p>Capture the affected process before termination when policy allows. Preserve its executable pages, module list, threads, call stacks, handles, script content, process ancestry, security-product state, and endpoint timeline. Compare the recovered image to a trusted file from the same system build. Scope the writer’s hash, signer, parent, command context, and changed bytes across the fleet.</p>
 <h2>Safe lab and GitHub tools</h2><p>Validate detection with a benign application whose own test code page is changed by an approved instrumentation harness; do not alter AMSI. Confirm that memory-protection and integrity sensors identify the generic behavior, then inject synthetic AMSI-health events into a test SIEM. <a href="https://github.com/hasherezade/pe-sieve">PE-sieve</a>, <a href="https://github.com/fortra/moneta">Moneta</a>, <a href="https://github.com/volatilityfoundation/volatility3">Volatility 3</a>, and <a href="https://github.com/erocarrera/pefile">pefile</a> support memory and image comparison.</p>
 <h2>ATT&amp;CK, CVEs, and hardening</h2><p>AMSI patching maps to T1562.001 Impair Defenses and may accompany T1059 scripting. It is a tampering technique, not a CVE. A provider-specific flaw should be cited only after exact product and version validation. Enable Defender tamper protection or equivalent controls, keep security components current, use WDAC/AppLocker and ASR, remove unnecessary scripting engines, restrict local administration, and alert on unexplained changes to security-related image pages.</p>
-<div class="article-tags"><span>AMSI</span><span>Code Integrity</span><span>T1562.001</span></div><div class="article-nav"><a href="amsi-architecture-bypass-theory-defense.html">&larr; Previous: AMSI Architecture</a><a href="amsi-write-raid-defense.html">Next: AMSI Write Raid &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<div class="article-tags"><span>AMSI</span><span>Code Integrity</span><span>T1562.001</span></div><div class="article-nav"><a href="amsi-architecture-bypass-theory-defense.html">&larr; Previous: AMSI Architecture</a><a href="amsi-write-raid-defense.html">Next: AMSI Write Raid &rarr;</a></div></div></div></article></main><footer><div class="container"><div><span class="footer-logo">PSC<span class="accent">.</span></span><p>Security before compromise.</p></div><div class="footer-bottom"><span>&copy; 2026 Preemptive Cyber Security</span><span>Built for resilience.</span></div></div><div class="container footer-rss" data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">Subscribe via RSS</a></div></footer><script src="../../assets/js/main.js"></script></body></html>

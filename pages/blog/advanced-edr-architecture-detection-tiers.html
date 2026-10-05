@@ -1,7 +1,125 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Advanced EDR Detection Tiers — Preemptive Cyber Security</title><meta name="description" content="A practical guide to EDR telemetry, prevention and detection tiers, correlation, response orchestration, and validation."><meta name="theme-color" content="#030806"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://api.fontshare.com"><link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/animations.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head>
-<body><nav class="navbar"><div class="container"><div class="nav-wrapper"><a href="../../index.html" class="logo"><span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span></a><button class="hamburger" id="hamburger" type="button" aria-label="Menu"><span></span><span></span><span></span></button><ul class="nav-menu" id="nav-menu"><li><a href="../services.html">Services</a></li><li><a href="../about.html">About</a></li><li><a href="../resources.html">Resources</a></li><li class="nav-cta"><a href="../contact.html">Get in touch</a></li></ul></div></div></nav><main><article class="article"><div class="container">
-<a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · Detection</span><span class="dot">//</span><span>2026-09-03</span><span class="dot">//</span><span>17 min read</span></div><h1>Advanced EDR Architecture and Tiers of Detection</h1><p class="article-lead">Endpoint Detection and Response is not one alert engine. It is a system of sensors, local enforcement, evidence pipelines, analytics, analyst workflows, and containment controls. Mature coverage uses multiple detection tiers so a single missed signature does not decide the outcome.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong>Viral Maniar</strong> · Managing Director &amp; Principal Consultant</span></div>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Advanced EDR Detection Tiers — Preemptive Cyber Security</title><meta name="description" content="A practical guide to EDR telemetry, prevention and detection tiers, correlation, response orchestration, and validation."><meta name="theme-color" content="#030806"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://api.fontshare.com"><link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/animations.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html",
+                "headline": "Advanced EDR Architecture and Tiers of Detection",
+                "description": "A practical guide to EDR telemetry, prevention and detection tiers, correlation, response orchestration, and validation.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-03",
+                "dateModified": "2026-09-03",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · Detection",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Advanced EDR Architecture and Tiers of Detection",
+                        "item": "https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Advanced EDR Detection Tiers — Preemptive Cyber Security">
+    <meta property="og:description" content="A practical guide to EDR telemetry, prevention and detection tiers, correlation, response orchestration, and validation.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Advanced EDR Detection Tiers — Preemptive Cyber Security">
+    <meta name="twitter:description" content="A practical guide to EDR telemetry, prevention and detection tiers, correlation, response orchestration, and validation.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-03">
+    <meta property="article:modified_time" content="2026-09-03">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="Windows Defense · Detection">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container">
+<nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Advanced EDR Architecture and Tiers of Detection</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · Detection</span><span class="dot">//</span><span>2026-09-03</span><span class="dot">//</span><span>17 min read</span></div><h1>Advanced EDR Architecture and Tiers of Detection</h1><p class="article-lead">Endpoint Detection and Response is not one alert engine. It is a system of sensors, local enforcement, evidence pipelines, analytics, analyst workflows, and containment controls. Mature coverage uses multiple detection tiers so a single missed signature does not decide the outcome.</p><div class="article-byline"><span class="avatar">VM</span><span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> · Managing Director &amp; Principal Consultant</span></div>
 <div class="prose"><h2>What an EDR is designed to do</h2><p>An EDR agent observes endpoint activity, enriches it with context, sends selected telemetry to an analysis service, and gives defenders the ability to investigate and respond. Antivirus-style prevention remains valuable, but EDR extends the job: it builds timelines, correlates actions across hosts and identities, preserves evidence, and can isolate an endpoint when risk is high. The goal is not to record every byte forever. It is to capture sufficiently trustworthy, useful events to answer what happened and to stop it safely.</p>
 <figure class="diagram-figure"><svg viewBox="0 0 760 305" role="img" aria-label="EDR architecture from endpoint sensors, local prevention and agent buffer through secure telemetry transport to cloud analytics, threat intelligence, analyst console and response actions back to the endpoint."><text x="16" y="24" class="dg-title">High-level EDR architecture</text><rect x="25" y="58" width="175" height="180" rx="8" class="dg-node"/><text x="112" y="83" text-anchor="middle" class="dg-label">Endpoint</text><text x="48" y="112" class="dg-sub">process + image loads</text><text x="48" y="136" class="dg-sub">file, registry, network</text><text x="48" y="160" class="dg-sub">script + identity events</text><text x="48" y="184" class="dg-accent-text">local prevention / buffer</text><rect x="290" y="58" width="180" height="180" rx="8" class="dg-node-accent"/><text x="380" y="83" text-anchor="middle" class="dg-accent-text">Detection platform</text><text x="313" y="112" class="dg-sub">ingestion + normalization</text><text x="313" y="136" class="dg-sub">correlation + scoring</text><text x="313" y="160" class="dg-sub">intel + behavior models</text><text x="313" y="184" class="dg-sub">case timeline + evidence</text><rect x="560" y="58" width="175" height="180" rx="8" class="dg-node"/><text x="647" y="83" text-anchor="middle" class="dg-label">Security operations</text><text x="583" y="112" class="dg-sub">analyst investigation</text><text x="583" y="136" class="dg-sub">SIEM / identity context</text><text x="583" y="160" class="dg-sub">containment decision</text><text x="583" y="184" class="dg-accent-text">isolate / collect / remediate</text><line x1="202" y1="145" x2="288" y2="145" class="dg-flow"/><line x1="472" y1="145" x2="558" y2="145" class="dg-flow"/><path d="M280 141 l8 4 -8 4 zM550 141 l8 4 -8 4 z" fill="var(--neon)"/><path d="M647 240 C647 278,112 278,112 240" class="dg-flow" stroke-dasharray="5 4"/><text x="380" y="290" text-anchor="middle" class="dg-sub">authorized response action returns to the endpoint</text></svg><figcaption class="diagram-caption"><b>Figure 1.</b> A resilient EDR pipeline turns endpoint facts into decisions, then sends a constrained response action back through the control plane.</figcaption></figure>
 <h2>Tier 0: prevention and policy enforcement</h2><p>Tier 0 is the work that prevents known-bad or clearly disallowed behavior before it becomes an investigation: reputation checks, signed-code policy, attack surface reduction rules, script restrictions, exploit protections, and application control. It has the lowest analyst cost and should be measured by blocked activity and business-compatible coverage. Prevention needs an exception process; uncontrolled exclusions create blind spots that later analytics cannot reliably repair.</p>
@@ -13,4 +131,16 @@
 <h2>Response is a safety-critical feature</h2><p>Containment actions have real business impact. Endpoint isolation, process termination, file quarantine, remote evidence collection, and account disablement should be role-controlled, logged, reversible where possible, and paired with a clear escalation path. An automated isolation decision may be appropriate for a high-confidence ransomware signal; a weak anomaly should create a case, not a disruption. Test response actions during exercises before relying on them in an incident.</p>
 <h2>Relevant CVEs: visibility must survive product risk</h2><p><strong>CVE-2021-44228</strong> (Log4Shell) demonstrated how quickly widespread exploitation can turn endpoint telemetry into an essential scoping tool: defenders needed to find affected processes, outbound connections, and follow-on activity. <strong>CVE-2024-21412</strong> was a Windows Internet Shortcut Files security-feature bypass used in the wild, showing that initial access controls can fail and endpoints still need behavioral detection. These CVEs are not EDR defects. They illustrate why patch management, prevention, endpoint visibility, and investigation workflows must work as a system.</p>
 <h2>Build a measurable detection program</h2><ol><li><strong>Inventory coverage.</strong> Track protected endpoints, agent health, OS versions, sensor status, and meaningful exclusions.</li><li><strong>Model the behavior.</strong> Map priority threats to ATT&amp;CK techniques, but write detections around observable, environment-specific hypotheses.</li><li><strong>Test safely.</strong> Exercise detections in a lab and through approved purple-team simulations. Measure telemetry arrival, rule hit, triage quality, and response time.</li><li><strong>Tune from cases.</strong> Record true positives, false positives, root causes, and tuning changes. A suppression without an expiry and owner is technical debt.</li><li><strong>Review blind spots.</strong> Reassess exclusions, new SaaS tooling, driver changes, and endpoints that fall out of policy.</li></ol>
-<div class="callout"><h4>Key takeaways</h4><ul><li>EDR is an evidence and response system, not merely an antivirus alert feed.</li><li>Layer prevention, atomic signals, behavioral analytics, and cross-domain hunting.</li><li>Engineer telemetry around investigative questions, agent health, and retention constraints.</li><li>Test containment actions and use automation only at an evidence threshold proportionate to business impact.</li></ul></div><div class="tag-row"><span class="tag">#edr</span><span class="tag">#detection-engineering</span><span class="tag">#windows-defense</span><span class="tag">#threat-hunting</span></div></div><div class="article-nav"><a href="../resources.html">&larr; All articles</a><a href="../contact.html">Improve your detection coverage &rarr;</a></div></div></article></main><footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div></div></footer><script src="../../assets/js/main.js"></script></body></html>
+<div class="callout"><h4>Key takeaways</h4><ul><li>EDR is an evidence and response system, not merely an antivirus alert feed.</li><li>Layer prevention, atomic signals, behavioral analytics, and cross-domain hunting.</li><li>Engineer telemetry around investigative questions, agent health, and retention constraints.</li><li>Test containment actions and use automation only at an evidence threshold proportionate to business impact.</li></ul></div><div class="tag-row"><span class="tag">#edr</span><span class="tag">#detection-engineering</span><span class="tag">#windows-defense</span><span class="tag">#threat-hunting</span></div></div>
+                <aside class="related-services" data-psc-related-services aria-labelledby="related-services-title">
+                    <span class="eyebrow">Related service</span>
+                    <h2 id="related-services-title">Apply this research to your environment.</h2>
+                    <div class="related-service-links">
+                        <a href="../services/detection-engineering.html">
+                            <strong>Detection Engineering</strong>
+                            <span>Detection engineering services that map priority threats to telemetry, build and tune ATT&amp;CK-aligned analytics, validate coverage, and create actionable analyst playbooks.</span>
+                        </a>
+                    </div>
+                </aside>
+
+<div class="article-nav"><a href="../resources.html">&larr; All articles</a><a href="../contact.html">Improve your detection coverage &rarr;</a></div></div></article></main><footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul></div></div></footer><script src="../../assets/js/main.js"></script></body></html>

@@ -1,1 +1,117 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Halo's and Tartarus Gate Defense — Preemptive Cyber Security</title><meta name="description" content="Defensive strategies for syscall-stub inspection anomalies and resilient endpoint telemetry."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css"></head><body><main><article class="article"><div class="container"><a href="../resources.html" class="back-link">&larr; ./resources / blog</a><div class="article-meta"><span class="cat">Windows Defense · API Integrity</span><span class="dot">//</span><span>2026-09-04</span></div><h1>Halo's and Tartarus Gate: Resilient Detection</h1><p class="article-lead">These names describe research patterns that attempt to work around assumptions about syscall stubs. A resilient defense treats any one API observation point as partial and invests in evidence that survives changes in call routing.</p><div class="prose"><h2>Architecture principle: sensor diversity</h2><p>Endpoint visibility is strongest when process, image, memory, file, registry, network, authentication, and code-integrity signals converge. An alert can remain accurate even when one telemetry source is absent, provided its rule clearly declares the required evidence and confidence threshold.</p><figure class="diagram-figure"><svg viewBox="0 0 700 180" role="img" aria-label="Multiple endpoint telemetry sensors feed a normalized event store and then detection rules and analyst response."><text x="16" y="22" class="dg-title">Diversified endpoint telemetry</text><rect x="30" y="65" width="135" height="45" rx="7" class="dg-node"/><text x="97" y="93" text-anchor="middle" class="dg-label">Endpoint sensors</text><rect x="280" y="65" width="135" height="45" rx="7" class="dg-node-accent"/><text x="347" y="93" text-anchor="middle" class="dg-accent-text">Normalized events</text><rect x="530" y="65" width="135" height="45" rx="7" class="dg-node"/><text x="597" y="93" text-anchor="middle" class="dg-label">Rules + analyst</text><g class="dg-flow"><line x1="165" y1="87" x2="278" y2="87"/><line x1="415" y1="87" x2="528" y2="87"/></g></svg><figcaption class="diagram-caption"><b>Figure 1.</b> Detection quality depends on correlation and sensor health, not an assumption that one internal path is always visible.</figcaption></figure><h2>Defender setup</h2><p>Map each priority detection to its telemetry dependencies and test degraded-sensor scenarios. Use <a href="https://github.com/SigmaHQ/sigma" target="_blank" rel="noopener">Sigma</a> to express portable behavior hypotheses, then tune them against your own endpoints. Track agent version, tamper-protection status, event latency, and gaps as security metrics.</p><h2>CVE and control context</h2><p><strong>CVE-2024-26229</strong> was a Windows CSC service elevation-of-privilege vulnerability exploited in the wild. Keep systems patched, limit local administrator access, use application control, and make sure incident responders can pivot from endpoint activity to identity and network evidence.</p><div class="callout"><h4>Key takeaways</h4><ul><li>Internal call-path variation is a reason for defense in depth.</li><li>Test telemetry dependencies and degraded-sensor response.</li><li>Patch and least privilege reduce the impact of endpoint compromise.</li></ul></div><div class="tag-row"><span class="tag">#edr</span><span class="tag">#detection-engineering</span></div></div></div></article></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Halo's and Tartarus Gate Defense — Preemptive Cyber Security</title><meta name="description" content="Defensive strategies for syscall-stub inspection anomalies and resilient endpoint telemetry."><meta name="theme-color" content="#030806"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/blog.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html",
+                "headline": "Halo's and Tartarus Gate: Resilient Detection",
+                "description": "Defensive strategies for syscall-stub inspection anomalies and resilient endpoint telemetry.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-09-04",
+                "dateModified": "2026-09-04",
+                "author": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "articleSection": "Windows Defense · API Integrity",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://preemptivecybersec.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Research",
+                        "item": "https://preemptivecybersec.com/pages/resources.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Halo's and Tartarus Gate: Resilient Detection",
+                        "item": "https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Halo's and Tartarus Gate Defense — Preemptive Cyber Security">
+    <meta property="og:description" content="Defensive strategies for syscall-stub inspection anomalies and resilient endpoint telemetry.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Halo's and Tartarus Gate Defense — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Defensive strategies for syscall-stub inspection anomalies and resilient endpoint telemetry.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta property="article:published_time" content="2026-09-04">
+    <meta property="article:modified_time" content="2026-09-04">
+    <meta property="article:author" content="https://preemptivecybersec.com/#organization">
+    <meta property="article:section" content="Windows Defense · API Integrity">
+</head><body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../resources.html#blog">Blog</a></li>
+                            <li><a href="../resources.html#tools">Tools</a></li>
+                            <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><main><article class="article"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Halo's and Tartarus Gate: Resilient Detection</li></ol></nav><div class="article-meta"><span class="cat">Windows Defense · API Integrity</span><span class="dot">//</span><span>2026-09-04</span></div><h1>Halo's and Tartarus Gate: Resilient Detection</h1><p class="article-lead">These names describe research patterns that attempt to work around assumptions about syscall stubs. A resilient defense treats any one API observation point as partial and invests in evidence that survives changes in call routing.</p><div class="article-byline"><span class="avatar">PSC</span><span>By <strong><a href="../../index.html" rel="author">Preemptive Cyber Security Research</a></strong></span></div><div class="prose"><h2>Architecture principle: sensor diversity</h2><p>Endpoint visibility is strongest when process, image, memory, file, registry, network, authentication, and code-integrity signals converge. An alert can remain accurate even when one telemetry source is absent, provided its rule clearly declares the required evidence and confidence threshold.</p><figure class="diagram-figure"><svg viewBox="0 0 700 180" role="img" aria-label="Multiple endpoint telemetry sensors feed a normalized event store and then detection rules and analyst response."><text x="16" y="22" class="dg-title">Diversified endpoint telemetry</text><rect x="30" y="65" width="135" height="45" rx="7" class="dg-node"/><text x="97" y="93" text-anchor="middle" class="dg-label">Endpoint sensors</text><rect x="280" y="65" width="135" height="45" rx="7" class="dg-node-accent"/><text x="347" y="93" text-anchor="middle" class="dg-accent-text">Normalized events</text><rect x="530" y="65" width="135" height="45" rx="7" class="dg-node"/><text x="597" y="93" text-anchor="middle" class="dg-label">Rules + analyst</text><g class="dg-flow"><line x1="165" y1="87" x2="278" y2="87"/><line x1="415" y1="87" x2="528" y2="87"/></g></svg><figcaption class="diagram-caption"><b>Figure 1.</b> Detection quality depends on correlation and sensor health, not an assumption that one internal path is always visible.</figcaption></figure><h2>Defender setup</h2><p>Map each priority detection to its telemetry dependencies and test degraded-sensor scenarios. Use <a href="https://github.com/SigmaHQ/sigma" target="_blank" rel="noopener">Sigma</a> to express portable behavior hypotheses, then tune them against your own endpoints. Track agent version, tamper-protection status, event latency, and gaps as security metrics.</p><h2>CVE and control context</h2><p><strong>CVE-2024-26229</strong> was a Windows CSC service elevation-of-privilege vulnerability exploited in the wild. Keep systems patched, limit local administrator access, use application control, and make sure incident responders can pivot from endpoint activity to identity and network evidence.</p><div class="callout"><h4>Key takeaways</h4><ul><li>Internal call-path variation is a reason for defense in depth.</li><li>Test telemetry dependencies and degraded-sensor response.</li><li>Patch and least privilege reduce the impact of endpoint compromise.</li></ul></div><div class="tag-row"><span class="tag">#edr</span><span class="tag">#detection-engineering</span></div></div></div></article></main>    <script src="../../assets/js/main.js"></script>
+</body></html>
