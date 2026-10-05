@@ -6,6 +6,23 @@
     <title>Contact — Preemptive Cyber Security</title>
     <meta name="description" content="Get a scoped security assessment. Talk to the Preemptive Cyber Security team.">
     <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/contact.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact — Preemptive Cyber Security">
+    <meta property="og:description" content="Get a scoped security assessment. Talk to the Preemptive Cyber Security team.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/contact.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Get a scoped security assessment. Talk to the Preemptive Cyber Security team.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://api.fontshare.com">
@@ -104,6 +121,8 @@
                             <input type="hidden" name="access_key" value="d1fb4a38-916d-465d-93da-065f220c176a">
                             <input type="hidden" name="subject" value="New enquiry from Preemptive website">
                             <input type="hidden" name="from_name" value="Preemptive Cyber Security">
+                            <input type="hidden" id="service_detail" name="service_detail" value="">
+                            <input type="hidden" id="enquiry_source" name="enquiry_source" value="contact-page">
                             <!-- Honeypot spam trap (bots fill this, humans can't see it) -->
                             <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none;" aria-hidden="true">
                             <div class="form-grid">
@@ -125,6 +144,7 @@
                                         <option value="">Select…</option>
                                         <option value="offensive">Offensive Security</option>
                                         <option value="defensive">Defensive Security</option>
+                                        <option value="ai">AI Security</option>
                                         <option value="training">Training</option>
                                         <option value="incident">Incident Response (urgent)</option>
                                         <option value="other">Other</option>
@@ -193,7 +213,7 @@
                     <li><a href="privacy.html">Privacy</a></li>
                     <li><a href="terms.html">Terms</a></li>
                     <li><a href="cookies.html">Cookies</a></li>
-                </ul>
+                <li data-psc-footer-rss><a href="../feed.xml" type="application/rss+xml">RSS</a></li></ul>
             </div>
         </div>
     </footer>
@@ -201,6 +221,26 @@
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script src="../assets/js/main.js"></script>
     <script>
+        const serviceSelections = {
+            'ai-mcp-security': 'ai',
+            'penetration-testing': 'offensive',
+            'red-team-exercise': 'offensive',
+            'detection-engineering': 'defensive',
+            'ransomware-readiness': 'defensive'
+        };
+        const allowedSources = new Set(['service-page', 'service-catalogue', 'services-hub', 'homepage', 'article']);
+        const enquiryParameters = new URLSearchParams(window.location.search);
+        const requestedService = enquiryParameters.get('service');
+        const requestedSource = enquiryParameters.get('source');
+
+        if (Object.prototype.hasOwnProperty.call(serviceSelections, requestedService)) {
+            document.getElementById('service_detail').value = requestedService;
+            document.getElementById('service').value = serviceSelections[requestedService];
+        }
+        if (allowedSources.has(requestedSource)) {
+            document.getElementById('enquiry_source').value = requestedSource;
+        }
+
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const form = this;
@@ -227,6 +267,14 @@
                 const data = await response.json();
 
                 if (response.ok && data.success) {
+                    const submissionDetail = {
+                        service: form.elements.service_detail.value || form.elements.service.value,
+                        source: form.elements.enquiry_source.value
+                    };
+                    window.dispatchEvent(new CustomEvent('psc:contact-form-submitted', { detail: submissionDetail }));
+                    if (Array.isArray(window.dataLayer)) {
+                        window.dataLayer.push({ event: 'contact_form_submitted', ...submissionDetail });
+                    }
                     msg.textContent = '✓ Message received. We\'ll respond within 48 hours.';
                     msg.className = 'form-message show success';
                     form.reset();

@@ -6,6 +6,23 @@
     <title>Resources — Preemptive Cyber Security</title>
     <meta name="description" content="Security research, tools, and conference talks from the Preemptive team.">
     <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/resources.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Resources — Preemptive Cyber Security">
+    <meta property="og:description" content="Security research, tools, and conference talks from the Preemptive team.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/resources.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Resources — Preemptive Cyber Security">
+    <meta name="twitter:description" content="Security research, tools, and conference talks from the Preemptive team.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://api.fontshare.com">
@@ -64,8 +81,13 @@
                     <button class="tab-button" type="button" data-tab="talks">Talks</button>
                 </div>
 
+                <div class="resource-feed" data-psc-resource-rss>
+                    <span>Follow new security research in your preferred feed reader.</span>
+                    <a href="../feed.xml" class="btn btn-ghost" type="application/rss+xml">Subscribe via RSS</a>
+                </div>
+
                 <div id="blog" class="tab-content active">
-                    <div class="bento-grid">
+                    <div class="bento-grid blog-card-grid">
                         <div class="card"><span class="date-tag">2026-10-03 // INTENT-AWARE SECURITY</span><h3>Intent-Aware Security: Hunting the Purpose Behind Activity</h3><p>Connect identity, role, workflow, target, method, and outcome to detect malware and malicious behavior earlier.</p><a href="blog/intent-aware-security-threat-hunting.html" class="card-link">./read →</a></div>
                         <div class="card"><span class="date-tag">2026-09-20 // TELEMETRY PROVENANCE</span><h3>Command-Line Spoofing: Capture Intent Before the Story Changes</h3><p>Compare creation-time arguments, process state, application records, and downstream behavior.</p><a href="blog/command-line-spoofing-defense.html" class="card-link">./read →</a></div>
                         <div class="card"><span class="date-tag">2026-09-18 // PROCESS CREATION</span><h3>PPID Spoofing: Parentage Is Not Provenance</h3><p>Separate the reported parent from creator identity, token context, handles, and behavior.</p><a href="blog/ppid-spoofing-defense.html" class="card-link">./read →</a></div>
@@ -555,7 +577,7 @@
                     <li><a href="privacy.html">Privacy</a></li>
                     <li><a href="terms.html">Terms</a></li>
                     <li><a href="cookies.html">Cookies</a></li>
-                </ul>
+                <li data-psc-footer-rss><a href="../feed.xml" type="application/rss+xml">RSS</a></li></ul>
             </div>
         </div>
     </footer>
