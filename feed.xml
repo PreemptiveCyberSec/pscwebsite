@@ -1,19 +1,461 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>PSC Security Research</title>
-        <link>https://preemptivecybersec.com/pages/resources.html</link>
-        <description>Defensive security research from Preemptive Cyber Security.</description>
-        <language>en</language>
-        <atom:link href="https://preemptivecybersec.com/feed.xml" rel="self" type="application/rss+xml" />
-        <item>
-            <title>{{ARTICLE TITLE}}</title>
-            <link>https://preemptivecybersec.com/pages/blog/{{SLUG}}.html</link>
-            <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/{{SLUG}}.html</guid>
-            <pubDate>{{RFC 822 DATE}}</pubDate>
-            <author>{{PUBLIC AUTHOR EMAIL OR OMIT THIS ELEMENT}} ({{AUTHOR NAME}})</author>
-            <category>{{CATEGORY}}</category>
-            <description>{{PLAIN-TEXT SUMMARY}}</description>
-        </item>
-    </channel>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>PSC Security Research</title>
+    <link>https://preemptivecybersec.com/pages/resources.html</link>
+    <description>Defensive security research from Preemptive Cyber Security.</description>
+    <language>en</language>
+    <atom:link href="https://preemptivecybersec.com/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Intent-Aware Security: Hunting the Purpose Behind Corporate Network Activity</title>
+      <link>https://preemptivecybersec.com/pages/blog/intent-aware-security-threat-hunting.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/intent-aware-security-threat-hunting.html</guid>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Threat Hunting · Behavioral Detection</category>
+      <description>A practical framework for intent-aware threat hunting and malware detection using identity, role, workflow, sequence, target, and outcome context.</description>
+    </item>
+    <item>
+      <title>Command-Line Spoofing: Capture Intent Before the Story Changes</title>
+      <link>https://preemptivecybersec.com/pages/blog/command-line-spoofing-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/command-line-spoofing-defense.html</guid>
+      <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Defense · Telemetry Provenance</category>
+      <description>Detect command-line spoofing by comparing creation-time telemetry, process memory, image behavior, and downstream effects.</description>
+    </item>
+    <item>
+      <title>PPID Spoofing: Parentage Is Not Provenance</title>
+      <link>https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/ppid-spoofing-defense.html</guid>
+      <pubDate>Fri, 18 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Defense · Process Creation</category>
+      <description>Detect PPID spoofing by separating reported parentage from creator identity, token provenance, handles, and process behavior.</description>
+    </item>
+    <item>
+      <title>Fragmentation and Alternate Data Streams: See the Whole NTFS Object</title>
+      <link>https://preemptivecybersec.com/pages/blog/fragmentation-ads-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/fragmentation-ads-defense.html</guid>
+      <pubDate>Thu, 17 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mark Chen</dc:creator>
+      <category>Digital Forensics · NTFS</category>
+      <description>Defensive NTFS analysis of fragmented artifacts, alternate data streams, stream-aware collection, and execution telemetry.</description>
+    </item>
+    <item>
+      <title>File Attributes and Locking: When Artifacts Resist Discovery or Removal</title>
+      <link>https://preemptivecybersec.com/pages/blog/file-attributes-locking-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/file-attributes-locking-defense.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mark Chen</dc:creator>
+      <category>Windows Defense · File System</category>
+      <description>Investigate hidden attributes, file locks, delete-pending state, sharing modes, and owning processes.</description>
+    </item>
+    <item>
+      <title>Time Stomping: Reconstructing Events When File Times Lie</title>
+      <link>https://preemptivecybersec.com/pages/blog/time-stomping-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/time-stomping-defense.html</guid>
+      <pubDate>Tue, 15 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Digital Forensics · NTFS</category>
+      <description>Detect timestomping by comparing NTFS timestamps with journals, execution evidence, and external logs.</description>
+    </item>
+    <item>
+      <title>Active Call Stack Spoofing: Validate the Story Behind the Frames</title>
+      <link>https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/active-call-stack-spoofing-defense.html</guid>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Defense · Telemetry Integrity</category>
+      <description>Detect active call stack spoofing with return provenance, unwind validation, memory telemetry, and CET.</description>
+    </item>
+    <item>
+      <title>Basic Return Address Overwrite: Detecting Broken Call-Return Integrity</title>
+      <link>https://preemptivecybersec.com/pages/blog/return-address-overwrite-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/return-address-overwrite-defense.html</guid>
+      <pubDate>Sun, 13 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mark Chen</dc:creator>
+      <category>Windows Defense · Stack Integrity</category>
+      <description>Defensive analysis of return-address overwrite, stack integrity, unwind anomalies, CET, crash evidence, and memory forensics.</description>
+    </item>
+    <item>
+      <title>Sleep Obfuscation: Detecting Dormant Memory State Changes</title>
+      <link>https://preemptivecybersec.com/pages/blog/sleep-obfuscation-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/sleep-obfuscation-defense.html</guid>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Defense · Dormant Memory</category>
+      <description>Detect sleep obfuscation through memory-state cycles, timers, thread stacks, telemetry gaps, and long-window behavioral correlation.</description>
+    </item>
+    <item>
+      <title>Anti-Debugging Techniques: Analysis Without a Single Point of Failure</title>
+      <link>https://preemptivecybersec.com/pages/blog/anti-debugging-techniques-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/anti-debugging-techniques-defense.html</guid>
+      <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mark Chen</dc:creator>
+      <category>Windows Defense · Reverse Engineering</category>
+      <description>Defensive analysis of anti-debugging checks, exception behavior, timing anomalies, resilient reverse engineering, and detection.</description>
+    </item>
+    <item>
+      <title>Anti-VM Techniques: Building Analysis That Survives Environment Checks</title>
+      <link>https://preemptivecybersec.com/pages/blog/anti-vm-techniques-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/anti-vm-techniques-defense.html</guid>
+      <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Defense · Anti-Analysis</category>
+      <description>Defensive analysis of anti-VM signals, sandbox resilience, false positives, behavioral telemetry, and safe malware research workflows.</description>
+    </item>
+    <item>
+      <title>ETW Session Hijacking: Protecting the Telemetry Control Plane</title>
+      <link>https://preemptivecybersec.com/pages/blog/etw-session-hijacking-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/etw-session-hijacking-defense.html</guid>
+      <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Lisa Garcia</dc:creator>
+      <category>Windows Defense · ETW Control Plane</category>
+      <description>Detect ETW session hijacking through controller identity, configuration drift, provider coverage, loss counters, and audit telemetry.</description>
+    </item>
+    <item>
+      <title>ETW Patching: Detecting Provider-Side Telemetry Tampering</title>
+      <link>https://preemptivecybersec.com/pages/blog/etw-patching-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/etw-patching-defense.html</guid>
+      <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Lisa Garcia</dc:creator>
+      <category>Windows Defense · ETW Integrity</category>
+      <description>Detect ETW patching through provider call-path integrity, writer attribution, event health, and independent endpoint telemetry.</description>
+    </item>
+    <item>
+      <title>Patching NtTraceEvent: Defending the Native Trace Boundary</title>
+      <link>https://preemptivecybersec.com/pages/blog/nttraceevent-patching-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/nttraceevent-patching-defense.html</guid>
+      <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Lisa Garcia</dc:creator>
+      <category>Windows Defense · Native Trace Path</category>
+      <description>Defensive analysis of NtTraceEvent path tampering using native-boundary integrity, syscall provenance, and telemetry correlation.</description>
+    </item>
+    <item>
+      <title>ETW Theory: Providers, Sessions, and Trust Boundaries</title>
+      <link>https://preemptivecybersec.com/pages/blog/etw-theory-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/etw-theory-defense.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Lisa Garcia</dc:creator>
+      <category>Windows Defense · ETW</category>
+      <description>Understand Event Tracing for Windows providers, sessions, buffers, consumers, trust boundaries, and resilient telemetry design.</description>
+    </item>
+    <item>
+      <title>AMSI Write Raid: Detecting Low-Volume Memory Tampering</title>
+      <link>https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/amsi-write-raid-defense.html</guid>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Lisa Garcia</dc:creator>
+      <category>Windows Defense · Memory Tampering</category>
+      <description>Defensive analysis of write-oriented AMSI tampering using writer attribution, page history, telemetry gaps, and memory forensics.</description>
+    </item>
+    <item>
+      <title>AMSI Architecture and Bypass Theory: Defending the Inspection Path</title>
+      <link>https://preemptivecybersec.com/pages/blog/amsi-architecture-bypass-theory-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/amsi-architecture-bypass-theory-defense.html</guid>
+      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Lisa Garcia</dc:creator>
+      <category>Windows Defense · AMSI</category>
+      <description>A defender-focused guide to AMSI architecture, trust boundaries, telemetry health, bypass classes, and layered detection.</description>
+    </item>
+    <item>
+      <title>AMSI Patching: Detecting In-Process Security Tampering</title>
+      <link>https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/amsi-patching-defense.html</guid>
+      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Lisa Garcia</dc:creator>
+      <category>Windows Defense · AMSI Integrity</category>
+      <description>Detect AMSI patching through page integrity, protection history, writer attribution, telemetry health, and layered response.</description>
+    </item>
+    <item>
+      <title>CrystalPalace PIC: Reasoning About Self-Contained Native Code</title>
+      <link>https://preemptivecybersec.com/pages/blog/crystalpalace-pic-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/crystalpalace-pic-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Reverse Engineering</category>
+      <description>Understand position-independent C artifacts through defensive reverse engineering, memory forensics, and resilient detections.</description>
+    </item>
+    <item>
+      <title>Custom Userland Primitives: Detect the Invariants</title>
+      <link>https://preemptivecybersec.com/pages/blog/custom-userland-primitives-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/custom-userland-primitives-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Detection Design</category>
+      <description>A defender&apos;s taxonomy for custom userland injection primitives based on access, placement, execution, and effects.</description>
+    </item>
+    <item>
+      <title>Ghost Files: File Names, Handles, and Section Lifetime</title>
+      <link>https://preemptivecybersec.com/pages/blog/ghost-files-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/ghost-files-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · File Forensics</category>
+      <description>Understand Windows delete-pending files, section objects, forensic timelines, and defensive monitoring for ghost-file behaviors.</description>
+    </item>
+    <item>
+      <title>KernelCallbackTable Injection: Validating GUI Callback Integrity</title>
+      <link>https://preemptivecybersec.com/pages/blog/kernel-callback-table-injection-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/kernel-callback-table-injection-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · GUI Callbacks</category>
+      <description>Defensive analysis of KernelCallbackTable injection, GUI callback provenance, process memory, and resilient detection.</description>
+    </item>
+    <item>
+      <title>Module Stomping: When a Trusted Mapping Stops Being Trusted</title>
+      <link>https://preemptivecybersec.com/pages/blog/module-stomping-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/module-stomping-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Image Integrity</category>
+      <description>Detect module stomping by comparing signed file-backed images with modified executable pages, threads, and call stacks.</description>
+    </item>
+    <item>
+      <title>Msfvenom vs. Donut: What Defenders Actually Observe</title>
+      <link>https://preemptivecybersec.com/pages/blog/msfvenom-vs-donut-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/msfvenom-vs-donut-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Process Execution</category>
+      <description>Compare Msfvenom and Donut artifacts through a defensive lens using static analysis, memory telemetry, and safe lab methods.</description>
+    </item>
+    <item>
+      <title>Pool Party Injections: Detecting Abused Work Queues</title>
+      <link>https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/pool-party-injection-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Thread Pools</category>
+      <description>Defensive analysis of Windows thread-pool injection families, worker-factory telemetry, memory indicators, and response.</description>
+    </item>
+    <item>
+      <title>Primitive Process Injection: A Defender&apos;s Baseline</title>
+      <link>https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Process Injection</category>
+      <description>Learn the core process injection primitives, evidence chain, memory forensics, detection logic, and Windows hardening.</description>
+    </item>
+    <item>
+      <title>Process Ghosting: Correlating Objects Across Time</title>
+      <link>https://preemptivecybersec.com/pages/blog/process-ghosting-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/process-ghosting-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Process Creation</category>
+      <description>Detect process ghosting by correlating file, section, process, image, and memory evidence across Windows telemetry.</description>
+    </item>
+    <item>
+      <title>Reflective DLL Injection: Loader Evidence in Memory</title>
+      <link>https://preemptivecybersec.com/pages/blog/reflective-dll-injection-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/reflective-dll-injection-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Process Injection</category>
+      <description>Defensive architecture, memory indicators, forensic workflow, and mitigations for reflective DLL injection.</description>
+    </item>
+    <item>
+      <title>NtQueueApcThreadEx2 Special Injection: Defensive Analysis</title>
+      <link>https://preemptivecybersec.com/pages/blog/special-apc-injection-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/special-apc-injection-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · APC Telemetry</category>
+      <description>Defensive guide to special user APC delivery, NtQueueApcThreadEx2 telemetry, thread context, and memory forensics.</description>
+    </item>
+    <item>
+      <title>Stardust Shellcode Framework: A Defender&apos;s Field Guide</title>
+      <link>https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/stardust-shellcode-framework-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Memory Analysis</category>
+      <description>Defensive analysis of position-independent shellcode frameworks, memory evidence, telemetry, and safe research methods.</description>
+    </item>
+    <item>
+      <title>Win32k Callback Detouring: Defending the Return Path</title>
+      <link>https://preemptivecybersec.com/pages/blog/win32k-callback-detouring-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/win32k-callback-detouring-defense.html</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>Windows Defense · Control Flow</category>
+      <description>Detect win32k callback detouring through control-flow, callback provenance, image integrity, and cross-process telemetry.</description>
+    </item>
+    <item>
+      <title>API Hashing: Defending Beyond the Import Table</title>
+      <link>https://preemptivecybersec.com/pages/blog/api-hashing-iat-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/api-hashing-iat-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>Defensive analysis of API hashing, import address table visibility, and runtime behavior detection.</description>
+    </item>
+    <item>
+      <title>Disk-Based API Comparison: Integrity Detection</title>
+      <link>https://preemptivecybersec.com/pages/blog/diskbased-gate-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/diskbased-gate-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>Defender guidance for disk-versus-memory module comparison and API integrity investigation.</description>
+    </item>
+    <item>
+      <title>Halo&apos;s and Tartarus Gate: Resilient Detection</title>
+      <link>https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/halos-tartarus-gate-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>Defensive strategies for syscall-stub inspection anomalies and resilient endpoint telemetry.</description>
+    </item>
+    <item>
+      <title>Hell&apos;s Gate: Detecting Syscall-Resolution Anomalies</title>
+      <link>https://preemptivecybersec.com/pages/blog/hells-gate-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/hells-gate-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>Defender guidance for syscall-resolution anomalies commonly associated with Hell&apos;s Gate discussions.</description>
+    </item>
+    <item>
+      <title>IAT Hooking: Integrity Detection and Triage</title>
+      <link>https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/iat-hooking-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>Defensive analysis of Import Address Table integrity, legitimate instrumentation, and suspicious redirection.</description>
+    </item>
+    <item>
+      <title>Indirect Syscalls: Detection Beyond One Sensor</title>
+      <link>https://preemptivecybersec.com/pages/blog/indirect-syscalls-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/indirect-syscalls-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>Defensive detection strategy for indirect syscall patterns and resilient endpoint telemetry.</description>
+    </item>
+    <item>
+      <title>Userland Hooking Theory: Visibility and Limits</title>
+      <link>https://preemptivecybersec.com/pages/blog/userland-hooking-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/userland-hooking-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>How defenders evaluate user-mode hooks, their telemetry value, limits, and integrity monitoring.</description>
+    </item>
+    <item>
+      <title>WinAPI vs. Native API: A Defender&apos;s View</title>
+      <link>https://preemptivecybersec.com/pages/blog/winapi-native-api-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/winapi-native-api-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>A defender&apos;s guide to Windows API layers, Native API concepts, API telemetry, and integrity monitoring.</description>
+    </item>
+    <item>
+      <title>WinAPI Wrappers: Defensive Analysis</title>
+      <link>https://preemptivecybersec.com/pages/blog/winapi-wrapper-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/winapi-wrapper-defense.html</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>Windows Defense · API Integrity</category>
+      <description>How defenders assess Windows API wrapper layers through code provenance and behavior correlation.</description>
+    </item>
+    <item>
+      <title>Advanced EDR Architecture and Tiers of Detection</title>
+      <link>https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/advanced-edr-architecture-detection-tiers.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Defense · Detection</category>
+      <description>A practical guide to EDR telemetry, prevention and detection tiers, correlation, response orchestration, and validation.</description>
+    </item>
+    <item>
+      <title>AES-Encrypted Payloads: Detection and Defense</title>
+      <link>https://preemptivecybersec.com/pages/blog/aes-encrypted-payloads-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/aes-encrypted-payloads-defense.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Static Analysis · Windows Defense</category>
+      <description>Defensive analysis of AES-encrypted payload artifacts, key handling risks, and endpoint detection.</description>
+    </item>
+    <item>
+      <title>Compile-Time String Encryption: Defensive Analysis</title>
+      <link>https://preemptivecybersec.com/pages/blog/compile-time-string-encryption-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/compile-time-string-encryption-defense.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Static Analysis · Windows Defense</category>
+      <description>How defenders analyze compile-time string transformation, validate detections, and protect applications from static evasion.</description>
+    </item>
+    <item>
+      <title>File Type Spoofing: Extensions, Icons, and Defense</title>
+      <link>https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/file-type-spoofing-defense.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Static Analysis · Windows Defense</category>
+      <description>How defenders detect file-type spoofing with extension, magic-byte, icon, and delivery-context validation.</description>
+    </item>
+    <item>
+      <title>Kernel vs. User Mode: The Role of Windows System Calls</title>
+      <link>https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Security · Internals</category>
+      <description>A practical security guide to Windows privilege rings, the kernel/user boundary, system calls, drivers, and defensive telemetry.</description>
+    </item>
+    <item>
+      <title>Layered Compile-Time String Transformation: Detection First</title>
+      <link>https://preemptivecybersec.com/pages/blog/layered-compile-time-string-encryption-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/layered-compile-time-string-encryption-defense.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Static Analysis · Windows Defense</category>
+      <description>Defensive analysis of layered compile-time string transformations, detection engineering, and triage.</description>
+    </item>
+    <item>
+      <title>PE Format &amp; Relocation Tables: How ASLR Gets Its Address</title>
+      <link>https://preemptivecybersec.com/pages/blog/pe-format-relocations-aslr.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/pe-format-relocations-aslr.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Security · Internals</category>
+      <description>A defender&apos;s guide to the Windows Portable Executable format, base relocations, ASLR, inspection tools, and mitigation validation.</description>
+    </item>
+    <item>
+      <title>Process and Thread Structure: The PEB and TEB Explained</title>
+      <link>https://preemptivecybersec.com/pages/blog/peb-teb-process-thread-structures.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/peb-teb-process-thread-structures.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Windows Security · Internals</category>
+      <description>A defensive guide to Windows process and thread structures, the PEB and TEB, module visibility, triage tools, and integrity checks.</description>
+    </item>
+    <item>
+      <title>Hiding Content in PNGs: Steganography Defense</title>
+      <link>https://preemptivecybersec.com/pages/blog/png-steganography-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/png-steganography-defense.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Static Analysis · Windows Defense</category>
+      <description>Defensive analysis of PNG steganography, content validation, sandboxing, and image-parser risk.</description>
+    </item>
+    <item>
+      <title>RC4-Encrypted Content: Detection and Defense</title>
+      <link>https://preemptivecybersec.com/pages/blog/rc4-encrypted-payloads-defense.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/rc4-encrypted-payloads-defense.html</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Static Analysis · Windows Defense</category>
+      <description>A defender-focused guide to recognizing legacy RC4 use, triaging encrypted content, and hardening Windows environments.</description>
+    </item>
+  </channel>
 </rss>
