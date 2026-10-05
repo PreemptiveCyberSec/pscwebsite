@@ -17,6 +17,36 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://preemptivecybersec.com/pages/services/penetration-testing.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/services/red-team-exercise.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/services/ai-mcp-security.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/services/detection-engineering.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://preemptivecybersec.com/pages/services/ransomware-readiness.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://preemptivecybersec.com/pages/contact.html</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
@@ -351,6 +381,35 @@
     <lastmod>2026-02-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- ===== Author profiles ===== -->
+  <url>
+    <loc>https://preemptivecybersec.com/pages/authors/viral-maniar.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://preemptivecybersec.com/pages/authors/mike-chen.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://preemptivecybersec.com/pages/authors/lisa-garcia.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://preemptivecybersec.com/pages/authors/mark-chen.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>

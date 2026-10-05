@@ -13,12 +13,27 @@ This file is a curated map of PSC's public company, service, and security resear
 - [Contact PSC](https://preemptivecybersec.com/pages/contact.html): Request a scoped security assessment or discuss an organization's attack surface and security requirements.
 - [Careers](https://preemptivecybersec.com/pages/careers.html): Open roles and information about joining PSC's offensive and defensive security team.
 
+## Research authors
+
+- [Viral Maniar](https://preemptivecybersec.com/pages/authors/viral-maniar.html): Managing Director and Principal Consultant covering offensive security, penetration testing, red teaming, and cloud security.
+- [Mike Chen](https://preemptivecybersec.com/pages/authors/mike-chen.html): Lead Penetration Tester covering web application, API, and offensive security research.
+- [Lisa Garcia](https://preemptivecybersec.com/pages/authors/lisa-garcia.html): Security Researcher covering cryptography, vulnerability research, and detection engineering.
+- [Mark Chen](https://preemptivecybersec.com/pages/authors/mark-chen.html): Security Researcher covering Windows security, digital forensics, and defensive security.
+
 ## Service disciplines
 
 - [Offensive Security](https://preemptivecybersec.com/pages/services.html#offensive): Adversary-driven testing across web applications, APIs, infrastructure, mobile and desktop applications, databases, wireless networks, hardware, IoT and OT, social engineering, physical security, red teaming, and adversarial simulation.
 - [Defensive Security](https://preemptivecybersec.com/pages/services.html#defensive): Application security programs, security operations, asset identification, architecture review, data leakage prevention, ransomware protection, threat assessment, risk analysis, configuration review, source-code review, password auditing, and policy review.
 - [AI Security](https://preemptivecybersec.com/pages/services.html#ai): Security for LLM applications, AI agents, orchestration layers, MCP servers and clients, agent-to-agent protocols, RAG pipelines, model supply chains, AI infrastructure, guardrails, governance, and adversarial testing.
 - [Training and Education](https://preemptivecybersec.com/pages/services.html#training): Hands-on courses in red-team social engineering, offensive tool development, OSINT and attack-surface management, mobile application security, threat intelligence, detection engineering, and proactive threat hunting.
+
+## Priority service pages
+
+- [Penetration Testing](https://preemptivecybersec.com/pages/services/penetration-testing.html): Manual testing across applications, APIs, infrastructure, mobile, and client software, with validated attack paths, remediation guidance, and retesting.
+- [Red Team Exercise](https://preemptivecybersec.com/pages/services/red-team-exercise.html): Objective-led adversary emulation that measures prevention, detection, investigation, and response across people, process, and technology.
+- [AI and MCP Security Assessment](https://preemptivecybersec.com/pages/services/ai-mcp-security.html): Security testing for LLM applications, AI agents, tools, and Model Context Protocol integrations, including authorization and trust-boundary failures.
+- [Detection Engineering](https://preemptivecybersec.com/pages/services/detection-engineering.html): Threat-informed design, validation, tuning, and operationalization of observable, actionable security detections.
+- [Ransomware Readiness Assessment](https://preemptivecybersec.com/pages/services/ransomware-readiness.html): Evidence-based review of ransomware prevention, precursor detection, containment, recovery, and crisis decision-making.
 
 ## Security research index
 

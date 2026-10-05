@@ -5,7 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preemptive Cyber Security — Offensive & Defensive Security</title>
     <meta name="description" content="Preemptive Cyber Security delivers 360° protection: penetration testing, threat detection, and security training. Stop breaches before they happen.">
+
     <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Preemptive Cyber Security — Offensive &amp; Defensive Security">
+    <meta property="og:description" content="Preemptive Cyber Security delivers 360° protection: penetration testing, threat detection, and security training. Stop breaches before they happen.">
+    <meta property="og:url" content="https://preemptivecybersec.com/">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Preemptive Cyber Security — Offensive &amp; Defensive Security">
+    <meta name="twitter:description" content="Preemptive Cyber Security delivers 360° protection: penetration testing, threat detection, and security training. Stop breaches before they happen.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://api.fontshare.com">
@@ -13,6 +31,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/animations.css">
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://preemptivecybersec.com/#organization",
+                "name": "Preemptive Cyber Security",
+                "url": "https://preemptivecybersec.com/",
+                "description": "360° protection against cyber threats. Offensive security, defensive operations, and training.",
+                "email": "info@preemptivecybersec.com",
+                "telephone": "+61 415 821 123",
+                "areaServed": "Global",
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "sales and security consulting",
+                    "email": "info@preemptivecybersec.com",
+                    "telephone": "+61 415 821 123",
+                    "url": "https://preemptivecybersec.com/pages/contact.html",
+                    "availableLanguage": "English"
+                }
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://preemptivecybersec.com/#website",
+                "url": "https://preemptivecybersec.com/",
+                "name": "Preemptive Cyber Security",
+                "publisher": {
+                    "@id": "https://preemptivecybersec.com/#organization"
+                },
+                "inLanguage": "en"
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 
@@ -42,6 +95,7 @@
                             <li><a href="pages/resources.html#talks">Talks &amp; Presentations</a></li>
                         </ul>
                     </li>
+                    <li><a href="llms.txt">llms.txt</a></li>
                     <li><a href="pages/careers.html">Careers</a></li>
                     <li class="nav-cta"><a href="pages/contact.html">Get in touch</a></li>
                 </ul>
@@ -163,6 +217,13 @@
                     <a href="pages/services.html#training" class="card-link">./explore →</a>
                 </div>
             </div>
+            <nav class="priority-service-links reveal" aria-label="Major security services">
+                <a href="pages/services/penetration-testing.html">Penetration Testing</a>
+                <a href="pages/services/red-team-exercise.html">Red Team Exercise</a>
+                <a href="pages/services/ai-mcp-security.html">AI &amp; MCP Security Assessment</a>
+                <a href="pages/services/detection-engineering.html">Detection Engineering</a>
+                <a href="pages/services/ransomware-readiness.html">Ransomware Readiness</a>
+            </nav>
         </div>
     </section>
 
@@ -277,10 +338,11 @@
                 <div>
                     <h4>Services</h4>
                     <ul>
-                        <li><a href="pages/services.html#offensive">Offensive Security</a></li>
-                        <li><a href="pages/services.html#defensive">Defensive Security</a></li>
-                        <li><a href="pages/services.html#training">Training</a></li>
-                        <li><a href="pages/services.html#ai">AI Security</a></li>
+                        <li><a href="pages/services/penetration-testing.html">Penetration Testing</a></li>
+                        <li><a href="pages/services/red-team-exercise.html">Red Team Exercise</a></li>
+                        <li><a href="pages/services/ai-mcp-security.html">AI &amp; MCP Security</a></li>
+                        <li><a href="pages/services/detection-engineering.html">Detection Engineering</a></li>
+                        <li><a href="pages/services/ransomware-readiness.html">Ransomware Readiness</a></li>
                     </ul>
                 </div>
                 <div>
@@ -298,7 +360,7 @@
                     <li><a href="pages/privacy.html">Privacy</a></li>
                     <li><a href="pages/terms.html">Terms</a></li>
                     <li><a href="pages/cookies.html">Cookies</a></li>
-                </ul>
+                <li data-psc-footer-rss><a href="feed.xml" type="application/rss+xml">RSS</a></li></ul>
             </div>
         </div>
     </footer>

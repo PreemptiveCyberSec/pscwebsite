@@ -5,20 +5,36 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+document.addEventListener('click', event => {
+    const conversionLink = event.target.closest('[data-conversion="service-enquiry"]');
+    if (!conversionLink) return;
+
+    const detail = {
+        service: conversionLink.dataset.service || 'unspecified',
+        href: conversionLink.getAttribute('href')
+    };
+    window.dispatchEvent(new CustomEvent('psc:service-enquiry-click', { detail }));
+    if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push({ event: 'service_enquiry_click', ...detail });
+    }
+});
+
 // ---------- Mobile menu ----------
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
 
 if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+        const isOpen = hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active', isOpen);
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
     navMenu.querySelectorAll('a:not(.nav-dropdown-toggle)').forEach(link => {
         link.addEventListener('click', () => {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
         });
     });
 }

@@ -651,6 +651,14 @@ const CATEGORIES = [
     }
 ];
 
+const LANDING_PAGES = {
+    'offensive:web': 'services/penetration-testing.html',
+    'offensive:redteam': 'services/red-team-exercise.html',
+    'defensive:soc': 'services/detection-engineering.html',
+    'defensive:ransom': 'services/ransomware-readiness.html',
+    'ai:ai-mcp': 'services/ai-mcp-security.html'
+};
+
 // --- Render ---
 const catMenu = document.getElementById('cat-menu');
 const svcPanel = document.getElementById('svc-panel');
@@ -691,14 +699,18 @@ if (catMenu && svcPanel) {
             <div class="svc-grid"></div>`;
         const grid = svcPanel.querySelector('.svc-grid');
         cat.services.forEach((s, i) => {
-            const card = document.createElement('button');
+            const landingPage = LANDING_PAGES[cat.id + ':' + s.id];
+            const card = document.createElement('div');
             card.className = 'svc-card';
             card.style.animation = `fade-up 0.5s cubic-bezier(0.16,1,0.3,1) ${Math.min(i * 45, 400)}ms both`;
             card.innerHTML = `
-                <div class="svc-icon">${s.icon}</div>
-                <h4>${s.name}</h4>
-                <div class="svc-accent"></div>`;
-            card.addEventListener('click', () => openModal(cat.id, s.id));
+                <button class="svc-card-details" type="button" aria-label="View ${s.name} methodology">
+                    <div class="svc-icon">${s.icon}</div>
+                    <h4>${s.name}</h4>
+                    <div class="svc-accent"></div>
+                </button>
+                ${landingPage ? `<a class="svc-landing-link" href="${landingPage}">Full service details &rarr;</a>` : ''}`;
+            card.querySelector('.svc-card-details').addEventListener('click', () => openModal(cat.id, s.id));
             grid.appendChild(card);
         });
     }
@@ -710,6 +722,8 @@ if (catMenu && svcPanel) {
 
     function openModal(catId, svcId) {
         const { s } = lookup[catId + ':' + svcId];
+        const landingPage = LANDING_PAGES[catId + ':' + svcId];
+        const contactUrl = `contact.html?service=${landingPage ? landingPage.split('/').pop().replace('.html', '') : catId}&source=service-catalogue`;
         lastFocus = document.activeElement;
         modalBody.innerHTML = `
             <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
@@ -735,7 +749,7 @@ if (catMenu && svcPanel) {
 
             <div class="modal-cta">
                 <span>Ready to scope this engagement?</span>
-                <a href="contact.html" class="btn btn-primary">Request this assessment
+                <a href="${contactUrl}" class="btn btn-primary" data-conversion="service-enquiry" data-service="${landingPage ? landingPage.split('/').pop().replace('.html', '') : s.id}">Request this assessment
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>`;

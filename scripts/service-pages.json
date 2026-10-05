@@ -1,0 +1,397 @@
+[
+  {
+    "slug": "ai-mcp-security",
+    "name": "AI and MCP Security Assessment",
+    "category": "AI Security",
+    "description": "Security assessment for LLM applications, AI agents, and Model Context Protocol servers and clients, covering injection, tool abuse, authorization, data exposure, and isolation.",
+    "answer": [
+      "PSC assesses LLM applications, AI agents, and Model Context Protocol integrations as connected systems rather than isolated models. The engagement maps prompts, tools, resources, credentials, memory, and approval boundaries, then tests whether untrusted content or a compromised connector can trigger unintended actions.",
+      "This assessment is for teams deploying copilots, autonomous workflows, MCP servers or clients, and tool-enabled agents. The outcome is a prioritized account of exploitable trust failures and practical controls for authorization, consent, isolation, monitoring, and human approval."
+    ],
+    "owner": { "name": "Viral Maniar", "role": "Managing Director and Principal Consultant", "url": "../authors/viral-maniar.html" },
+    "reviewer": { "name": "Shabnam Sharma", "role": "Product Owner and DevSecOps Advisor", "url": "../team.html" },
+    "problems": [
+      "Direct and indirect prompt injection crossing application or agent trust boundaries.",
+      "MCP tools, resources, or descriptions that can be poisoned, replaced, or over-trusted.",
+      "Over-broad credentials, scopes, and consent paths that turn model output into privileged action.",
+      "Sensitive data leaking through prompts, retrieval, memory, logs, or tool responses.",
+      "Missing sandbox, rate, step, and human-approval controls around consequential operations."
+    ],
+    "fitFor": [
+      "Teams preparing an LLM feature or agent for production.",
+      "Organizations connecting models to internal data, APIs, code execution, or business systems.",
+      "MCP server and client owners who need authorization and connector-level assurance.",
+      "Security teams validating guardrails, monitoring, and incident evidence for AI workflows."
+    ],
+    "notFor": [
+      "A model-quality or accuracy benchmark without a security objective.",
+      "A compliance certification or guarantee that all future model behavior is safe.",
+      "Unbounded testing against third-party models or services without written authorization."
+    ],
+    "scopeOptions": [
+      { "title": "LLM application", "text": "Prompts, retrieval, output handling, identity, tenancy, data flows, and abuse controls around a chatbot or copilot." },
+      { "title": "Agent and tools", "text": "Planning loops, memory, delegated tools, credentials, side effects, approval gates, and failure containment." },
+      { "title": "MCP ecosystem", "text": "Servers, clients, transports, tools, resources, prompts, scopes, consent, and malicious-connector scenarios." }
+    ],
+    "prerequisites": [
+      "An architecture and data-flow walkthrough with owners of the model, application, and connected tools.",
+      "Authorized test identities, representative roles, and a safe environment or agreed production safeguards.",
+      "Current system prompts, tool definitions, MCP configuration, and relevant logging access.",
+      "Written rules of engagement for data handling, external providers, and consequential actions."
+    ],
+    "exclusions": [
+      "Training-data provenance or model-supply-chain review unless explicitly scoped.",
+      "Destructive, irreversible, or financially consequential tool actions.",
+      "Third-party infrastructure outside the client's authority.",
+      "Continuous monitoring after the agreed assessment window."
+    ],
+    "phases": [
+      { "title": "Architecture and trust mapping", "text": "Inventory models, prompts, retrieval sources, agents, MCP connectors, tools, credentials, memory, and human decision points." },
+      { "title": "Threat modelling", "text": "Define abuse cases for injection, goal hijack, confused-deputy behavior, excessive agency, data disclosure, poisoning, and denial of wallet." },
+      { "title": "Adversarial testing", "text": "Exercise direct and indirect injection, unsafe output handling, tool chaining, scope bypass, malicious resources, and connector replacement within the rules of engagement." },
+      { "title": "Control validation", "text": "Test authorization, consent, isolation, allow-lists, approval gates, rate and step limits, logging, and incident reconstruction." },
+      { "title": "Reporting and retest", "text": "Provide reproducible evidence, system-level remediation, residual-risk decisions, and verification of agreed fixes." }
+    ],
+    "frameworks": ["OWASP Top 10 for LLM Applications", "OWASP Agentic AI", "MITRE ATLAS", "NIST AI RMF", "MCP security guidance"],
+    "deliverables": [
+      "AI and MCP attack-surface inventory with trust boundaries.",
+      "Risk-ranked findings with reproducible prompts, connector conditions, and observed effects.",
+      "Tool and credential authorization matrix.",
+      "Guardrail, isolation, consent, logging, and human-approval recommendations.",
+      "Executive readout, technical workshop, and agreed remediation retest."
+    ],
+    "severity": "Severity combines exploitability, required access, action autonomy, data sensitivity, blast radius, reversibility, and the strength of compensating human or technical controls. Model output alone is not treated as impact unless it crosses a trust boundary or enables a credible harmful action.",
+    "readout": "PSC presents an executive risk narrative and a technical walkthrough for product, engineering, and security teams. Findings identify the affected trust boundary, required preconditions, evidence, and a testable remediation outcome.",
+    "remediation": "Remediation support focuses on least-privilege tool design, explicit consent, output mediation, isolation, secret handling, observable action trails, and safe failure behavior. Recommendations distinguish application controls from provider-dependent limitations.",
+    "retest": "An agreed retest verifies corrected authorization, injection resistance, isolation, and approval behavior using the original evidence path. Material architecture changes are re-scoped rather than assumed equivalent.",
+    "process": ["Confirm objectives and authority", "Map the connected AI system", "Execute controlled abuse cases", "Review evidence with builders", "Verify prioritized fixes"],
+    "evidence": [
+      { "title": "Prompt Injection and LLM Agents", "href": "../blog/prompt-injection-llm-agents.html", "text": "Trust boundaries, indirect injection, tool use, and agent control design." },
+      { "title": "Burp Suite MCP", "href": "../blog/burp-mcp-pentest.html", "text": "Security implications of connecting an AI assistant to penetration-testing tools." },
+      { "title": "OpenClaw Agent Security", "href": "../blog/openclaw-agent-security.html", "text": "Agent attack surfaces across tools, memory, permissions, and orchestration." },
+      { "title": "AI Security for LLM Systems", "href": "../blog/ai-security-llm.html", "text": "Application-layer risks and defensive controls for generative AI." }
+    ],
+    "faqs": [
+      { "question": "Is an MCP assessment different from an API penetration test?", "answer": "Yes. API testing remains relevant, but MCP adds model-mediated tool selection, prompt and resource content, consent, connector trust, and delegated authority. The assessment follows those additional paths from untrusted content to tool effects." },
+      { "question": "Can PSC test a production agent?", "answer": "Only with explicit safeguards and rules of engagement. Consequential actions are normally redirected to a controlled environment, test tenant, mock tool, or approval gate so evidence can be collected without creating business impact." },
+      { "question": "Does the assessment guarantee that prompt injection is impossible?", "answer": "No. The goal is to reduce reachable impact through layered controls, constrained authority, isolation, monitoring, and safe human decisions. Residual model uncertainty is documented rather than hidden." },
+      { "question": "What should we provide before testing?", "answer": "Provide architecture and data flows, model and agent configuration, tool and MCP inventories, test roles, logging access, and owners who can explain intended workflows and approve safe test cases." }
+    ]
+  },
+  {
+    "slug": "penetration-testing",
+    "name": "Penetration Testing",
+    "category": "Offensive Security",
+    "description": "Manual penetration testing for web applications, APIs, infrastructure, mobile and client applications, focused on validated attack paths and developer-ready remediation.",
+    "answer": [
+      "PSC penetration testing combines threat modelling, manual exploration, controlled exploitation, and evidence-based reporting across applications, APIs, infrastructure, mobile, and client software. It is designed to show which weaknesses form credible attack paths, not to deliver an unverified scanner export.",
+      "The engagement is for teams that own a defined system or environment and need practical assurance before release, after major change, or as part of an established security program. The outcome is a prioritized set of reproducible findings, an attack-path narrative, and clear remediation and retest decisions."
+    ],
+    "owner": { "name": "Mike Chen", "role": "Lead Penetration Tester", "url": "../authors/mike-chen.html" },
+    "reviewer": { "name": "Viral Maniar", "role": "Managing Director and Principal Consultant", "url": "../authors/viral-maniar.html" },
+    "problems": [
+      "Authentication, session, and authorization failures that expose another user's or tenant's data.",
+      "Injection, unsafe file handling, server-side request forgery, and insecure output processing.",
+      "Internet-facing or internal infrastructure weaknesses that enable foothold, privilege escalation, or lateral movement.",
+      "Business-logic abuse that scanners cannot understand or validate.",
+      "Security controls that exist on paper but fail under realistic attack sequences."
+    ],
+    "fitFor": [
+      "A release, migration, acquisition, or major architecture change with a defined target.",
+      "A web application, API, infrastructure range, mobile app, or client application under your authority.",
+      "Teams that can provide technical owners and act on remediation findings.",
+      "Organizations seeking manual validation beyond automated vulnerability scanning."
+    ],
+    "notFor": [
+      "An undefined request to test every asset without ownership, boundaries, or priorities.",
+      "A substitute for secure development, patch management, or continuous attack-surface management.",
+      "Testing third-party systems without documented authorization."
+    ],
+    "scopeOptions": [
+      { "title": "Applications and APIs", "text": "Web, REST, GraphQL, and SOAP interfaces, including identity, tenancy, workflows, inputs, outputs, and resource abuse." },
+      { "title": "Infrastructure and identity", "text": "External or internal hosts, network services, Active Directory, segmentation, privilege paths, and exposed management planes." },
+      { "title": "Mobile and client software", "text": "Android, iOS, desktop, local storage, binaries, runtime behavior, platform interfaces, and client-server trust." }
+    ],
+    "prerequisites": [
+      "Confirmed ownership, target inventory, environments, test windows, and emergency contacts.",
+      "Representative user roles and test data for authorization and workflow coverage.",
+      "Architecture, API specifications, and deployment context where available.",
+      "Written rules of engagement covering safety limits, source addresses, and escalation."
+    ],
+    "exclusions": [
+      "Denial-of-service, destructive changes, persistence, or social engineering unless explicitly approved.",
+      "Assets discovered outside the authorized target list.",
+      "Source-code review, cloud configuration review, or wireless testing unless included in scope.",
+      "A guarantee that no vulnerability exists after a time-bounded assessment."
+    ],
+    "phases": [
+      { "title": "Scoping and threat modelling", "text": "Define assets, roles, trust boundaries, business workflows, likely adversaries, safety constraints, and success criteria." },
+      { "title": "Reconnaissance and mapping", "text": "Build a complete target map from application routes, API operations, services, identities, and technology behavior." },
+      { "title": "Manual security testing", "text": "Test identity, access control, input handling, configuration, business logic, privilege boundaries, and chained attack paths." },
+      { "title": "Controlled validation", "text": "Safely demonstrate impact, preserve evidence, remove test artifacts, and escalate critical findings through the agreed channel." },
+      { "title": "Reporting and retest", "text": "Deliver prioritized findings, technical reproduction, remediation guidance, stakeholder readout, and verification of agreed fixes." }
+    ],
+    "frameworks": ["OWASP WSTG", "OWASP ASVS", "OWASP API Security Top 10", "PTES", "NIST SP 800-115", "MITRE ATT&CK"],
+    "deliverables": [
+      "Executive summary and attack-path narrative.",
+      "Risk-ranked findings with evidence and reproducible steps.",
+      "Affected assets, roles, requests, and security-control observations.",
+      "Developer and infrastructure remediation guidance.",
+      "Technical readout and agreed remediation retest."
+    ],
+    "severity": "PSC rates findings using technical exploitability and impact, then adjusts priority for exposed data, reachable privileges, business workflow, existing controls, and credible attack chaining. CVSS may support consistency, but it does not replace business context.",
+    "readout": "The readout separates immediate containment, near-term remediation, and structural improvements. Engineering teams receive the evidence needed to reproduce and fix each issue; leadership receives the attack path and decision context.",
+    "remediation": "PSC answers finding-specific questions and helps teams distinguish root-cause fixes from narrow symptom patches. Recommendations are written for the technology and control boundary observed during testing.",
+    "retest": "The retest repeats the original path against the corrected environment and records fixed, partially fixed, accepted, or unresolved outcomes. New functionality or broad architecture changes require separate scope confirmation.",
+    "process": ["Define authority and scope", "Prepare roles and test access", "Map and test the attack surface", "Escalate material findings", "Read out and verify fixes"],
+    "evidence": [
+      { "title": "Modern Penetration Testing Methodology", "href": "../blog/penetration-testing.html", "text": "Scoping, reconnaissance, validation, exploitation, reporting, and retesting." },
+      { "title": "API Security and OWASP", "href": "../blog/api-security-owasp.html", "text": "Authorization, authentication, input, inventory, and business-logic risks." },
+      { "title": "Mobile Application Penetration Testing", "href": "../blog/mobile-app-pentesting.html", "text": "Static, dynamic, storage, platform, and network testing for mobile applications." },
+      { "title": "Active Directory Attack Paths", "href": "../blog/active-directory-attacks.html", "text": "Identity relationships, privilege paths, detection, and hardening." }
+    ],
+    "faqs": [
+      { "question": "How is penetration testing different from vulnerability scanning?", "answer": "Scanning identifies potential issues at scale. Penetration testing manually validates behavior, authorization, business logic, exploitability, and attack chains, while removing false positives and documenting observed impact." },
+      { "question": "Do you need source code?", "answer": "Not for a black-box or grey-box assessment. Source, architecture, and API specifications can improve coverage when the objective includes design or implementation assurance, but they are agreed during scoping." },
+      { "question": "Will testing disrupt production?", "answer": "The rules of engagement define safety constraints, test windows, escalation contacts, and prohibited actions. High-risk validation is adapted, simulated, or moved to a safe environment when production impact is plausible." },
+      { "question": "What happens after the report?", "answer": "PSC provides a stakeholder readout, answers remediation questions, and retests agreed fixes. The retest records the status of the original evidence path rather than simply checking that code changed." }
+    ]
+  },
+  {
+    "slug": "red-team-exercise",
+    "name": "Red Team Exercise",
+    "category": "Offensive Security",
+    "description": "Objective-driven red team exercises that emulate realistic adversary behavior across people, process, identity, endpoints, and infrastructure to measure detection and response.",
+    "answer": [
+      "A PSC red team exercise is an objective-driven adversary emulation that tests whether preventive, detective, and response controls work together against a credible attack path. It can combine external exposure, identity, endpoint, cloud, social, or physical vectors only where they are explicitly authorized.",
+      "The engagement is for organizations with established controls and a clear crown-jewel objective that want to measure operational resilience rather than collect isolated vulnerabilities. The outcome is an end-to-end attack narrative, ATT&CK-mapped observations, and a prioritized purple-team improvement plan."
+    ],
+    "owner": { "name": "Viral Maniar", "role": "Managing Director and Principal Consultant", "url": "../authors/viral-maniar.html" },
+    "reviewer": { "name": "Mike Chen", "role": "Lead Penetration Tester", "url": "../authors/mike-chen.html" },
+    "problems": [
+      "Controls assessed independently without evidence that they interrupt a complete attack path.",
+      "Detection coverage that exists as rules but has not been exercised against realistic techniques.",
+      "Identity, endpoint, network, cloud, and human signals that are not correlated during an incident.",
+      "Response playbooks that have not been tested under ambiguity and time pressure.",
+      "Leadership uncertainty about whether an adversary can reach a defined critical objective."
+    ],
+    "fitFor": [
+      "Organizations with a functioning security program, telemetry, and incident-response ownership.",
+      "A board, risk, or control question that can be expressed as a concrete adversary objective.",
+      "Teams prepared to coordinate a small trusted planning group and protect exercise confidentiality.",
+      "Defenders who can join a purple-team replay and implement detection improvements."
+    ],
+    "notFor": [
+      "A first security assessment where basic asset inventory or vulnerability management is absent.",
+      "A broad request to attack anything without agreed objectives and rules of engagement.",
+      "A covert exercise that would create unmanaged safety, legal, privacy, or employment risk."
+    ],
+    "scopeOptions": [
+      { "title": "External-to-objective", "text": "Begin from public exposure and test a controlled path through initial access, identity, privilege, movement, and the agreed objective." },
+      { "title": "Assumed breach", "text": "Start from an agreed foothold to focus time on identity, endpoint, cloud, lateral movement, detection, and response depth." },
+      { "title": "Threat-led emulation", "text": "Replay a relevant adversary's documented ATT&CK techniques against the controls intended to detect and contain them." }
+    ],
+    "prerequisites": [
+      "A named executive sponsor, exercise controller, legal authority, and emergency stop process.",
+      "Defined objectives, crown-jewel systems, permitted techniques, and safety constraints.",
+      "A protected communication channel and agreed handling for sensitive exercise evidence.",
+      "Identified defenders and owners for the post-exercise replay and remediation plan."
+    ],
+    "exclusions": [
+      "Destructive actions, uncontrolled persistence, data publication, or irreversible business impact.",
+      "Targets, people, suppliers, or facilities outside written authorization.",
+      "Employee performance assessment or deceptive activity outside approved governance.",
+      "Claims of complete adversary coverage from a time-bounded scenario."
+    ],
+    "phases": [
+      { "title": "Objective and governance design", "text": "Set the business objective, threat assumptions, rules, safety limits, communications, evidence handling, and stop conditions." },
+      { "title": "Reconnaissance and scenario preparation", "text": "Develop target intelligence and select realistic paths while preserving operational security and legal boundaries." },
+      { "title": "Controlled adversary emulation", "text": "Execute approved techniques across the relevant surfaces, adapting to controls while preventing unmanaged impact." },
+      { "title": "Detection and response observation", "text": "Record which signals were generated, correlated, investigated, contained, or missed without coaching defenders during a covert phase." },
+      { "title": "Purple-team replay", "text": "Reconstruct the operation with defenders, map ATT&CK coverage, validate improvements, and assign a measurable remediation backlog." }
+    ],
+    "frameworks": ["MITRE ATT&CK", "PTES", "Cyber Kill Chain", "TIBER-EU concepts", "CBEST concepts"],
+    "deliverables": [
+      "Objective-focused attack narrative and evidence timeline.",
+      "ATT&CK-mapped technique and control observations.",
+      "Detection, investigation, containment, and coordination gap analysis.",
+      "Executive risk briefing and technical purple-team replay.",
+      "Prioritized improvement backlog with validation opportunities."
+    ],
+    "severity": "Observations are prioritized by progress toward the agreed objective, access and privilege gained, detectability, containment opportunity, blast radius, and demonstrated control failure. The exercise distinguishes exploited weaknesses from missed telemetry and process delays.",
+    "readout": "A restricted executive readout explains the objective, path, business implication, and major control decisions. A separate technical replay gives defenders timestamps, techniques, evidence, and tuning opportunities without publishing unnecessary sensitive tradecraft.",
+    "remediation": "PSC works with control owners to translate exercise observations into detection, hardening, identity, segmentation, and response improvements. Each action identifies an owner and a way to verify the control rather than relying on policy language alone.",
+    "retest": "Validation normally uses a focused purple-team replay of selected techniques and control points. A second covert exercise is a separate engagement because knowledge of the original scenario changes the test conditions.",
+    "process": ["Set the objective and controller group", "Build a governed scenario", "Emulate the approved attack path", "Measure detection and response", "Replay and validate improvements"],
+    "evidence": [
+      { "title": "C2 Architecture and Detection", "href": "../blog/c2-development.html", "text": "Command-and-control architecture, telemetry, and defensive detection points." },
+      { "title": "Malware Development: A Defender's Lens", "href": "../blog/malware-development.html", "text": "How tooling behavior appears to endpoint and analysis controls." },
+      { "title": "Purple Teaming", "href": "../blog/purple-teaming.html", "text": "Collaborative validation that turns emulation into measurable defensive improvements." },
+      { "title": "Threat Hunting with MITRE ATT&CK", "href": "../blog/threat-hunting-mitre-attack.html", "text": "ATT&CK-aligned hypotheses, evidence, and coverage improvement." }
+    ],
+    "faqs": [
+      { "question": "How is a red team different from penetration testing?", "answer": "Penetration testing finds and validates weaknesses in a defined target. A red team starts with an operational objective and tests how people, process, and technology prevent, detect, investigate, and contain an end-to-end attack path." },
+      { "question": "Will our security team know about the exercise?", "answer": "A small controller group always knows. Whether defenders are informed depends on the objective and governance decision. Covert phases still require legal authority, emergency contacts, and agreed safety controls." },
+      { "question": "Can social engineering or physical access be included?", "answer": "Yes, but only as explicitly scoped modules with approved targets, pretexts, handling rules, and stop conditions. They are not assumed parts of every exercise." },
+      { "question": "What makes the exercise useful after the final report?", "answer": "The purple-team replay connects each technique to available telemetry and response decisions, then turns the evidence into owned improvements that can be validated with focused replays." }
+    ]
+  },
+  {
+    "slug": "detection-engineering",
+    "name": "Detection Engineering",
+    "category": "Defensive Security",
+    "description": "Detection engineering services that map priority threats to telemetry, build and tune ATT&CK-aligned analytics, validate coverage, and create actionable analyst playbooks.",
+    "answer": [
+      "PSC detection engineering turns priority threats into observable behaviors, required data, tested analytics, and analyst decisions. The work connects ATT&CK techniques to the telemetry your environment actually produces, then validates whether detections are reliable, explainable, and actionable.",
+      "This service is for SOC, SIEM, and security-platform teams that need to build a detection program, reduce noisy legacy rules, or close known coverage gaps. The outcome is a governed detection catalogue with test evidence, tuning decisions, and practical triage guidance."
+    ],
+    "owner": { "name": "Mark Chen", "role": "Security Researcher", "url": "../authors/mark-chen.html" },
+    "reviewer": { "name": "Viral Maniar", "role": "Managing Director and Principal Consultant", "url": "../authors/viral-maniar.html" },
+    "problems": [
+      "Large rule inventories with unknown ownership, quality, or connection to priority threats.",
+      "Telemetry gaps that make important attacker behaviors impossible to observe or reconstruct.",
+      "High false-positive volume caused by missing context, weak baselines, or brittle indicators.",
+      "Detections deployed without repeatable tests, versioning, or expected analyst outcomes.",
+      "ATT&CK coverage measured by rule count rather than validated behavioral visibility."
+    ],
+    "fitFor": [
+      "SOC and SIEM teams building or rationalizing a detection catalogue.",
+      "Organizations onboarding new endpoint, identity, cloud, network, or application telemetry.",
+      "Purple-team or incident lessons that need to become durable analytics and playbooks.",
+      "Security leaders who need an evidence-based view of detection coverage and gaps."
+    ],
+    "notFor": [
+      "A request to install a SIEM without threat priorities, data ownership, or operating processes.",
+      "A promise of zero false positives or complete ATT&CK coverage.",
+      "Twenty-four-hour managed monitoring unless separately scoped as an operating service."
+    ],
+    "scopeOptions": [
+      { "title": "Program baseline", "text": "Inventory rules, data, ownership, lifecycle, quality, threat alignment, and analyst outcomes to establish a practical target state." },
+      { "title": "Priority use cases", "text": "Design and implement a focused set of analytics for agreed threats across endpoint, identity, cloud, network, or application data." },
+      { "title": "Validation and tuning", "text": "Replay representative behaviors, measure evidence and noise, improve context, and document analyst decisions and response links." }
+    ],
+    "prerequisites": [
+      "Named threat priorities, critical assets, and security operations stakeholders.",
+      "Access to representative schemas, sample events, retention details, and existing rules.",
+      "A test path for analytics and controlled validation before production enforcement.",
+      "Owners for telemetry onboarding, SIEM content, analyst playbooks, and change approval."
+    ],
+    "exclusions": [
+      "Licensing, procurement, or operation of third-party SIEM and EDR products.",
+      "Data-source onboarding that requires unapproved production changes.",
+      "Incident response or continuous alert handling outside the agreed engineering scope.",
+      "Coverage claims for unavailable or unvalidated telemetry."
+    ],
+    "phases": [
+      { "title": "Threat and coverage model", "text": "Prioritize adversary behaviors, critical workflows, assets, and ATT&CK techniques based on business and incident context." },
+      { "title": "Telemetry assessment", "text": "Map each behavior to available events, required fields, provenance, latency, retention, joins, and known blind spots." },
+      { "title": "Detection design", "text": "Write behavioral logic, context enrichment, thresholds, suppression, expected evidence, and analyst outcomes." },
+      { "title": "Validation and tuning", "text": "Exercise representative behaviors, test historical data, measure false positives, and document limitations and safe exceptions." },
+      { "title": "Operational handover", "text": "Version detections, define ownership and review cadence, deliver triage playbooks, and prioritize remaining data or coverage gaps." }
+    ],
+    "frameworks": ["MITRE ATT&CK", "Sigma", "NIST CSF", "SOC-CMM", "Detection Engineering Maturity Model concepts"],
+    "deliverables": [
+      "Threat-prioritized detection use-case catalogue.",
+      "Telemetry and field requirement matrix with identified gaps.",
+      "Versioned detection logic and validation evidence.",
+      "Triage, enrichment, escalation, and response playbooks.",
+      "Coverage dashboard design and continuous-review backlog."
+    ],
+    "severity": "Detection work is prioritized by threat relevance, asset criticality, behavior impact, telemetry confidence, existing prevention, expected alert volume, and the cost of a miss. ATT&CK technique counts are supporting context, not a severity score.",
+    "readout": "PSC reviews the coverage model with leadership and walks analysts and engineers through logic, evidence, tuning, blind spots, and expected decisions. Limitations remain visible so coverage is not overstated.",
+    "remediation": "Remediation can include telemetry corrections, field normalization, context joins, rule redesign, baseline changes, suppression governance, and playbook updates. Product-specific implementation is agreed against the team's supported platforms.",
+    "retest": "Detections are re-executed against controlled behavior or approved historical datasets after changes. Validation records expected events, alert output, enrichment, analyst path, and known environmental exceptions.",
+    "process": ["Prioritize threats and assets", "Map required telemetry", "Engineer focused analytics", "Validate behavior and noise", "Hand over lifecycle and playbooks"],
+    "evidence": [
+      { "title": "SIEM Detection Engineering", "href": "../blog/siem-detection-engineering.html", "text": "Use-case design, tuning, testing, and operational ownership." },
+      { "title": "Advanced EDR Detection Tiers", "href": "../blog/advanced-edr-architecture-detection-tiers.html", "text": "Prevention, behavior, correlation, response, and telemetry resilience." },
+      { "title": "Intent-Aware Threat Hunting", "href": "../blog/intent-aware-security-threat-hunting.html", "text": "Identity, workflow, target, method, and outcome context for better decisions." },
+      { "title": "SOC Automation and SOAR", "href": "../blog/soc-automation-soar.html", "text": "Automation patterns around triage, enrichment, and response workflows." }
+    ],
+    "faqs": [
+      { "question": "Can PSC write rules for our SIEM or EDR?", "answer": "Yes, when the platform, schemas, test path, and deployment process are in scope. The service starts with behavior and evidence requirements so product syntax does not become the only definition of coverage." },
+      { "question": "How do you reduce false positives?", "answer": "PSC tests logic against representative data, adds identity and asset context, documents baselines and exceptions, and tunes thresholds with analysts. Noise is measured against the risk of suppressing meaningful behavior." },
+      { "question": "Does ATT&CK coverage prove we can detect an attack?", "answer": "No. A mapping shows intent, not validated visibility. PSC records the required telemetry, test evidence, logic limitations, and analyst outcome for each priority use case." },
+      { "question": "Can this follow a red or purple team exercise?", "answer": "Yes. Exercise evidence provides concrete behaviors, timestamps, and missed opportunities that can be converted into tested analytics and playbook improvements." }
+    ]
+  },
+  {
+    "slug": "ransomware-readiness",
+    "name": "Ransomware Readiness Assessment",
+    "category": "Defensive Security",
+    "description": "Ransomware readiness assessment across initial access, identity, endpoint, segmentation, detection, containment, backups, restoration, and crisis decision-making.",
+    "answer": [
+      "PSC assesses ransomware readiness across the full path from initial access and privilege escalation to defense impairment, data theft, recovery disruption, encryption, and extortion. The review connects preventive controls with detection, containment, backup integrity, restoration evidence, and decision ownership.",
+      "This service is for organizations that need a practical view of whether they can interrupt and recover from a ransomware scenario. The outcome is an evidence-based scorecard and prioritized resilience roadmap, not a guarantee that one product or backup copy prevents every incident."
+    ],
+    "owner": { "name": "Mark Chen", "role": "Security Researcher", "url": "../authors/mark-chen.html" },
+    "reviewer": { "name": "Viral Maniar", "role": "Managing Director and Principal Consultant", "url": "../authors/viral-maniar.html" },
+    "problems": [
+      "Common entry paths remain exposed through identity, remote access, email, applications, or unmanaged assets.",
+      "Endpoint and identity controls do not reliably interrupt privilege escalation and lateral movement.",
+      "Defense impairment, recovery changes, staging, and precursor behavior are not detected early enough.",
+      "Backups are reachable from production identities or have not been restored under realistic conditions.",
+      "Containment, communications, legal, executive, and recovery decisions lack tested ownership."
+    ],
+    "fitFor": [
+      "Organizations preparing for an exercise, insurance review, major change, or resilience investment decision.",
+      "Security and infrastructure teams that can provide control, identity, network, backup, and recovery evidence.",
+      "Leadership seeking a cross-functional roadmap rather than a single-tool assessment.",
+      "Teams that need to test assumptions about containment and restoration before an incident."
+    ],
+    "notFor": [
+      "An active ransomware incident requiring immediate containment and incident response.",
+      "A backup product configuration review with no wider identity, detection, or recovery context.",
+      "A certification, insurance guarantee, or promise that extortion cannot occur."
+    ],
+    "scopeOptions": [
+      { "title": "Control readiness", "text": "Review exposure, identity, hardening, endpoint, email, segmentation, detection, and response controls against common ransomware behaviors." },
+      { "title": "Backup and recovery", "text": "Examine isolation, immutability, administrative paths, monitoring, restoration procedures, dependencies, and available test evidence." },
+      { "title": "Scenario validation", "text": "Walk through or safely simulate a representative precursor and impact scenario to test evidence, decisions, containment, and recovery coordination." }
+    ],
+    "prerequisites": [
+      "Named owners for security, identity, infrastructure, backup, recovery, incident management, and executive decisions.",
+      "Current architecture, critical services, identity paths, backup design, and incident procedures.",
+      "Representative control evidence, alert examples, restoration records, and prior exercise or incident lessons.",
+      "Agreement on whether validation is document-based, workshop-led, or includes controlled technical tests."
+    ],
+    "exclusions": [
+      "Live destructive encryption, recovery deletion, uncontrolled malware, or denial of service.",
+      "Incident response retainers or emergency response unless separately contracted.",
+      "Formal legal, regulatory, insurance, or business-continuity certification.",
+      "Recovery guarantees for systems or dependencies that cannot be safely tested."
+    ],
+    "phases": [
+      { "title": "Critical-service and scenario definition", "text": "Identify business-critical services, credible entry paths, identity and infrastructure dependencies, and a representative ransomware scenario." },
+      { "title": "Preventive control review", "text": "Assess attack surface, email and remote access, identity tiers, privilege, endpoint hardening, segmentation, and administrative boundaries." },
+      { "title": "Detection and containment assessment", "text": "Map precursor behaviors to telemetry, alerts, investigation, isolation, credential control, and network containment decisions." },
+      { "title": "Backup and recovery validation", "text": "Review immutability, isolation, administrative access, monitoring, restoration evidence, dependency order, and clean-recovery assumptions." },
+      { "title": "Roadmap and exercise", "text": "Prioritize gaps across prevent, detect, contain, recover, and govern, then validate selected decisions or controls through an agreed scenario." }
+    ],
+    "frameworks": ["CISA StopRansomware Guide", "NIST CSF", "MITRE ATT&CK", "NIST SP 1800-25", "NIST SP 1800-26"],
+    "deliverables": [
+      "Ransomware readiness scorecard with evidence and confidence notes.",
+      "Attack-path and critical-service dependency view.",
+      "Detection, containment, backup, and restoration gap analysis.",
+      "Prioritized resilience roadmap with accountable control areas.",
+      "Executive workshop and optional focused validation plan."
+    ],
+    "severity": "Gaps are prioritized by credible attack-path contribution, critical-service impact, privilege and blast radius, detection opportunity, backup exposure, restoration uncertainty, and the time sensitivity of containment decisions.",
+    "readout": "The executive readout explains the scenario, critical assumptions, likely decision points, and highest-value resilience investments. Technical owners receive evidence, dependencies, and validation actions for each gap.",
+    "remediation": "PSC supports control owners in refining identity tiers, segmentation, telemetry, containment procedures, backup administration, restore testing, and cross-functional playbooks. Recommendations identify dependencies that one team cannot fix alone.",
+    "retest": "Retesting targets the original evidence gap: a corrected identity path, a new detection, an isolation workflow, or a restoration test. Destructive behavior is simulated or exercised through safe artifacts and agreed test systems.",
+    "process": ["Define critical services and scenario", "Review prevention and identity paths", "Assess detection and containment", "Validate recovery evidence", "Prioritize and exercise improvements"],
+    "evidence": [
+      { "title": "Ransomware Defense in 2026", "href": "../blog/ransomware-defense-2026.html", "text": "Double extortion, precursor behavior, resilience, containment, and recovery." },
+      { "title": "Intent-Aware Threat Hunting", "href": "../blog/intent-aware-security-threat-hunting.html", "text": "Connecting role, sequence, target, and outcome to identify ransomware precursors." },
+      { "title": "Zero Trust Architecture", "href": "../blog/zero-trust-architecture.html", "text": "Identity, device, network, application, and data boundaries that constrain spread." },
+      { "title": "Threat Intelligence and Incident Response", "href": "../blog/threat-intel-incident-response.html", "text": "Intelligence-led investigation, containment, recovery, and feedback cycles." }
+    ],
+    "faqs": [
+      { "question": "Is this a backup assessment?", "answer": "Backup and restoration are essential parts, but readiness also depends on entry paths, identity, privilege, segmentation, detection, containment, crisis decisions, and critical-service dependencies." },
+      { "question": "Will PSC run ransomware in our environment?", "answer": "No uncontrolled malware or destructive encryption is required. Technical validation uses safe behaviors, simulations, configuration evidence, or agreed test systems to examine the same control and decision points." },
+      { "question": "Can the assessment support a tabletop exercise?", "answer": "Yes. The evidence and scenario can inform a cross-functional exercise, or a workshop can be included to test escalation, containment, communications, and recovery decisions." },
+      { "question": "What does recovery validation include?", "answer": "It examines isolation and administrative paths, immutability assumptions, monitoring, restoration records, dependency order, clean-system decisions, and whether representative services have been restored successfully." }
+    ]
+  }
+]
