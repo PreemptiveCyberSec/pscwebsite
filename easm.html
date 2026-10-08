@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Australia EASM | Preemptive Cyber Security</title>
+    <meta name="description" content="Daily external attack surface inventory for Australian organisations, built from public certificate transparency sources.">
+    <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/easm.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Australia EASM | Preemptive Cyber Security">
+    <meta property="og:description" content="Explore public domains and subdomains across Australian service lines.">
+    <meta property="og:url" content="https://preemptivecybersec.com/easm.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Australia EASM | Preemptive Cyber Security">
+    <meta name="twitter:description" content="Daily public attack surface inventory for Australian organisations.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security — Know the Unknown">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="easm/Australia/easm.css">
+</head>
+<body class="easm-page">
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo" aria-label="Preemptive Cyber Security home">
+                    <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+                </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="pages/services.html">Services</a></li>
+                    <li><a href="pages/about.html">About</a></li>
+                    <li><a href="pages/team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="pages/resources.html" class="nav-dropdown-toggle active" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu"><li><a href="pages/resources.html#blog">Blog</a></li><li><a href="pages/resources.html#tools">Tools</a></li><li><a href="pages/resources.html#talks">Talks &amp; Presentations</a></li><li><a href="easm.html">EASM</a></li></ul>
+                    </li>
+                    <li><a href="pages/careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="pages/contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="easm-shell">
+        <header class="easm-toolbar">
+            <div class="easm-title">
+                <span class="easm-shield" aria-hidden="true">◇</span>
+                <div><h1>EASM</h1><p>External Attack Surface Management</p></div>
+            </div>
+            <form class="domain-switcher" id="domain-form">
+                <label for="domain-input">Inspect another domain</label>
+                <div class="domain-input-row">
+                    <input id="domain-input" name="domain" type="text" inputmode="url" value="commbank.com.au" autocomplete="off" spellcheck="false" aria-describedby="domain-help">
+                    <button type="submit">Inspect</button>
+                </div>
+                <span id="domain-help" class="sr-only">Enter a root domain such as example.com</span>
+            </form>
+            <div class="region-chip"><span aria-hidden="true">⌖</span> Australia region</div>
+        </header>
+
+        <div class="easm-status" id="easm-status" role="status" aria-live="polite">
+            <span class="status-dot"></span><span>Loading daily snapshot…</span>
+        </div>
+
+        <div class="easm-grid">
+            <aside class="panel service-panel" aria-labelledby="service-lines-heading">
+                <div class="panel-label"><span class="status-dot"></span><h2 id="service-lines-heading">Service lines</h2></div>
+                <div id="service-lines" class="service-lines"></div>
+                <div class="filter-block">
+                    <span class="filter-heading">Filters</span>
+                    <label class="switch-row"><span>Production assets</span><input id="production-filter" type="checkbox"><span class="switch" aria-hidden="true"></span></label>
+                    <label class="switch-row is-disabled"><span>High risk only</span><input type="checkbox" disabled><span class="switch" aria-hidden="true"></span></label>
+                    <p class="filter-note">Risk data is not supplied by the discovery APIs.</p>
+                </div>
+                <div class="updated-at"><span aria-hidden="true">◷</span><span id="updated-at">Awaiting snapshot</span></div>
+            </aside>
+
+            <section class="panel organisation-panel" aria-labelledby="organisations-heading">
+                <div class="panel-heading"><h2 id="organisations-heading">Organisations <span id="organisation-count" class="count-badge">0</span></h2></div>
+                <div class="list-search"><span aria-hidden="true">⌕</span><input id="organisation-search" type="search" placeholder="Search organisations…" aria-label="Search organisations"></div>
+                <div id="organisation-list" class="organisation-list"></div>
+            </section>
+
+            <section class="detail-column" aria-label="Selected organisation attack surface">
+                <div class="metric-grid">
+                    <article class="metric-card"><span class="metric-icon" aria-hidden="true">◎</span><span class="metric-label">Root domains</span><strong id="root-domain-count">0</strong><small>Configured scope</small></article>
+                    <article class="metric-card"><span class="metric-icon blue" aria-hidden="true">⌘</span><span class="metric-label">Subdomains</span><strong id="subdomain-count">0</strong><small id="subdomain-note">Publicly observed</small></article>
+                    <article class="metric-card"><span class="metric-icon gold" aria-hidden="true">⇄</span><span class="metric-label">Source overlap</span><strong id="overlap-count">0</strong><small>Seen by both APIs</small></article>
+                    <article class="metric-card"><span class="metric-icon" aria-hidden="true">◈</span><span class="metric-label">Source coverage</span><strong id="source-count">0/2</strong><small id="source-note">Daily snapshot</small></article>
+                </div>
+
+                <section class="panel asset-panel" aria-labelledby="asset-heading">
+                    <div class="panel-heading asset-heading-row"><div><h2 id="asset-heading">Domains &amp; subdomains</h2><p id="asset-summary">Select an organisation to inspect its inventory.</p></div><span id="selected-domain" class="domain-badge"></span></div>
+                    <div class="asset-table-wrap">
+                        <table>
+                            <thead><tr><th scope="col">Domain / subdomain</th><th scope="col">Type</th><th scope="col">Environment</th></tr></thead>
+                            <tbody id="asset-rows"></tbody>
+                        </table>
+                    </div>
+                    <button id="load-more" class="load-more" type="button" hidden>Load more assets</button>
+                </section>
+
+                <section class="panel distribution-panel" aria-labelledby="distribution-heading">
+                    <div class="panel-heading"><h2 id="distribution-heading">Exposure profile — Australia</h2><p>Hostname environment signals, inferred from naming patterns</p></div>
+                    <div id="environment-chart" class="environment-chart"></div>
+                    <div class="method-note"><span aria-hidden="true">ⓘ</span> Inventory only. These sources do not provide IP ranges, geolocation, vulnerabilities, or a risk score.</div>
+                </section>
+            </section>
+        </div>
+    </main>
+
+    <script src="assets/js/main.js"></script>
+    <script src="easm/Australia/easm.js"></script>
+</body>
+</html>

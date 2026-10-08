@@ -1,0 +1,26 @@
+{
+  "region": "Australia",
+  "organisations": [
+    { "id": "commbank", "name": "Commonwealth Bank", "shortName": "CBA", "domain": "commbank.com.au", "serviceLine": "Banking & Finance" },
+    { "id": "anz", "name": "ANZ", "shortName": "ANZ", "domain": "anz.com.au", "serviceLine": "Banking & Finance" },
+    { "id": "nab", "name": "National Australia Bank", "shortName": "NAB", "domain": "nab.com.au", "serviceLine": "Banking & Finance" },
+    { "id": "australia", "name": "Australian Government", "shortName": "AUS", "domain": "australia.gov.au", "serviceLine": "Government & Critical Infrastructure" },
+    { "id": "telstra", "name": "Telstra", "shortName": "TLS", "domain": "telstra.com.au", "serviceLine": "Telecommunications" },
+    { "id": "optus", "name": "Optus", "shortName": "OPT", "domain": "optus.com.au", "serviceLine": "Telecommunications" },
+    { "id": "health", "name": "Australian Department of Health", "shortName": "DOH", "domain": "health.gov.au", "serviceLine": "Healthcare" },
+    { "id": "bhp", "name": "BHP", "shortName": "BHP", "domain": "bhp.com", "serviceLine": "Energy & Resources" },
+    { "id": "australian-super", "name": "AustralianSuper", "shortName": "AS", "domain": "australiansuper.com", "serviceLine": "Superannuation" },
+    { "id": "australian-retirement-trust", "name": "Australian Retirement Trust", "shortName": "ART", "domain": "australianretirementtrust.com.au", "serviceLine": "Superannuation" },
+    { "id": "woolworths-group", "name": "Woolworths Group", "shortName": "WOW", "domain": "woolworthsgroup.com.au", "serviceLine": "Retail, Food & Grocery" },
+    { "id": "coles-group", "name": "Coles Group", "shortName": "COL", "domain": "colesgroup.com.au", "serviceLine": "Retail, Food & Grocery" },
+    { "id": "nextdc", "name": "NEXTDC", "shortName": "NXT", "domain": "nextdc.com", "serviceLine": "Data Storage & Processing" },
+    { "id": "austal", "name": "Austal", "shortName": "ASB", "domain": "austal.com", "serviceLine": "Defence Industry" },
+    { "id": "origin-energy", "name": "Origin Energy", "shortName": "ORG", "domain": "originenergy.com.au", "serviceLine": "Energy" },
+    { "id": "university-melbourne", "name": "University of Melbourne", "shortName": "UOM", "domain": "unimelb.edu.au", "serviceLine": "Higher Education & Research" },
+    { "id": "australian-space-agency", "name": "Australian Space Agency", "shortName": "ASA", "domain": "space.gov.au", "serviceLine": "Space Technology" },
+    { "id": "qantas", "name": "Qantas", "shortName": "QF", "domain": "qantas.com", "serviceLine": "Transport" },
+    { "id": "sydney-water", "name": "Sydney Water", "shortName": "SW", "domain": "sydneywater.com.au", "serviceLine": "Water & Sewerage" },
+    { "id": "iag", "name": "Insurance Australia Group", "shortName": "IAG", "domain": "iag.com.au", "serviceLine": "Insurance" },
+    { "id": "asx", "name": "Australian Securities Exchange", "shortName": "ASX", "domain": "asx.com.au", "serviceLine": "Financial Markets" }
+  ]
+}
