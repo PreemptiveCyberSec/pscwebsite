@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE | Preemptive Cyber Security</title>
+    <meta name="description" content="A technical breakdown of LiteLLM, the Trivy-linked package compromise, authenticated gateway RCE and SSRF, and practical controls for AI infrastructure.">
+    <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE | Preemptive Cyber Security">
+    <meta property="og:description" content="A technical breakdown of LiteLLM, the Trivy-linked package compromise, authenticated gateway RCE and SSRF, and practical controls for AI infrastructure.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE | Preemptive Cyber Security">
+    <meta name="twitter:description" content="A technical breakdown of LiteLLM, the Trivy-linked package compromise, authenticated gateway RCE and SSRF, and practical controls for AI infrastructure.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta property="article:published_time" content="2026-10-15">
+    <meta property="article:modified_time" content="2026-10-15">
+    <meta property="article:author" content="https://preemptivecybersec.com/#organization">
+    <meta property="article:section" content="AI Infrastructure Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html",
+                "headline": "LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE",
+                "description": "A technical breakdown of LiteLLM, the Trivy-linked package compromise, authenticated gateway RCE and SSRF, and practical controls for AI infrastructure.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-10-15",
+                "dateModified": "2026-10-15",
+                "author": {"@id": "https://preemptivecybersec.com/#organization"},
+                "publisher": {"@id": "https://preemptivecybersec.com/#organization"},
+                "articleSection": "AI Infrastructure Security",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html#breadcrumb",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://preemptivecybersec.com/"},
+                    {"@type": "ListItem", "position": 2, "name": "Research", "item": "https://preemptivecybersec.com/pages/resources.html"},
+                    {"@type": "ListItem", "position": 3, "name": "LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE", "item": "https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo" aria-label="Preemptive Cyber Security home">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../../pages/services.html">Services</a></li>
+                    <li><a href="../../pages/about.html">About</a></li>
+                    <li><a href="../../pages/team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../pages/resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../../pages/resources.html#blog">Blog</a></li>
+                            <li><a href="../../pages/resources.html#tools">Tools</a></li>
+                            <li><a href="../../pages/resources.html#talks">Talks &amp; Presentations</a></li>
+                            <li><a href="../../easm.html">EASM</a></li>
+                            <li><a href="../../skillscan.html">SkillScan</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../llms.txt">llms.txt</a></li>
+                    <li><a href="../../pages/careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../../pages/contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <article class="article litellm-article">
+            <div class="container">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE</li></ol></nav>
+                <div class="article-meta"><span class="cat">AI Infrastructure Security</span><span class="dot">//</span><time datetime="2026-10-15">15 October 2026</time><span class="dot">//</span><span>Deep dive</span></div>
+                <h1>LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE</h1>
+                <p class="article-lead">An AI gateway concentrates access to models, credentials, budgets, and business data. When that gateway, or the pipeline that ships it, is compromised, the blast radius reaches far beyond a single chatbot.</p>
+                <div class="article-byline"><span class="avatar" aria-hidden="true">PSC</span><span>By <strong>Preemptive Cyber Security Research</strong></span></div>
+
+                <div class="prose">
+                    <p>LiteLLM sits at an increasingly important junction in AI systems: the place where applications exchange their own access tokens for the ability to call upstream model providers. Its usefulness is also why security failures matter. A dependency running in a build job, an overly powerful configuration endpoint, and a caller-controlled outbound destination can each break a different trust boundary.</p>
+                    <p>This article separates three stories that are easy to conflate: the <strong>March 2026 malicious PyPI releases linked by LiteLLM to the Trivy compromise</strong>, an authenticated configuration-to-code-execution vulnerability, and an authenticated server-side request forgery vulnerability. They are related security lessons, not one demonstrated exploit chain. The product shown in the supplied graphic is <strong>LiteLLM</strong>, not llvmlite, the separate LLVM binding used in Python tooling.</p>
+
+                    <div class="callout">
+                        <h4>The short version</h4>
+                        <ul>
+                            <li><strong>Supply chain:</strong> LiteLLM PyPI versions <code>1.82.7</code> and <code>1.82.8</code> were malicious releases, not merely versions containing an ordinary software bug.</li>
+                            <li><strong>Gateway RCE:</strong> CVE-2026-35029 allowed an authenticated user to abuse a missing administrative authorization check. The vendor identifies <code>1.83.0</code> as the fix.</li>
+                            <li><strong>Gateway SSRF:</strong> CVE-2026-59823 allowed a valid virtual-key holder to influence outbound routing through nested request configuration. The vendor identifies <code>1.83.9</code> as the fix.</li>
+                            <li><strong>Recovery:</strong> patching prevents known entry paths; it does not revoke stolen credentials, remove attacker persistence, or establish that old artifacts were trustworthy.</li>
+                        </ul>
+                    </div>
+
+                    <nav class="litellm-toc" aria-label="Article contents">
+                        <h2>In this deep dive</h2>
+                        <ol>
+                            <li><a href="#what-is-litellm">What LiteLLM does and why it is sensitive</a></li>
+                            <li><a href="#reference-check">Reading the reference graphic critically</a></li>
+                            <li><a href="#trivy-incident">How the Trivy-linked package compromise unfolded</a></li>
+                            <li><a href="#execution-boundary">Why Python startup changed the exposure</a></li>
+                            <li><a href="#gateway-rce">Configuration access becoming code execution</a></li>
+                            <li><a href="#gateway-ssrf">Nested configuration and the SSRF boundary</a></li>
+                            <li><a href="#ai-blast-radius">What compromise means for AI projects</a></li>
+                            <li><a href="#detection">Evidence and detection opportunities</a></li>
+                            <li><a href="#response">Containment and recovery</a></li>
+                            <li><a href="#architecture">Designing a smaller blast radius</a></li>
+                            <li><a href="#sources">Primary sources and verification notes</a></li>
+                        </ol>
+                    </nav>
+
+                    <h2 id="what-is-litellm">1. What is LiteLLM?</h2>
+                    <p><a href="https://docs.litellm.ai/docs/">LiteLLM</a> is an open-source Python SDK and an AI gateway, also called the LiteLLM Proxy. The SDK exposes a common interface across model providers; the gateway offers a service that applications can call using OpenAI-compatible or provider-native request formats. These are distinct deployment modes. Finding the Python package in a notebook does not prove that a network-accessible proxy is running.</p>
+                    <p>In a gateway deployment, teams can centralize provider routing, fallbacks, retries, virtual keys, access policies, usage accounting, and an administrative UI. An application uses a gateway-issued virtual key rather than necessarily holding the real OpenAI, Anthropic, or cloud-provider credential. The gateway maps the request to an approved model and authenticates upstream on the application's behalf.</p>
+                    <p>That distinction creates several security boundaries: the application-to-gateway identity, the caller's model and tenant permissions, the administrative configuration plane, and the gateway's authority to reach providers and retrieve secrets. A virtual key should authorize a bounded inference request. It should not implicitly authorize arbitrary configuration changes or the selection of an arbitrary server-side network destination.</p>
+
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 360" role="img" aria-labelledby="litellm-diagram-title litellm-diagram-desc">
+                            <title id="litellm-diagram-title">An AI gateway is a credential and routing trust boundary</title>
+                            <desc id="litellm-diagram-desc">Applications use virtual keys to reach the LiteLLM gateway. The gateway enforces identity, tenant policy and routing, then uses provider credentials to reach approved model services. Administrators and the build pipeline have separate paths into the system. Each path needs its own authorization and isolation.</desc>
+                            <text x="20" y="24" class="dg-title">AI GATEWAY / DISTINCT TRUST BOUNDARIES</text>
+                            <rect x="20" y="110" width="160" height="92" rx="8" class="dg-node"/>
+                            <text x="100" y="142" text-anchor="middle" class="dg-label">Applications</text>
+                            <text x="100" y="166" text-anchor="middle" class="dg-sub">Agents / RAG / APIs</text>
+                            <text x="100" y="186" text-anchor="middle" class="dg-sub">Gateway virtual keys</text>
+                            <path d="M180 155H250" class="dg-flow"/>
+                            <path d="M242 150l8 5-8 5" class="dg-flow"/>
+                            <rect x="250" y="80" width="260" height="160" rx="8" class="dg-node-accent"/>
+                            <text x="380" y="110" text-anchor="middle" class="dg-accent-text">LiteLLM gateway</text>
+                            <text x="380" y="140" text-anchor="middle" class="dg-label">Identity + tenant policy</text>
+                            <text x="380" y="167" text-anchor="middle" class="dg-label">Approved model routing</text>
+                            <text x="380" y="194" text-anchor="middle" class="dg-label">Provider credentials</text>
+                            <text x="380" y="222" text-anchor="middle" class="dg-sub">Data plane != admin plane</text>
+                            <path d="M510 155H580" class="dg-flow"/>
+                            <path d="M572 150l8 5-8 5" class="dg-flow"/>
+                            <rect x="580" y="110" width="160" height="92" rx="8" class="dg-node"/>
+                            <text x="660" y="142" text-anchor="middle" class="dg-label">Model providers</text>
+                            <text x="660" y="166" text-anchor="middle" class="dg-sub">Approved endpoints</text>
+                            <text x="660" y="186" text-anchor="middle" class="dg-sub">Scoped provider keys</text>
+                            <rect x="80" y="278" width="250" height="54" rx="8" class="dg-node"/>
+                            <text x="205" y="300" text-anchor="middle" class="dg-label">Administrative access</text>
+                            <text x="205" y="319" text-anchor="middle" class="dg-sub">Configuration authorization</text>
+                            <path d="M205 278V257H310V240" class="dg-flow-dim"/>
+                            <rect x="430" y="278" width="250" height="54" rx="8" class="dg-node"/>
+                            <text x="555" y="300" text-anchor="middle" class="dg-label">Build + release pipeline</text>
+                            <text x="555" y="319" text-anchor="middle" class="dg-sub">Artifact integrity + provenance</text>
+                            <path d="M555 278V257H450V240" class="dg-flow-dim"/>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> The gateway mediates trust; it does not eliminate it. Compromising the runtime and compromising its delivery pipeline are different ways to acquire the gateway's authority.</figcaption>
+                    </figure>
+
+                    <h2 id="reference-check">2. Reading the supplied graphic critically</h2>
+                    <p>The reference image captures the central concern well: an AI gateway can concentrate credentials and downstream dependency risk. However, its severity labels, prerequisites, and combined mitigation need qualification. The comparison below uses the vendor advisories and the CVE Program's CNA records, checked on <strong>15 October 2026</strong>. Popularity figures in the image are not used as verified measurements or estimates of affected systems.</p>
+                    <figure class="diagram-figure litellm-reference">
+                        <span class="litellm-figure-label">REFERENCE GRAPHIC / SEE CORRECTIONS BELOW</span>
+                        <a href="../../assets/images/blog/litellm-gateway-reference.png" aria-label="Open the full-size user-supplied LiteLLM reference graphic">
+                            <img src="../../assets/images/blog/litellm-gateway-reference.png" width="800" height="534" loading="lazy" decoding="async" alt="User-supplied LiteLLM gateway takeover infographic showing two CVEs, provider credential exposure and mitigations. Its severity scores and some impact claims differ from the primary records; the following table provides the verified details.">
+                        </a>
+                        <figcaption class="diagram-caption"><b>Figure 2.</b> User-supplied reference, presented in a mint-bordered site panel without altering the source image. This is an illustration, not an authoritative advisory. Its 9.8/8.6 ratings, popularity figures, and suggestion of unconditional API-key theft are not adopted as established facts here.</figcaption>
+                    </figure>
+                    <div class="litellm-table-wrap" role="region" aria-label="Verified LiteLLM vulnerability comparison" tabindex="0">
+                        <table class="litellm-table">
+                            <caption>What the primary records actually establish</caption>
+                            <thead><tr><th scope="col">Issue</th><th scope="col">Prerequisite and boundary</th><th scope="col">Published CNA rating</th><th scope="col">Vendor fix</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row">CVE-2026-35029</th><td>Already-authenticated user; missing admin authorization on configuration updates. RCE, server-file disclosure, and privileged-account takeover are documented impacts.</td><td>CVSS v4.0 <strong>8.7 / High</strong></td><td><code>1.83.0</code>; affected upstream versions are below it.</td></tr>
+                                <tr><th scope="row">CVE-2026-59823</th><td>Valid virtual key; nested request configuration bypasses a top-level routing guard. Server-side requests to caller-selected internal or external hosts.</td><td>CVSS v4.0 <strong>5.3 / Medium</strong></td><td><code>1.83.9</code>; vendor lists <code>&lt;=1.83.8</code> as affected.</td></tr>
+                                <tr><th scope="row">March PyPI compromise</th><td>Consumption of malicious <code>1.82.7</code> or <code>1.82.8</code> artifacts. This is a release-integrity incident, not either CVE.</td><td>No CVSS score asserted here</td><td>Remove affected artifacts, investigate execution and exposure, rotate affected credentials, and rebuild from verified releases.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>A CVSS score is not an incident-loss estimate. A medium-rated SSRF in a gateway with broad internal access may still justify urgent containment. Conversely, describing an authenticated vulnerability as an unauthenticated internet takeover loses an important exposure condition. Other scoring authorities and CVSS versions can differ; the table explicitly names the CNA's CVSS v4.0 ratings. <a href="#source-rce">[3]</a> <a href="#source-ssrf">[4]</a></p>
+
+                    <h2 id="trivy-incident">3. The earlier compromise: from a security scanner to an AI dependency</h2>
+                    <p>Trivy is a security scanner commonly run in CI/CD pipelines. Its position is privileged in practice: build jobs may expose repository tokens, registry credentials, signing material, and cloud identities. A scanner is still executable third-party software. Calling it a security control does not make its execution less sensitive.</p>
+                    <p><a href="https://www.aquasec.com/blog/trivy-supply-chain-attack-what-you-need-to-know/">Aqua's incident account</a> describes a multi-stage compromise beginning with a late-February GitHub Actions misconfiguration and token theft. A March credential rotation was not comprehensive, leaving residual access. On 19 March, attackers used compromised credentials to distribute malicious Trivy <code>0.69.4</code> and poison references in <code>trivy-action</code> and <code>setup-trivy</code>. Existing version tags were moved to attacker-controlled commits, so an unchanged workflow could resolve to changed code.</p>
+                    <p>The malicious action could collect credentials before continuing with legitimate scanning behavior. This matters operationally: a successful security scan and a green build can coexist with credential theft. The output proves that scanning ran, not that every preceding process or dependency was trustworthy. Aqua also documented later malicious Docker tags; those are separate artifacts to account for, not evidence that every Trivy distribution or Aqua commercial product was affected. <a href="#source-trivy">[2]</a></p>
+                    <p><a href="https://docs.litellm.ai/blog/security-update-march-2026">LiteLLM's own incident report</a> says it believed the compromise originated from the Trivy dependency used in its CI/CD security scanning workflow. It describes evidence suggesting that an attacker bypassed the official release workflow and directly uploaded malicious packages to PyPI. That is a vendor-reported connection and investigation assessment; it should not be rewritten as a fully proven account of every intermediate credential transfer.</p>
+                    <ol class="litellm-timeline">
+                        <li><strong>Late February to 19 March:</strong> Aqua describes initial token compromise, incomplete early containment, and malicious scanner/action distribution.</li>
+                        <li><strong>24 March:</strong> LiteLLM identifies PyPI <code>1.82.7</code> and <code>1.82.8</code> as compromised. Its report says they became available at 10:39 UTC for approximately 40 minutes, while recommending a broader 10:39-16:00 UTC investigation window.</li>
+                        <li><strong>30 March:</strong> LiteLLM announces a clean <code>1.83.0</code> release through a redesigned CI/CD pipeline.</li>
+                        <li><strong>6 April:</strong> CVE-2026-35029 is published, separately documenting the gateway's configuration authorization flaw.</li>
+                        <li><strong>17 April / 16 September:</strong> the SSRF advisory identifies a 17 April <code>1.83.9</code> fix; the CVE-2026-59823 record is published on 16 September. Patch availability and CVE publication are different dates.</li>
+                    </ol>
+                    <p>LiteLLM reported that its official proxy Docker deployment path and GitHub source were not impacted by the malicious PyPI releases. <strong>That statement is scoped to this package incident.</strong> A custom image that installed the poisoned PyPI versions can still be affected, and an official image can independently contain a gateway version vulnerable to a CVE. Assess the exact artifact, provenance, and runtime configuration rather than treating a product name as an exposure verdict. <a href="#source-incident">[1]</a></p>
+
+                    <h2 id="execution-boundary">4. Why the Python startup detail matters</h2>
+                    <p>The vendor identifies malicious content in <code>proxy_server.py</code> in both affected releases and an additional <code>litellm_init.pth</code> file in <code>1.82.8</code>. That second artifact changes the question from “Did anyone explicitly import the AI gateway?” to “Did a Python interpreter start with that environment's site packages enabled?”</p>
+                    <p>Python's <code>site</code> initialization processes path-configuration files. Executable import lines in <code>.pth</code> files can run during ordinary interpreter startup, even when the corresponding application package is not explicitly imported. The exact behavior depends on the interpreter and startup configuration, but the practical lesson is clear: an installed package can affect processes beyond the feature for which it was selected. A notebook kernel, test runner, utility script, or later build step may cross the execution boundary. <a href="#source-python">[7]</a></p>
+                    <p>The incident report describes a credential stealer targeting environment variables, SSH material, cloud credentials, Kubernetes tokens, and database passwords. It names <code>models[.]litellm[.]cloud</code> as an attacker destination, not an official LiteLLM domain. The defanged name is provided for historical log correlation, not as a complete or evergreen indicator set. Consult the maintained incident report for updated indicators.</p>
+                    <p><strong>Do not import a suspect package to identify its version.</strong> Even launching a normal interpreter inside the suspect environment can be unsafe. Preserve artifacts and inspect package metadata and filesystem contents from a trusted forensic environment. Also distinguish installation from execution: an artifact's presence establishes an exposure lead, while process and network evidence help determine what actually ran and what it could access.</p>
+
+                    <h2 id="gateway-rce">5. CVE-2026-35029: configuration becomes code</h2>
+                    <p>The <a href="https://github.com/BerriAI/litellm/security/advisories/GHSA-53mr-6c8q-9789">vendor advisory</a> describes missing admin-role authorization on <code>/config/update</code>. An already-authenticated user could modify proxy configuration and environment variables. Authentication answered “Who is this caller?” but the endpoint failed to enforce “May this caller administer the gateway?”</p>
+                    <p>The documented consequences include registering custom pass-through endpoint handlers pointing to attacker-controlled Python code, which enables remote code execution. The advisory also describes arbitrary server-file reads through <code>UI_LOGO_PATH</code> and <code>/get_image</code>, and privileged-account takeover by changing <code>UI_USERNAME</code> and <code>UI_PASSWORD</code>. These are separate documented capabilities of the configuration flaw; the advisory does not require a single fixed file-read-to-credential-overwrite sequence.</p>
+                    <p>This is a broader design warning about <strong>configuration as executable authority</strong>. A setting that controls callback imports, handler loading, plugin selection, or filesystem paths is not ordinary business data. If an inference user can change that setting, the application has effectively exposed part of its execution environment as an API.</p>
+                    <p>The fix in <code>1.83.0</code> requires the <code>proxy_admin</code> role for the endpoint. The vendor states there is no configuration-level workaround and advises restricting API-key distribution. Network restrictions and administrative-plane isolation are useful additional barriers, not a substitute for the authorization fix.</p>
+                    <p>Remote code execution initially means execution with the affected service process's authority. It does <strong>not automatically mean root, host escape, or cluster administrator</strong>. Those outcomes depend on container privileges, mounts, service-account permissions, local kernel exposure, network reachability, and available credentials. A non-root process with readable production keys can still produce a severe incident without escaping its container.</p>
+
+                    <h2 id="gateway-ssrf">6. CVE-2026-59823: a shallow guard meets nested configuration</h2>
+                    <p>The <a href="https://github.com/BerriAI/litellm/security/advisories/GHSA-hx8v-g79f-8w5f">SSRF advisory</a> documents a valid virtual-key holder placing an <code>api_base</code> value inside the request's <code>user_config</code>. The <code>is_request_body_safe</code> guard rejected top-level <code>api_base</code> and <code>base_url</code>, but did not cover the nested configuration used to construct the outbound router.</p>
+                    <p>The trust-boundary error is structural: the security check examined one representation of a request while downstream code interpreted a more powerful one. Rejecting a dangerous field at the top level is insufficient if another accepted object can express the same capability. Safer designs validate a normalized, typed request schema and separate caller-controlled generation options from operator-controlled destinations and credentials.</p>
+                    <p>The documented impact is a server-side request to an internal or external host selected by the authenticated caller. That can expose resources the caller cannot reach directly. The record does not establish that every deployment necessarily forwards a provider key to that host, nor does it describe this specifically as an HTTP 302 redirect bug. <strong>API-key leakage is a deployment-dependent consequence to investigate</strong>: determine which headers and credentials the selected route attaches, how redirects are handled, and what responses are returned.</p>
+                    <p>Useful defenses include strict provider endpoint allowlists, explicit separation of model parameters from routing parameters, blocked access to loopback/link-local/internal destinations where not required, and network-enforced egress controls. Allowlisting only the original URL is insufficient if redirects or DNS resolution can move the connection elsewhere. Apply checks at each relevant resolution or redirect boundary and retain a network policy as an independent control. The vendor identifies <code>1.83.9</code> as the patch. <a href="#source-ssrf">[4]</a></p>
+
+                    <h2 id="ai-blast-radius">7. How RCE and credential theft affect AI projects</h2>
+                    <p>The model's weights do not have to be compromised for an AI service to become untrustworthy. An attacker who controls the surrounding software can alter the requests, responses, identities, and tools that give a model its operational meaning.</p>
+                    <h3>Provider-key theft and spend abuse</h3>
+                    <p>A gateway may hold credentials for several providers and environments. Theft can let an attacker call those providers independently of gateway quotas or logging, subject to the upstream key's restrictions. Consequences include unauthorized spend, quota exhaustion, and abuse attributed to the victim's account. Gateway virtual-key rotation alone does not revoke upstream provider credentials.</p>
+                    <h3>Confidentiality of prompts, retrieved context, and results</h3>
+                    <p>Gateway traffic can include customer records, source code, system instructions, RAG passages, and proprietary outputs. Runtime compromise can expose data in memory or application logs and may permit observation of future traffic. Whether historical prompts or cached responses are recoverable depends on actual logging, storage, and permissions; do not assume the gateway stores everything or nothing.</p>
+                    <h3>Integrity of routing, guardrails, and answers</h3>
+                    <p>A compromised gateway may reroute approved requests, change model selection, disable application-layer controls, or tamper with response content. Those are architectural consequences of gateway control, not an assertion that these activities occurred in the cited incident. A downstream application that trusts gateway output without an independent authorization boundary inherits this integrity risk.</p>
+                    <h3>Agent tools, MCP, and application permissions</h3>
+                    <p>If an agent treats model output as a proposal for a tool call, the tool executor still needs to authorize that call. RCE in the gateway does not automatically grant every MCP permission. However, response manipulation can become a second attack path when a tool client blindly executes requests with broad filesystem, cloud, or deployment privileges. Keep tool authorization and high-impact approvals independent of model-generated text and gateway trust.</p>
+                    <h3>RAG and model supply-chain contamination</h3>
+                    <p>A process with write access to vector stores, ingestion queues, evaluation corpora, or model artifacts can potentially poison future behavior. That is different from merely leaking an inference key: it requires the relevant access. Map the service's actual credentials before claiming that a gateway flaw implies training-data poisoning or model-weight compromise.</p>
+                    <h3>CI/CD and cloud lateral movement</h3>
+                    <p>The package incident demonstrates why developer and build environments belong in the incident scope. An AI dependency may execute where registry push tokens, cloud deployment identities, source repositories, and signing permissions coexist. The most consequential stolen secret may be a publishing token rather than an LLM key, allowing compromise to propagate into another organization's trusted software.</p>
+                    <p>For governance, map these risks across <strong>confidentiality, integrity, availability, and financial exposure</strong>. A gateway outage is an availability problem; prompt theft is a confidentiality problem; manipulated tool actions are an integrity problem; stolen inference credentials add a financial and abuse channel. One “AI risk” score obscures the different controls and evidence each requires.</p>
+
+                    <h2 id="detection">8. Detect the boundary crossing, not just a CVE string</h2>
+                    <p>Detection should join build provenance, application identities, configuration history, and network telemetry. A package version is an inventory fact; a suspicious configuration mutation is a control-plane event; a secret-bearing request to a new destination is a behavioral event. None is a complete investigation by itself.</p>
+                    <ul>
+                        <li><strong>Build and package evidence:</strong> preserve lockfiles, package hashes, registry download logs, cached wheels, image manifests, SBOMs, workflow run IDs, and the resolved commits of third-party actions. Search for the two malicious LiteLLM releases across direct and transitive dependencies.</li>
+                        <li><strong>Python startup evidence:</strong> investigate unexpected <code>.pth</code> files and startup changes in the affected environment, especially <code>litellm_init.pth</code> in the documented release. Treat a filename match as a lead; compare artifact contents and provenance before a verdict.</li>
+                        <li><strong>Gateway administration:</strong> alert on configuration updates by non-admin identities, unexpected role or credential changes, handler registrations, and deviations from approved configuration baselines.</li>
+                        <li><strong>Routing anomalies:</strong> correlate virtual-key identity, model route, outbound hostname/IP, redirect behavior, and destination changes. Flag routes to non-approved providers or sensitive internal address ranges.</li>
+                        <li><strong>Runtime behavior:</strong> review unexpected child processes, filesystem writes, secret-file access, and unusual egress from gateway and build workloads. Absence of a shell process does not rule out in-process Python execution.</li>
+                        <li><strong>Upstream provider evidence:</strong> correlate usage, key IDs, source networks, models, account changes, and spending anomalies with the gateway's own request records. Requests made using a stolen provider key may never appear in gateway logs.</li>
+                    </ul>
+                    <p>Prefer metadata and access events over collecting raw prompts or authorization headers. Logging every request body can create a second sensitive-data repository, while dumping headers can turn an investigation into another credential exposure. Protect evidence access, record retention decisions, and document telemetry gaps explicitly.</p>
+
+                    <h2 id="response">9. A practical containment and recovery sequence</h2>
+                    <h3>First: establish which incident you are responding to</h3>
+                    <p>Record the deployment mode, exact artifact digest, package source, proxy version, running configuration, network exposure, and affected identities. Ask separately whether a malicious PyPI release was consumed, whether a vulnerable proxy was reachable by authenticated users, and whether either condition led to execution or credential access. Unrelated exposure paths can coexist.</p>
+                    <h3>Preserve and isolate</h3>
+                    <p>Where feasible, preserve volatile evidence before termination; retain images, affected package artifacts, logs, and build records according to your response process. Restrict affected workloads' network access and pause suspect build or release paths. Do not launch a normal Python or pip process inside a suspect environment simply to inspect it: startup processing can itself execute malicious code.</p>
+                    <p>The following example only lists metadata directories and reads text from an <em>already-preserved forensic copy</em>. Run it from a trusted analyst host, replace the evidence path, and protect the results. It does not establish that a package executed or that an artifact is safe.</p>
+                    <pre><code># PowerShell on a trusted analyst host; inspect the evidence copy only.
+Get-ChildItem -LiteralPath 'C:\Evidence\site-packages' `
+    -Directory -Filter 'litellm-*.dist-info'
+
+Select-String `
+    -Path 'C:\Evidence\site-packages\litellm-*.dist-info\METADATA' `
+    -Pattern '^Name:', '^Version:'
+
+Get-ChildItem -LiteralPath 'C:\Evidence\site-packages' `
+    -File -Filter '*.pth'</code></pre>
+                    <h3>Revoke exposed authority, not just the nearest password</h3>
+                    <p>From a clean administrative environment, identify and revoke credentials the compromised process could access: provider keys, gateway master and virtual keys, cloud identities, database accounts, repository tokens, publishing credentials, and signing material as applicable. Rotate downstream credentials and invalidate sessions where required. Complete containment before injecting replacement secrets into a workload that may still be attacker-controlled.</p>
+                    <h3>Rebuild and validate</h3>
+                    <p>Rebuild from verified source and artifacts in a clean environment, restore reviewed configuration, and deploy a currently supported release that addresses the applicable advisories. <code>1.83.0</code> and <code>1.83.9</code> are historical fix boundaries for the issues discussed here, <strong>not a blanket claim that either is the safest current release</strong>. Check the current security advisory set and downstream vendor backports before selecting a version.</p>
+                    <p>Test that non-admin identities cannot mutate administrative configuration, nested request fields cannot select unapproved destinations, outbound requests reach only approved providers, and tool execution still requires independent authorization. Validate provider usage and cost baselines after restoration. Reinstallation alone does not undo previously stolen keys or prove that a compromised release pipeline is now trustworthy.</p>
+
+                    <h2 id="architecture">10. Design AI infrastructure to fail within a boundary</h2>
+                    <p>The most useful long-term response is not “avoid AI gateways.” A well-designed gateway can reduce credential sprawl and enforce central policy. The goal is to make each trust relationship narrow, observable, and independently enforceable.</p>
+                    <ol>
+                        <li><strong>Separate inference from administration.</strong> Put administrative access behind stronger identity controls and restricted network paths. Enforce role checks on the server for every privileged operation, not only in the UI.</li>
+                        <li><strong>Treat destinations as operator policy.</strong> Keep provider base URLs and credential selection out of arbitrary caller-controlled request objects. Reject unknown configuration fields rather than accepting loosely typed extensions.</li>
+                        <li><strong>Reduce runtime authority.</strong> Use non-root workloads, read-only filesystems where compatible, minimal mounts, and narrowly scoped cloud identities. Disable automatic service-account token mounting when the workload does not need it.</li>
+                        <li><strong>Bound egress.</strong> Permit approved providers and necessary dependencies; block metadata endpoints and internal destinations that the gateway does not require. Independently enforce these restrictions outside application request parsing.</li>
+                        <li><strong>Scope secrets and budgets.</strong> Separate providers, environments, and tenants where practical. Use provider-side restrictions and spend alerts; the gateway should not be the only place abuse is constrained.</li>
+                        <li><strong>Isolate scanning from publishing.</strong> Security tools and tests should not inherit release authority just because they run earlier in a pipeline. Prefer short-lived, identity-bound publishing credentials, minimal job permissions, and separation of validation and release environments.</li>
+                        <li><strong>Pin and verify artifacts.</strong> Pin third-party actions to reviewed full commit SHAs and container deployments to verified digests. Review changes to those pins. Hashes freeze selected bytes; they do not prove the bytes were benign when approved.</li>
+                        <li><strong>Validate provenance without overstating it.</strong> Signatures and attestations help establish artifact origin and build identity. A trusted signer attached to compromised automation can still sign a harmful artifact; provenance complements source review and isolation.</li>
+                        <li><strong>Keep an SBOM and release evidence.</strong> An SBOM helps identify dependency exposure and affected downstream builds. It does not, by itself, detect malicious startup code or guarantee that a package is clean.</li>
+                    </ol>
+                    <p>LiteLLM's <a href="https://docs.litellm.ai/blog/ci-cd-v2-improvements">CI/CD v2 account</a> describes isolated scanning and test environments, separation of validation from releases, PyPI Trusted Publishing, and signed Docker images. Its account also distinguished implemented controls from planned provenance work. Those distinctions matter: a roadmap is not an already-deployed security guarantee. <a href="#source-cicd">[8]</a></p>
+                    <div class="callout">
+                        <h4>The enduring lesson</h4>
+                        <p>An AI gateway is part of the security control plane, and its release pipeline is part of the software supply chain. Protect both. Authorization stops a caller from becoming an administrator; egress policy constrains an outbound request; build isolation keeps a compromised scanner away from publishing authority. No one of these controls replaces the others.</p>
+                    </div>
+                    <p>For related context, see our work on <a href="supply-chain-security.html">software supply-chain security</a>, <a href="prompt-injection-llm-agents.html">prompt injection in tool-using agents</a>, and <a href="ai-security-llm.html">LLM application security</a>. <a href="../../skillscan.html">SkillScan</a> can inspect AI skill text and supporting scripts for configured static patterns; it is not a substitute for artifact verification, runtime authorization testing, or incident response.</p>
+
+                    <h2 id="sources">11. Sources, scope, and verification notes</h2>
+                    <p>Primary sources checked on 15 October 2026. The March compromise is an observed package incident described by the vendors; the two CVEs describe documented vulnerabilities and impacts, not proof of exploitation in every customer environment. Architectural impact scenarios above are explicitly conditional on the permissions and data present in a deployment.</p>
+                    <ol class="litellm-sources">
+                        <li id="source-incident"><a href="https://docs.litellm.ai/blog/security-update-march-2026">LiteLLM: March 2026 security update</a> - affected PyPI versions, vendor-assessed Trivy connection, malicious artifacts, deployment scope, indicators, and incident-response guidance.</li>
+                        <li id="source-trivy"><a href="https://www.aquasec.com/blog/trivy-supply-chain-attack-what-you-need-to-know/">Aqua: Trivy supply-chain attack account</a> - compromise timeline, tag poisoning, malicious scanner/action behavior, and the limits of the stated commercial-product impact.</li>
+                        <li id="source-rce"><a href="https://github.com/BerriAI/litellm/security/advisories/GHSA-53mr-6c8q-9789">LiteLLM: configuration authorization advisory</a> and <a href="https://cveawg.mitre.org/api/cve/CVE-2026-35029">CVE-2026-35029 record</a> - authenticated prerequisite, documented impacts, fix, and CNA CVSS v4.0 score.</li>
+                        <li id="source-ssrf"><a href="https://github.com/BerriAI/litellm/security/advisories/GHSA-hx8v-g79f-8w5f">LiteLLM: user_config SSRF advisory</a> and <a href="https://cveawg.mitre.org/api/cve/CVE-2026-59823">CVE-2026-59823 record</a> - virtual-key requirement, nested routing issue, affected range, patch, and CNA CVSS v4.0 score.</li>
+                        <li><a href="https://docs.litellm.ai/docs/">LiteLLM documentation</a> - SDK, gateway, routing, virtual-key, and provider-interface context.</li>
+                        <li><strong>Supplied reference image:</strong> included as reader context, not independent substantiation. Download/star figures and the image's score labels are not used as verified facts.</li>
+                        <li id="source-python"><a href="https://docs.python.org/3/library/site.html">Python: site-specific configuration and startup hooks</a> - executable path-configuration lines and interpreter startup behavior.</li>
+                        <li id="source-cicd"><a href="https://docs.litellm.ai/blog/ci-cd-v2-improvements">LiteLLM: CI/CD v2 improvements</a> - published pipeline changes, signature verification, and the distinction between delivered and planned controls.</li>
+                    </ol>
+                    <div class="tag-row"><span class="tag">#litellm</span><span class="tag">#ai-security</span><span class="tag">#supply-chain</span><span class="tag">#trivy</span><span class="tag">#rce</span><span class="tag">#ssrf</span></div>
+                </div>
+                <section class="related-services" aria-labelledby="litellm-services">
+                    <span class="eyebrow">Reduce the blast radius</span>
+                    <h2 id="litellm-services">Assess the gateway and its trust boundaries.</h2>
+                    <div class="related-service-links">
+                        <a href="../services/ai-mcp-security.html"><strong>AI and MCP Security Assessment</strong><span>Validate agent permissions, gateway authorization, tool boundaries, and sensitive-data flows.</span></a>
+                        <a href="../services/detection-engineering.html"><strong>Detection Engineering</strong><span>Connect identity, configuration, runtime, and provider telemetry to actionable detections.</span></a>
+                    </div>
+                </section>
+                <div class="article-nav"><a href="../resources.html#blog">All articles</a><a href="../contact.html">Discuss your AI security architecture</a></div>
+            </div>
+        </article>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand"><a href="../../index.html" class="logo"><span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span></a><p>360-degree protection against cyber threats. Offensive security, defensive operations, and training.</p></div>
+                <div><h4>Company</h4><ul><li><a href="../about.html">About</a></li><li><a href="../team.html">Team</a></li><li><a href="../careers.html">Careers</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+                <div><h4>Services</h4><ul><li><a href="../services.html#offensive">Offensive Security</a></li><li><a href="../services.html#defensive">Defensive Security</a></li><li><a href="../services.html#ai">AI Security</a></li></ul></div>
+                <div><h4>Resources</h4><ul><li><a href="../resources.html#blog">Blog</a></li><li><a href="../../easm.html">EASM</a></li><li><a href="../../skillscan.html">SkillScan</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../cookies.html">Cookies</a></li><li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
