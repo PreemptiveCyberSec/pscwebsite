@@ -34,31 +34,36 @@
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Main navigation">
         <div class="container">
             <div class="nav-wrapper">
-                <a href="../index.html" class="logo">
+                <a href="../index.html" class="logo" aria-label="Preemptive Cyber Security home">
                         <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
                         <span class="logo-word">
                             <span class="logo-name">Preemptive <em>Cyber Security</em></span>
                             <span class="logo-tag">Know the Unknown</span>
                         </span>
                     </a>
-                <button class="hamburger" id="hamburger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
                 <ul class="nav-menu" id="nav-menu">
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="team.html">Team</a></li>
+                    <li><a href="../pages/services.html">Services</a></li>
+                    <li><a href="../pages/about.html">About</a></li>
+                    <li><a href="../pages/team.html">Team</a></li>
                     <li class="nav-dropdown">
-                        <a href="resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <a href="../pages/resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
                         <ul class="nav-dropdown-menu">
-                            <li><a href="resources.html#blog">Blog</a></li>
-                            <li><a href="resources.html#tools">Tools</a></li>
-                            <li><a href="resources.html#talks">Talks &amp; Presentations</a></li>
+                            <li><a href="../pages/resources.html#blog">Blog</a></li>
+                            <li><a href="../pages/resources.html#tools">Tools</a></li>
+                            <li><a href="../pages/resources.html#talks">Talks &amp; Presentations</a></li>
+                            <li><a href="../easm.html">EASM</a></li>
+                            <li><a href="../skillscan.html">SkillScan</a></li>
                         </ul>
                     </li>
-                    <li><a href="careers.html">Careers</a></li>
-                    <li class="nav-cta"><a href="contact.html">Get in touch</a></li>
+                    <li><a href="../llms.txt">llms.txt</a></li>
+                    <li><a href="../pages/careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../pages/contact.html">Get in touch</a></li>
                 </ul>
             </div>
         </div>
@@ -88,6 +93,7 @@
 
                 <div id="blog" class="tab-content active">
                     <div class="bento-grid blog-card-grid">
+                        <div class="card"><span class="date-tag">2026-10-15 // AI INFRASTRUCTURE SECURITY</span><h3>LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE</h3><p>Separate the malicious-package incident from gateway RCE and SSRF, understand the AI blast radius, and build a practical containment plan.</p><a href="blog/litellm-ai-gateway-security.html" class="card-link">./read →</a></div>
                         <div class="card"><span class="date-tag">2026-10-03 // INTENT-AWARE SECURITY</span><h3>Intent-Aware Security: Hunting the Purpose Behind Activity</h3><p>Connect identity, role, workflow, target, method, and outcome to detect malware and malicious behavior earlier.</p><a href="blog/intent-aware-security-threat-hunting.html" class="card-link">./read →</a></div>
                         <div class="card"><span class="date-tag">2026-09-20 // TELEMETRY PROVENANCE</span><h3>Command-Line Spoofing: Capture Intent Before the Story Changes</h3><p>Compare creation-time arguments, process state, application records, and downstream behavior.</p><a href="blog/command-line-spoofing-defense.html" class="card-link">./read →</a></div>
                         <div class="card"><span class="date-tag">2026-09-18 // PROCESS CREATION</span><h3>PPID Spoofing: Parentage Is Not Provenance</h3><p>Separate the reported parent from creator identity, token context, handles, and behavior.</p><a href="blog/ppid-spoofing-defense.html" class="card-link">./read →</a></div>
@@ -377,6 +383,12 @@
 
                 <div id="tools" class="tab-content">
                     <div class="bento-grid">
+                        <div class="card">
+                            <span class="date-tag">AI SKILL SECURITY</span>
+                            <h3>SkillScan</h3>
+                            <p>Inspect AI agent skill files, scripts, and configurations with 151 static security rules across 15 categories. Cloud scanning requires explicit upload consent.</p>
+                            <a href="../skillscan.html" class="card-link">./launch →</a>
+                        </div>
                         <div class="card">
                             <span class="date-tag">CREDENTIAL DISCOVERY</span>
                             <h3>Passhunt</h3>
