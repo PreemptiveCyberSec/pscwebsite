@@ -6,7 +6,16 @@
     <description>Defensive security research from Preemptive Cyber Security.</description>
     <language>en</language>
     <atom:link href="https://preemptivecybersec.com/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sat, 03 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE</title>
+      <link>https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html</guid>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>AI Infrastructure Security</category>
+      <description>A technical breakdown of LiteLLM, the Trivy-linked package compromise, authenticated gateway RCE and SSRF, and practical controls for AI infrastructure.</description>
+    </item>
     <item>
       <title>Intent-Aware Security: Hunting the Purpose Behind Corporate Network Activity</title>
       <link>https://preemptivecybersec.com/pages/blog/intent-aware-security-threat-hunting.html</link>
@@ -447,15 +456,6 @@
       <dc:creator>Viral Maniar</dc:creator>
       <category>Static Analysis · Windows Defense</category>
       <description>Defensive analysis of PNG steganography, content validation, sandboxing, and image-parser risk.</description>
-    </item>
-    <item>
-      <title>RC4-Encrypted Content: Detection and Defense</title>
-      <link>https://preemptivecybersec.com/pages/blog/rc4-encrypted-payloads-defense.html</link>
-      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/rc4-encrypted-payloads-defense.html</guid>
-      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Viral Maniar</dc:creator>
-      <category>Static Analysis · Windows Defense</category>
-      <description>A defender-focused guide to recognizing legacy RC4 use, triaging encrypted content, and hardening Windows environments.</description>
     </item>
   </channel>
 </rss>

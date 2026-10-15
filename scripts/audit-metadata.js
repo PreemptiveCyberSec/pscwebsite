@@ -236,4 +236,4 @@ if (failures.length) {
     process.exit(1);
 }
 
-console.log(`PASS: ${pagePaths.length} pages, 89 articles, ${feedSize} complete RSS items, and ${servicePages.length + 1} valid social images.`);
+console.log(`PASS: ${pagePaths.length} pages, ${pagePaths.filter(page => page.startsWith("pages/blog/")).length} articles, ${feedSize} complete RSS items, and ${servicePages.length + 1} valid social images.`);

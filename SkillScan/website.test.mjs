@@ -33,8 +33,15 @@ test("SkillScan is included in the public sitemap", async () => {
   assert.match(sitemap, /<loc>https:\/\/preemptivecybersec\.com\/skillscan\.html<\/loc>/);
 });
 
-test("every website page has exactly one working EASM and SkillScan link in Resources", async () => {
+test("every website header matches index.html with correctly resolved links and working Resources tools", async () => {
   const root = new URL("../", import.meta.url);
+  const navbarPattern = /<nav\b[^>]*class="[^"]*\bnavbar\b[^"]*"[^>]*>[\s\S]*?<\/nav>/g;
+  const homepage = await readFile(new URL("index.html", root), "utf8");
+  function normalizeNavbar(navbar, base) {
+    return navbar.replace(/\bhref="([^"]+)"/g, (_, href) => `href="${new URL(href, base).href}"`)
+      .replace(/>\s+</g, "><").trim();
+  }
+  const canonical = normalizeNavbar(homepage.match(navbarPattern)[0], "https://preemptivecybersec.com/");
   async function htmlFiles(directory, recursive) {
     const entries = await readdir(directory, { withFileTypes: true });
     const files = await Promise.all(entries.map(entry => {
@@ -51,15 +58,20 @@ test("every website page has exactly one working EASM and SkillScan link in Reso
   for (const file of files) {
     const relativePath = file.href.slice(root.href.length);
     const html = await readFile(file, "utf8");
-    const navbar = html.match(/<nav\b[^>]*class="[^"]*\bnavbar\b[^"]*"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
-    assert.ok(navbar, `Missing navbar: ${relativePath}`);
+    const navbars = html.match(navbarPattern) ?? [];
+    assert.equal(navbars.length, 1, `Expected exactly one header: ${relativePath}`);
+    const navbar = navbars[0];
+    const base = new URL(relativePath, "https://preemptivecybersec.com/");
+    assert.equal(normalizeNavbar(navbar, base), canonical, `Header differs from index.html: ${relativePath}`);
+    const scripts = [...html.matchAll(/<script\b[^>]*src="([^"]+)"/g)];
+    assert.ok(scripts.some(script => new URL(script[1], base).pathname === "/assets/js/main.js"),
+      `Missing shared header interactions: ${relativePath}`);
     const dropdown = navbar.match(/<ul class="nav-dropdown-menu">([\s\S]*?)<\/ul>/)?.[1];
     assert.ok(dropdown, `Missing Resources dropdown: ${relativePath}`);
     const links = [...dropdown.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)];
     for (const [label, target] of [["EASM", "easm.html"], ["SkillScan", "skillscan.html"]]) {
       const matches = links.filter(link => link[2] === label);
       assert.equal(matches.length, 1, `Expected one ${label} link: ${relativePath}`);
-      const base = new URL(relativePath, "https://preemptivecybersec.com/");
       assert.equal(new URL(matches[0][1], base).href, `https://preemptivecybersec.com/${target}`,
         `Incorrect ${label} target: ${relativePath}`);
     }
