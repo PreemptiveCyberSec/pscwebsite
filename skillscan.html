@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="SkillScan: static security scanning for AI agent skill files.">
+  <meta name="theme-color" content="#030806">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://preemptivecybersec.com/skillscan.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SkillScan | Preemptive Cyber Security">
+  <meta property="og:description" content="Inspect AI agent skill files with 151 static security rules across 15 detection categories.">
+  <meta property="og:url" content="https://preemptivecybersec.com/skillscan.html">
+  <meta property="og:site_name" content="Preemptive Cyber Security">
+  <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SkillScan | Preemptive Cyber Security">
+  <meta name="twitter:description" content="Static security scanning for AI agent skill files, scripts, and configurations.">
+  <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+  <meta name="twitter:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://api.fontshare.com; font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com; img-src 'self' data:; connect-src https://skillsguard.apiskillsguard.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>SkillScan | Preemptive Cyber Security</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="SkillScan/preemptive.css">
+  <script type="module" src="SkillScan/app.js"></script>
+</head>
+<body class="skillscan-page">
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="index.html" class="logo" aria-label="Preemptive Cyber Security home">
+          <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+          <span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span>
+        </a>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="pages/services.html">Services</a></li>
+          <li><a href="pages/about.html">About</a></li>
+          <li><a href="pages/team.html">Team</a></li>
+          <li class="nav-dropdown">
+            <a href="pages/resources.html" class="nav-dropdown-toggle active" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="pages/resources.html#blog">Blog</a></li>
+              <li><a href="pages/resources.html#tools">Tools</a></li>
+              <li><a href="pages/resources.html#talks">Talks &amp; Presentations</a></li>
+              <li><a href="easm.html">EASM</a></li>
+              <li><a href="skillscan.html" aria-current="page">SkillScan</a></li>
+            </ul>
+          </li>
+          <li><a href="pages/careers.html">Careers</a></li>
+          <li class="nav-cta"><a href="pages/contact.html">Get in touch</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main id="workspace" tabindex="-1">
+    <section class="workspace-heading">
+      <div class="workspace-title"><img src="SkillScan/assets/shield-check.svg" alt="" width="42" height="42"><div><p class="eyebrow"><a href="pages/resources.html#tools">SECURITY RESOURCES</a> / SKILL INSPECTION</p><h1>SkillScan</h1><p class="subtitle">AI agent skill security</p></div></div>
+      <div class="workspace-facts"><span><strong>151</strong> rules</span><span><strong>15</strong> categories</span><span class="version">v1.1.1 / cloud</span><span class="service-status" id="service-status"><span class="status-dot"></span> CLOUD API</span></div>
+    </section>
+    <div class="dashboard-layout">
+      <aside class="scope-section" id="categories"><div class="section-heading"><h2>DETECTION SCOPE</h2><span class="section-number">15</span></div><div id="category-filters" class="category-filters"></div><div class="sidebar-note"><span class="status-dot"></span> STATIC ANALYSIS</div></aside>
+      <div class="dashboard-content">
+    <div class="scan-layout" id="scanner">
+      <section class="scan-console" aria-label="Scan inputs">
+        <div class="section-heading"><h2>SCAN A SKILL FILE</h2><span class="section-number">STATIC ANALYSIS</span></div>
+        <div class="tabs" role="group" aria-label="Scan input source"><button id="paste-tab" type="button" aria-pressed="true" aria-controls="paste-panel">Paste content</button><button id="files-tab" type="button" aria-pressed="false" aria-controls="files-panel">Upload files</button></div>
+        <div class="target-layout">
+        <div id="paste-panel">
+          <label class="field-label" for="filename">FILENAME</label><input id="filename" value="SKILL.md" maxlength="255" spellcheck="false">
+          <label class="field-label editor-label" for="content"><span>CONTENT</span><button type="button" id="sample-button" class="text-command">Load sample</button></label>
+          <div class="editor-wrap"><span class="editor-gutter" aria-hidden="true">01<br>02<br>03<br>04<br>05<br>06<br>07<br>08</span><textarea id="content" spellcheck="false" aria-label="Skill file content" placeholder="# SKILL.md" maxlength="524288"></textarea></div>
+          <div class="editor-status"><span id="byte-count">0 B</span><span>UTF-8</span></div>
+        </div>
+        <div id="files-panel">
+          <label class="drop-zone" id="drop-zone" for="file-input"><img src="SkillScan/assets/upload.svg" alt="" width="26" height="26"><strong>Select files</strong><span>SKILL.md · scripts · configs</span><span class="upload-limit">512 KB / file · 20 files / batch</span></label><input id="file-input" type="file" multiple class="visually-hidden" accept=".md,.txt,.sh,.bash,.zsh,.fish,.ksh,.ps1,.psm1,.psd1,.py,.js,.mjs,.cjs,.ts,.mts,.cts,.json,.yaml,.yml,.toml,.env,.conf,.cfg,.html,.xml,.rb,.rake,.gemspec,.dockerfile">
+          <ul id="file-list" class="file-list" aria-label="Selected files"></ul>
+          <button type="button" id="clear-files" class="secondary-button" hidden>Clear files</button>
+        </div>
+        </div>
+        <label class="consent"><input type="checkbox" id="consent"><span>I agree to send this content to the Cloudflare-hosted scan API. Content leaves this device.</span></label>
+        <button type="button" id="scan-button" class="primary-button"><img src="SkillScan/assets/scan-line.svg" alt="" width="18" height="18"><span>Run inspection</span><span class="button-arrow" aria-hidden="true">→</span></button>
+        <button type="button" id="cancel-button" class="secondary-button" hidden>Cancel scan</button>
+        <p class="input-error" id="input-error" role="alert" hidden></p>
+        <div class="engine-footer"><span class="status-dot"></span><span>STATIC ONLY. NO CODE EXECUTION.</span></div>
+      </section>
+      <aside class="scan-summary" aria-label="Scan summary"><div class="section-heading"><h2>SCAN SUMMARY</h2><span class="section-number">LIVE</span></div><div class="risk-summary"><div class="risk-dial" id="risk-dial"><div class="risk-dial-core"><strong id="risk-value">&mdash;</strong><span>RISK SCORE</span></div></div><div class="risk-meta"><span class="metric-label">HIGHEST SEVERITY</span><strong class="severity-value" id="severity-value">&mdash;</strong><span id="severity-caption">Not assessed</span><dl><div><dt>Files scanned</dt><dd id="files-count">00</dd></div><div><dt>Total findings</dt><dd id="findings-count">00</dd></div><div class="critical"><dt><span class="severity-dot"></span>Critical</dt><dd id="count-critical">0</dd></div><div class="high"><dt><span class="severity-dot"></span>High</dt><dd id="count-high">0</dd></div><div class="medium"><dt><span class="severity-dot"></span>Medium</dt><dd id="count-medium">0</dd></div><div class="low"><dt><span class="severity-dot"></span>Low</dt><dd id="count-low">0</dd></div><div class="info"><dt><span class="severity-dot"></span>Info</dt><dd id="count-info">0</dd></div></dl></div></div><div class="summary-status"><span id="files-caption">No active scan</span><span id="findings-caption">Awaiting results</span></div><div class="risk-track" aria-hidden="true"><span id="risk-fill"></span></div><p id="risk-caption">Not assessed</p><div class="summary-limits"><div><strong>512 KB</strong><span>FILE LIMIT</span></div><div><strong>5</strong><span>DECODE LAYERS</span></div><div><strong>100</strong><span>MAX SCORE</span></div></div></aside>
+    </div>
+      <section class="results-panel" aria-label="Inspection results">
+        <div class="section-heading results-heading"><div><h2>INSPECTION RESULTS</h2><p id="result-status" role="status" aria-live="polite">Awaiting inspection</p></div><div class="result-actions"><button type="button" id="export-button" class="icon-button" title="Download JSON report" aria-label="Download JSON report" disabled><img src="SkillScan/assets/download.svg" alt="" width="18" height="18"></button><button type="button" id="reset-button" class="icon-button" title="Reset results" aria-label="Reset results" disabled><img src="SkillScan/assets/rotate-ccw.svg" alt="" width="18" height="18"></button></div></div>
+        <div class="results-toolbar"><label class="search-field"><img src="SkillScan/assets/search.svg" alt="" width="16" height="16"><input id="search" type="search" aria-label="Search findings" placeholder="Search findings"></label><select id="severity-filter" aria-label="Filter by severity"><option value="ALL">All severities</option><option>CRITICAL</option><option>HIGH</option><option>MEDIUM</option><option>LOW</option><option>INFO</option></select><span class="result-count" id="visible-count">0 results</span></div>
+        <div id="warnings" class="warnings" role="alert" hidden></div>
+        <div id="empty-state" class="empty-state"><div class="inspection-visual"><img src="SkillScan/assets/shield-check.svg" alt="" width="68" height="68"><span class="inspection-cross cross-top"></span><span class="inspection-cross cross-bottom"></span></div><h3 id="empty-title">Ready for inspection</h3><p id="empty-description">No scan results</p><div class="empty-code" aria-hidden="true"><span>ENGINE</span> CLOUD API <span>EXECUTION</span> DISABLED</div></div>
+        <div id="findings-container" class="table-scroll" hidden><table><thead><tr><th>SEVERITY</th><th>RULE / FINDING</th><th>LOCATION</th><th aria-label="Inspect finding"></th></tr></thead><tbody id="findings-body"></tbody></table></div>
+        <section id="detail-panel" class="detail-panel" aria-label="Finding detail" hidden><div class="detail-heading"><span class="eyebrow" id="detail-id"></span><button type="button" id="close-detail" class="icon-button" title="Close finding details" aria-label="Close finding details"><img src="SkillScan/assets/x.svg" alt="" width="16" height="16"></button></div><h3 id="detail-message"></h3><p id="detail-location" class="detail-location"></p><pre id="detail-evidence"></pre><p id="detail-decoded" class="decoded-note" hidden></p></section>
+        <div class="results-footer"><span><span class="status-dot"></span> REGEX + RECURSIVE DECODING</span><span id="scan-time">&mdash;</span></div>
+      </section>
+      </div>
+    </div>
+    <section class="pipeline-section" id="pipeline"><div class="section-heading"><h2>HOW SKILLSCAN WORKS</h2><span class="section-number">DETERMINISTIC / NO LLM</span></div><ol class="pipeline"><li><span>01</span><strong>Upload</strong><small>Skill file or scripts</small></li><li><span>02</span><strong>Discover</strong><small>Supported inputs</small></li><li><span>03</span><strong>Decode</strong><small>Base64, hex, URL</small></li><li><span>04</span><strong>Analyze</strong><small>Match security rules</small></li><li><span>05</span><strong>Deduplicate</strong><small>Merge findings</small></li><li><span>06</span><strong>Score</strong><small>Calculate file risk</small></li><li><span>07</span><strong>Report</strong><small>Review and export</small></li></ol></section>
+    <section class="integrations" aria-label="SkillScan integrations"><article><img src="SkillScan/assets/terminal.svg" alt="" width="26" height="26"><h3>CLI</h3><p>Local scanning. Offline by default.</p><code>node dist/cli.js ./path/to/skill</code><a href="SkillScan/howto.md">CLI documentation →</a></article><article><img src="SkillScan/assets/cloud.svg" alt="" width="26" height="26"><h3>Cloud API</h3><p>Cloudflare-hosted static analysis.</p><code>POST /scan</code><a href="SkillScan/howto.md">API documentation →</a></article><article><img src="SkillScan/assets/box.svg" alt="" width="26" height="26"><h3>MCP</h3><p>Agent-native security inspection.</p><code>node dist/cli.js setup</code><a href="SkillScan/howto.md">MCP documentation →</a></article></section>
+    <section class="boundary-note"><span class="note-index">NOTE / 001</span><p>No findings is not a guarantee of safety. Review skills before granting tools, credentials, or filesystem access. Partial scans are not complete assessments.</p></section>
+  </main>
+  <footer class="site-footer"><span>Preemptive Cyber Security <span class="footer-muted">/ Know the Unknown</span></span><span><a href="pages/resources.html#tools">All tools</a><span class="footer-divider">·</span><a href="SkillScan/howto.md">SkillScan documentation</a><span class="footer-divider">·</span><a href="SkillScan/assets/NOTICE.txt">Icon attribution</a></span></footer>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

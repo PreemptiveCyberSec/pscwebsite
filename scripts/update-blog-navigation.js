@@ -23,6 +23,8 @@ const navbar = `
                             <li><a href="../resources.html#blog">Blog</a></li>
                             <li><a href="../resources.html#tools">Tools</a></li>
                             <li><a href="../resources.html#talks">Talks &amp; Presentations</a></li>
+                            <li><a href="../../easm.html">EASM</a></li>
+                            <li><a href="../../skillscan.html">SkillScan</a></li>
                         </ul>
                     </li>
                     <li><a href="../careers.html">Careers</a></li>

@@ -38,6 +38,7 @@ This file is a curated map of PSC's public company, service, and security resear
 ## Security research index
 
 - [Resources](https://preemptivecybersec.com/pages/resources.html): Complete index of PSC security research, tools, and conference material. Use this page to discover all published articles.
+- [SkillScan](https://preemptivecybersec.com/skillscan.html): Static security inspection for AI agent skill files, scripts, and configurations. Cloud scanning requires explicit upload consent; a clean result is not a guarantee of safety.
 - [XML sitemap](https://preemptivecybersec.com/sitemap.xml): Machine-readable index of current public pages and all published research URLs.
 
 ## Threat detection, hunting, and incident response
