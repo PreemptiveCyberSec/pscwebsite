@@ -596,6 +596,35 @@ const CATEGORIES = [
                 deliverables: ['Course materials & pretext playbooks', 'Controlled phishing / vishing labs', 'Rules-of-engagement templates', 'Certificate of completion']
             },
             {
+                id: 'purple-team-ai', icon: ICON.aiagent, name: 'Purple Team AI: Attacking and Defending AI',
+                enquiryService: 'purple-team-ai',
+                overview: 'A hands-on course for teams securing AI-enabled products and machine-learning systems. Work through a repeatable purple-team cycle: define an abuse case, reproduce it in an authorised sandbox, inspect the telemetry, implement a defence, and retest. The syllabus spans LLM applications, RAG, agents and MCP, adversarial ML, and governance. Exercises use synthetic data and scoped lab targets, never unapproved production systems. Delivery format, scheduling, and lab access are agreed when scoping the cohort.',
+                audience: 'Red and blue team practitioners, application security engineers, SOC analysts, AI/ML engineers, architects, and technical risk leads who need a shared method for testing and defending AI systems.',
+                prerequisites: 'Working knowledge of HTTP APIs, authentication, and basic security testing; ability to read short Python examples and use a terminal. Introductory AI concepts are covered. Participants need a laptop with a browser and permission to use the agreed lab environment; any local software or compute requirements are confirmed before the course.',
+                outcomes: [
+                    'Build an AI threat model that identifies assets, identities, data flows, and trust boundaries.',
+                    'Reproduce scoped LLM, agent, retrieval, and ML abuse cases with traceable evidence.',
+                    'Implement layered controls and compare attack success, false positives, and legitimate-task performance before and after a change.',
+                    'Translate technical findings into detection logic, response actions, ownership, and a prioritised remediation plan.'
+                ],
+                phases: [
+                    ['AI foundations & the purple-team workflow', 'Map the differences between predictive ML, LLMs, RAG, and tool-using agents. Define rules of engagement, synthetic test data, stop conditions, and a baseline. Lab: trace a request through an AI application and record each identity and trust boundary.'],
+                    ['Threat modelling & assessment design', 'Identify sensitive data, model endpoints, retrieval stores, tools, and deployment dependencies. Distinguish model behaviour from conventional authentication and authorisation flaws. Lab: turn abuse cases into a scoped test matrix with expected controls and evidence requirements.'],
+                    ['Prompt injection & instruction boundaries', 'Evaluate direct and indirect prompt injection, instruction conflicts, and unsafe reliance on system-prompt secrecy. Lab: test a sandbox assistant, inspect its traces, separate untrusted content from instructions, and retest both adversarial and legitimate requests.'],
+                    ['RAG, embeddings & retrieval isolation', 'Examine document poisoning, retrieval manipulation, cross-tenant access, and sensitive context disclosure. Lab: introduce a synthetic hostile document, verify retrieval permissions and citations, then apply ingestion checks and tenant-scoped retrieval and compare results.'],
+                    ['Agents, tool use & MCP security', 'Analyse excessive agency, tool-description injection, identity propagation, and unsafe output-to-action paths. Lab: test a constrained agent workflow, enforce server-side tool permissions and high-impact approvals, and verify that model output cannot grant additional authority.'],
+                    ['AI gateways, APIs & execution boundaries', 'Study routing controls, virtual keys, administrative separation, SSRF, unsafe output handling, and sandbox escape assumptions. Lab: review a deliberately vulnerable gateway configuration, restrict destinations and execution privileges, and demonstrate the reduced blast radius without targeting external services.'],
+                    ['Adversarial examples & robustness', 'Compare attacker knowledge and capabilities in white-box and black-box ML testing. Explore evasion and distribution shift using a small synthetic classification task. Lab: measure baseline and perturbed performance, evaluate a mitigation, and document accuracy and robustness trade-offs.'],
+                    ['Poisoning, backdoors & model privacy', 'Examine dataset and fine-tuning integrity, backdoor behaviour, membership inference, and model extraction risk. Lab: test a small controlled dataset, review provenance and access controls, and assess leakage indicators. Discuss differential privacy and its utility trade-offs without treating it as a universal defence.'],
+                    ['AI dependencies & release integrity', 'Trace model, dataset, package, container, and CI/CD supply chains; connect compromised dependencies to runtime authority. Lab: inspect an example SBOM and release evidence, identify unsafe loading and secret exposure, and propose isolated builds, verified artifacts, and scoped publishing permissions.'],
+                    ['Layered defence & detection engineering', 'Combine schema validation, output encoding, retrieval permissions, egress restrictions, guardrails, and least privilege. Lab: correlate caller identity, retrieval, tool decisions, and provider activity into detections while redacting sensitive content and testing false positives.'],
+                    ['Evaluation, incident response & governance', 'Build a repeatable adversarial regression set and assess defence coverage, alert latency, and legitimate-task completion. Lab: triage a simulated AI incident, define containment and credential rotation, then record risk ownership, residual risk, approval gates, privacy, bias, and transparency considerations.'],
+                    ['Purple-team capstone: attack, defend, retest', 'Work in attacker and defender roles against a scoped AI workflow. Produce a reproducible finding, implement a control, rerun the same tests, and explain remaining gaps. Finish with an evidence-led debrief and a prioritised technical and governance action plan.']
+                ],
+                frameworks: ['OWASP Top 10 for LLM Applications', 'MITRE ATLAS', 'NIST AI RMF', 'NIST Generative AI Profile', 'OWASP API Security Top 10'],
+                deliverables: ['Original course notes and scoped lab exercises', 'AI threat-model and assessment worksheets', 'Adversarial regression-test and evaluation templates', 'Detection and incident-response playbooks', 'Capstone evidence, remediation, and retest report', 'Governance and residual-risk checklist']
+            },
+            {
                 id: 'tool-dev', icon: ICON.tooldev, name: 'Offensive Tool Development for Covert Operations',
                 overview: 'A deep-technical course on engineering custom offensive tooling for authorized red team and adversary-emulation work — building implants and tradecraft that safely test how well modern defences detect novel threats.',
                 phases: [
@@ -723,16 +752,22 @@ if (catMenu && svcPanel) {
     function openModal(catId, svcId) {
         const { s } = lookup[catId + ':' + svcId];
         const landingPage = LANDING_PAGES[catId + ':' + svcId];
-        const contactUrl = `contact.html?service=${landingPage ? landingPage.split('/').pop().replace('.html', '') : catId}&source=service-catalogue`;
+        const isTraining = catId === 'training';
+        const enquiryService = landingPage ? landingPage.split('/').pop().replace('.html', '') : s.enquiryService || catId;
+        const contactUrl = `contact.html?service=${enquiryService}&source=service-catalogue`;
         lastFocus = document.activeElement;
         modalBody.innerHTML = `
             <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
             <div class="modal-icon">${s.icon}</div>
-            <span class="modal-eyebrow">Methodology / How we conduct it</span>
+            <span class="modal-eyebrow">${isTraining ? 'Training / Course syllabus' : 'Methodology / How we conduct it'}</span>
             <h2>${s.name}</h2>
             <p class="modal-overview">${s.overview}</p>
 
-            <h3>Engagement phases</h3>
+            ${s.audience ? `<h3>Who this course is for</h3><p class="modal-overview">${s.audience}</p>` : ''}
+            ${s.prerequisites ? `<h3>Prerequisites &amp; lab requirements</h3><p class="modal-overview">${s.prerequisites}</p>` : ''}
+            ${s.outcomes ? `<h3>Learning outcomes</h3><ul class="deliver-list">${s.outcomes.map(outcome => `<li>${outcome}</li>`).join('')}</ul>` : ''}
+
+            <h3>${isTraining ? 'Course modules &amp; practical labs' : 'Engagement phases'}</h3>
             <ol class="phase-list">
                 ${s.phases.map(p => `<li><strong>${p[0]}</strong><span>${p[1]}</span></li>`).join('')}
             </ol>
@@ -748,8 +783,8 @@ if (catMenu && svcPanel) {
             </ul>
 
             <div class="modal-cta">
-                <span>Ready to scope this engagement?</span>
-                <a href="${contactUrl}" class="btn btn-primary" data-conversion="service-enquiry" data-service="${landingPage ? landingPage.split('/').pop().replace('.html', '') : s.id}">Request this assessment
+                <span>${isTraining ? 'Plan training for your team.' : 'Ready to scope this engagement?'}</span>
+                <a href="${contactUrl}" class="btn btn-primary" data-conversion="service-enquiry" data-service="${landingPage ? landingPage.split('/').pop().replace('.html', '') : s.id}">${isTraining ? 'Enquire about this course' : 'Request this assessment'}
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>`;
