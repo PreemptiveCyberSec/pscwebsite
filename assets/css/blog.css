@@ -362,6 +362,19 @@
 
 .litellm-article { padding-top: calc(var(--nav-height) + 30px); }
 
+.quantization-article { padding-top: calc(var(--nav-height) + 30px); }
+
+.article-toc {
+    margin: 2em 0;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-elevated);
+}
+.article-toc h2 { margin: 0 0 18px; padding: 0; font-size: 1.25rem; }
+.article-toc h2::before { content: none; }
+.article-toc ol { margin-bottom: 0; }
+
 .litellm-article .litellm-toc {
     margin: 2em 0;
     padding: 24px;
