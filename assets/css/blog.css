@@ -364,6 +364,28 @@
 
 .quantization-article { padding-top: calc(var(--nav-height) + 30px); }
 
+.ai-pentesting-article { padding-top: calc(var(--nav-height) + 30px); }
+.ai-pentesting-article .callout > p { margin-bottom: 0; color: var(--text-secondary); }
+.ai-pentesting-article pre { max-width: 100%; }
+.article-sources li { overflow-wrap: anywhere; margin-bottom: 1em; }
+.article-table-wrap { overflow-x: auto; max-width: 100%; margin: 2em 0; border: 1px solid var(--border); border-radius: var(--radius); }
+.article-table-wrap:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+.article-table { width: 100%; min-width: 640px; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+.article-table caption { padding: 16px; color: var(--neon); font: 0.75rem/1.6 var(--font-mono); text-align: left; }
+.article-table th, .article-table td { padding: 16px; border-top: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); }
+.article-table th { color: var(--text-primary); font-weight: 500; background: var(--bg-card); }
+
+.local-ai-article { padding-top: calc(var(--nav-height) + 30px); }
+.local-ai-article .callout > p { margin-bottom: 0; color: var(--text-secondary); }
+.local-ai-article pre { max-width: 100%; }
+.local-ai-article .local-ai-sources li { overflow-wrap: anywhere; margin-bottom: 1em; }
+.local-ai-table-wrap { overflow-x: auto; max-width: 100%; margin: 2em 0; border: 1px solid var(--border); border-radius: var(--radius); }
+.local-ai-table-wrap:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+.local-ai-table { width: 100%; min-width: 660px; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+.local-ai-table caption { padding: 16px; color: var(--neon); font: 0.75rem/1.6 var(--font-mono); text-align: left; }
+.local-ai-table th, .local-ai-table td { padding: 16px; border-top: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); }
+.local-ai-table th { color: var(--text-primary); font-weight: 500; background: var(--bg-card); }
+
 .article-toc {
     margin: 2em 0;
     padding: 24px;
