@@ -33,6 +33,18 @@ test("SkillScan is included in the public sitemap", async () => {
   assert.match(sitemap, /<loc>https:\/\/preemptivecybersec\.com\/skillscan\.html<\/loc>/);
 });
 
+test("homepage service cards link across the full card to their matching categories", async () => {
+  const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const css = await readFile(new URL("../assets/css/style.css", import.meta.url), "utf8");
+  const cards = [...html.matchAll(/<div class="card service-card">/g)];
+  const links = [...html.matchAll(/<a href="pages\/services\.html#(offensive|defensive|ai|training)" class="card-link" aria-label="Explore ([^"]+)">/g)];
+
+  assert.equal(cards.length, 4);
+  assert.deepEqual(links.map(([, category]) => category), ["offensive", "defensive", "ai", "training"]);
+  assert.match(css, /\.service-card \.card-link::after\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0;/s);
+  assert.match(css, /\.service-card:has\(\.card-link:focus-visible\)/);
+});
+
 test("every website header matches index.html with correctly resolved links and working Resources tools", async () => {
   const root = new URL("../", import.meta.url);
   const navbarPattern = /<nav\b[^>]*class="[^"]*\bnavbar\b[^"]*"[^>]*>[\s\S]*?<\/nav>/g;
