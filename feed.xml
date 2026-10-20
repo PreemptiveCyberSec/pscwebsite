@@ -6,7 +6,16 @@
     <description>Defensive security research from Preemptive Cyber Security.</description>
     <language>en</language>
     <atom:link href="https://preemptivecybersec.com/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Thu, 15 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Quantization Hacking: From SimpleCNN to CIFAR-10</title>
+      <link>https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html</guid>
+      <pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>Machine Learning Security</category>
+      <description>A step-by-step PyTorch CIFAR-10 lab covering convolution, SimpleCNN, cross-entropy, Adam, INT8 post-training quantization, evaluation, and quantization security testing.</description>
+    </item>
     <item>
       <title>LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE</title>
       <link>https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html</link>
@@ -447,15 +456,6 @@
       <dc:creator>Viral Maniar</dc:creator>
       <category>Windows Security · Internals</category>
       <description>A defensive guide to Windows process and thread structures, the PEB and TEB, module visibility, triage tools, and integrity checks.</description>
-    </item>
-    <item>
-      <title>Hiding Content in PNGs: Steganography Defense</title>
-      <link>https://preemptivecybersec.com/pages/blog/png-steganography-defense.html</link>
-      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/png-steganography-defense.html</guid>
-      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Viral Maniar</dc:creator>
-      <category>Static Analysis · Windows Defense</category>
-      <description>Defensive analysis of PNG steganography, content validation, sandboxing, and image-parser risk.</description>
     </item>
   </channel>
 </rss>

@@ -39,6 +39,7 @@ This file is a curated map of PSC's public company, service, and security resear
 
 - [Resources](https://preemptivecybersec.com/pages/resources.html): Complete index of PSC security research, tools, and conference material. Use this page to discover all published articles.
 - [SkillScan](https://preemptivecybersec.com/skillscan.html): Static security inspection for AI agent skill files, scripts, and configurations. Cloud scanning requires explicit upload consent; a clean result is not a guarantee of safety.
+- [Quantization Hacking: From SimpleCNN to CIFAR-10](https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html): Step-by-step PyTorch CIFAR-10 lab covering convolution, Adam, cross-entropy, INT8 post-training quantization, and secure model-pipeline testing.
 - [LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE](https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html): Source-checked analysis of the March 2026 malicious PyPI releases, authenticated gateway configuration RCE, nested-routing SSRF, and incident response for AI infrastructure.
 - [XML sitemap](https://preemptivecybersec.com/sitemap.xml): Machine-readable index of current public pages and all published research URLs.
 
