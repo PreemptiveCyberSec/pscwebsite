@@ -126,8 +126,8 @@ for (const file of articleFiles) {
         if (posting.author?.name !== visibleAuthor || meta(source, "article:author") !== posting.author?.url) failures.push(`${relativePath}: Person byline mismatch`);
     }
 }
-if (articleFiles.length !== 90) failures.push(`Expected 90 articles, found ${articleFiles.length}`);
-if (organizationAuthors !== 8) failures.push(`Expected 8 organization-authored articles, found ${organizationAuthors}`);
+if (articleFiles.length !== 91) failures.push(`Expected 91 articles, found ${articleFiles.length}`);
+if (organizationAuthors !== 9) failures.push(`Expected 9 organization-authored articles, found ${organizationAuthors}`);
 
 const servicesSource = fs.readFileSync(path.join(root, "pages", "services.html"), "utf8");
 const serviceNodes = graph("pages/services.html", servicesSource);
@@ -168,4 +168,4 @@ if (failures.length) {
     console.error(failures.join("\n"));
     process.exit(1);
 }
-console.log("PASS: Organization, WebSite, 4 Person, 90 BlogPosting, 9 Service, and 99 BreadcrumbList entities agree with visible content.");
+console.log("PASS: Organization, WebSite, 4 Person, 91 BlogPosting, 9 Service, and 100 BreadcrumbList entities agree with visible content.");
