@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantization Hacking: From SimpleCNN to CIFAR-10 | Preemptive Cyber Security</title>
+    <meta name="description" content="A step-by-step PyTorch CIFAR-10 lab covering convolution, SimpleCNN, cross-entropy, Adam, INT8 post-training quantization, evaluation, and quantization security testing.">
+    <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quantization Hacking: From SimpleCNN to CIFAR-10 | Preemptive Cyber Security">
+    <meta property="og:description" content="A step-by-step PyTorch CIFAR-10 lab covering convolution, SimpleCNN, cross-entropy, Adam, INT8 post-training quantization, evaluation, and quantization security testing.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quantization Hacking: From SimpleCNN to CIFAR-10 | Preemptive Cyber Security">
+    <meta name="twitter:description" content="A step-by-step PyTorch CIFAR-10 lab covering convolution, SimpleCNN, cross-entropy, Adam, INT8 post-training quantization, evaluation, and quantization security testing.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta property="article:published_time" content="2026-10-19">
+    <meta property="article:modified_time" content="2026-10-19">
+    <meta property="article:author" content="https://preemptivecybersec.com/#organization">
+    <meta property="article:section" content="Machine Learning Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html",
+                "headline": "Quantization Hacking: From SimpleCNN to CIFAR-10",
+                "description": "A step-by-step PyTorch CIFAR-10 lab covering convolution, SimpleCNN, cross-entropy, Adam, INT8 post-training quantization, evaluation, and quantization security testing.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-10-19",
+                "dateModified": "2026-10-19",
+                "author": {"@id": "https://preemptivecybersec.com/#organization"},
+                "publisher": {"@id": "https://preemptivecybersec.com/#organization"},
+                "articleSection": "Machine Learning Security",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html#breadcrumb",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://preemptivecybersec.com/"},
+                    {"@type": "ListItem", "position": 2, "name": "Research", "item": "https://preemptivecybersec.com/pages/resources.html"},
+                    {"@type": "ListItem", "position": 3, "name": "Quantization Hacking: From SimpleCNN to CIFAR-10", "item": "https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo" aria-label="Preemptive Cyber Security home">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../../pages/services.html">Services</a></li>
+                    <li><a href="../../pages/about.html">About</a></li>
+                    <li><a href="../../pages/team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../pages/resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../../pages/resources.html#blog">Blog</a></li>
+                            <li><a href="../../pages/resources.html#tools">Tools</a></li>
+                            <li><a href="../../pages/resources.html#talks">Talks &amp; Presentations</a></li>
+                            <li><a href="../../easm.html">EASM</a></li>
+                            <li><a href="../../skillscan.html">SkillScan</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../llms.txt">llms.txt</a></li>
+                    <li><a href="../../pages/careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../../pages/contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <article class="article quantization-article">
+            <div class="container">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Quantization Hacking: From SimpleCNN to CIFAR-10</li></ol></nav>
+                <div class="article-meta"><span class="cat">Machine Learning Security</span><span class="dot">//</span><time datetime="2026-10-19">19 October 2026</time><span class="dot">//</span><span>Technical lab</span></div>
+                <h1>Quantization Hacking: From SimpleCNN to CIFAR-10</h1>
+                <p class="article-lead">Quantization makes neural networks smaller and often faster by representing weights and activations with fewer bits. It also changes the numerical behavior of a model. This hands-on guide builds a convolutional classifier, trains it with Adam and cross-entropy, converts it to INT8, and tests what changed—using CIFAR-10 in a local, reproducible lab.</p>
+                <div class="article-byline"><span class="avatar" aria-hidden="true">PSC</span><span>By <strong>Preemptive Cyber Security Research</strong></span></div>
+
+                <div class="prose">
+                    <p>Here, <strong>hacking</strong> means taking a model and its deployment pipeline apart to understand assumptions, failure modes, and integrity boundaries. This is not a recipe for breaking into a service. The experiments use a public dataset and a model you train yourself. The security question is practical: can a conversion, calibration, runtime, or artifact change make the model behave differently from the model you validated?</p>
+
+                    <div class="callout">
+                        <h4>Lab at a glance</h4>
+                        <ul>
+                            <li>Train a small CNN on the CIFAR-10 training split; evaluate on its separate test split.</li>
+                            <li>Use raw logits with cross-entropy and update floating-point weights with Adam.</li>
+                            <li>Convert a copy with post-training static INT8 quantization and calibrate only on training images.</li>
+                            <li>Compare accuracy and prediction agreement; treat any measured result as local to your machine, library versions, and backend.</li>
+                        </ul>
+                    </div>
+
+                    <nav class="article-toc" aria-label="Article contents">
+                        <h2>In this walkthrough</h2>
+                        <ol>
+                            <li><a href="#quantization">What quantization changes</a></li>
+                            <li><a href="#math">Convolution, loss, and Adam</a></li>
+                            <li><a href="#network">Build the SimpleCNN</a></li>
+                            <li><a href="#training">Train and evaluate on CIFAR-10</a></li>
+                            <li><a href="#ptq">Post-training INT8 quantization</a></li>
+                            <li><a href="#audit">Red-team the conversion safely</a></li>
+                            <li><a href="#qat">When to use quantization-aware training</a></li>
+                            <li><a href="#defense">Defending the model pipeline</a></li>
+                            <li><a href="#sources">Primary references</a></li>
+                        </ol>
+                    </nav>
+
+                    <h2 id="quantization">1. What quantization changes</h2>
+                    <p>A conventional training run represents parameters and intermediate activations using floating-point numbers, often FP32. An INT8 inference path stores or computes many values using signed 8-bit integers. A simple affine mapping is:</p>
+                    <pre><code>q = clamp(round(x / scale) + zero_point, qmin, qmax)
+x_hat = (q - zero_point) * scale</code></pre>
+                    <p><code>x</code> is a real value, <code>q</code> its integer representation, <code>scale</code> the step size, and <code>zero_point</code> the integer that represents real zero. The second equation dequantizes the integer value back to an approximation <code>x_hat</code>. Clamping means values outside the selected range saturate at its endpoints; rounding and saturation introduce error. Small scale improves resolution near zero but clips large values more readily. Large scale preserves a wider range but rounds away small differences.</p>
+                    <p><strong>Per-tensor</strong> quantization uses one scale and zero point for a tensor. <strong>Per-channel</strong> quantization gives each output channel its own range, which often helps convolution weights whose channels have different distributions. Weights and activations may use different schemes. The CPU operator kernel and backend determine the exact supported path; “INT8” does not guarantee identical arithmetic or performance on every device.</p>
+                    <ul>
+                        <li><strong>Dynamic quantization:</strong> commonly quantizes weights ahead of time and determines activation ranges during inference; it is useful for supported operators such as linear layers.</li>
+                        <li><strong>Post-training static quantization (PTQ):</strong> observes representative inputs to estimate activation ranges, then converts supported operations.</li>
+                        <li><strong>Quantization-aware training (QAT):</strong> inserts simulated quantize/dequantize effects during training so the learned model can adapt to them.</li>
+                    </ul>
+                    <p>Quantization is a deployment transformation, not a security property. Smaller files or lower precision do not automatically make a model safer, more robust, or private.</p>
+
+                    <h2 id="math">2. Convolution, loss, and Adam</h2>
+                    <h3>Convolution: the image feature extractor</h3>
+                    <p>A 2-D convolution slides a learned kernel over the input image. PyTorch's <code>Conv2d</code> uses the conventional name, although its kernel operation is technically cross-correlation (it does not reverse the kernel). For input channels <code>C<sub>in</sub></code>, output channel <code>o</code>, and kernel weights <code>W</code>, a simplified output is:</p>
+                    <pre><code>Y[n, o, i, j] = b[o] +
+    sum over c, r, s of X[n, c, i+r, j+s] * W[o, c, r, s]</code></pre>
+                    <p>The kernel responds to local patterns; early layers can learn edges and color transitions, and later layers combine them into more useful features. Padding, stride, and kernel size determine the output dimensions. With a 3×3 kernel, stride 1, and padding 1, a 32×32 feature map stays 32×32. A 2×2 max-pool with stride 2 halves it to 16×16.</p>
+                    <h3>Cross-entropy: measure the classification error</h3>
+                    <p>The network outputs ten raw scores, or <strong>logits</strong>, one for each class. For the correct class <code>y</code>, cross-entropy is the negative log-probability assigned to that class after softmax:</p>
+                    <pre><code>L = -log(exp(z[y]) / sum_j exp(z[j]))</code></pre>
+                    <p>In PyTorch, <code>nn.CrossEntropyLoss</code> combines the numerically stable log-softmax and negative-log-likelihood operation. Give it logits and integer class indices—not softmax probabilities. Applying softmax first changes the expected input and is a common training bug.</p>
+                    <h3>Adam: adapt the parameter updates</h3>
+                    <p>Adam tracks exponentially weighted first and second moments of the gradients, <code>m</code> and <code>v</code>. With bias-corrected moments <code>m_hat</code> and <code>v_hat</code>, a simplified update is:</p>
+                    <pre><code>m_t = beta1 * m_(t-1) + (1 - beta1) * g_t
+v_t = beta2 * v_(t-1) + (1 - beta2) * g_t^2
+                    m_hat = m_t / (1 - beta1^t)
+                    v_hat = v_t / (1 - beta2^t)
+                    theta_t = theta_(t-1) - learning_rate * m_hat / (sqrt(v_hat) + epsilon)</code></pre>
+                    <p>In each training step, gradients flow backward from loss, Adam updates the FP32 parameters, and the next batch is evaluated. In this lab, Adam trains the floating-point model. PTQ does not keep running Adam on integer weights; it calibrates a trained model and converts supported operators. QAT is a separate training path.</p>
+
+                    <h2 id="network">3. Build the SimpleCNN</h2>
+                    <p>CIFAR-10 contains 60,000 color images sized 32×32: 50,000 training examples and 10,000 test examples, split across ten classes. The model below uses two convolution and pooling stages followed by a small classifier.</p>
+                    <div class="diagram-figure">
+                        <svg viewBox="0 0 760 180" role="img" aria-labelledby="cnn-title cnn-desc">
+                            <title id="cnn-title">SimpleCNN training and quantization flow</title>
+                            <desc id="cnn-desc">A CIFAR-10 image passes through two convolution, ReLU, and pooling stages, then a flattened fully connected classifier produces ten logits. Training uses cross-entropy and Adam. A separate copy is calibrated and converted to INT8 for evaluation.</desc>
+                            <text x="18" y="25" class="dg-title">FLOAT32 TRAINING / INT8 INFERENCE AUDIT</text>
+                            <rect x="18" y="55" width="110" height="66" rx="7" class="dg-node"/>
+                            <text x="73" y="82" text-anchor="middle" class="dg-label">32×32×3</text>
+                            <text x="73" y="103" text-anchor="middle" class="dg-sub">CIFAR-10</text>
+                            <path d="M128 88H155" class="dg-flow"/><path d="M149 83l6 5-6 5" class="dg-flow"/>
+                            <rect x="155" y="55" width="120" height="66" rx="7" class="dg-node-accent"/>
+                            <text x="215" y="82" text-anchor="middle" class="dg-accent-text">Conv / ReLU</text>
+                            <text x="215" y="103" text-anchor="middle" class="dg-sub">Pool → 16×16</text>
+                            <path d="M275 88H302" class="dg-flow"/><path d="M296 83l6 5-6 5" class="dg-flow"/>
+                            <rect x="302" y="55" width="120" height="66" rx="7" class="dg-node-accent"/>
+                            <text x="362" y="82" text-anchor="middle" class="dg-accent-text">Conv / ReLU</text>
+                            <text x="362" y="103" text-anchor="middle" class="dg-sub">Pool → 8×8</text>
+                            <path d="M422 88H449" class="dg-flow"/><path d="M443 83l6 5-6 5" class="dg-flow"/>
+                            <rect x="449" y="55" width="120" height="66" rx="7" class="dg-node"/>
+                            <text x="509" y="82" text-anchor="middle" class="dg-label">Flatten / FC</text>
+                            <text x="509" y="103" text-anchor="middle" class="dg-sub">10 logits</text>
+                            <path d="M569 88H596" class="dg-flow"/><path d="M590 83l6 5-6 5" class="dg-flow"/>
+                            <rect x="596" y="55" width="145" height="66" rx="7" class="dg-node"/>
+                            <text x="668" y="82" text-anchor="middle" class="dg-label">Compare</text>
+                            <text x="668" y="103" text-anchor="middle" class="dg-sub">FP32 / INT8</text>
+                            <text x="155" y="153" class="dg-sub">Training: CrossEntropyLoss + Adam</text>
+                            <text x="449" y="153" class="dg-sub">PTQ: calibration → conversion → test</text>
+                        </svg>
+                        <p class="diagram-caption"><b>Figure 1.</b> Keep the training, calibration, and final evaluation roles distinct. The test set is for measurement, not calibration or model selection.</p>
+                    </div>
+                    <p>Tensor shapes for a batch of 128 are <code>[128, 3, 32, 32]</code> → <code>[128, 32, 16, 16]</code> → <code>[128, 64, 8, 8]</code> → <code>[128, 10]</code>. PyTorch convolution layers use channel-first tensors. The flatten operation turns each final feature map into 4,096 values before the classifier.</p>
+
+                    <h2 id="training">4. Train and evaluate on CIFAR-10</h2>
+                    <p>For a standard pip environment, install PyTorch and TorchVision; select the matching command from the official installer if you need a CUDA-specific build. Then save the following as <code>train_quantize_cifar.py</code>. The first run downloads CIFAR-10 into <code>./data</code>. The script uses five epochs for a manageable demonstration; expect the accuracy to vary, and do not treat this small network or short run as a benchmark.</p>
+                    <pre><code>python -m pip install torch torchvision</code></pre>
+                    <pre><code>import torch
+from torch import nn
+from torch.utils.data import DataLoader, random_split
+from torchvision import datasets, transforms
+
+class SimpleCNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
+        self.relu1 = nn.ReLU()
+        self.pool1 = nn.MaxPool2d(2)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
+        self.relu2 = nn.ReLU()
+        self.pool2 = nn.MaxPool2d(2)
+        self.flatten = nn.Flatten()
+        self.fc1 = nn.Linear(64 * 8 * 8, 128)
+        self.relu3 = nn.ReLU()
+        self.fc2 = nn.Linear(128, 10)
+
+    def forward(self, x):
+        x = self.pool1(self.relu1(self.conv1(x)))
+        x = self.pool2(self.relu2(self.conv2(x)))
+        x = self.flatten(x)
+        x = self.relu3(self.fc1(x))
+        return self.fc2(x)  # logits; do not apply softmax before CrossEntropyLoss
+
+def evaluate(model, loader, device):
+    model.eval()
+    correct = total = loss_sum = 0
+    criterion = nn.CrossEntropyLoss()
+    with torch.inference_mode():
+        for images, labels in loader:
+            images, labels = images.to(device), labels.to(device)
+            logits = model(images)
+            loss_sum += criterion(logits, labels).item() * labels.size(0)
+            correct += (logits.argmax(dim=1) == labels).sum().item()
+            total += labels.size(0)
+    return loss_sum / total, correct / total
+
+def collect_logits(model, loader):
+    model.eval()
+    logits, labels = [], []
+    with torch.inference_mode():
+        for images, targets in loader:
+            logits.append(model(images).cpu())
+            labels.append(targets)
+    return torch.cat(logits), torch.cat(labels)
+
+def main():
+    torch.manual_seed(7)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    transform = transforms.ToTensor()  # values are in [0, 1]
+    full_train_set = datasets.CIFAR10("data", train=True, download=True, transform=transform)
+    test_set = datasets.CIFAR10("data", train=False, download=True, transform=transform)
+    train_set, validation_set = random_split(
+        full_train_set, [45000, 5000],
+        generator=torch.Generator().manual_seed(7),
+    )
+    train_loader = DataLoader(train_set, batch_size=128, shuffle=True, num_workers=0)
+    calibration_loader = DataLoader(train_set, batch_size=64, shuffle=False, num_workers=0)
+    validation_loader = DataLoader(validation_set, batch_size=256, shuffle=False, num_workers=0)
+    test_loader = DataLoader(test_set, batch_size=256, shuffle=False, num_workers=0)
+
+    model = SimpleCNN().to(device)
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+
+    for epoch in range(5):
+        model.train()
+        for images, labels in train_loader:
+            images, labels = images.to(device), labels.to(device)
+            optimizer.zero_grad(set_to_none=True)
+            logits = model(images)
+            loss = criterion(logits, labels)
+            loss.backward()
+            optimizer.step()
+        val_loss, val_accuracy = evaluate(model, validation_loader, device)
+        print(f"epoch {epoch + 1}: val_loss={val_loss:.4f} "
+              f"val_accuracy={val_accuracy:.3%}")
+
+    # Keep the trained FP32 model as the reference for the final comparison.
+    float_model = model.to("cpu").eval()
+    backend = next(
+        (name for name in ("x86", "fbgemm", "qnnpack")
+         if name in torch.backends.quantized.supported_engines),
+        None,
+    )
+    if backend is None:
+        raise RuntimeError("No supported quantized CPU backend is available")
+    torch.backends.quantized.engine = backend
+
+    from torch.ao.quantization import QConfigMapping, get_default_qconfig
+    from torch.ao.quantization.quantize_fx import prepare_fx, convert_fx
+
+    qconfig = QConfigMapping().set_global(get_default_qconfig(backend))
+    example_inputs = (torch.randn(1, 3, 32, 32),)
+    prepared = prepare_fx(float_model, qconfig, example_inputs)
+
+    # Calibrate on training examples only; do not use the held-out test set.
+    with torch.inference_mode():
+        for batch_index, (images, _) in enumerate(calibration_loader):
+            prepared(images)
+            if batch_index == 15:  # 16 batches × 64 = at most 1,024 images
+                break
+    int8_model = convert_fx(prepared).eval()
+
+    float_logits, test_labels = collect_logits(float_model, test_loader)
+    int8_logits, _ = collect_logits(int8_model, test_loader)
+    predictions_float = float_logits.argmax(dim=1)
+    predictions_int8 = int8_logits.argmax(dim=1)
+    float_loss = nn.CrossEntropyLoss()(float_logits, test_labels).item()
+    int8_loss = nn.CrossEntropyLoss()(int8_logits, test_labels).item()
+    float_accuracy = (predictions_float == test_labels).float().mean().item()
+    int8_accuracy = (predictions_int8 == test_labels).float().mean().item()
+    agreement = (predictions_float == predictions_int8).float().mean().item()
+    print(f"backend={backend}")
+    print(f"FP32: loss={float_loss:.4f}, accuracy={float_accuracy:.3%}")
+    print(f"INT8: loss={int8_loss:.4f}, accuracy={int8_accuracy:.3%}")
+    print(f"accuracy_delta={int8_accuracy - float_accuracy:+.3%}")
+    print(f"prediction_agreement={agreement:.3%}")
+    for class_index, class_name in enumerate(test_set.classes):
+        class_mask = test_labels == class_index
+        acc_float = (predictions_float[class_mask] == test_labels[class_mask]).float().mean().item()
+        acc_int8 = (predictions_int8[class_mask] == test_labels[class_mask]).float().mean().item()
+        print(f"{class_name}: FP32={acc_float:.3%}, INT8={acc_int8:.3%}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                    <p>The loop shuffles the 45,000-image training subset, computes logits, evaluates cross-entropy, backpropagates gradients, and applies Adam. A separate 5,000-image validation subset tracks training progress; the official test split is used only once for the final FP32-versus-INT8 comparison. PTQ calibrates on a small sample from the training subset. The script then reports overall accuracy, class-wise accuracy, and prediction agreement on the held-out test examples.</p>
+
+                    <h2 id="ptq">5. Post-training INT8 quantization: what to inspect</h2>
+                    <p><code>prepare_fx</code> inserts observers according to a backend-specific configuration. Running representative training images through the prepared graph records activation ranges. <code>convert_fx</code> then replaces supported patterns with quantized implementations. Operator coverage, available backends, and APIs vary between PyTorch releases and builds; use a compatible PyTorch/TorchVision installation and check the current quantization documentation before adapting this example.</p>
+                    <p>Look at more than top-1 accuracy:</p>
+                    <ul>
+                        <li><strong>Accuracy delta:</strong> INT8 test accuracy minus FP32 test accuracy, reported in percentage points.</li>
+                        <li><strong>Prediction agreement:</strong> fraction of test images for which both models choose the same class. Equal overall accuracy can hide different per-example errors.</li>
+                        <li><strong>Per-class results:</strong> compare each class and inspect a confusion matrix. A good aggregate can conceal a severe regression on one class.</li>
+                        <li><strong>Latency and memory:</strong> measure the actual target hardware, after warm-up and with a defined batch size. A quantized model can be slower when kernels or data movement are a poor fit.</li>
+                        <li><strong>Numerical drift:</strong> compare logits or confidence distributions, not just their argmax. A small logit change can flip a close decision.</li>
+                    </ul>
+                    <p>There is deliberately no promised accuracy number: random initialization, library versions, hardware, kernels, and training time all affect results. Record the environment with the result—PyTorch and TorchVision versions, device, quantized backend, model hash, data transform, calibration sample, and command-line parameters—so another run can explain discrepancies.</p>
+
+                    <h2 id="audit">6. Red-team the conversion safely</h2>
+                    <p>Quantization hacking is most useful when it becomes a controlled differential test. The comparison above already exposes a basic signal: aggregate behavior differs if the FP32 and INT8 accuracies differ. For a stronger audit, retain logits for both models and calculate prediction agreement and class-wise metrics on exactly the same held-out examples.</p>
+                    <p>Then vary one trusted input at a time in a separate copy of the experiment. Examples include calibrating with a smaller but still representative subset, testing known brightness or contrast shifts, and checking whether a conversion setting or backend change causes unexpected drift. Keep the original test set untouched for the final report. Do not call a transformation an attack success merely because the model changes its prediction: first define the threat model, perturbation limits, target behavior, and success criterion.</p>
+                    <h3>Failure modes worth probing</h3>
+                    <ol>
+                        <li><strong>Calibration mismatch:</strong> calibration images do not represent production inputs. Ranges may clip or collapse meaningful activation differences.</li>
+                        <li><strong>Calibration integrity:</strong> a compromised or accidentally skewed calibration pipeline can produce poor scales and a model that fails on expected traffic. Restrict, record, and version the calibration data and preprocessing.</li>
+                        <li><strong>Conversion drift:</strong> a backend, library, graph rewrite, or unsupported operator changes the executed path. Compare conversion output to the approved baseline on fixed test vectors.</li>
+                        <li><strong>Artifact substitution:</strong> a model file, scale, zero point, label mapping, or preprocessing asset is replaced after validation. Hashes help identify changes; signed provenance and controlled deployment determine whether an artifact is authorized.</li>
+                        <li><strong>Boundary disagreement:</strong> quantization rounding shifts a decision near a class boundary. Measure the rate and inspect cases; quantization does not inherently create or remove adversarial robustness.</li>
+                    </ol>
+                    <div class="callout">
+                        <h4>Keep the experiment honest</h4>
+                        <p>Never calibrate on the test split, tune repeatedly against it, or report the best run without the configuration. Separate training, calibration, validation, and final test roles. Publish the measured result with its backend and software versions rather than treating a single CIFAR-10 score as proof of production safety.</p>
+                    </div>
+
+                    <h2 id="qat">7. When post-training quantization is not enough</h2>
+                    <p>If PTQ causes unacceptable accuracy or class-wise regressions, consider better calibration coverage, per-channel weight quantization where supported, a different precision such as FP16, or QAT. QAT keeps trainable floating-point parameters but simulates quantization effects in the forward pass. Training can then adapt parameters to rounding and clipping noise before the final conversion.</p>
+                    <pre><code># Conceptual PyTorch FX QAT flow; use a supported CPU backend and
+# verify these APIs against the installed PyTorch version.
+from torch.ao.quantization import QConfigMapping, get_default_qat_qconfig
+from torch.ao.quantization.quantize_fx import prepare_qat_fx, convert_fx
+
+qat_model = SimpleCNN().cpu()
+qat_model.load_state_dict(float_model.state_dict())
+qat_model.train()
+qat_config = QConfigMapping().set_global(get_default_qat_qconfig(backend))
+qat_model = prepare_qat_fx(qat_model, qat_config, example_inputs)
+
+# Fine-tune qat_model on the training split using the same
+# CrossEntropyLoss / Adam loop, with a smaller learning rate.
+qat_optimizer = torch.optim.Adam(qat_model.parameters(), lr=1e-4)
+# Run a bounded fine-tuning loop here using training data only.
+
+qat_model.eval()
+qat_int8_model = convert_fx(qat_model)</code></pre>
+                    <p>This is a flow sketch, not a turnkey recipe for every PyTorch release or architecture. QAT needs a backend-compatible model, training code, a validation protocol, and a final target-device check. It can recover some quantization-related accuracy loss; it cannot compensate for unrepresentative data, incorrect labels, a compromised build, or a broken runtime.</p>
+
+                    <h2 id="defense">8. Defend the model and quantization pipeline</h2>
+                    <p>Protect the lifecycle, not only the inference call. A sound release process should make each transformation attributable and reproducible:</p>
+                    <ul>
+                        <li><strong>Pin and review tooling:</strong> control PyTorch, TorchVision, conversion libraries, kernels, and build images. Review dependency changes and generate a software bill of materials where appropriate.</li>
+                        <li><strong>Separate data roles:</strong> maintain access controls and provenance for training and calibration data; prevent test examples from silently entering calibration.</li>
+                        <li><strong>Make conversion deterministic enough to audit:</strong> record the source checkpoint digest, code revision, preprocessing, observer configuration, backend, conversion command, and resulting artifact digest.</li>
+                        <li><strong>Validate the released artifact:</strong> run fixed regression vectors through the FP32 and quantized versions, check class-wise behavior and thresholds, and compare the final device build to the one that passed review.</li>
+                        <li><strong>Authenticate deployment:</strong> sign release manifests and verify them at promotion or startup. A cryptographic hash detects difference only when the expected hash comes from a trusted channel.</li>
+                        <li><strong>Monitor for drift:</strong> observe input ranges, clipping or saturation where available, confidence shifts, class distribution, and runtime errors. Use privacy-preserving telemetry and an escalation path.</li>
+                        <li><strong>Keep rollback possible:</strong> retain the approved previous artifact and its metadata; deploy quantized variants behind controlled rollout and rollback mechanisms.</li>
+                    </ul>
+                    <p>The principle generalizes beyond vision models. Quantization is one of many compiler-like transformations that can make validated source and deployed behavior diverge. Treat the converter, calibration corpus, runtime backend, and model artifact as part of the trusted computing base.</p>
+
+                    <h2 id="sources">9. Primary references</h2>
+                    <ul>
+                        <li><a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank" rel="noopener noreferrer">CIFAR-10 and CIFAR-100 dataset information</a>, University of Toronto.</li>
+                        <li><a href="https://pytorch.org/get-started/locally/" target="_blank" rel="noopener noreferrer">PyTorch installation selector</a> for operating-system and accelerator-specific packages.</li>
+                        <li><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Conv2d.html" target="_blank" rel="noopener noreferrer">PyTorch <code>Conv2d</code> reference</a>.</li>
+                        <li><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html" target="_blank" rel="noopener noreferrer">PyTorch <code>CrossEntropyLoss</code> reference</a>.</li>
+                        <li><a href="https://docs.pytorch.org/docs/stable/generated/torch.optim.Adam.html" target="_blank" rel="noopener noreferrer">PyTorch Adam optimizer reference</a>.</li>
+                        <li><a href="https://docs.pytorch.org/vision/stable/generated/torchvision.datasets.CIFAR10.html" target="_blank" rel="noopener noreferrer">TorchVision CIFAR10 dataset API</a>.</li>
+                        <li><a href="https://docs.pytorch.org/docs/stable/quantization.html" target="_blank" rel="noopener noreferrer">PyTorch quantization documentation</a>; check the version-specific API guidance for your deployment target.</li>
+                    </ul>
+                    <p>Use a versioned official guide and the actual backend documentation for production work. Quantization support evolves; the FX example above is intended as an educational, local CPU lab rather than a recommendation to deploy a specific API without validation.</p>
+
+                    <div class="tag-row"><span class="tag">#quantization</span><span class="tag">#pytorch</span><span class="tag">#cifar10</span><span class="tag">#mlsecurity</span><span class="tag">#modelintegrity</span></div>
+                </div>
+                <section class="related-services" aria-labelledby="quantization-services">
+                    <span class="eyebrow">Secure the model lifecycle</span>
+                    <h2 id="quantization-services">Validate AI systems beyond the model weights.</h2>
+                    <div class="related-service-links">
+                        <a href="../services/ai-mcp-security.html"><strong>AI and MCP Security Assessment</strong><span>Assess AI application trust boundaries, integrations, permissions, and data handling.</span></a>
+                        <a href="../services/detection-engineering.html"><strong>Detection Engineering</strong><span>Build measurable signals and response workflows around security-critical systems.</span></a>
+                    </div>
+                </section>
+                <div class="article-nav"><a href="../resources.html#blog">All articles</a><a href="../contact.html">Discuss your AI security architecture</a></div>
+            </div>
+        </article>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand"><a href="../../index.html" class="logo"><span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span></a><p>360-degree protection against cyber threats. Offensive security, defensive operations, and training.</p></div>
+                <div><h4>Company</h4><ul><li><a href="../about.html">About</a></li><li><a href="../team.html">Team</a></li><li><a href="../careers.html">Careers</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+                <div><h4>Services</h4><ul><li><a href="../services.html#offensive">Offensive Security</a></li><li><a href="../services.html#defensive">Defensive Security</a></li><li><a href="../services.html#ai">AI Security</a></li></ul></div>
+                <div><h4>Resources</h4><ul><li><a href="../resources.html#blog">Blog</a></li><li><a href="../../easm.html">EASM</a></li><li><a href="../../skillscan.html">SkillScan</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../cookies.html">Cookies</a></li><li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
