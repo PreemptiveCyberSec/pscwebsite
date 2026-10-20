@@ -718,6 +718,22 @@ h1, h2, h3, h4 {
     box-shadow: 0 0 0 2px rgba(88, 245, 160, 0.25);
 }
 
+.service-card { cursor: pointer; }
+
+.service-card .card-link { position: static; }
+
+.service-card .card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+}
+
+.service-card:has(.card-link:focus-visible) {
+    border-color: var(--neon);
+    box-shadow: 0 0 0 2px rgba(88, 245, 160, 0.25);
+}
+
 /* ---------- Capabilities ---------- */
 .capability-grid {
     display: grid;
