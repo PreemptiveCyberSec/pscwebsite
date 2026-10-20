@@ -17,6 +17,15 @@
       <description>A technical guide to local AI memory: model weights, KV cache, full-context sizing, Mac Studio, DGX Spark, GPU clusters, benchmarks, cost, and secure deployment.</description>
     </item>
     <item>
+      <title>Local AI for Pentesting and Bug Bounty: Models, Agents and Evidence</title>
+      <link>https://preemptivecybersec.com/pages/blog/local-ai-pentesting-bug-bounty.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/local-ai-pentesting-bug-bounty.html</guid>
+      <pubDate>Tue, 20 Oct 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>AI-Assisted Security Testing</category>
+      <description>A technical guide to local model development, evidence-led pentesting, cyber verification, team learning, and safe AI assessment workflows.</description>
+    </item>
+    <item>
       <title>Quantization Hacking: From SimpleCNN to CIFAR-10</title>
       <link>https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html</link>
       <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html</guid>
@@ -447,15 +456,6 @@
       <dc:creator>Viral Maniar</dc:creator>
       <category>Static Analysis · Windows Defense</category>
       <description>Defensive analysis of layered compile-time string transformations, detection engineering, and triage.</description>
-    </item>
-    <item>
-      <title>PE Format &amp; Relocation Tables: How ASLR Gets Its Address</title>
-      <link>https://preemptivecybersec.com/pages/blog/pe-format-relocations-aslr.html</link>
-      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/pe-format-relocations-aslr.html</guid>
-      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Viral Maniar</dc:creator>
-      <category>Windows Security · Internals</category>
-      <description>A defender&apos;s guide to the Windows Portable Executable format, base relocations, ASLR, inspection tools, and mitigation validation.</description>
     </item>
   </channel>
 </rss>

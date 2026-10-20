@@ -109,7 +109,8 @@
     <priority>0.3</priority>
   </url>
 
-  <!-- ===== Blog — 92 posts, newest first ===== -->
+  <!-- ===== Blog — 93 posts, newest first ===== -->
+  <url><loc>https://preemptivecybersec.com/pages/blog/local-ai-pentesting-bug-bounty.html</loc><lastmod>2026-10-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://preemptivecybersec.com/pages/blog/local-ai-512gb-vram-kv-cache.html</loc><lastmod>2026-10-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html</loc><lastmod>2026-10-19</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html</loc><lastmod>2026-10-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
