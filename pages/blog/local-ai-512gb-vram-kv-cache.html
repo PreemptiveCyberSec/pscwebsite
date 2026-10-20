@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>512GB for Local AI: VRAM, KV Cache and Full-Context Inference | Preemptive Cyber Security</title>
+    <meta name="description" content="A technical guide to local AI memory: model weights, KV cache, full-context sizing, Mac Studio, DGX Spark, GPU clusters, benchmarks, cost, and secure deployment.">
+    <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/local-ai-512gb-vram-kv-cache.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="512GB for Local AI: VRAM, KV Cache and Full-Context Inference | Preemptive Cyber Security">
+    <meta property="og:description" content="A technical guide to local AI memory: model weights, KV cache, full-context sizing, Mac Studio, DGX Spark, GPU clusters, benchmarks, cost, and secure deployment.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/local-ai-512gb-vram-kv-cache.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="512GB for Local AI: VRAM, KV Cache and Full-Context Inference | Preemptive Cyber Security">
+    <meta name="twitter:description" content="A technical guide to local AI memory: model weights, KV cache, full-context sizing, Mac Studio, DGX Spark, GPU clusters, benchmarks, cost, and secure deployment.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta property="article:published_time" content="2026-10-20">
+    <meta property="article:modified_time" content="2026-10-20">
+    <meta property="article:author" content="https://preemptivecybersec.com/#organization">
+    <meta property="article:section" content="Local AI Infrastructure">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/local-ai-512gb-vram-kv-cache.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/local-ai-512gb-vram-kv-cache.html",
+                "headline": "512GB for Local AI: VRAM, KV Cache and Full-Context Inference",
+                "description": "A technical guide to local AI memory: model weights, KV cache, full-context sizing, Mac Studio, DGX Spark, GPU clusters, benchmarks, cost, and secure deployment.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-10-20",
+                "dateModified": "2026-10-20",
+                "author": {"@id": "https://preemptivecybersec.com/#organization"},
+                "publisher": {"@id": "https://preemptivecybersec.com/#organization"},
+                "articleSection": "Local AI Infrastructure",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/local-ai-512gb-vram-kv-cache.html#breadcrumb",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://preemptivecybersec.com/"},
+                    {"@type": "ListItem", "position": 2, "name": "Research", "item": "https://preemptivecybersec.com/pages/resources.html"},
+                    {"@type": "ListItem", "position": 3, "name": "512GB for Local AI: VRAM, KV Cache and Full-Context Inference", "item": "https://preemptivecybersec.com/pages/blog/local-ai-512gb-vram-kv-cache.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo" aria-label="Preemptive Cyber Security home">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../../pages/services.html">Services</a></li>
+                    <li><a href="../../pages/about.html">About</a></li>
+                    <li><a href="../../pages/team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../pages/resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../../pages/resources.html#blog">Blog</a></li>
+                            <li><a href="../../pages/resources.html#tools">Tools</a></li>
+                            <li><a href="../../pages/resources.html#talks">Talks &amp; Presentations</a></li>
+                            <li><a href="../../easm.html">EASM</a></li>
+                            <li><a href="../../skillscan.html">SkillScan</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../llms.txt">llms.txt</a></li>
+                    <li><a href="../../pages/careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../../pages/contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <article class="article local-ai-article">
+            <div class="container">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">512GB for Local AI: VRAM, KV Cache and Full-Context Inference</li></ol></nav>
+                <div class="article-meta"><span class="cat">Local AI Infrastructure</span><span class="dot">//</span><time datetime="2026-10-20">20 October 2026</time><span class="dot">//</span><span>Architecture deep dive</span></div>
+                <h1>512GB for Local AI: VRAM, KV Cache and Full-Context Inference</h1>
+                <p class="article-lead">A large memory figure does not tell you which model will run, how much context it can retain, how long the first answer will take, or whether the system is economical. Start with the workload, account for every memory consumer, and benchmark the exact deployment topology.</p>
+                <div class="article-byline"><span class="avatar" aria-hidden="true">PSC</span><span>By <strong>Preemptive Cyber Security Research</strong></span></div>
+                <div class="prose">
+                    <p>The central engineering problem is not “How do I buy 512GB?” It is “What combination of model, precision, context, concurrency, and latency can I support?” A 512GB unified-memory computer, four networked nodes, and sixteen older accelerators are different systems even if their advertised capacities add up to the same number. Memory location and movement can matter as much as capacity.</p>
+                    <nav class="article-toc" aria-label="Article contents">
+                        <h2>Inside this deep dive</h2>
+                        <ol>
+                            <li><a href="#memory-budget">Build the complete memory budget</a></li>
+                            <li><a href="#weights">Weights, precision, and mixture-of-experts models</a></li>
+                            <li><a href="#kv-cache">Derive KV-cache memory from the architecture</a></li>
+                            <li><a href="#planner">Run a dependency-free sizing lab</a></li>
+                            <li><a href="#compressed-memory">Compressed attention and SSD-resident tables</a></li>
+                            <li><a href="#hardware">Compare all six hardware approaches</a></li>
+                            <li><a href="#parallelism">Understand distributed inference and interconnects</a></li>
+                            <li><a href="#performance">Separate prefill, decode, and caching</a></li>
+                            <li><a href="#benchmarks">Read benchmark claims correctly</a></li>
+                            <li><a href="#economics">Calculate ownership cost versus API cost</a></li>
+                            <li><a href="#deployment">Validate and secure the deployment</a></li>
+                            <li><a href="#sources">Sources, limits, and purchasing checklist</a></li>
+                        </ol>
+                    </nav>
+
+                    <h2 id="memory-budget">1. “512GB” is not a usable inference budget</h2>
+                    <p>First distinguish units. Decimal <strong>GB</strong> means 10<sup>9</sup> bytes; binary <strong>GiB</strong> means 2<sup>30</sup> bytes. A hypothetical capacity specified as exactly 512 billion bytes is about <strong>476.84GiB</strong>. Vendors and operating systems do not always use labels consistently, so check the runtime's reported bytes rather than assuming either interpretation of a marketing label.</p>
+                    <pre><code>M_required = M_weights + M_KV + M_workspace
+           + M_runtime + M_communication + M_other_resident
+
+M_required must fit the memory actually available to the process,
+on every participating device or node, with operating headroom.</code></pre>
+                    <p>Workspace includes temporary tensors, attention kernels, and graph-capture allocations. Runtime overhead includes allocators and framework state. Distributed jobs need communication buffers; unified-memory systems also share capacity with the CPU, operating system, and other applications. Reserved cache blocks and fragmentation can make allocation fail before an elementary byte sum reaches the installed capacity.</p>
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 280" role="img" aria-labelledby="budget-title budget-desc">
+                            <title id="budget-title">Installed memory is divided between weights, cache, overhead, and safety margin</title>
+                            <desc id="budget-desc">An illustrative 512 GiB memory pool has 300 GiB of weights, 80 GiB of key-value cache, 32 GiB of runtime and workspace overhead, and 100 GiB left over. These are example allocations, not a particular model or hardware measurement.</desc>
+                            <text x="20" y="25" class="dg-title">ILLUSTRATIVE BUDGET / 512 GiB INSTALLED</text>
+                            <rect x="20" y="60" width="422" height="64" rx="5" class="dg-node-accent"/>
+                            <rect x="442" y="60" width="113" height="64" class="dg-node"/>
+                            <rect x="555" y="60" width="45" height="64" class="dg-node"/>
+                            <rect x="600" y="60" width="140" height="64" rx="5" class="dg-node"/>
+                            <text x="231" y="87" text-anchor="middle" class="dg-accent-text">Resident weights</text>
+                            <text x="231" y="109" text-anchor="middle" class="dg-label">300 GiB</text>
+                            <text x="498" y="87" text-anchor="middle" class="dg-label">KV cache</text>
+                            <text x="498" y="109" text-anchor="middle" class="dg-sub">80 GiB</text>
+                            <text x="578" y="98" text-anchor="middle" class="dg-sub">32</text>
+                            <text x="670" y="87" text-anchor="middle" class="dg-label">Remaining</text>
+                            <text x="670" y="109" text-anchor="middle" class="dg-sub">100 GiB</text>
+                            <path d="M578 126V156H450" class="dg-flow-dim"/>
+                            <text x="300" y="159" class="dg-sub">32 GiB: runtime + workspace</text>
+                            <rect x="20" y="188" width="720" height="60" rx="5" class="dg-node"/>
+                            <text x="38" y="212" class="dg-label">A fit in aggregate is necessary, not sufficient.</text>
+                            <text x="38" y="233" class="dg-sub">Each rank also needs room for its shard, cache, buffers, and uneven allocations.</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 1.</b> Budget in bytes, then reserve operational headroom. The numbers are an accounting example, not a hardware recommendation.</figcaption>
+                    </figure>
+                    <p>A fixed “use 90%” rule is not portable. One configuration may reserve workspace up front while another grows it during prefill. Measure the peak during startup, long-prompt ingestion, concurrent decode, and cancellation or cache eviction. Do not treat swap as equivalent to additional fast model memory.</p>
+
+                    <h2 id="weights">2. Model weights: stored parameters are not active parameters</h2>
+                    <p>A first approximation for weight storage is <code>parameters × bits_per_weight / 8</code>. A hypothetical 400-billion-parameter checkpoint at exactly four bits per parameter has a raw payload of <strong>200GB, or 186.26GiB</strong>. That excludes quantization scales, zero points, metadata, tensors retained at higher precision, padding, and runtime-specific packing. Inspect the actual converted artifact and loaded allocation rather than using the nominal quantization name as an exact compression ratio.</p>
+                    <p>A mixture-of-experts (MoE) model routes each token through a subset of experts. Its active parameter count helps explain compute cost, not automatically storage cost: unselected experts still need to be available when routing changes. A model with many stored parameters and relatively few active parameters is not a model whose inactive weights disappear. CPU, SSD, or distributed expert placement requires explicit runtime support and can introduce significant transfer latency.</p>
+                    <p>Precision changes also affect quality and kernel compatibility. Weight-only four-bit quantization does not imply a four-bit KV cache; those are separate settings. A format that saves disk space may be unpacked or converted on load. Compare the exact model revision, tokenizer, quantizer, runtime, and kernel path, and include draft-model memory if speculative decoding is enabled.</p>
+                    <p>For the mathematical background on quantization, see our <a href="quantization-hacking-cifar10.html">SimpleCNN and CIFAR-10 walkthrough</a>. Vision-model PTQ and large-language-model serving have different operator and quality considerations, but both require validation of the deployed representation.</p>
+
+                    <h2 id="kv-cache">3. KV cache: the memory that grows with the conversation</h2>
+                    <p>During autoregressive inference, attention reuses previously computed keys and values instead of rebuilding them for every new token. The <strong>key-value cache</strong> persists across the sequence. For an ordinary decoder with uniform full-attention layers, its logical size is approximately:</p>
+                    <pre><code>KV_bytes = 2 × layers × KV_heads × head_dimension
+           × bytes_per_cache_element × sum(sequence_lengths)
+
+For equal-length requests:
+sum(sequence_lengths) = concurrent_sequences × tokens_per_sequence</code></pre>
+                    <p>The factor of two represents keys and values. Use <strong>KV heads</strong>, not automatically query heads: grouped-query attention (GQA) shares keys and values across multiple query heads. Multi-query attention can reduce that count further. FP16 and BF16 ordinarily use two bytes per element; a supported FP8 cache uses one byte per element before scale and allocation overhead. Beam search, duplicated cache state, and implementation-specific layout can alter physical memory.</p>
+                    <h3>A worked example: 80 layers, 8 KV heads, head size 128</h3>
+                    <pre><code>Bytes per token = 2 × 80 × 8 × 128 × 2
+                = 327,680 bytes = 320 KiB
+
+One sequence at 131,072 tokens:
+327,680 × 131,072 / 2^30 = 40 GiB
+
+Four independent sequences at that length:
+4 × 40 GiB = 160 GiB
+
+One sequence at 1,000,000 tokens:
+327,680 × 1,000,000 / 2^30 ≈ 305.18 GiB</code></pre>
+                    <p>This is an illustrative architecture, not a claim about every large model. The difference between one million tokens and 1,048,576 tokens also matters: “1M” and “1Mi” are not interchangeable. Budget prompt tokens <em>plus generated tokens</em>; if a runtime's context limit is 131,072 tokens, a prompt of that length leaves no room for a nonempty answer under that limit.</p>
+                    <p>Sliding-window layers retain only a bounded history in some implementations; hybrid models mix attention types and state-space layers. Multi-head latent attention (MLA) can cache a compressed latent representation rather than the full conventional K/V tensors. These require their own formulas and runtime inspection. Do not paste the standard GQA calculation onto every architecture.</p>
+                    <h3>Apply the formula to the actual model</h3>
+                    <p>Establish the effective bytes per token from the model's architecture and serving implementation rather than borrowing a number from another model. Recompute the weight format, cache format, units, concurrent sequences, and overhead from revision-pinned sources. A context limit in a model card specifies a supported configuration, not a promise that your hardware can serve it at useful latency or quality.</p>
+
+                    <h2 id="planner">4. A runnable memory-planning lab</h2>
+                    <p>Save the following as <code>memory_budget.py</code> and run <code>python memory_budget.py</code>. It uses only the Python standard library. The example assumes <strong>512GiB actually available in the chosen memory pool</strong>, a 300GiB loaded weight allocation, 32GiB of measured or estimated overhead, and a separate 32GiB safety reserve. These are hypothetical inputs, not a benchmark or a vendor's default allocation policy.</p>
+                    <pre><code class="language-python" data-psc-example="memory-budget">from dataclasses import dataclass
+from math import isfinite
+
+GiB = 2 ** 30
+
+@dataclass(frozen=True)
+class Attention:
+    layers: int = 80
+    kv_heads: int = 8
+    head_dim: int = 128
+    element_bytes: int = 2
+
+    def bytes_per_token(self):
+        values = (self.layers, self.kv_heads,
+                  self.head_dim, self.element_bytes)
+        if any(type(value) is not int or value &lt;= 0 for value in values):
+            raise ValueError("Attention dimensions must be positive integers")
+        return 2 * self.layers * self.kv_heads * self.head_dim * self.element_bytes
+
+def budget(attention, *, total_gib, weights_gib, overhead_gib,
+           reserve_gib, tokens, sequences):
+    sizes = (total_gib, weights_gib, overhead_gib, reserve_gib)
+    if any(not isfinite(value) or value &lt; 0 for value in sizes):
+        raise ValueError("Memory sizes must be finite and nonnegative")
+    if total_gib &lt;= 0:
+        raise ValueError("Total memory must be positive")
+    if any(type(value) is not int or value &lt;= 0
+           for value in (tokens, sequences)):
+        raise ValueError("Tokens and sequences must be positive integers")
+
+    per_token = attention.bytes_per_token()
+    fixed = (weights_gib + overhead_gib + reserve_gib) * GiB
+    cache_bytes = per_token * tokens * sequences
+    available = total_gib * GiB
+    return {
+        "cache_gib": cache_bytes / GiB,
+        "required_gib": (fixed + cache_bytes) / GiB,
+        "fits": fixed + cache_bytes &lt;= available,
+        "max_equal_length_sequences": max(
+            0, int((available - fixed) // (per_token * tokens))
+        ),
+    }
+
+if __name__ == "__main__":
+    attention = Attention()
+    settings = dict(
+        total_gib=512, weights_gib=300,
+        overhead_gib=32, reserve_gib=32, tokens=131072,
+    )
+    print("bytes_per_token:", attention.bytes_per_token())
+    for count in (1, 3, 4):
+        print(count, budget(attention, sequences=count, **settings))
+</code></pre>
+                    <pre><code>bytes_per_token: 327680
+1 {'cache_gib': 40.0, 'required_gib': 404.0, 'fits': True, 'max_equal_length_sequences': 3}
+3 {'cache_gib': 120.0, 'required_gib': 484.0, 'fits': True, 'max_equal_length_sequences': 3}
+4 {'cache_gib': 160.0, 'required_gib': 524.0, 'fits': False, 'max_equal_length_sequences': 3}</code></pre>
+                    <p>Change <code>element_bytes</code> to 1 to model the idealized storage payload of an eight-bit cache. In this example the logical cache halves to 20GiB per sequence and the arithmetic ceiling becomes seven equal-length sequences. That is a sizing scenario, not a throughput guarantee or a claim of equal model quality. The calculator omits block padding and architecture-specific states; for a cluster, repeat the budget <strong>per rank</strong> using the actual sharding or replication of weights and cache.</p>
+
+                    <h2 id="compressed-memory">5. Compressed attention is not the same as putting a model on an SSD</h2>
+                    <p>Three mechanisms are easily confused: lower-precision cache storage, architecture-level compressed attention, and moving model-related data to a slower storage tier. They solve different problems and have different correctness and latency implications.</p>
+                    <p>The linked <a href="https://github.com/MiaAI-Lab/DeepSeek-v4.1-Flash-DGX-Sparks" target="_blank" rel="noopener noreferrer">Mia'a AI Lab deployment report</a> describes native low-precision weights and NVMe-resident Engram lookup tables for DeepSeek V4.1 Flash. It reports approximately 189GiB of tables on NVMe and about 305GiB of GPU-resident data in that configuration. These are the maintainer's measurements, not figures independently reproduced by PSC. The report also distinguishes checkpoint size, resident allocations, and layouts across different rank counts; those are not necessarily directly subtractable quantities.</p>
+                    <p>An architecture-specific lookup table can have a sparse access pattern suitable for that runtime's SSD-backed implementation. That does <strong>not</strong> mean that an arbitrary 189GiB of dense transformer weights or KV cache can be moved to SSD at negligible cost. Dense per-token weight access, random lookup reads, and cache paging have different working sets. Validate SSD latency, IOPS, page-cache behavior, and sustained operation under memory pressure.</p>
+                    <p>The same report warns that putting the tables in host RAM can evict the model on unified-memory systems. “Offload to RAM” is not a capacity win when RAM and GPU allocations consume the same physical pool. Record what is actually resident, replicated, mapped, and pageable rather than merely listing where the file lives.</p>
+
+                    <h2 id="hardware">6. Six hardware approaches, six different bottlenecks</h2>
+                    <p>The following compares six hardware approaches, not an endorsement or a universal ranking. Vendor specifications were checked on <strong>20 October 2026</strong> where accessible; stock, regional pricing, supported configurations, and runtimes still need a fresh check before purchase.</p>
+                    <div class="local-ai-table-wrap" role="region" aria-label="Local AI hardware architecture comparison" tabindex="0">
+                        <table class="local-ai-table">
+                            <caption>Capacity alone does not describe an inference system</caption>
+                            <thead><tr><th scope="col">Approach</th><th scope="col">Memory accounting</th><th scope="col">Primary engineering constraint</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row">Mac Studio / Apple silicon</th><td>A large coherent unified-memory pool; CPU, GPU, and OS compete for it.</td><td>Runtime and Metal kernel support, practical GPU working set, system pressure, and sustained bandwidth.</td></tr>
+                                <tr><th scope="row">Four 128GB DGX Sparks</th><td>512GB advertised aggregate across four independent nodes, not one allocation.</td><td>Distributed runtime support, per-node headroom, and network collectives.</td></tr>
+                                <tr><th scope="row">Four 96GB RTX PRO 6000s</th><td><strong>384GB</strong> advertised GPU memory in total, not 512GB.</td><td>PCIe topology, GPU peer access, per-card fit, power, cooling, and exact board variant.</td></tr>
+                                <tr><th scope="row">Large-memory EPYC host</th><td>System DDR memory; discrete GPU capacity is separate unless an explicit offload path is used.</td><td>Memory channels, NUMA locality, CPU kernels, and host-to-GPU transfers.</td></tr>
+                                <tr><th scope="row">Sixteen 32GB AMD MI50s</th><td>512GB aggregate for this illustrative sixteen-card layout.</td><td>Current software compatibility, sixteen-device fabric, chassis, power, and used hardware condition.</td></tr>
+                                <tr><th scope="row">Multiple Strix Halo mini PCs</th><td>Separate unified-memory pools; count the actual fitted memory per device.</td><td>iGPU runtime support, local bandwidth, thermal behavior, and cross-node communication.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>Mac Studio: one large pool is simpler, but not unrestricted</h3>
+                    <p><a href="https://www.apple.com/mac-studio/specs/" target="_blank" rel="noopener noreferrer">Apple's current specification page</a> lists M5 Ultra configurations up to 512GB and 1.2TB/s memory bandwidth; its configuration rules attach the highest memory option to the higher-core-count variant. Those are vendor specifications, not measured LLM speeds. A spec listing does not itself confirm a purchasable configuration in your region; verify availability and pricing directly.</p>
+                    <p>Do not hard-code a universal macOS percentage as usable GPU memory. Query what the chosen framework can allocate, observe memory pressure during long-context runs, and leave capacity for the OS. An unsupported limit override can destabilize the machine and does not increase physical bandwidth. Two Macs connected by Thunderbolt still require a distributed implementation; the cable does not merge their memory spaces.</p>
+                    <h3>DGX Spark: coherent memory within a node, networking between nodes</h3>
+                    <p><a href="https://docs.nvidia.com/dgx/dgx-spark/hardware.html" target="_blank" rel="noopener noreferrer">NVIDIA's Spark hardware documentation</a> lists a 128GB configuration, 273GB/s memory bandwidth, and ConnectX-7 networking. The product page also lists other memory options, so verify the SKU. Four 128GB nodes make the headline sum, but memory occupied by the head node's API server, tokenizer, communication buffers, and CPU tasks is unavailable to its model shard.</p>
+                    <p>A vendor's advertised FP4 compute figure is not tokens per second. Precision, sparsity assumptions, attention kernels, memory traffic, and communication determine the application result. Confirm the exact model and runtime support before treating an aggregate capacity claim as a working configuration.</p>
+                    <h3>RTX PRO 6000: faster local memory may beat a larger pool</h3>
+                    <p><a href="https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/" target="_blank" rel="noopener noreferrer">NVIDIA lists 96GB GDDR7</a> for RTX PRO 6000 Blackwell. Four such devices add up to 384GB. Distinguish Max-Q and Workstation Edition variants; do not apply one variant's power and cooling requirements to every board. A four-card workstation also needs appropriate electrical service, PSU capacity, airflow, slot spacing, and enough usable PCIe lanes. Do not assume a particular interconnect or peer-to-peer feature from the family name.</p>
+                    <h3>EPYC, MI50, and mini-PC builds: cheap capacity can charge in latency</h3>
+                    <p>A many-channel EPYC system can offer substantial DDR capacity, but population matters: filling only a few channels or accessing a remote NUMA node can waste much of the theoretical bandwidth. A historical build price is not a current bill of materials; reprice compatible DIMMs, motherboard, CPUs, cooling, storage, and any accelerators.</p>
+                    <p>Sixteen older MI50 cards add compatibility and integration risks. Check the exact GPU generation against the runtime, driver, and kernel support matrix; successful community workarounds are not equivalent to current vendor support. Include risers, PCIe switches, power distribution, fans, spare parts, and failure diagnosis. Two compact Strix Halo systems reduce chassis complexity but still face inter-node bandwidth and supported distributed-execution constraints. Neither approach earns a recommendation just by reaching a memory total.</p>
+
+                    <h2 id="parallelism">7. Distributed inference: memory does not add itself</h2>
+                    <p><strong>Tensor parallelism</strong> divides computations within layers and typically needs frequent collectives. <strong>Pipeline parallelism</strong> assigns stages to devices and transfers intermediate activations between them; bubbles and uneven stages affect utilization. <strong>Expert parallelism</strong> distributes MoE experts and adds token-routing traffic. <strong>Data parallelism</strong> ordinarily replicates a complete serving instance, increasing throughput rather than making one oversized instance fit.</p>
+                    <figure class="diagram-figure">
+                        <svg viewBox="0 0 760 245" role="img" aria-labelledby="fabric-title fabric-desc">
+                            <title id="fabric-title">Four nodes form a distributed inference system rather than a single memory pool</title>
+                            <desc id="fabric-desc">A serving coordinator distributes work to four nodes. Each node has its own weights, cache and overhead, and exchanges data using a network fabric. Per-node memory and network latency both constrain the deployment.</desc>
+                            <text x="20" y="25" class="dg-title">DISTRIBUTED INFERENCE / EACH RANK MUST FIT</text>
+                            <rect x="220" y="45" width="320" height="48" rx="6" class="dg-node-accent"/>
+                            <text x="380" y="74" text-anchor="middle" class="dg-accent-text">Serving coordinator + scheduler</text>
+                            <path d="M380 93V119H100V143M380 119H300V143M380 119H500V143M380 119H660V143" class="dg-flow"/>
+                            <rect x="20" y="143" width="160" height="72" rx="6" class="dg-node"/>
+                            <rect x="220" y="143" width="160" height="72" rx="6" class="dg-node"/>
+                            <rect x="420" y="143" width="160" height="72" rx="6" class="dg-node"/>
+                            <rect x="600" y="143" width="140" height="72" rx="6" class="dg-node"/>
+                            <text x="100" y="171" text-anchor="middle" class="dg-label">Rank 0</text>
+                            <text x="300" y="171" text-anchor="middle" class="dg-label">Rank 1</text>
+                            <text x="500" y="171" text-anchor="middle" class="dg-label">Rank 2</text>
+                            <text x="670" y="171" text-anchor="middle" class="dg-label">Rank 3</text>
+                            <text x="100" y="193" text-anchor="middle" class="dg-sub">Shard + KV + buffers</text>
+                            <text x="300" y="193" text-anchor="middle" class="dg-sub">Shard + KV + buffers</text>
+                            <text x="500" y="193" text-anchor="middle" class="dg-sub">Shard + KV + buffers</text>
+                            <text x="670" y="193" text-anchor="middle" class="dg-sub">Own memory pool</text>
+                        </svg>
+                        <figcaption class="diagram-caption"><b>Figure 2.</b> Total capacity is distributed. The slowest or most memory-constrained rank can stall a synchronous job.</figcaption>
+                    </figure>
+                    <p>Check the backend's sharding rules. Fewer KV heads than tensor-parallel ranks may require replication, and some tensors or stages remain uneven. Adding ranks can therefore reduce weight pressure without dividing all cache or overhead equally. <a href="https://docs.vllm.ai/en/stable/serving/parallelism_scaling/" target="_blank" rel="noopener noreferrer">vLLM's parallelism guide</a> discusses supported layouts and the runtime's cache-capacity logs; those measured allocations are more useful than assuming perfect division.</p>
+                    <p>Keep bandwidth units consistent. A 200Gbit/s link has a raw arithmetic ceiling of 25GB/s before protocol and software overhead. It is not a 200GB/s memory bus. The 273GB/s Spark memory specification and a network link describe different operations; neither can simply replace the other. Check topology, message sizes, latency, link negotiation, and actual collective performance.</p>
+
+                    <h2 id="performance">8. Prefill, decode, prefix caching, and quantized cache</h2>
+                    <p><strong>Prefill</strong> processes the input prompt and constructs its cache. <strong>Decode</strong> generates new tokens while reusing cached state. Long prompts stress attention, compute, and cache allocation; low-concurrency decoding often puts more pressure on weight movement. Architecture, batching, speculative decoding, and kernels can change which bottleneck dominates.</p>
+                    <pre><code>Approximate cold prompt processing time = input_tokens / measured_prefill_tokens_per_second
+Approximate output time = output_tokens / measured_decode_tokens_per_second
+
+End-to-end time also includes queueing, tokenization, transfers,
+startup or compilation, and any cache misses or storage reads.</code></pre>
+                    <p>At a sustained 5,000 input tokens/s, a one-million-token cold prompt takes about <strong>200 seconds</strong> to process. At 18,000 input tokens/s, the corresponding arithmetic is about <strong>55.6 seconds</strong>. These are conditional examples, not extrapolated benchmark promises: attention cost, chunking, cache capacity, and throttling can change throughput at extreme lengths. A short-prompt decode number cannot predict long-context time to first token.</p>
+                    <p><strong>Prefix caching</strong> can reuse an already-computed, matching token prefix. It does not eliminate the first cold ingestion, and changed tokens earlier in the prefix can reduce reuse. Cache eviction, tokenizer or template differences, model revision, and tenant-isolation rules affect hit rate. <a href="https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/" target="_blank" rel="noopener noreferrer">vLLM documents APC as a prefill optimization</a>, not a general acceleration of every newly generated token.</p>
+                    <p><strong>KV-cache quantization</strong> changes cache storage precision. It can increase capacity, but speed and quality depend on hardware and kernels. <a href="https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache/" target="_blank" rel="noopener noreferrer">vLLM's documentation</a> describes supported formats and calibration schemes. Do not assume all architectures, layers, or devices support the same mode. Compare retrieval, long-horizon reasoning, tool use, and coding tasks with a higher-precision baseline before approving a smaller cache.</p>
+                    <p>A defensible cache-quality comparison holds checkpoint, prompts, tool environment, decoding settings, and evaluation protocol fixed and changes only the cache setting. Report the task-level results and their variation rather than assuming a universal quality penalty for FP8.</p>
+
+                    <h2 id="benchmarks">9. Separate measured evidence from shopping numbers</h2>
+                    <p>The linked Mia'a AI Lab report gives a four-Spark single-stream decode result of <strong>87.7 tokens/s</strong> and a 16-stream aggregate result of <strong>342.7 tokens/s</strong> for its setup. Those are community-maintained deployment results using particular low-precision kernels and speculative decoding, not vendor guarantees. Aggregate throughput does not mean each of 16 users gets 342.7 tokens/s; individual rates and scheduling fairness must be measured separately.</p>
+                    <p>The report also describes a verified prompt of roughly 1.01 million tokens and cold-prefill measurements at several shorter lengths. A successful long-context needle test demonstrates something useful but narrower than complete long-context reliability. It does not establish that every workload, every query position, and every concurrent session behaves equally well.</p>
+                    <p>The <a href="https://github.com/local-inference-lab/rtx6kpro/blob/master/models/deepseek-v4.1-flash.md" target="_blank" rel="noopener noreferrer">local-inference-lab four-RTX-PRO deployment report</a> describes a separate configuration. Compare its exact memory tiering, speculative settings, kernels, and benchmark revision before ranking it against Sparks. A headline result with tables in RAM cannot silently be assigned to a disk-backed deployment. Do not copy permissive container settings such as host networking or a disabled seccomp profile without reviewing why they are required and how the environment is isolated.</p>
+                    <h3>A useful measurement matrix</h3>
+                    <ol>
+                        <li>Pin model and tokenizer revisions, quantization format, draft model, runtime commit, drivers, kernels, and hardware topology.</li>
+                        <li>Test cold inputs at 4K, 32K, and 128K, then higher lengths only if required. Count tokens with the deployed tokenizer; reserve output capacity.</li>
+                        <li>Repeat at concurrency 1, 4, and the expected peak. Use both independent prompts and realistic shared-prefix traffic.</li>
+                        <li>Record p50/p95 time to first token, inter-token latency, completed-request latency, per-request output rate, total throughput, errors, and cancellations.</li>
+                        <li>Track peak per-rank memory, CPU pressure, network throughput, SSD reads, wall power, and thermals after warm-up and at sustained load.</li>
+                        <li>Evaluate answer quality at multiple context positions and lengths. Keep quality failures visible alongside speed and capacity.</li>
+                    </ol>
+                    <p>“Full context” should mean the complete tested workload fits and meets its quality and latency targets, not merely that a maximum-length command-line option was accepted.</p>
+
+                    <h2 id="economics">10. Local versus API: a transparent break-even model</h2>
+                    <p>Hardware and API pricing change over time; the worked scenario below uses illustrative assumptions, not current quotes. Region, tax, model availability, cache discounts, and contractual data terms must be checked separately. A useful comparison starts with the same task quality and an actual utilization trace.</p>
+                    <pre><code>Monthly_local_cost =
+    (hardware_cost - expected_resale_value) / useful_life_months
+    + electricity + cooling + administration + maintenance + network/storage
+
+Monthly_API_cost =
+    uncached_input_millions × uncached_input_price
+    + cached_input_millions × cached_input_price
+    + output_millions × output_price
+    + other provider or platform charges</code></pre>
+                    <p>As an <strong>illustrative scenario only</strong>, suppose hardware costs $28,000, useful life is 36 months with zero assumed resale, wall power averages 0.6kW over 720 hours/month, electricity is $0.25/kWh, and administration plus maintenance is $150/month. Amortized hardware is $777.78/month, electricity is $108/month, and the subtotal is <strong>$1,035.78/month</strong> before cooling and other costs.</p>
+                    <p>For a hypothetical API at $0.50 per million input tokens and $2.00 per million output tokens, 100 million input plus 20 million output tokens cost $90/month. With all else held fixed, roughly 11.51 times that token volume matches the illustrative local monthly subtotal. That does not prove the local box can produce the corresponding workload at acceptable latency.</p>
+                    <p>For a separate cash-payback view, divide upfront hardware cost by monthly <em>net avoided API cost</em> after recurring local expenses. If net savings are zero or negative, there is no positive payback period under those assumptions. Do not count hardware amortization again in that denominator. Tokens per second multiplied by every second of the year is installed capacity, not demonstrated demand.</p>
+                    <p>Self-hosting can still be justified by offline availability, predictable access, data governance, or workflow control. An API can be preferable for bursty workloads or rapidly changing models. Include licensing, regional availability, redundancy, spare capacity, and operator time. Cheap hardware with expensive integration can lose to a smaller supported deployment.</p>
+
+                    <h2 id="deployment">11. Validate and secure the final system</h2>
+                    <p>Local inference keeps data on infrastructure you control only if the surrounding system is configured that way. Runtime downloads, telemetry, connectors, tools, logs, and remote management can still transmit data. The model endpoint is also a resource-intensive service that needs ordinary production controls.</p>
+                    <ol>
+                        <li><strong>Inventory before loading.</strong> Record model source, license, artifact digests, runtime and container versions, driver support, and conversion provenance. Review custom model code rather than enabling trust flags automatically.</li>
+                        <li><strong>Isolate management and fabric.</strong> Keep model-serving control planes, distributed-worker ports, RDMA networks, dashboards, and storage services on restricted networks. An OpenAI-compatible API shape does not provide authentication by itself.</li>
+                        <li><strong>Authenticate and bound inference.</strong> Enforce caller identity, authorization, per-tenant quotas, maximum input and output tokens, concurrency, queue limits, and timeouts. Reject oversized workloads before expensive prefill.</li>
+                        <li><strong>Protect cache and logs.</strong> Treat cached prompts, KV state, spill files, prefixes, and debug traces as potentially sensitive. Apply tenant isolation, retention limits, encryption where appropriate, and supported deletion procedures.</li>
+                        <li><strong>Contain tool use.</strong> A locally hosted model is not an authorization engine. Tool adapters need least privilege, network egress controls, explicit permissions, and independent validation of model-proposed actions.</li>
+                        <li><strong>Exercise failures.</strong> Test cancellation, one rank failing, SSD unavailability, cache eviction, OOM, restart, and backend fallback. A degraded CPU path should be observable rather than silently violating service targets.</li>
+                        <li><strong>Promote only measured configurations.</strong> Archive the actual benchmark report and peak memory, then use controlled rollout, health checks, capacity alerts, and a tested rollback path.</li>
+                    </ol>
+                    <div class="callout">
+                        <h4>The purchase acceptance test</h4>
+                        <p>Specify a model revision, precision, maximum prompt and output length, concurrent users, acceptable p95 latency, quality threshold, and sustained power envelope. Buy the system that passes that test—not the system whose capacity label is largest.</p>
+                    </div>
+
+                    <h2 id="sources">12. Sources, verification limits, and final checklist</h2>
+                    <p>Source review date: <strong>20 October 2026</strong>. Product pages and community repositories are mutable. Primary documentation supports the architectural discussion; externally reported benchmarks are attributed to their maintainers. This article is not an independent hardware benchmark, a live price list, or a claim of affiliation with the vendors.</p>
+                    <ol class="local-ai-sources">
+                        <li><a href="https://www.apple.com/mac-studio/specs/" target="_blank" rel="noopener noreferrer">Apple Mac Studio specifications</a> — memory configurations and advertised bandwidth, not an application benchmark.</li>
+                        <li><a href="https://docs.nvidia.com/dgx/dgx-spark/hardware.html" target="_blank" rel="noopener noreferrer">NVIDIA DGX Spark hardware overview</a> and <a href="https://www.nvidia.com/en-us/products/workstations/dgx-spark/" target="_blank" rel="noopener noreferrer">product specifications</a> — distinguish the selected memory SKU and network from the application result.</li>
+                        <li><a href="https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/" target="_blank" rel="noopener noreferrer">NVIDIA RTX PRO 6000 Blackwell</a> — verify the exact board variant and installation requirements.</li>
+                        <li><a href="https://github.com/MiaAI-Lab/DeepSeek-v4.1-Flash-DGX-Sparks" target="_blank" rel="noopener noreferrer">Mia'a AI Lab: DeepSeek V4.1 Flash on DGX Sparks</a> — maintainer-reported deployment, memory placement, context tests, and throughput.</li>
+                        <li><a href="https://github.com/local-inference-lab/rtx6kpro/blob/master/models/deepseek-v4.1-flash.md" target="_blank" rel="noopener noreferrer">local-inference-lab: four-RTX-PRO deployment</a> — a separate runtime configuration; benchmark storage mode must match deployment mode.</li>
+                        <li><a href="https://docs.vllm.ai/en/stable/serving/parallelism_scaling/" target="_blank" rel="noopener noreferrer">vLLM parallelism and scaling</a>, <a href="https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/" target="_blank" rel="noopener noreferrer">automatic prefix caching</a>, and <a href="https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache/" target="_blank" rel="noopener noreferrer">quantized KV cache</a> — select documentation matching your installed release; the last link is the developer-preview guide.</li>
+                    </ol>
+                    <p>Before buying: confirm units and usable memory; calculate weight and cache allocations; validate per-rank fit; price the complete system; measure cold and warm workloads; test full-context quality; and review the deployment's data and administrative boundaries. Memory is one line in that checklist, not its conclusion.</p>
+                    <div class="tag-row"><span class="tag">#local-ai</span><span class="tag">#kv-cache</span><span class="tag">#gpu</span><span class="tag">#llm-inference</span><span class="tag">#ai-infrastructure</span></div>
+                </div>
+                <section class="related-services" aria-labelledby="local-ai-services">
+                    <span class="eyebrow">Control the deployment boundary</span>
+                    <h2 id="local-ai-services">Make local AI measurable and defensible.</h2>
+                    <div class="related-service-links">
+                        <a href="../services/ai-mcp-security.html"><strong>AI and MCP Security Assessment</strong><span>Validate model-serving access, tool permissions, sensitive-data flows, and AI application trust boundaries.</span></a>
+                        <a href="../services/detection-engineering.html"><strong>Detection Engineering</strong><span>Connect identity, runtime, infrastructure, and provider telemetry to actionable security signals.</span></a>
+                    </div>
+                </section>
+                <div class="article-nav"><a href="../resources.html#blog">All articles</a><a href="quantization-hacking-cifar10.html">Explore the quantization lab</a></div>
+            </div>
+        </article>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand"><a href="../../index.html" class="logo"><span class="logo-word"><span class="logo-name">Preemptive <em>Cyber Security</em></span><span class="logo-tag">Know the Unknown</span></span></a><p>360-degree protection against cyber threats. Offensive security, defensive operations, and training.</p></div>
+                <div><h4>Company</h4><ul><li><a href="../about.html">About</a></li><li><a href="../team.html">Team</a></li><li><a href="../careers.html">Careers</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+                <div><h4>Services</h4><ul><li><a href="../services.html#offensive">Offensive Security</a></li><li><a href="../services.html#defensive">Defensive Security</a></li><li><a href="../services.html#ai">AI Security</a></li></ul></div>
+                <div><h4>Resources</h4><ul><li><a href="../resources.html#blog">Blog</a></li><li><a href="../../easm.html">EASM</a></li><li><a href="../../skillscan.html">SkillScan</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../cookies.html">Cookies</a></li><li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
