@@ -380,6 +380,11 @@
 .runtime-security-article .prose li { overflow-wrap: anywhere; }
 .runtime-security-article [id] { scroll-margin-top: 110px; }
 
+.abliterated-models-article { padding-top: calc(var(--nav-height) + 30px); }
+.abliterated-models-article .prose p,
+.abliterated-models-article .prose li { overflow-wrap: anywhere; }
+.abliterated-models-article [id] { scroll-margin-top: var(--nav-height); }
+
 .local-ai-article { padding-top: calc(var(--nav-height) + 30px); }
 .local-ai-article .callout > p { margin-bottom: 0; color: var(--text-secondary); }
 .local-ai-article pre { max-width: 100%; }
