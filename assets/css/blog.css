@@ -375,6 +375,11 @@
 .article-table th, .article-table td { padding: 16px; border-top: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); }
 .article-table th { color: var(--text-primary); font-weight: 500; background: var(--bg-card); }
 
+.runtime-security-article { padding-top: 110px; }
+.runtime-security-article .prose p,
+.runtime-security-article .prose li { overflow-wrap: anywhere; }
+.runtime-security-article [id] { scroll-margin-top: 110px; }
+
 .local-ai-article { padding-top: calc(var(--nav-height) + 30px); }
 .local-ai-article .callout > p { margin-bottom: 0; color: var(--text-secondary); }
 .local-ai-article pre { max-width: 100%; }
