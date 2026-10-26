@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uncensored and Abliterated AI: Cloud vs Local Labs | PSC</title>
+    <meta name="description" content="How uncensored and abliterated models work: jailbreak research, open weights, eight service candidates, cloud versus local labs, costs and security controls.">
+    <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/uncensored-abliterated-models-cloud-local.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Uncensored and Abliterated AI: Cloud vs Local Labs | PSC">
+    <meta property="og:description" content="How uncensored and abliterated models work: jailbreak research, open weights, eight service candidates, cloud versus local labs, costs and security controls.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/uncensored-abliterated-models-cloud-local.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Uncensored and Abliterated AI: Cloud vs Local Labs | PSC">
+    <meta name="twitter:description" content="How uncensored and abliterated models work: jailbreak research, open weights, eight service candidates, cloud versus local labs, costs and security controls.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta property="article:published_time" content="2026-10-27">
+    <meta property="article:modified_time" content="2026-10-27">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="AI Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/uncensored-abliterated-models-cloud-local.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/uncensored-abliterated-models-cloud-local.html",
+                "headline": "Uncensored and Abliterated Models: From Refusal Directions to Cloud and Local AI Labs",
+                "description": "How uncensored and abliterated models work: jailbreak research, open weights, eight service candidates, cloud versus local labs, costs and security controls.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-10-27",
+                "dateModified": "2026-10-27",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": { "@id": "https://preemptivecybersec.com/#organization" },
+                "articleSection": "AI Security",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/uncensored-abliterated-models-cloud-local.html#breadcrumb",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://preemptivecybersec.com/" },
+                    { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://preemptivecybersec.com/pages/resources.html" },
+                    { "@type": "ListItem", "position": 3, "name": "Uncensored and Abliterated Models", "item": "https://preemptivecybersec.com/pages/blog/uncensored-abliterated-models-cloud-local.html" }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo" aria-label="Preemptive Cyber Security home">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../../pages/services.html">Services</a></li>
+                    <li><a href="../../pages/about.html">About</a></li>
+                    <li><a href="../../pages/team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../pages/resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../../pages/resources.html#blog">Blog</a></li>
+                            <li><a href="../../pages/resources.html#tools">Tools</a></li>
+                            <li><a href="../../pages/resources.html#talks">Talks &amp; Presentations</a></li>
+                            <li><a href="../../easm.html">EASM</a></li>
+                            <li><a href="../../skillscan.html">SkillScan</a></li>
+                            <li><a href="../../CI.html">Breach Intelligence</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../llms.txt">llms.txt</a></li>
+                    <li><a href="../../pages/careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../../pages/contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <article class="article abliterated-models-article">
+            <div class="container">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">Uncensored and Abliterated Models</li></ol></nav>
+                <div class="article-meta"><span class="cat">AI Security</span><span class="dot">//</span><span>2026-10-27</span><span class="dot">//</span><span>35 min read</span></div>
+                <h1>Uncensored and Abliterated Models: From Refusal Directions to Cloud and Local AI Labs</h1>
+                <p class="article-lead">A model that stops saying no has not necessarily become more capable, more truthful or more private. To choose between a hosted reduced-refusal API and a local AI lab, first separate the model's learned behaviour from its weights, its serving stack and the permissions of the tools attached to it.</p>
+                <div class="article-byline"><span class="avatar">VM</span><span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> &middot; Managing Director &amp; Principal Consultant</span></div>
+                <div class="prose">
+                    <p><strong>Evidence cut-off: 27 October 2026.</strong> This is a technical explanation and a source-based service comparison, not a hands-on benchmark or endorsement. Service descriptions below are attributed to public vendor material. Abliteration.ai, Morph and Venice could not be reviewed through this environment's access restrictions; their current features, policies and prices are explicitly unverified. No paid accounts, hosted-model experiments or model downloads were used for this article.</p>
+                    <div class="callout"><p><strong>The practical recommendation:</strong> compare an unchanged instruction model and its modified derivative on your actual authorised workload. Use synthetic data for the first hosted trial, keep sensitive work local when its data classification requires it, and enforce tool permissions outside the model. A refusal score is not a security boundary or a measure of useful work.</p></div>
+
+                    <nav aria-label="Article contents">
+                        <h2>Contents</h2>
+                        <ol>
+                            <li><a href="#terminology">What uncensored, abliterated and open-weight mean</a></li>
+                            <li><a href="#refusal">Where refusal behaviour comes from</a></li>
+                            <li><a href="#jailbreaks">How jailbreaks work</a></li>
+                            <li><a href="#creation">How reduced-refusal models are created</a></li>
+                            <li><a href="#abliteration">Abliteration and the geometry of refusal</a></li>
+                            <li><a href="#open-weights">Open weights, licences and reproducibility</a></li>
+                            <li><a href="#providers">Eight services: what can actually be compared</a></li>
+                            <li><a href="#deployment">Cloud inference versus local AI labs</a></li>
+                            <li><a href="#economics">Memory, latency and cost</a></li>
+                            <li><a href="#evaluation">A defensible evaluation and rollout</a></li>
+                            <li><a href="#controls">Controls that survive a compliant model</a></li>
+                            <li><a href="#sources">Primary sources and further reading</a></li>
+                        </ol>
+                    </nav>
+
+                    <h2 id="terminology">1. Five labels that describe different things</h2>
+                    <p><strong>Uncensored</strong> is a marketing label, not a standard model architecture. It can mean fewer refusals, broader topic coverage, a permissive system prompt, different training preferences or simply an application with fewer visible moderation checks. It does not establish that the weights were modified, that every request will succeed, or that the provider permits every use. A model can be willing to discuss a subject and still be unable to reason about it accurately.</p>
+                    <p><strong>Abliterated</strong> usually describes a derivative whose internal representations or weights have been modified to reduce a refusal-related signal. The name blends ablation and obliteration. It is more specific than uncensored, but still not a complete technical specification: publishers may use different directions, layers, strengths, recovery training and evaluation procedures. Two checkpoints with the same suffix can have very different behaviour.</p>
+                    <p><strong>Jailbroken</strong> generally describes an interaction in which the model violates its intended behavioural policy. In a prompt-based jailbreak, the deployed weights do not change. White-box research also uses the term for interventions with access to model internals. State which threat model applies rather than treating every jailbreak as a clever phrase entered into a chat box.</p>
+                    <p><strong>Open-weight</strong> means the model parameters are available under some licence. <strong>Open-source AI</strong> is a broader and contested claim involving the rights and materials needed to understand, use and modify a system. Neither term automatically means unrestricted commercial use. <strong>Open-access</strong> can mean anyone may sign up for an API; that says nothing about downloading its weights. A public model card is not itself a redistribution licence.</p>
+                    <p>Finally, <strong>local</strong> describes where a component runs. A desktop chat client can call a remote API. A locally installed browser extension can send page contents to a hosted model. A local inference server can still use remote embeddings, cloud OCR, web search or telemetry. Privacy assessment begins with a data-flow diagram, not the location of the chat window.</p>
+
+                    <h2 id="refusal">2. Refusal is learned behaviour within a larger system</h2>
+                    <p>A pretrained language model learns to predict tokens from a broad corpus. It does not begin as a polished assistant with a neatly separated safety module. Instruction tuning then teaches response formats and task-following. Preference optimisation and other post-training stages shift the distribution toward outputs judged more useful, appropriate or safe. Refusal examples are part of that behavioural shaping; they are not generally stored in one editable list of forbidden words.</p>
+                    <p>Supervised fine-tuning increases the likelihood of selected answers given their prompts. Preference methods compare candidate answers and make preferred responses more likely relative to alternatives, subject to the method's constraints. RLHF commonly involves a learned reward signal and reinforcement learning; <a href="https://arxiv.org/abs/2305.18290">direct preference optimisation</a> uses a different training objective. These are families of methods, not interchangeable names for a universal alignment recipe.</p>
+                    <p>At inference time, the system prompt, conversation history, retrieval context, chat template and sampling settings all influence the next-token distribution. Outside the model, an application may apply input classification, output filtering, account restrictions or tool authorisation. A refusal-shaped sentence could come from the model or be inserted by middleware. Changing weights does not automatically remove a gateway block, and changing a gateway does not prove a model has been abliterated.</p>
+                    <p>This layered design explains two apparently contradictory experiences: a researcher can get an unnecessarily cautious answer to an authorised analysis question, while a malicious instruction in a retrieved document can still manipulate the same application's agent. Topic refusal and resistance to untrusted instructions are different properties. Reducing the former can help legitimate analysis while leaving the latter unchanged or making it worse.</p>
+
+                    <h2 id="jailbreaks">3. How jailbreaks work without changing the weights</h2>
+                    <p>A prompt-based jailbreak exploits a mismatch between the behaviour a developer intends and the behaviour a model produces under a particular context. It changes the input distribution, not the model's installed permissions. Language models must interpret instructions and quoted data through overlapping learned representations; textual authority is not equivalent to an operating-system access-control check.</p>
+                    <h3>Instruction conflict, role framing and indirect requests</h3>
+                    <p>Some attempts recast a restricted request as role-play, quotation, translation or a fictional task. Others impersonate a higher-priority message or split a goal across several exchanges. The common mechanism is competition between learned instruction-following patterns and refusal behaviour. These approaches are model- and context-dependent: a trick that changes one answer can fail on a revised checkpoint, a different chat template or a gateway classifier.</p>
+                    <p>A harmless way to study that boundary is a test assistant instructed to answer in JSON containing only a colour name. Put an instruction in a quoted document asking it to switch to a paragraph. If it obeys the document, the experiment demonstrates a failure to distinguish trusted task instructions from source material. It does not require sensitive content, real secrets or access to another organisation's service.</p>
+                    <h3>Adversarial token search</h3>
+                    <p><a href="https://arxiv.org/abs/2307.15043">Zou and colleagues' 2023 research</a> demonstrated automatically discovered suffixes that increased the likelihood of affirmative continuations and sometimes transferred between models. The central idea is optimisation: evaluate how a change to the input affects a chosen output objective, search candidate token substitutions and retain improvements. Their method combined gradient information with discrete search because text tokens are not continuously adjustable numbers.</p>
+                    <p>The gradient is computed through continuous token representations, while the final input must be valid discrete tokens. That gap is why a gradient alone is not a finished prompt. Optimising across several prompts or models can discourage a solution that works on only one example. Transfer is an empirical result under particular conditions, not proof that one suffix defeats every contemporary API. An affirmative opening is also only a proxy objective: it does not prove a complete, correct or actionable answer follows.</p>
+                    <h3>Many-shot and long-context effects</h3>
+                    <p><a href="https://www.anthropic.com/research/many-shot-jailbreaking">Anthropic's 2024 many-shot study</a> showed that a long context containing repeated demonstrations of a behaviour can steer a model toward that behaviour, including violations of its intended policy. This is related to in-context learning: the model adapts its continuation to examples already in the prompt without updating its weights. The study found scaling trends with the number of demonstrations and explored mitigations.</p>
+                    <p>More context is therefore not merely a larger document buffer. It changes the attack surface and the distribution of examples the model conditions on. Defenders should test long documents, repeated instructions and multi-turn carry-over, not just a small list of suspicious phrases. The results from particular 2024 models should not be advertised as a current success rate against unrelated 2026 products.</p>
+                    <h3>Jailbreak versus prompt injection</h3>
+                    <p>A direct jailbreak usually comes from the person interacting with the model. An <strong>indirect prompt injection</strong> arrives through lower-trust material such as a web page, repository file, email or tool result. In an agent, the objective may be to redirect a workflow or obtain an unauthorised tool action rather than elicit a prohibited paragraph. An assistant can pass a harmful-content refusal benchmark and still mishandle an injected instruction.</p>
+                    <p>Practical testing should therefore record two outcomes separately: did the model violate a conversational policy, and did the surrounding system allow an unauthorised effect? A fabricated tool call is a proposal; a trusted executor deciding to honour it creates the effect. This distinction remains essential when the model has been deliberately tuned to refuse less.</p>
+
+                    <h2 id="creation">4. How reduced-refusal models are created</h2>
+                    <p>There is no single production pipeline. A publisher might use one method, combine several or merely wrap an unchanged model. Ask for a model card that identifies the base revision, adaptation method and evaluation results. A model name ending in <code>-uncensored</code> is not enough evidence to distinguish these approaches.</p>
+                    <div class="article-table-wrap" role="region" aria-label="Model modification methods" tabindex="0">
+                        <table class="article-table">
+                            <caption>Different interventions, different evidence requirements</caption>
+                            <thead><tr><th scope="col">Method</th><th scope="col">What changes</th><th scope="col">Principal limitation</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row">Prompt or wrapper changes</th><td>System instructions, templates, routing or external moderation.</td><td>No proof of a changed checkpoint; behaviour can remain fragile and context-dependent.</td></tr>
+                                <tr><th scope="row">Supervised fine-tuning</th><td>Parameters are trained on selected prompt-response pairs, including more accepted answers to legitimate sensitive-topic requests.</td><td>Dataset quality, coverage and duplication can dominate results; forgetting and new errors are possible.</td></tr>
+                                <tr><th scope="row">Preference optimisation</th><td>The relative likelihood of preferred and rejected responses changes.</td><td>A preference for answering can reward unsupported certainty or verbosity instead of correctness.</td></tr>
+                                <tr><th scope="row">Activation steering or ablation</th><td>A serving-time intervention changes intermediate activations.</td><td>Requires compatible runtime hooks and careful measurement across layers and tokens.</td></tr>
+                                <tr><th scope="row">Weight orthogonalisation</th><td>Selected parameter matrices are edited to suppress a measured representational direction.</td><td>Does not guarantee complete refusal removal or preservation of unrelated abilities.</td></tr>
+                                <tr><th scope="row">Adapters, merges and recovery tuning</th><td>A low-rank update, combined checkpoint or further training changes behaviour.</td><td>Effects can interact; a merge label does not explain which modification caused an observed result.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>Data selection can matter more than the label</h3>
+                    <p>A reduced-refusal supervised dataset might replace unnecessary refusals on legitimate security analysis, medical education or other sensitive topics with useful, bounded answers. Removing every refusal indiscriminately is a different objective. It can remove desirable behaviours such as acknowledging missing evidence, declining to fabricate a citation or stopping an unauthorised action. Training examples must separate topic openness from unsupported compliance.</p>
+                    <p>A professional dataset process documents consent and rights, removes secrets and duplicates, separates train and evaluation sets by underlying task, and checks for benchmark contamination. Splitting paraphrases of the same question across both sets can make a derivative look better than it generalises. Synthetic training answers need verification: distilling a fluent mistake from a larger model does not turn it into ground truth.</p>
+                    <h3>LoRA changes the training budget, not the definition of success</h3>
+                    <p><a href="https://arxiv.org/abs/2106.09685">Low-rank adaptation</a> trains a compact update to a base weight matrix instead of updating every parameter. Schematically, the effective matrix is <code>W_effective = W_base + scale * B * A</code>. This can reduce trainable parameter and optimiser-state memory. It does not mean inference needs only the small adapter: the base weights are still required unless the architecture says otherwise.</p>
+                    <p>An adapter can be loaded at inference or merged into compatible base weights. Pin the exact base checkpoint, target modules, scaling and tokenizer. An adapter built for one revision is not automatically valid for another similarly named model. Recovery fine-tuning after a weight edit can improve ordinary task performance, but it can also change refusal behaviour again. The final exported artifact, not each intermediate stage in isolation, is what needs evaluation.</p>
+
+                    <h2 id="abliteration">5. Abliteration: the geometry, the intervention and the limits</h2>
+                    <p><a href="https://arxiv.org/abs/2406.11717">Arditi and colleagues' 2024 paper, <em>Refusal in Language Models Is Mediated by a Single Direction</em></a>, provides an important mechanistic foundation. Across 13 studied chat models up to 72 billion parameters, the authors found a direction in residual-stream activations whose removal suppressed refusal and whose addition could induce refusal on harmless instructions. That is an experimentally observed mechanism in the studied systems, not a theorem that every model has one universal safety switch.</p>
+                    <h3>The residual stream is a shared representation</h3>
+                    <p>In a transformer, attention and feed-forward blocks write updates into a running hidden representation, often described as the residual stream. At a particular layer and token position, it is a vector with thousands of coordinates. Individual coordinates need not correspond to human concepts. A behaviour can instead be associated with a direction: a weighted combination of many coordinates.</p>
+                    <p>A simplified residual update is <code>hidden_next = hidden + attention_update + mlp_update</code>; exact ordering and normalisation depend on the architecture. A refusal-related direction is not a special token, a neuron named refusal or the entire safety policy. It is a geometric feature that may participate in generating refusal behaviour.</p>
+                    <h3>Estimating a direction</h3>
+                    <p>Conceptually, collect activations for two carefully matched groups of prompts: a group associated with refusal and a contrasting group associated with ordinary answering. At a chosen layer and token position, calculate each group's mean activation, subtract the means and normalise the result. The following is mathematical notation, not a complete model-modification implementation:</p>
+                    <pre><code>difference = mean(refusal_activations) - mean(answer_activations)
+direction = difference / norm(difference)
+component = dot(hidden, direction)
+projected_hidden = hidden - component * direction</code></pre>
+                    <p>The groups must not differ only by obvious nuisance factors such as prompt length, language, formatting or topic vocabulary. Otherwise the direction may primarily encode those differences. A zero or near-zero difference also cannot be safely normalised. Candidate directions are tied to the checkpoint, template, layer and token position used to measure them; they are not portable vectors for arbitrary models.</p>
+                    <p>Correlation is not enough. A stronger causal test removes the candidate direction and measures the effect, then adds it under controlled conditions and checks whether behaviour changes in the other direction. Selection should use a validation set distinct from the final evaluation. Trying many candidates and reporting only the most successful training result substantially overstates generalisation.</p>
+                    <h3>Runtime ablation versus persistent weight editing</h3>
+                    <p>Directional ablation subtracts the component parallel to a unit direction while retaining the orthogonal part of an activation. In the idealised full projection, the edited vector has zero dot product with that direction. Partial steering subtracts only a fraction; a stronger intervention is not automatically a better one because useful representations can be entangled with the targeted feature.</p>
+                    <p>With runtime hooks, the original checkpoint remains unchanged and the intervention is applied during inference. A persistent edit instead changes matrices that write into the residual stream. Using column-vector notation, let <code>projector = I - direction * direction_transpose</code>. If a module writes <code>W * inputs + bias</code>, then <code>W_edited = projector * W</code> and <code>bias_edited = projector * bias</code> remove the direction from that module's write. Libraries storing transposed weights require the corresponding orientation change.</p>
+                    <p>That algebra describes one linear write, not a complete transformer recipe. Embeddings, attention output projections, feed-forward output projections, biases, normalisation and skip paths have to be understood in the particular architecture. Removing a component from one write does not remove it from an existing residual state, and later blocks can reconstruct it. Applying an intervention at different points changes the resulting function. Architecture-specific validation is essential before claiming equivalence between hooks and edited weights.</p>
+                    <h3>A benign numerical example</h3>
+                    <p>To see projection without a live model, suppose a synthetic three-dimensional activation is <code>(3, 4, 5)</code> and an arbitrary unit direction is <code>(0, 0.6, 0.8)</code>. Their dot product is <code>6.4</code>. Subtracting <code>6.4</code> times the direction gives <code>(3, 0.16, -0.12)</code>. The result has dot product zero with that direction, within rounding. These invented vectors represent no actual refusal feature; they illustrate the linear algebra only.</p>
+                    <p>The example also shows why a rank-one edit need not be inconsequential. The vector's magnitude and downstream computations changed. In a real network, a small representational intervention can move token probabilities enough to change a whole generated answer, and the new answer becomes the context for subsequent tokens.</p>
+                    <h3>What has not been removed</h3>
+                    <p>Abliteration is not knowledge unlearning. Suppressing a refusal-associated signal does not erase training data, remove personal information or certify that copyrighted material cannot be reproduced. Nor does it install missing knowledge. The derivative may simply give a confident answer where the original stopped. Changes to politeness or introductory wording must not be confused with better task completion.</p>
+                    <p>Refusal can be context-dependent, nonlinear, distributed or reconstructed through other pathways. Models with different post-training or architectures may not behave like the paper's studied models. A multi-direction intervention may suppress more behaviours but can also remove more useful structure. Even when broad capability metrics change little, narrow regressions in tool use, languages, long-context reasoning or calibration can matter operationally.</p>
+                    <p>Measure answer quality, refusal frequency and output-distribution drift separately. Divergence on ordinary prompts can help detect broad perturbation, but a small average does not exclude rare severe failures. Include confidence intervals, held-out tasks and human review of a stratified sample. The scientific claim should be scoped to the tested model, edit, dataset and serving configuration.</p>
+
+                    <h2 id="open-weights">6. Open weights make scrutiny possible, not automatic</h2>
+                    <p>Downloadable weights enable local inference, checkpoint comparisons, activation inspection and reproducible modification in ways an API usually cannot. They also let a team keep an unchanged baseline and roll back a derivative without waiting for a provider. This is particularly valuable when evaluating whether an adaptation genuinely improves authorised analysis rather than merely reducing refusal language.</p>
+                    <p>However, availability is not transparency about everything. Training data, post-training datasets, intermediate checkpoints and compute budgets may remain undisclosed. A quantised derivative may be downloadable while its higher-precision parent is gated. A provider can serve an open-weight base through a private adapter without distributing the adapter or resulting checkpoint. Hosted access to that derivative is not the same as having its weights.</p>
+                    <p>For reproducibility, record the repository and immutable revision, weight and tokenizer hashes, licence, model card, chat template, context settings, quantisation format, inference-engine version and any adapter or steering configuration. Record whether the runtime executes custom model code. Prefer reviewed artifacts and non-executable tensor formats where supported, while recognising that parsers and serving engines still need patching and isolation.</p>
+                    <p>Licences may impose attribution, redistribution, acceptable-use, scale or commercial conditions. Modification does not erase the base licence. A gated download or KYC process may impose additional access conditions without granting every deployment right. Resolve those terms before distributing a merged checkpoint, exposing a public endpoint or embedding the model in a commercial product.</p>
+                    <p>Quantisation adds another version boundary. Reducing numerical precision changes the deployed computation; a published evaluation of full-precision weights does not automatically describe a particular low-bit export. Evaluate the same artifact you intend to serve, including its tokenizer and prompt template. For more on this trade-off, see our <a href="local-ai-512gb-vram-kv-cache.html">local AI memory and KV-cache analysis</a>.</p>
+
+                    <h2 id="providers">7. Eight services, with different roles and evidence</h2>
+                    <p>The services in this comparison should not be placed in one uncensored-model leaderboard. Some advertise specialised or abliterated models, some offer general inference infrastructure, and some automate tools around models. A service's willingness to process a topic is separate from its model quality, acceptable-use terms, retention policy and downloadable-weight availability.</p>
+                    <div class="article-table-wrap" role="region" aria-label="Eight AI service candidates" tabindex="0">
+                        <table class="article-table">
+                            <caption>Public material reviewed at the evidence cut-off; no independent performance tests</caption>
+                            <thead><tr><th scope="col">Service</th><th scope="col">Supported characterisation</th><th scope="col">Potential fit</th><th scope="col">Important qualification</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row"><a href="https://hinoki.security/">Hinoki</a></th><td>Advertises the cyber-focused Hinoki Offensive One model and hosted access.</td><td>Evaluate authorised security-analysis workflows against a general-purpose baseline.</td><td>Open-access wording does not establish downloadable weights; benchmark claims are vendor-reported.</td></tr>
+                                <tr><th scope="row"><a href="https://abliteration.ai/">Abliteration.ai</a></th><td>Current offering unverified: access restricted in this review environment.</td><td>Candidate requiring model and deployment documentation before selection.</td><td>The domain name alone establishes neither a modification method nor weight availability.</td></tr>
+                                <tr><th scope="row"><a href="https://refuseless.com/">Refuseless</a></th><td>Advertises hosted abliterated open-weight models through an OpenAI-compatible API.</td><td>Low-operations API trial of a reduced-refusal derivative.</td><td>Listed benchmark scores are explicitly for base checkpoints, not evaluations of its derivatives.</td></tr>
+                                <tr><th scope="row"><a href="https://www.morphllm.com/">Morph</a></th><td>Current offering unverified: access restricted in this review environment.</td><td>Assess the exact proposed product and workload before comparing model hosts.</td><td>No verified claim here that Morph hosts abliterated models or supplies downloadable weights.</td></tr>
+                                <tr><th scope="row"><a href="https://friendli.ai/">FriendliAI</a></th><td>General inference infrastructure: model APIs, dedicated endpoints and bring-your-own-GPU options.</td><td>Serving a supported open-weight or custom checkpoint with managed infrastructure.</td><td>Hosting flexibility is not a blanket uncensored-model claim or permission to deploy every derivative.</td></tr>
+                                <tr><th scope="row"><a href="https://venice.ai/">Venice</a></th><td>Current offering unverified: access restricted in this review environment.</td><td>Candidate for a separate product, API and data-policy assessment.</td><td>No zero-retention, local-inference or unrestricted-use guarantee is established by this article.</td></tr>
+                                <tr><th scope="row"><a href="https://automatio.ai/">Automatio</a></th><td>AI workflow and browser-automation platform with model and tool integrations.</td><td>Automation around a selected model when its data flow and permissions meet requirements.</td><td>A local extension does not imply local inference; BYOK descriptions need clarification.</td></tr>
+                                <tr><th scope="row"><a href="https://audn.ai/">Audn</a></th><td>Security validation, Pingu Unchained models, API/chat and agent products.</td><td>Evaluate a security-specific model together with a bounded validation workflow.</td><td>Hosted and weight-access offerings differ; checkpoint descriptions and plan-specific terms need confirmation.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>Hinoki: a security-specialised candidate, not proof of open weights</h3>
+                    <p>Hinoki's public page presents Offensive One as an open-access cyber model intended to work within a user-defined policy, including tasks on which other models refuse. That positioning is relevant to authorised security research where broad topic-based refusals can interrupt legitimate analysis. A specialised model may require less workflow adaptation than a general assistant, but that advantage must be measured on the organisation's own tasks.</p>
+                    <p>The page's benchmark score and cost claims are vendor statements. Before relying on them, request the exact evaluation harness, model revision, tool access, sample count and conditions. Also establish prompt retention, training use, deployment regions, context limits and whether weights can actually be obtained. Defining a policy in prose is not equivalent to enforcing network scope in an executor.</p>
+                    <h3>Abliteration.ai: method claims require inspectable evidence</h3>
+                    <p>The site and a documentation-style endpoint were inaccessible during this review, with the browser showing an organisational access-policy block. No attempt was made to bypass that restriction. Consequently, this article does not assert which models, APIs, privacy settings or downloadable artifacts the service currently supplies.</p>
+                    <p>For this candidate, request an exact base checkpoint, a description of the intervention, derivative-specific evaluation and deployment rights. If the service offers both hosted and downloadable versions, ask whether they share the same artifact and serving configuration. Without those details, the mathematical discussion above describes a research method, not a verified implementation by this particular vendor.</p>
+                    <h3>Refuseless: convenient access, with a benchmark caveat</h3>
+                    <p>Refuseless explicitly markets hosted abliterated models and an OpenAI-compatible base URL, <code>https://api.refuseless.com/v1</code>. Its stated approach is weight-level refusal-direction removal rather than maintaining a jailbreak prompt. This potentially reduces the infrastructure burden for testing a derivative, but an API still gives less visibility into the served artifact than a pinned local checkpoint.</p>
+                    <p>Its homepage says prompts and outputs with abliterated models are never stored. Treat that as a vendor claim whose scope should be confirmed in applicable terms: request bodies, abuse handling, operational metadata, subprocessors, backups and optional product features can have different rules. The page also explicitly says displayed benchmarks describe base checkpoints, not Refuseless evaluations. Do not transfer those scores to modified models or infer that the served derivative is downloadable merely because its base is open-weight.</p>
+                    <h3>Morph: establish the product category before comparing</h3>
+                    <p>Morph's website and documentation could not be reviewed through the access restrictions. Its current endpoints, model lineage, modification methods, pricing and retention terms are therefore not scored here. Inclusion in a list of AI services is not evidence that it is an uncensored-model host.</p>
+                    <p>A buyer should first identify the actual product being purchased: a general chat model, a task-specific model, a code-editing component, an orchestration service or an inference platform. Those products solve different problems. If a proposed component is task-specific, evaluate correctness and latency on that task rather than extrapolating to general conversational freedom or local-weight access.</p>
+                    <h3>FriendliAI: infrastructure for a chosen model</h3>
+                    <p>FriendliAI describes model APIs, dedicated endpoints and a bring-your-own-GPU product, with support for open-weight and custom models. Its role in this decision is primarily inference infrastructure. That can be useful when a team wants a chosen checkpoint served with operational support, scaling and performance engineering, rather than maintaining every aspect of the serving stack itself.</p>
+                    <p>Confirm support for the exact architecture, quantisation, adapter and licence, along with the provider's acceptable-use terms. Dedicated capacity, private networking, customer-owned GPUs and customer-owned keys are separate capabilities; one does not imply the others. Performance and SLA claims need the appropriate product and contract scope. Do not assume the public model API automatically serves an abliterated version of a listed base model.</p>
+                    <h3>Venice: privacy must be specified per data path</h3>
+                    <p>Venice's homepage and an official documentation page were inaccessible in this environment. This comparison therefore does not repeat a current model list, pricing table or privacy guarantee. A meaningful evaluation would distinguish browser chat, API access and any additional features rather than assigning one policy to the brand as a whole.</p>
+                    <p>For any privacy-positioned candidate, ask where prompts are processed, what each intermediary retains, whether saved conversations have a separate policy, how inference partners are governed, and which metadata remains. Also verify whether the exact model you plan to use is available through the intended interface. Transport encryption and a no-training promise are useful properties, but neither by itself establishes end-to-end encryption from the inference operator or zero retention.</p>
+                    <h3>Automatio: the automation layer changes the risk</h3>
+                    <p>Automatio presents a broader workflow platform with browser interactions, integrations, skills and model-backed tasks. That is not synonymous with a model-weight modification service. It may help turn a model into a useful workflow, but browser sessions, email connectors and scheduled actions introduce permissions and data flows beyond a simple prompt-completion API.</p>
+                    <p>Its public descriptions say browser interactions can run locally while AI processing uses its API. Local interaction is therefore not an offline-inference guarantee. The reviewed page also advertised a BYOK plan while a FAQ described platform-managed API infrastructure and keys. Obtain written clarification of the applicable plan and routing before assuming your own provider keys control every model call. Budget for model usage, workflow steps, tools and browser or sandbox runtime, not just tokens.</p>
+                    <h3>Audn: distinguish the model from the security platform</h3>
+                    <p>Audn describes Pingu Unchained models, hosted chat and API access, a CLI and a security-agent ecosystem including PenClaw. It also advertises isolated authorised environments, tool artifacts and validation workflows. These are potentially relevant operational features, but they must be evaluated separately from claims about model compliance or reduced refusal.</p>
+                    <p>The reviewed material contains differing base-model descriptions and gated weight references, so this article does not assign an exact lineage to every advertised tier. Some access is described as subscription- and KYC-gated, and not every hosted offering is presented as exportable. Request an immutable checkpoint identifier, the actual licence and the exact difference between a hosted adapter and downloadable weights.</p>
+                    <p>Retention and no-training statements should be checked per plan, not generalised from one tier. Optional federated weight updates also do not establish that sensitive information cannot leave: parameter deltas can leak information even when raw examples are not transmitted. Internal compliance percentages and dedicated-server throughput are not interchangeable with independently verified task success or performance on a local workstation.</p>
+
+                    <h2 id="deployment">8. Cloud versus local: compare the trust boundary you operate</h2>
+                    <div class="article-table-wrap" role="region" aria-label="Cloud and local deployment comparison" tabindex="0">
+                        <table class="article-table">
+                            <caption>Deployment choices for the same authorised workload</caption>
+                            <thead><tr><th scope="col">Deployment</th><th scope="col">Advantages</th><th scope="col">Costs and limitations</th><th scope="col">Best fit</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row">Shared hosted API</th><td>Fast trials, no GPU purchase, managed serving and access to large models.</td><td>External processing, rate limits, variable queues, model-version drift and provider dependency.</td><td>Bursty workloads and synthetic or approved non-sensitive inputs.</td></tr>
+                                <tr><th scope="row">Dedicated managed endpoint</th><td>Reserved capacity and potentially stronger network, region and version controls.</td><td>Idle capacity costs; private networking and administrative access remain contract-specific.</td><td>Steady workloads needing operational support and predictable capacity.</td></tr>
+                                <tr><th scope="row">Self-hosted rented cloud GPU</th><td>Control of weights, runtime and configuration without hardware ownership.</td><td>You maintain the stack; cloud disks, snapshots, IAM, egress and provider access remain in scope.</td><td>Temporary experiments, burst training or larger models than a local lab can fit.</td></tr>
+                                <tr><th scope="row">Local workstation or lab server</th><td>Physical control, pinned artifacts, internal data locality and offline-capable inference.</td><td>Capital expense, power, cooling, limited concurrency, maintenance and endpoint compromise risk.</td><td>Regular sensitive analysis when suitable models fit and operators can maintain the system.</td></tr>
+                                <tr><th scope="row">Controlled air-gapped lab</th><td>Explicitly restricted network paths and inspectable data transfer.</td><td>Artifact import/export processes, patch delays, limited integrations and operational overhead.</td><td>Work whose classification requires isolation beyond ordinary local hosting.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>What cloud services do well</h3>
+                    <p>Hosted inference lets a team compare models quickly without buying hardware for a speculative workload. Providers can batch requests and amortise expensive accelerators across customers. Larger models, longer contexts or higher concurrency may be affordable on demand even when the equivalent local capacity is not. Managed infrastructure can also provide availability and operational expertise that a single workstation cannot.</p>
+                    <p>The trade-offs are not limited to prompt privacy. A changing model alias can silently invalidate a previous evaluation. A compatible endpoint can differ in structured-output guarantees, tool-call semantics, stop conditions, token accounting and retry behaviour. Provider outages, regional restrictions and account policies become workflow dependencies. Pin versions when available and make upgrades a measured change.</p>
+                    <h3>What local labs do well</h3>
+                    <p>A local lab offers reproducibility and direct control over the serving process. It can retain client source code or incident evidence inside an approved boundary, inspect intermediate representations and compare original and modified checkpoints. For sustained use of a suitably sized model, predictable ownership costs can be attractive. An internet connection is unnecessary for inference once all required artifacts are present, provided the workflow has no external dependencies.</p>
+                    <p>However, local is not automatically secure. A model server bound to all interfaces without authentication can expose the lab to the network. Logs, crash dumps, swap, backups and shared filesystems can copy sensitive prompts. Remote plugins can reintroduce cloud processing. The GPU driver, web UI, inference runtime and model loader all need ordinary software-security maintenance. A lab on a daily-use laptop inherits that laptop's compromise risk.</p>
+                    <h3>A hybrid deployment needs explicit routing</h3>
+                    <p>A useful hybrid design keeps sensitive retrieval and inference local while sending only approved synthetic or redacted tasks to an external provider. Routing should be determined by data classification and policy, not improvised by the model. Redaction must cover identifying context as well as obvious strings; combining innocuous fragments can still reveal a client or incident.</p>
+                    <p>Do not silently fall back from local to cloud when a model times out or runs out of memory. Such a fallback changes the disclosure boundary at precisely the moment operators may be focused on availability. Require an explicit, auditable decision, and provide a fail-closed path for workloads that must remain internal.</p>
+
+                    <h2 id="economics">9. Memory, latency and cost: what the label does not change</h2>
+                    <p>Abliterating a model usually does not make it a smaller architecture. The same parameter count still has to be stored and used unless a separate compression or architectural change is made. A small adapter also does not eliminate the base-model footprint. Compare complete deployed artifacts rather than the size of the download containing only the modification.</p>
+                    <h3>Weight memory is only the starting point</h3>
+                    <p>A first approximation is <code>weight_bytes = parameter_count * bits_per_weight / 8</code>. In decimal units, 8 billion parameters at 16 bits require about 16 GB for weights alone; at an idealised 4 bits they require about 4 GB. For 70 billion parameters the corresponding figures are about 140 GB and 35 GB. Real quantised formats add scales, metadata and sometimes higher-precision tensors, so those numbers are not fit guarantees.</p>
+                    <p>Inference also needs runtime workspace, activations, allocator headroom and the attention KV cache. For conventional full-attention layers with equal key and value widths, a useful estimate is <code>KV_bytes = 2 * layers * cached_tokens * KV_heads * head_dimension * bytes_per_element</code>. Here cached tokens means the total retained across active sequences; architectures with sliding windows, compressed attention states or hybrid layers need their own calculation.</p>
+                    <p>For an illustrative configuration with 32 layers, 8 KV heads, head dimension 128 and a two-byte KV representation, the cache is 131,072 bytes per token. At 32,768 cached tokens, that is 4 GiB for one sequence, before allocation overhead. Four equally long independent sequences can require about 16 GiB for that cache alone. Grouped-query attention affects the number of KV heads; substituting the larger query-head count can badly overestimate memory.</p>
+                    <p>Mixture-of-experts models complicate the picture further. The active parameters per token affect computation, while many deployments still need all experts resident or an offload strategy. Low active-parameter count is not proof that the whole model fits on a small GPU. CPU or disk offload trades memory pressure for transfer latency and may change the concurrency you can sustain.</p>
+                    <h3>Measure the wait the analyst experiences</h3>
+                    <p>Track time to first token, decode rate, total completion time and p95 latency under expected concurrency. Long inputs incur prefill work before generation; long outputs occupy capacity even when tokens arrive quickly. A local GPU removes internet latency but can still lose to a hosted deployment because of model size, memory bandwidth or an overloaded queue. A provider's peak tokens-per-second figure is not a guaranteed interactive response time.</p>
+                    <p>Cloud budgets should include input, output and cached-token pricing, subscriptions, minimum capacity, tool calls, storage, egress and retries. A model that produces long speculative answers or repeatedly repairs invalid tool calls can cost more per successful task than a higher-priced model that succeeds once. Define success before calculating savings.</p>
+                    <h3>An illustrative break-even calculation</h3>
+                    <p>Suppose, purely for budgeting, an API costs $1 per million input tokens and $3 per million output tokens. A monthly workload of 20 million input and 5 million output tokens costs $35 in model tokens. These are invented rates, not quotes for any service above. Now suppose a $6,000 workstation is amortised over 36 months: that is $166.67 per month before electricity, support, repairs or software operations.</p>
+                    <p>At that input/output ratio, API tokens cost an average of $1.40 per million combined tokens. Hardware amortisation alone therefore reaches parity at roughly 119 million combined tokens per month. That is not a deployment recommendation: it assumes equivalent task quality, enough local throughput and no other charges. Adding power and labour moves the break-even point, while cloud minimums or tool charges can move it in the other direction.</p>
+                    <p>A more useful metric is <strong>total cost per validated task</strong>: all infrastructure, usage and review costs divided by successful outcomes. Privacy requirements, offline availability or the need to inspect weights may justify local deployment even before financial break-even. Conversely, a lightly used lab can be more expensive than an API despite having no per-token invoice.</p>
+
+                    <h2 id="evaluation">10. Evaluate usefulness, not just willingness</h2>
+                    <p>The strongest potential benefit of a reduced-refusal model is fewer false refusals on legitimate work. Security teams may gain more consistent assistance with code review, defensive analysis, incident documentation and controlled simulations. Researchers also gain an opportunity to study the relationship between refusal, representation and capability. None of those benefits requires assuming that every refusal was a defect.</p>
+                    <p>The main disadvantages are uncertain provenance, capability regressions, weaker calibration, greater review burden and increased risk when broad tool permissions are attached. A model that rarely declines may also be less likely to stop when the evidence is incomplete. Organisational policy and legal obligations remain in force regardless of what the model is willing to generate.</p>
+                    <h3>A paired evaluation matrix</h3>
+                    <p>Where artifacts are available, compare the unchanged base or instruction checkpoint, the modified checkpoint, and the actual quantised or hosted deployment. Use the same tasks, templates and sampling settings where possible. Record unavoidable differences, including hidden provider prompts or unavailable seeds. Repeat stochastic tasks and retain uncertainty estimates instead of presenting one run as a universal score.</p>
+                    <div class="article-table-wrap" role="region" aria-label="Model evaluation criteria" tabindex="0">
+                        <table class="article-table">
+                            <caption>Separate helpfulness, reliability and control-plane outcomes</caption>
+                            <thead><tr><th scope="col">Dimension</th><th scope="col">Test</th><th scope="col">What to report</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row">Legitimate task completion</th><td>Held-out analysis tasks with known expected findings and evidence.</td><td>Correct completed tasks, false refusals, unsupported claims and reviewer time.</td></tr>
+                                <tr><th scope="row">General capability</th><td>Representative reasoning, coding, language and long-context tasks.</td><td>Derivative-versus-baseline regressions, not inherited base-model scores.</td></tr>
+                                <tr><th scope="row">Calibration</th><td>Questions with missing information, ambiguity or no valid answer.</td><td>Appropriate uncertainty, fabricated answers and confidence errors.</td></tr>
+                                <tr><th scope="row">Tool reliability</th><td>Mock tools with strict schemas, bounded arguments and known results.</td><td>Schema validity, correct calls, fabricated results and retry counts.</td></tr>
+                                <tr><th scope="row">Instruction boundaries</th><td>Synthetic untrusted documents attempting to change the task.</td><td>Model deviations separately from executor-blocked and completed actions.</td></tr>
+                                <tr><th scope="row">Deployment behaviour</th><td>Expected context lengths, concurrency, failures and cancellations.</td><td>Memory, p95 latency, cost per success and disclosure-boundary violations.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>A staged hosted trial</h3>
+                    <ol>
+                        <li><strong>Confirm the contract:</strong> identify the model, applicable terms, processing region, retention, training use and deletion process before sending organisational data.</li>
+                        <li><strong>Create a bounded test identity:</strong> use a dedicated API credential, spending limit and approved secret store. Do not paste keys into prompts or commit them to a repository.</li>
+                        <li><strong>Start with synthetic prompts and no tools:</strong> test streaming, errors, context limits and structured outputs. An OpenAI-compatible URL does not establish identical semantics.</li>
+                        <li><strong>Add mock tools:</strong> verify argument validation, cancellation, timeouts and retry handling. A repeated request must not repeat a consequential side effect.</li>
+                        <li><strong>Gate real workflows:</strong> approve only the data classes and actions supported by the evaluation, with recorded rollback criteria.</li>
+                    </ol>
+                    <h3>A synthetic-data API smoke test</h3>
+                    <p>A minimal hosted smoke test can establish that the selected endpoint and model work before any tools or organisational data are introduced. The PowerShell example below uses Refuseless's advertised compatible endpoint, an exact model ID selected from its current catalogue, and an API credential injected into the environment by your approved secret-management process. It was syntax-checked, not executed against the service; a real request may incur charges.</p>
+                    <pre data-example="hosted-smoke-test"><code>$apiBase = "https://api.refuseless.com/v1"
+$modelId = $env:MODEL_ID
+if ([string]::IsNullOrWhiteSpace($modelId) -or
+    [string]::IsNullOrWhiteSpace($env:MODEL_API_KEY)) {
+    throw "Set MODEL_ID and inject MODEL_API_KEY before this test."
+}
+
+$requestBody = @{
+    model = $modelId
+    messages = @(@{
+        role = "user"
+        content = "Define a transformer residual stream in one sentence."
+    })
+    max_tokens = 128
+} | ConvertTo-Json -Depth 6
+
+$requestOptions = @{
+    Method = "Post"
+    Uri = "$apiBase/chat/completions"
+    Headers = @{ Authorization = "Bearer $env:MODEL_API_KEY" }
+    ContentType = "application/json"
+    Body = $requestBody
+    TimeoutSec = 60
+}
+$response = Invoke-RestMethod @requestOptions
+$response.choices[0].message.content</code></pre>
+                    <p>Keep the endpoint explicit. Do not change it to a different provider or a local server without checking that server's authentication and request schema. This smoke test confirms connectivity and one response only; it does not validate reduced refusal, privacy, tool calling or answer quality. Never print the request headers to troubleshoot authentication.</p>
+                    <h3>Bringing the same evaluation into a local lab</h3>
+                    <ol>
+                        <li><strong>Acquire reviewed artifacts:</strong> verify licences, immutable revisions, checksums and model-code requirements; retain a clean baseline.</li>
+                        <li><strong>Isolate the runtime:</strong> use a dedicated environment, a loopback-bound inference endpoint and no unnecessary credentials or outbound connections.</li>
+                        <li><strong>Fit the complete workload:</strong> reserve memory for context and concurrency rather than sizing only from the weight file.</li>
+                        <li><strong>Run paired tests:</strong> compare original, modified and deployed representations before attaching automation.</li>
+                        <li><strong>Operate it as a service:</strong> patch the runtime, control logs and backups, monitor resource use and rehearse rollback.</li>
+                    </ol>
+                    <p>Set pass/fail thresholds in advance. For example, require no degradation in a critical task suite, no unauthorised effects in the synthetic tool tests and a measurable reduction in false refusals. Zero observed failures is evidence about the tested cases, not a statistical guarantee of zero future risk. Document excluded tasks and known failure modes alongside the scores.</p>
+
+                    <h2 id="controls">11. Keep authorisation outside the model</h2>
+                    <p>The more readily a model follows requests, the more important it becomes to prevent text from granting authority. A system prompt can communicate a policy; it cannot replace the executor's checks. The model should propose a typed action, and trusted code should decide whether that action is permitted for the current user, task, target and data classification.</p>
+                    <pre><code>Approved task and data classification
+    -&gt; model proposes a typed action
+    -&gt; trusted policy checks scope and permissions
+    -&gt; approval for consequential operations
+    -&gt; isolated executor with limited credentials
+    -&gt; bounded result and auditable evidence</code></pre>
+                    <p>Use allowlisted tools, strict schemas, canonicalised resource identifiers, network egress restrictions, short-lived credentials and per-task budgets. Validate targets at execution time, including redirects and resolved destinations where applicable, rather than accepting the model's interpretation of an approved hostname. Keep credentials in the executor, not in conversation context. Treat retrieved text and tool output as untrusted data even when it comes from an internal system.</p>
+                    <p>Human approval should show the actual destination, operation, arguments and likely effects. A generic approve button over a model-written summary is weak protection if that summary can omit the dangerous part. Irreversible or externally visible operations need stronger controls than reading a disposable local fixture. Preserve idempotency and cancellation semantics across retries.</p>
+                    <p>Logging needs similar discipline. Record enough structured evidence to investigate decisions without indiscriminately retaining client secrets or complete prompts. Restrict access, define retention periods and separate operational metrics from sensitive content. A provider's no-storage claim does not stop your own client, proxy or observability agent from writing a transcript.</p>
+                    <p>For corporate adoption, assign ownership across security, platform engineering, privacy and the workload's business owner. Maintain an approved model registry, data-classification rules, model-update review and an incident procedure for unexpected disclosure or tool execution. A permissive checkpoint inside a tightly controlled workflow can be safer than a refusal-heavy assistant with unrestricted credentials, but that is a property to demonstrate, not presume.</p>
+
+                    <h2>12. The decision to make</h2>
+                    <p>Choose a reduced-refusal model when it demonstrably improves authorised work and its regressions are understood. Choose a hosted API when rapid access and elastic capacity fit the data policy. Choose local inference when artifact control, internal processing or offline operation is necessary and the team can support the hardware and runtime. Choose dedicated or self-hosted cloud infrastructure when those requirements fall between the two.</p>
+                    <p>The model's name is the least reliable part of that decision. What matters is the exact checkpoint, the evidence for its adaptation, the quality of its answers, the rights to operate it and the boundary around its tools. Removing a refusal signal is an interesting model-engineering intervention. Turning that intervention into a trustworthy working system is a separate engineering task.</p>
+
+                    <h2 id="sources">Primary sources and further reading</h2>
+                    <p>Research papers support the mechanisms discussed here; vendor pages support only the attributed product descriptions. Products and policies can change after the cut-off. The three access-restricted candidates are included for completeness, not represented as verified reviews.</p>
+                    <ol>
+                        <li><a href="https://arxiv.org/abs/2406.11717">Arditi et al.: Refusal in Language Models Is Mediated by a Single Direction</a>, 2024. Primary research on refusal-associated directions and interventions.</li>
+                        <li><a href="https://arxiv.org/abs/2307.15043">Zou et al.: Universal and Transferable Adversarial Attacks on Aligned Language Models</a>, 2023. Primary research on optimised adversarial suffixes.</li>
+                        <li><a href="https://www.anthropic.com/research/many-shot-jailbreaking">Anthropic: Many-shot jailbreaking</a>, 2024. Long-context demonstrations, in-context learning and mitigation experiments.</li>
+                        <li><a href="https://arxiv.org/abs/2106.09685">Hu et al.: LoRA: Low-Rank Adaptation of Large Language Models</a>, 2021. Frozen base weights and trainable low-rank updates.</li>
+                        <li><a href="https://arxiv.org/abs/2305.18290">Rafailov et al.: Direct Preference Optimization</a>, 2023. Preference learning without the conventional separate reward-model and reinforcement-learning pipeline.</li>
+                        <li><a href="https://hinoki.security/">Hinoki</a>. Reviewed public positioning of Offensive One; performance claims not independently tested.</li>
+                        <li><a href="https://abliteration.ai/">Abliteration.ai</a>. Access restricted; current offering and policies unverified.</li>
+                        <li><a href="https://refuseless.com/">Refuseless</a> and <a href="https://refuseless.com/docs">documentation</a>. Homepage reviewed for API, abliteration and benchmark qualifications.</li>
+                        <li><a href="https://www.morphllm.com/">Morph</a>. Access restricted; current offering and policies unverified.</li>
+                        <li><a href="https://friendli.ai/">FriendliAI</a> and <a href="https://friendli.ai/docs">documentation</a>. Homepage reviewed for model APIs, dedicated endpoints and bring-your-own-GPU positioning.</li>
+                        <li><a href="https://venice.ai/">Venice</a>. Access restricted; current offering and policies unverified.</li>
+                        <li><a href="https://automatio.ai/">Automatio</a>. Reviewed workflow, browser-processing and plan descriptions; BYOK availability requires clarification.</li>
+                        <li><a href="https://audn.ai/">Audn</a>. Reviewed platform, model and access claims; exact lineage and plan-specific guarantees require confirmation.</li>
+                    </ol>
+                    <p>Related PSC research: <a href="local-ai-pentesting-bug-bounty.html">local AI for authorised pentesting and bug bounty workflows</a>, <a href="local-ai-512gb-vram-kv-cache.html">local AI memory, VRAM and KV cache</a>, and <a href="quantization-hacking-cifar10.html">quantisation and deployed-model validation</a>.</p>
+                </div>
+                <div class="tag-row"><span class="tag">AI Security</span><span class="tag">Abliteration</span><span class="tag">Open Weights</span><span class="tag">Local AI</span><span class="tag">Model Evaluation</span></div>
+                <nav class="article-nav" aria-label="Related articles"><a href="local-ai-pentesting-bug-bounty.html">Local AI for Security Testing</a><a href="local-ai-512gb-vram-kv-cache.html">Local AI Memory and KV Cache</a></nav>
+            </div>
+        </article>
+    </main>
+    <footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../contact.html">Contact</a></li><li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul></div></div></footer>
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
