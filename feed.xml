@@ -6,7 +6,16 @@
     <description>Defensive security research from Preemptive Cyber Security.</description>
     <language>en</language>
     <atom:link href="https://preemptivecybersec.com/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Mon, 26 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Uncensored and Abliterated Models: From Refusal Directions to Cloud and Local AI Labs</title>
+      <link>https://preemptivecybersec.com/pages/blog/uncensored-abliterated-models-cloud-local.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/uncensored-abliterated-models-cloud-local.html</guid>
+      <pubDate>Tue, 27 Oct 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>AI Security</category>
+      <description>How uncensored and abliterated models work: jailbreak research, open weights, eight service candidates, cloud versus local labs, costs and security controls.</description>
+    </item>
     <item>
       <title>eMudhra, PHP2Shell and Node2Shell: When Runtime Vulnerabilities Become Business Incidents</title>
       <link>https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html</link>
@@ -447,15 +456,6 @@
       <dc:creator>Viral Maniar</dc:creator>
       <category>Static Analysis · Windows Defense</category>
       <description>How defenders detect file-type spoofing with extension, magic-byte, icon, and delivery-context validation.</description>
-    </item>
-    <item>
-      <title>Kernel vs. User Mode: The Role of Windows System Calls</title>
-      <link>https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html</link>
-      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/kernel-user-mode-system-calls.html</guid>
-      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Viral Maniar</dc:creator>
-      <category>Windows Security · Internals</category>
-      <description>A practical security guide to Windows privilege rings, the kernel/user boundary, system calls, drivers, and defensive telemetry.</description>
     </item>
   </channel>
 </rss>
