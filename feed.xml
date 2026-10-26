@@ -6,7 +6,16 @@
     <description>Defensive security research from Preemptive Cyber Security.</description>
     <language>en</language>
     <atom:link href="https://preemptivecybersec.com/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Tue, 20 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>eMudhra, PHP2Shell and Node2Shell: When Runtime Vulnerabilities Become Business Incidents</title>
+      <link>https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html</guid>
+      <pubDate>Mon, 26 Oct 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Viral Maniar</dc:creator>
+      <category>Runtime Security</category>
+      <description>A technical analysis of eMudhra, PHP2Shell, Node2Shell and the October 2026 Node.js fixes, with AI discovery evidence and enterprise remediation guidance.</description>
+    </item>
     <item>
       <title>512GB for Local AI: VRAM, KV Cache and Full-Context Inference</title>
       <link>https://preemptivecybersec.com/pages/blog/local-ai-512gb-vram-kv-cache.html</link>
@@ -447,15 +456,6 @@
       <dc:creator>Viral Maniar</dc:creator>
       <category>Windows Security · Internals</category>
       <description>A practical security guide to Windows privilege rings, the kernel/user boundary, system calls, drivers, and defensive telemetry.</description>
-    </item>
-    <item>
-      <title>Layered Compile-Time String Transformation: Detection First</title>
-      <link>https://preemptivecybersec.com/pages/blog/layered-compile-time-string-encryption-defense.html</link>
-      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/layered-compile-time-string-encryption-defense.html</guid>
-      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Viral Maniar</dc:creator>
-      <category>Static Analysis · Windows Defense</category>
-      <description>Defensive analysis of layered compile-time string transformations, detection engineering, and triage.</description>
     </item>
   </channel>
 </rss>
