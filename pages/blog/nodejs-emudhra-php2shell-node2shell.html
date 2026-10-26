@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eMudhra, PHP2Shell and Node2Shell: Runtime Security | PSC</title>
+    <meta name="description" content="A technical analysis of eMudhra, PHP2Shell, Node2Shell and the October 2026 Node.js fixes, with AI discovery evidence and enterprise remediation guidance.">
+    <meta name="theme-color" content="#030806">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html">
+    <link rel="alternate" type="application/rss+xml" title="PSC Security Research" href="https://preemptivecybersec.com/feed.xml">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="eMudhra, PHP2Shell and Node2Shell: Runtime Security | PSC">
+    <meta property="og:description" content="A technical analysis of eMudhra, PHP2Shell, Node2Shell and the October 2026 Node.js fixes, with AI discovery evidence and enterprise remediation guidance.">
+    <meta property="og:url" content="https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html">
+    <meta property="og:site_name" content="Preemptive Cyber Security">
+    <meta property="og:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="eMudhra, PHP2Shell and Node2Shell: Runtime Security | PSC">
+    <meta name="twitter:description" content="A technical analysis of eMudhra, PHP2Shell, Node2Shell and the October 2026 Node.js fixes, with AI discovery evidence and enterprise remediation guidance.">
+    <meta name="twitter:image" content="https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png">
+    <meta name="twitter:image:alt" content="Preemptive Cyber Security - Know the Unknown">
+    <meta property="article:published_time" content="2026-10-26">
+    <meta property="article:modified_time" content="2026-10-26">
+    <meta property="article:author" content="https://preemptivecybersec.com/pages/authors/viral-maniar.html">
+    <meta property="article:section" content="Runtime Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <script type="application/ld+json" data-psc-structured-data>
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "@id": "https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html#article",
+                "mainEntityOfPage": "https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html",
+                "headline": "eMudhra, PHP2Shell and Node2Shell: When Runtime Vulnerabilities Become Business Incidents",
+                "description": "A technical analysis of eMudhra, PHP2Shell, Node2Shell and the October 2026 Node.js fixes, with AI discovery evidence and enterprise remediation guidance.",
+                "image": "https://preemptivecybersec.com/assets/images/social/preemptive-cyber-security.png",
+                "datePublished": "2026-10-26",
+                "dateModified": "2026-10-26",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://preemptivecybersec.com/pages/authors/viral-maniar.html#person",
+                    "name": "Viral Maniar",
+                    "url": "https://preemptivecybersec.com/pages/authors/viral-maniar.html"
+                },
+                "publisher": { "@id": "https://preemptivecybersec.com/#organization" },
+                "articleSection": "Runtime Security",
+                "inLanguage": "en"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html#breadcrumb",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://preemptivecybersec.com/" },
+                    { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://preemptivecybersec.com/pages/resources.html" },
+                    { "@type": "ListItem", "position": 3, "name": "eMudhra, PHP2Shell and Node2Shell", "item": "https://preemptivecybersec.com/pages/blog/nodejs-emudhra-php2shell-node2shell.html" }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../../index.html" class="logo" aria-label="Preemptive Cyber Security home">
+                        <span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5" stroke-width="1.5"/><g stroke-width="1"><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(30 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(90 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(150 24 24)"/></g><circle cx="24" cy="24" r="2.8" fill="currentColor" stroke="none"/></svg></span>
+                        <span class="logo-word">
+                            <span class="logo-name">Preemptive <em>Cyber Security</em></span>
+                            <span class="logo-tag">Know the Unknown</span>
+                        </span>
+                    </a>
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../../pages/services.html">Services</a></li>
+                    <li><a href="../../pages/about.html">About</a></li>
+                    <li><a href="../../pages/team.html">Team</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../pages/resources.html" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Resources<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../../pages/resources.html#blog">Blog</a></li>
+                            <li><a href="../../pages/resources.html#tools">Tools</a></li>
+                            <li><a href="../../pages/resources.html#talks">Talks &amp; Presentations</a></li>
+                            <li><a href="../../easm.html">EASM</a></li>
+                            <li><a href="../../skillscan.html">SkillScan</a></li>
+                            <li><a href="../../CI.html">Breach Intelligence</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../llms.txt">llms.txt</a></li>
+                    <li><a href="../../pages/careers.html">Careers</a></li>
+                    <li class="nav-cta"><a href="../../pages/contact.html">Get in touch</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <article class="article runtime-security-article">
+            <div class="container">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../resources.html">Research</a></li><li aria-current="page">eMudhra, PHP2Shell and Node2Shell</li></ol></nav>
+                <div class="article-meta"><span class="cat">Runtime Security</span><span class="dot">//</span><span>2026-10-26</span><span class="dot">//</span><span>30 min read</span></div>
+                <h1>eMudhra, PHP2Shell and Node2Shell: When Runtime Vulnerabilities Become Business Incidents</h1>
+                <p class="article-lead">The internet feels like it is burning again. Certificate trust, native decompression, DNS resolution and TLS identity checks are all appearing on the same change ticket. The new common is not that every bug becomes a breach: it is that a single runtime release can require coordinated action across application engineering, platform operations, PKI and incident response.</p>
+                <div class="article-byline"><span class="avatar">VM</span><span>By <strong><a href="../authors/viral-maniar.html" rel="author">Viral Maniar</a></strong> &middot; Managing Director &amp; Principal Consultant</span></div>
+                <div class="prose">
+                    <p><strong>Evidence cut-off: 26 October 2026.</strong> The <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases">Node.js security advisory of 21 October</a> confirms ten runtime vulnerabilities, the release versions below, and dependency updates including an eMudhra intermediate CA compromise response. Severity labels below are the project's labels; remediation priorities are operational decisions. A vulnerability announcement is not evidence that every affected deployment has been exploited.</p>
+
+                    <nav aria-label="Article contents">
+                        <h2>Contents</h2>
+                        <ol>
+                            <li><a href="#names-and-trust">eMudhra, PHP2Shell and the names behind the headlines</a></li>
+                            <li><a href="#patch-matrix">The Node.js patch matrix</a></li>
+                            <li><a href="#brotli">Brotli: a streaming error becomes memory corruption</a></li>
+                            <li><a href="#identity">DNS and TLS: different parsers, different identities</a></li>
+                            <li><a href="#state">HTTP, snapshots, ZIP and permissions</a></li>
+                            <li><a href="#ai-discovery">How AI can discover a vulnerability</a></li>
+                            <li><a href="#corporate-response">Corporate response and verification</a></li>
+                            <li><a href="#sources">Primary sources</a></li>
+                        </ol>
+                    </nav>
+
+                    <h2 id="names-and-trust">1. Separate the names from the trust boundaries</h2>
+                    <p>A useful incident record identifies a component, version range, vulnerable operation, attacker-controlled input, required privileges and fix. A memorable name is an index into that record, not a substitute for it. <strong>eMudhra is a certificate-authority context, while PHP and Node.js are execution environments.</strong> These are different layers of a corporate dependency graph even when one Node.js upgrade addresses several of them.</p>
+                    <h3>eMudhra: the trust-store change is a security change</h3>
+                    <p>On 17 October, Mozilla received a report concerning compromised private keys for eight eMudhra intermediates. Its <a href="https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/">20 October incident notice</a> explains the consequence: an attacker holding one of these keys could issue fraudulent HTTPS certificates and, with the ability to intercept a connection, impersonate a website. This is a failure of authentication; possession of a CA key does not by itself route traffic to the attacker or decrypt previously recorded forward-secret TLS sessions.</p>
+                    <p><a href="https://emudhra.com/en/post/certificate-security-incident">eMudhra's 26 October statement</a> acknowledges recoverable private keys and attributes the weak issuing-CA keys to a script error. Its earlier update describes a flawed wrap/unwrap step during the 30 April 2025 key-generation ceremony, despite use of FIPS 140-2 Level 3 HSMs. A full root-cause analysis remained pending at this article's cut-off. Do not infer an unreported mathematical break of elliptic-curve cryptography or invent an exact key-recovery algorithm from this preliminary account.</p>
+                    <p>The vendor says the affected intermediates were revoked within 14 hours of confirmation, had not issued publicly trusted end-entity certificates, and that its investigation found no infrastructure or customer-data compromise. It also says its digital-signature, eSign and enterprise application infrastructure was separate and unaffected. Those are attributed vendor findings, not a reason for relying parties to ignore compromised signing keys. An attacker could issue certificates outside the vendor's normal issuance systems; absence from the vendor's records or Certificate Transparency alone cannot prove no abuse occurred.</p>
+                    <p>TLS authentication requires more than encryption. A client must construct an acceptable chain to a configured trust anchor, enforce certificate constraints and validity, and bind the certificate's identity to the intended endpoint. An intermediate CA that remains acceptable in that path can influence which leaf certificates a client accepts. Chain construction, issuer distrust and hostname matching must therefore be assessed separately: correcting an IP SAN check does not remove a distrusted issuer, and changing trust material does not repair hostname-verification code.</p>
+                    <p>The Node.js release addresses this on 22.x, 24.x and 26.x. In addition to refreshing roots to NSS 3.131.1, the <a href="https://github.com/nodejs/node/commit/01acf0ee7493d9a6b68dd66eeefe242aa9010759">Node TLS change</a> adds a compiled-in blocklist of SHA-256 hashes of DER-encoded SubjectPublicKeyInfo (SPKI), initially covering the eight affected keys. The verification callback checks the verified chain and reports a match as <code>CERT_REVOKED</code>. Identifying the key, rather than just a certificate serial number or subject name, addresses certificates carrying that same key through different issuer paths.</p>
+                    <p>This is important because Node's use of Mozilla trust anchors does not automatically give it Firefox's OneCRL updates, browser revocation behaviour or default online revocation checking. The patch applies the blocklist independently of the selected trust store through the certificate-verification path; it still honours <code>rejectUnauthorized</code>. Disabling certificate rejection undermines that protection. Previously established TLS sessions resumed without full certificate re-verification also need attention: drain old connections and account for session-cache and ticket lifetimes rather than assuming installation invalidates every session.</p>
+                    <p>In an enterprise, inventory bundled roots, operating-system trust, explicit TLS <code>ca</code> options, extra CA files and interception proxies. A bundle update does not rewrite a custom PEM file; the patched runtime's additional key enforcement is a separate control. Track official issuer identifiers and SPKI hashes, examine alternative certification paths, and test an expected-valid service chain and the affected chain under the deployed configuration. Reissue affected service certificates through an acceptable hierarchy when required. Do not remove every certificate associated with a company based only on a subject-name substring.</p>
+
+                    <h3 id="php2shell">PHP2Shell: two failure classes below application code</h3>
+                    <p>The <a href="https://www.php2shell.com/">coordinated PHP2Shell research site</a> maps the name to <code>CVE-2026-109618</code> and <code>CVE-2026-109619</code>, both rated Critical, CVSS v4.0 9.2 by PHP. These are PHP core memory-safety issues, not WordPress plugin bugs, JavaScript injection or the Node.js Brotli flaw. PHP's <a href="https://www.php.net/archive/2026.php#2026-10-21-5">21 October security announcement</a> calls for immediate updates across web-serving installations, including mod_php, PHP-FPM, php-cgi, FrankenPHP and LiteSpeed. Exact reachability differs by Server API (SAPI), configuration and application path.</p>
+                    <p><strong>CVE-2026-109618: out-of-memory bailout breaks initialisation invariants.</strong> PHP used <code>longjmp()</code> to leave an allocation context when an out-of-memory condition occurred. Some operations temporarily made request memory reachable before fully initialising it. A failed allocation could abandon that operation; request shutdown then read or branched on invalid state. The failed allocation need not concern the same object that cleanup later consumes.</p>
+                    <pre><code>Allocate request state -&gt; publish a reference -&gt; initialise the object
+                                  |
+                         OOM non-local exit
+                                  v
+                    cleanup consumes incomplete state</code></pre>
+                    <p>In mod_php, shutdown is invoked even after request startup fails. Automatic input parsing can therefore trigger the condition before the first application statement, so application authentication does not guard that path. The advisory confirms HTTP RCE in normal prefork configurations. FPM exits a child when startup fails, blocking that specific sequence; it remains susceptible to post-startup paths, but the OOM advisory does not claim a complete FPM exploit for this CVE. Do not confuse that limitation with the separately validated FPM session-lifecycle exploit below.</p>
+                    <p>The <a href="https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w">OOM fix</a> changes failure semantics: soft OOM is deferred to a VM safe point, while crossing a higher hard threshold terminates the process with <code>_exit()</code>. That prevents unsafe shutdown processing. It also changes operational assumptions: hard OOM skips shutdown handlers, so correctness cannot depend on in-process cleanup always completing. Test transaction recovery, external job acknowledgements and worker replacement.</p>
+                    <p><strong>CVE-2026-109619: worker globals outlive request-owned memory.</strong> A persistent worker can retain pointers to session, error, object or extension state allocated by an earlier request. Fatal errors can skip reset operations; even later nonfatal shutdown diagnostics can repopulate previously cleared state. Once the request heap is freed, the worker-global pointer becomes stale. An early operation in a subsequent request can consume it before normal initialisation overwrites it, producing a use-after-free.</p>
+                    <pre><code>Request A: publish request-owned state -&gt; reset missed -&gt; request heap freed
+Worker:    global reference remains, but its target is no longer valid
+Request B: early consumer uses reference before ordinary initialisation</code></pre>
+                    <p>The <a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp">stale-state advisory</a> requires both a producer and a consumer in the same reused worker. It confirms a PHP 8.5 fatal-backtrace path against mod_php and session-lifecycle RCE against mod_php and FPM. For the validated FPM path, a suitable application operation produces the stale state after successful startup; a later upload-progress operation consumes it. More workers reduce the chance of a particular request pairing, but do not remove the bug. The complete patch resets the wider state families rather than only the demonstrated example.</p>
+                    <div class="article-table-wrap" tabindex="0" role="region" aria-label="PHP2Shell fixed releases">
+                        <table class="article-table">
+                            <caption>PHP2Shell: supported branch fixes published 21 October 2026</caption>
+                            <thead><tr><th scope="col">PHP branch</th><th scope="col">Affected supported releases</th><th scope="col">Fixed release</th><th scope="col">Action</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row">8.2</th><td>Before 8.2.35</td><td>8.2.35</td><td>Patch; plan migration before the branch's 31 December 2026 EOL.</td></tr>
+                                <tr><th scope="row">8.3</th><td>Before 8.3.36</td><td>8.3.36</td><td>Patch and restart serving workers.</td></tr>
+                                <tr><th scope="row">8.4</th><td>Before 8.4.27</td><td>8.4.27</td><td>Patch and restart serving workers.</td></tr>
+                                <tr><th scope="row">8.5</th><td>Before 8.5.12</td><td>8.5.12</td><td>Patch and restart serving workers.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Use newer approved fixes when available. PHP 8.1 and older lack normal upstream support; distribution backports need vendor-specific verification. PHP made exceptional minimal source backports available for 7.4, 8.0 and 8.1, but this does not restore those branches to supported status. Verify the web-serving SAPI and every FPM pool; the CLI executable can be a different installation. Replacing a CMS or updating Composer dependencies does not replace PHP itself.</p>
+                    <p><strong>Temporary controls require care.</strong> PHP recommends administratively disabling <code>session.upload_progress.enabled</code>, and on 8.5 disabling <code>fatal_error_backtraces</code>, then restarting every worker to block specific confirmed paths. An application-level <code>ini_set()</code> can be too late for pre-initialisation processing. Turning off displayed errors does not prevent internal diagnostics from touching stale state. Enforce decoded-body and multipart complexity limits at the frontend, including requests without a usable <code>Content-Length</code>.</p>
+                    <p>PHP also documents <code>memory_limit=-1</code> as a partial OOM-path mitigation. It removes the controllable PHP memory-limit failure but not underlying allocation failures, and risks memory exhaustion. Do not deploy it as a blanket hardening setting. Any temporary use requires platform-approved resource containment and capacity testing; PHP specifically warns against substituting <code>RLIMIT_AS</code> or <code>RLIMIT_DATA</code>, which can trigger the same vulnerable allocation-failure path. No configuration-only workaround completely fixes both CVEs.</p>
+                    <p><strong>Follow-up notice, 23 October:</strong> PHP identifies an additional unusual upload-progress/serializer-switching condition tracked as <code>CVE-2026-115560</code>. It involves configuring <code>php_binary</code> or <code>php_serialize</code>, switching to <code>php</code> with <code>ini_set()</code> before <code>session_start()</code>, with upload progress enabled. The <a href="https://www.php.net/archive/2026.php#2026-10-23-1">official notice</a> recommends retaining <code>session.upload_progress.enabled=0</code> until the next regular bugfix release and says a full advisory will accompany that release. Do not describe the 21 October releases as fixing this later condition.</p>
+
+                    <h3>Node2Shell: a distinct decoder flaw</h3>
+                    <p><a href="https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/">Imperva Red Team uses Node2Shell</a> for its analysis of <code>CVE-2026-111497</code>. The connection to PHP2Shell is architectural: attacker-controlled data reaches native code underneath application logic. The root causes and fix owners are different. Node2Shell is not a collective name for every Node.js CVE below, and a Node.js upgrade does not repair PHP2Shell.</p>
+
+                    <h2 id="patch-matrix">2. The October 2026 Node.js patch matrix</h2>
+                    <p>The following preserves the supplied CVE rows and priorities while making the patch targets explicit. These are <strong>the October fixes, not a permanent recommendation to pin old versions</strong>: install the latest approved security release on the chosen supported branch, at least the listed release. A listed branch is affected before its corresponding fix; not every historical patch level or application configuration has identical exposure.</p>
+                    <div class="article-table-wrap" tabindex="0" role="region" aria-label="Node.js October 2026 vulnerability and patch matrix">
+                        <table class="article-table">
+                            <caption>Node.js advisory: 21 October 2026. Fix priority is distinct from vendor severity.</caption>
+                            <thead><tr><th scope="col">CVE</th><th scope="col">Severity</th><th scope="col">Module</th><th scope="col">Description</th><th scope="col">Affected branches</th><th scope="col">Security update / action</th><th scope="col">Fix priority</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row"><a href="#brotli">CVE-2026-111497</a></th><td>High</td><td>zlib / Brotli</td><td>Decoder out-of-bounds write; potential remote code execution.</td><td>22.x LTS<br>24.x LTS<br>26.x</td><td>22.23.4<br>24.22.1<br>26.12.1</td><td>High</td></tr>
+                                <tr><th scope="row"><a href="#dns-nul">CVE-2026-105482</a></th><td>High</td><td>DNS</td><td>Embedded NUL truncation changes the name actually resolved.</td><td>22.x LTS<br>24.x LTS<br>26.x</td><td>22.23.4<br>24.22.1<br>26.12.1</td><td>High</td></tr>
+                                <tr><th scope="row"><a href="#tls-fullwidth">CVE-2026-105483</a></th><td>High</td><td>TLS</td><td>Fullwidth IP digits bypass the required IP identity check.</td><td>24.x LTS<br>26.x</td><td>24.22.1<br>26.12.1</td><td>High</td></tr>
+                                <tr><th scope="row"><a href="#tls-resolver">CVE-2026-106069</a></th><td>High</td><td>TLS</td><td>Noncanonical IP interpretation differs between validation and connection.</td><td>22.x LTS<br>24.x LTS<br>26.x</td><td>22.23.4<br>24.22.1<br>26.12.1</td><td>High</td></tr>
+                                <tr><th scope="row"><a href="#http-agent">CVE-2026-105481</a></th><td>Medium</td><td>HTTP</td><td>A reused keep-alive socket accepts an unsolicited prior response.</td><td>22.x LTS<br>24.x LTS<br>26.x</td><td>22.23.4<br>24.22.1<br>26.12.1</td><td>High</td></tr>
+                                <tr><th scope="row"><a href="#tls-san">CVE-2026-106072</a></th><td>Medium</td><td>TLS</td><td>DNS SANs authenticate IP endpoints under unusual IPv4 spellings.</td><td>22.x LTS<br>24.x LTS<br>26.x</td><td>22.23.4<br>24.22.1<br>26.12.1</td><td>Medium</td></tr>
+                                <tr><th scope="row"><a href="#snapshot-entropy">CVE-2026-106074</a></th><td>Medium</td><td>crypto</td><td>Entropy caches preserved in snapshots repeat values across processes.</td><td>22.x LTS<br>24.x LTS<br>26.x</td><td>22.23.4<br>24.22.1<br>26.12.1</td><td>Medium</td></tr>
+                                <tr><th scope="row"><a href="#zip-state">CVE-2026-106070</a></th><td>Low</td><td>zlib / ZipFile</td><td>Failed ZIP validation leaves cached state that exposes attacker-chosen prefix bytes.</td><td>26.x</td><td>26.12.1</td><td>Low</td></tr>
+                                <tr><th scope="row"><a href="#permission-wildcard">CVE-2026-106071</a></th><td>Low</td><td>Permission Model</td><td>Wildcard radix lookup grants access to an unintended shorter path.</td><td>26.x</td><td>26.12.1</td><td>Low</td></tr>
+                                <tr><th scope="row"><a href="#permission-realpath">CVE-2026-106073</a></th><td>Low</td><td>fs / Permission Model</td><td><code>fs.realpathSync()</code> bypasses required read-permission checks.</td><td>22.x LTS<br>24.x LTS<br>26.x</td><td>22.23.4<br>24.22.1<br>26.12.1</td><td>Low</td></tr>
+                                <tr><th scope="row">Not specified</th><td>Not specified</td><td>Node.js runtime</td><td>Unsupported branch; no upstream security fix on that branch.</td><td>25.x, 23.x, 21.x</td><td>Migrate to a supported branch and its current security release.</td><td>Low in supplied table; reassess exposure</td></tr>
+                                <tr><th scope="row">Not specified</th><td>Not specified</td><td>Node.js runtime</td><td>End-of-life runtime.</td><td>20.x and older</td><td>Migrate to a supported branch and its current security release.</td><td>Unclear: supplied value was "L"; reassess exposure</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><strong>Do not treat unsupported production runtimes as inherently low priority.</strong> The supplied lifecycle rows are not CVEs, and lack of an upstream release is not evidence of safety. Prioritise an internet-facing unsupported service handling hostile compressed input above an isolated supported workload with no relevant input path. Consult the <a href="https://github.com/nodejs/Release#release-schedule">release schedule</a> when selecting a migration target; keep separately contracted vendor backports distinguishable from upstream support.</p>
+
+                    <h2 id="brotli">3. Brotli: a streaming error becomes memory corruption</h2>
+                    <p><code>CVE-2026-111497</code> lives below JavaScript, inside the Brotli decoder bundled with Node.js. The official description identifies a precise state-machine failure: an invalid block switch is treated as a temporary need for more input, rather than a terminal format error. The streaming decoder continues appending bytes into an <strong>eight-byte internal buffer</strong>, overrunning its boundary.</p>
+                    <pre><code>Expected: invalid block switch -&gt; terminal decoder error -&gt; reject stream
+Affected: invalid block switch -&gt; need more input -&gt; append again
+Consequence: internal buffer boundary exceeded -&gt; process memory corruption</code></pre>
+                    <p>This is not a JavaScript array-bound error that an application can reliably catch. The advisory describes possible crashes, process-memory disclosure and remote code execution. The concrete outcome depends on build, architecture, memory layout and mitigations; a malformed-stream crash alone does not demonstrate a reliable remote code execution exploit.</p>
+                    <p>There is stronger evidence than a crash in the <a href="https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/">22 October Imperva report</a>: its independent proof of concept executed supplied code in the official Node.js <strong>24.22.0 Linux arm64 image</strong> without an instrumented binary or debugger. The same inputs were rejected by 24.22.1. The tested routes included built-in <code>fetch()</code> consuming a Brotli response and configured Express/body-parser request decoders. Execution required multiple attempts in that setup. This demonstrates impact on those tested builds and paths, not every architecture or every intervening middleware version.</p>
+                    <p>The reachability question is whether an attacker can make the process <strong>decode attacker-controlled Brotli data</strong>. Examine upload processors, API body-decoding middleware, outbound HTTP clients that decompress responses, background importers and archive-processing pipelines. Sending compressed responses to browsers is a different operation: enabling outbound Brotli compression does not by itself establish this vulnerable decoder path. A client-side fetch can be exposed even when there is no inbound public web route.</p>
+                    <p>Patch the runtime that contains the decoder, rebuild images and restart the processes that load it. For a documented temporary control, remove Brotli decoding from the affected untrusted-input path, or route the work to patched, tightly isolated workers. Merely advertising fewer encodings with <code>Accept-Encoding</code> is not sufficient unless unexpected encodings are rejected too. Limits on decompressed size, processing time and worker memory help availability, but do not prove an out-of-bounds write unreachable. A WAF is not a replacement for a native-library fix.</p>
+
+                    <h2 id="identity">4. DNS and TLS: different parsers, different identities</h2>
+                    <p>These bugs break an assumption commonly hidden inside allowlists and secure-client wrappers: that the string authorised by the application denotes the same endpoint the resolver connects to and the certificate authenticates. The desired invariant is an authorised hostname bound to an approved address set and a certificate valid for that intended identity. Normalising at one layer while another layer interprets the original value differently breaks that binding.</p>
+                    <h3 id="dns-nul">CVE-2026-105482: DNS NUL truncation</h3>
+                    <p>JavaScript strings can contain an embedded NUL. A C-string interface treats NUL as the terminator. In the affected <code>dns.resolve*()</code> and <code>dns.reverse()</code> paths, c-ares receives only the prefix even if an application has inspected the longer JavaScript value. A suffix allowlist can therefore approve one apparent domain while resolution returns records for another.</p>
+                    <p>The project calls this an incomplete fix for <code>CVE-2026-48930</code>, which covered <code>dns.lookup()</code> and <code>net</code>/<code>tls</code> host options. This matters for testing: a regression test passing against <code>dns.lookup()</code> says nothing about <code>dns.resolve4()</code>. Include all wrappers your application actually uses. Reject control characters before resolution, use a strict domain policy, enforce outbound network restrictions and test redirects and re-resolution. These are complementary SSRF controls, not a claim that this one CVE explains all SSRF.</p>
+                    <h3 id="tls-fullwidth">CVE-2026-105483: fullwidth digits cross an identity boundary</h3>
+                    <p>Some non-ASCII digit forms can normalise to an IPv4 address. The advisory's example begins with fullwidth digits. Affected <code>tls.checkServerIdentity()</code> fails to classify the input as an IP address and considers certificate DNS names or the Common Name instead of requiring the matching IP subject alternative name. The issue affects 24.x and 26.x, and is described as a regression following <code>CVE-2026-48618</code>.</p>
+                    <p>An X.509 <code>dNSName</code> SAN containing numeric text is not equivalent to an <code>iPAddress</code> SAN encoding an address. A trusted chain alone cannot make the wrong identity type correct. Where business requirements permit, accept only explicitly configured DNS service names or canonical ASCII IP literals. Do not implement a homemade replacement for TLS certificate validation.</p>
+                    <h3 id="tls-resolver">CVE-2026-106069: the verifier and operating system disagree</h3>
+                    <p>The advisory explains that WHATWG URL normalisation interprets the leading-zero octet in <code>0127.0.0.1</code> as octal, producing <code>87.0.0.1</code>, while some platform resolvers, including the cited macOS behaviour, connect using decimal <code>127.0.0.1</code>. Certificate validation can therefore authenticate an address different from the socket's destination.</p>
+                    <p>This is a parser differential, not simply weak string filtering. Regression tests must cover the deployment operating system and libc, not only a developer's laptop. Reject ambiguous literal forms at configuration boundaries and retain evidence of the intended hostname, resolved address and actual peer address without logging sensitive URL query strings.</p>
+                    <h3 id="tls-san">CVE-2026-106072: DNS SANs accepted for unusual IP spellings</h3>
+                    <p>Short, hexadecimal, integer and octal-looking IPv4 forms can reach the same endpoint while evading the IP classification used for hostname verification. The advisory names <code>0177.0.0.1</code>, <code>0x7f.0.0.1</code>, <code>2130706433</code> and <code>127.1</code>. A certificate with only a numeric DNS SAN can then be accepted where a matching IP SAN should be required.</p>
+                    <p>Do not remove the exploit prerequisites from the story. The Node.js project specifies a certificate with the numeric DNS SAN issued by a CA trusted by the client, plus a resolver accepting these forms, such as glibc. This is not a universal ability to present any self-signed certificate. Test positive and negative SAN cases in a private test PKI; never disable validation with <code>rejectUnauthorized: false</code> or <code>NODE_TLS_REJECT_UNAUTHORIZED=0</code> as a production workaround.</p>
+
+                    <h2 id="state">5. The quieter bugs: state survives when it should not</h2>
+                    <h3 id="http-agent">CVE-2026-105481: response confusion during keep-alive reuse</h3>
+                    <p>Node.js HTTP Agent should discard an idle connection receiving unsolicited data. The existing guard runs when the event loop polls for I/O. If unsolicited response bytes are already in the socket but have not been read, and synchronous work delays polling, the socket can be assigned to another request and the guard removed first. Those old bytes are then parsed as the new request's response.</p>
+                    <p>The security failure is loss of request-response association, not simply a slow socket or arbitrary cross-origin pool reuse. Reachability depends on influence over the upstream connection and affected Agent usage. Review shared outbound clients, reverse-proxy dependencies and authentication-sensitive API responses. The advisory identifies this as an incomplete fix for <code>CVE-2026-48931</code>. An approved temporary workaround can avoid connection reuse for the affected client, but capacity-test the additional TLS handshakes, latency and ephemeral-port demand. Patch and test actual pooled traffic, including delayed event-loop scheduling.</p>
+                    <h3 id="snapshot-entropy">CVE-2026-106074: random at build time is not random per process</h3>
+                    <p>User-land startup snapshots and single executable applications using <code>useSnapshot</code> can serialise the internal entropy caches behind <code>crypto.randomUUID()</code>, <code>crypto.randomUUIDv7()</code> and <code>crypto.randomInt()</code>. Calling these APIs, or a dependent API such as <code>URL.createObjectURL()</code>, while building the snapshot can copy unused cached values into every process launched from the artifact.</p>
+                    <p>The advisory reports repetition until cache refill, up to 127 UUIDs and approximately 1,000 <code>randomInt()</code> values. This is <strong>not a claim that all Node.js randomness or the operating system RNG is broken</strong>. The condition is build-time entropy state captured into a reusable snapshot. Impact is much higher when a repeated value is used as a bearer secret than when it is a non-sensitive correlation identifier, although duplicate identifiers can still break business logic.</p>
+                    <p>Patch the build runtime and rebuild snapshots and single executables, not just the machine that launches them. Generate per-process and per-session security material after deserialisation. Test several independent processes started from the exact same artifact and check their first outputs for repetition. Sampling cannot prove cryptographic security; this test targets the specific deterministic reuse condition. Invalidate affected tokens or sessions when exposure is established, with rotation scope based on actual use rather than an assumption that every stored credential is affected.</p>
+                    <h3 id="zip-state">CVE-2026-106070: failed validation leaves a usable ZIP object</h3>
+                    <p>In Node.js 26.x, reading <code>zipEntry.modified</code> on an archive with inconsistent local and central-directory headers can catch a validation error yet leave the parsed local header cached without a valid content offset. A later content read returns attacker-controlled bytes at the start of the file rather than rejecting the entry. The central-directory CRC is attacker-controlled too, so a passing CRC-32 is not a security guarantee.</p>
+                    <p>The practical risk is a scanner/extractor disagreement: one component approves bytes different from the bytes another implementation extracts. Fail closed after validation errors, discard partially validated objects, reject inconsistent metadata, and make downstream processing consume the exact validated bytes. Where possible, perform parsing and scanning in an isolated worker and pass an immutable content digest and object reference onward. CRC detects accidental corruption; it does not authenticate an archive.</p>
+                    <h3 id="permission-wildcard">CVE-2026-106071: wildcard lookup over-grants filesystem access</h3>
+                    <p>The 26.x Permission Model radix lookup can stop comparing too early when a requested path is shorter than the wildcard prefix. The advisory's example grants <code>/etc/passwd</code> under a rule intended for <code>/etc/passwd.*</code>. The reported condition requires that wildcard grant directly under the permission tree root, for example as the scope's only grant. This is a different root cause from <code>CVE-2026-58043</code>.</p>
+                    <p>Test denied paths, especially prefix siblings, as well as allowed paths. Prefer narrow explicit grants where practical. A policy that appears strict in a deployment manifest is not evidence that every lookup enforces it correctly.</p>
+                    <h3 id="permission-realpath">CVE-2026-106073: a sibling filesystem API misses the check</h3>
+                    <p><code>fs.realpathSync()</code> lacks required read-permission checks, whereas the earlier <code>CVE-2026-21715</code> fix addressed <code>fs.realpathSync.native()</code>. Restricted code can learn file existence, resolve symlink targets and enumerate paths outside its allowed directories. The advisory describes metadata exposure, not an unrestricted arbitrary-file-content read or host takeover.</p>
+                    <p>Node's Permission Model is defence in depth, <a href="https://nodejs.org/api/permissions.html">not a security boundary for executing malicious code</a>. Enforce operating-system identities, filesystem permissions, read-only mounts, capability restrictions and an appropriate container or VM boundary as well. This distinction is particularly important for AI tool runners, plugin hosts and build systems executing externally supplied code.</p>
+                    <h3>Do not stop at the ten CVE rows</h3>
+                    <p>The same Node.js advisory includes c-ares and Undici updates on all three release lines, OpenSSL updates on 22.x and 24.x, and SQLite on 22.x. A Node release is a bundle of security-relevant components. Assess separately installed copies too: built-in <code>fetch()</code> uses Node's bundled Undici, while an application's npm-installed <code>undici</code> has its own lifecycle. Likewise, an Electron application or another product embedding a native decoder needs its supplier's update; replacing the host's standalone Node installation may leave its embedded runtime untouched.</p>
+
+                    <h2 id="ai-discovery">6. How did AI know about these vulnerabilities?</h2>
+                    <p>The evidence supports AI-assisted research, not omniscience. The Node.js advisory credits <strong>OpenAI Codex Security, Khai Tran and Sylvie Mayer</strong> with the Brotli report. For discovery attribution, this article follows that current maintainer advisory; Imperva's independent reproduction is separate work, and its report's attribution sentence differs from the current advisory.</p>
+                    <p>The PHP2Shell coordinated disclosure credits researchers from <strong>Wiz Research, OpenAI Codex Security and Calif</strong>, and records collaboration with PHP and Google's Gemini team on discovery, coordination and patch verification. eMudhra's preliminary account separately says the researcher reportedly used AI-assisted tooling to recover its weak keys; that is a vendor-reported claim without a complete public technical account in the sources used here. The Node SPKI-blocking commit also includes an <code>Assisted-by: Claude, Codex</code> attribution, which documents assistance with remediation, not discovery of the CA incident. These are different roles and different levels of evidence.</p>
+                    <p>It helps to separate four mechanisms. <strong>Recall</strong> reproduces information encountered during training or in a supplied document. <strong>Retrieval</strong> looks up a public advisory, issue or patch. <strong>Inference</strong> reasons from unfamiliar source code to a possible defect. <strong>Validation</strong> executes a controlled experiment that confirms the defect. A fluent answer containing a CVE can result from retrieval, not secret foreknowledge; a plausible code explanation remains a hypothesis until tested.</p>
+                    <h3>A reproducible AI-assisted research workflow</h3>
+                    <ol>
+                        <li><strong>Choose a trust boundary.</strong> Identify attacker-controlled input entering a native decoder, resolver, identity verifier or permission check, and state the invariant that must hold.</li>
+                        <li><strong>Inspect state transitions and sibling APIs.</strong> Follow error codes, buffer cursors, partial objects and normalisation steps. Use earlier patches as leads for variants, not as proof of another bug.</li>
+                        <li><strong>Build a bounded local harness.</strong> Compile the relevant native component with AddressSanitizer or UndefinedBehaviorSanitizer where supported. For parser disagreements, compare outputs and rejection behaviour across the actual supported platform combinations.</li>
+                        <li><strong>Use tools for feedback.</strong> Coverage-guided fuzzing and targeted tests produce concrete crashes or invariant violations. An AI assistant can help interpret traces, suggest input classes and reduce a failing case; the execution results, not the suggestion, supply evidence.</li>
+                        <li><strong>Establish the regression.</strong> Run the same non-destructive case against affected and patched builds. Verify that the fix closes the invalid state without breaking legitimate inputs.</li>
+                        <li><strong>Disclose and retain provenance.</strong> Record commits, compiler settings, sanitizer logs, platform details and researcher review. Coordinate disclosure with the maintainer; remove credentials and customer data from prompts and artifacts.</li>
+                    </ol>
+                    <p>This is a general workflow, not an assertion that the credited researchers used every step above. AI makes source review and test iteration cheaper, which can benefit defenders and attackers. The October advisory also documents multiple incomplete fixes and a regression: variants around an already identified boundary deserve systematic tests. The business response should be a shorter, measured remediation cycle, not the unsupported claim that AI has made every system instantly exploitable.</p>
+                    <h3>What "burning the internet" means in the observed timeline</h3>
+                    <p><a href="https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot/">Amazon Threat Intelligence reports</a> a PHP2Shell attempt in MadPot telemetry on <strong>17 October</strong>, four days before the 21 October disclosure. AWS also describes further attempts around the release and broad attempts afterwards, while explicitly saying it was unclear whether the observed attempts would succeed against real systems or how the actors acquired the information. This is concrete evidence of attempted exploitation, not proof that all vulnerable sites were compromised.</p>
+                    <p>The timeline is tighter than a monthly patch process: eMudhra's report and the earliest AWS PHP observation on 17 October, browser trust-response announcements on 20 October, PHP and Node security releases on 21 October, Imperva's Node2Shell demonstration on 22 October, and PHP's follow-up notice on 23 October. These events do not establish a common attacker, a causal chain between the incidents or that AI generated the observed attack traffic. They do establish a need to process new evidence continuously during remediation.</p>
+
+                    <h2 id="corporate-response">7. Corporate response: patch the running estate, not the spreadsheet</h2>
+                    <h3>First establish an evidence-based inventory</h3>
+                    <p>Collect the runtime version and executable path from the application process or its actual container, along with application owner, environment, image digest, architecture, base image, package provenance and exposed data paths. Include CI runners, build images, serverless runtimes, desktop applications embedding Node, vendor appliances and abandoned services. A developer shell's <code>node --version</code> does not identify the interpreter running a Windows service or a production pod.</p>
+                    <p>The following read-only inventory command reports the runtime it executes under. Run it through approved management tooling inside the relevant workload; it does not discover every Node process or prove a distribution backport is present.</p>
+                    <pre><code class="language-bash">node -p 'JSON.stringify({node:process.version,execPath:process.execPath,platform:process.platform,arch:process.arch,openssl:process.versions.openssl,brotli:process.versions.brotli},null,2)'</code></pre>
+                    <p>For each asset, record whether it decodes untrusted Brotli, resolves untrusted names, uses customised outbound TLS, pools HTTP connections, builds startup snapshots, reads ZIPs with the affected API, or relies on Permission Model restrictions. Link findings to deployed image digests and service owners. SCA remains useful for npm dependencies, but neither a clean lockfile audit nor a patched OpenSSL package establishes that the Node binary and its bundled components are patched.</p>
+                    <p>For PHP, add the serving SAPI, effective INI settings, FPM pool and worker lifecycle, extensions and hosting-provider patch revision. For PKI, record the actual chain and public-key identifiers seen by each relying party. Give an internet-facing PHP2Shell exposure an emergency response measured in hours; the seven-day target below is for resolving residual exceptions and plans, not permission to leave reachable critical RCE unaddressed.</p>
+                    <h3>A proposed emergency change schedule</h3>
+                    <p>These are suggested enterprise targets, not vendor-mandated SLAs. Adjust for exposure and service criticality. When exploitation is suspected, start incident response immediately instead of waiting for the normal change window.</p>
+                    <div class="article-table-wrap" tabindex="0" role="region" aria-label="Corporate remediation owners and evidence">
+                        <table class="article-table">
+                            <caption>Response targets measured from advisory intake</caption>
+                            <thead><tr><th scope="col">Window</th><th scope="col">Accountable teams</th><th scope="col">Action</th><th scope="col">Required evidence</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row">0-4 hours</th><td>Vulnerability management, service owners, SOC</td><td>Confirm advisories, map runtime and CA exposure, identify public and high-trust workloads; contain suspected compromise.</td><td>Owner-assigned assets, source links, running versions, input-path assessment and incident decision.</td></tr>
+                                <tr><th scope="row">Within 24 hours</th><td>Platform, application engineering, PKI</td><td>Patch highest-risk reachable services; validate issuer trust changes; disable an affected feature only as a tracked temporary control.</td><td>Canary results, approved image digest, deployed version and certificate-chain tests.</td></tr>
+                                <tr><th scope="row">Within 72 hours</th><td>Platform, build engineering, application teams</td><td>Roll out across affected workloads; rebuild snapshots and single executables; retire vulnerable instances and autoscaling templates.</td><td>Deployment inventory, fresh process start, snapshot tests and runtime attestations.</td></tr>
+                                <tr><th scope="row">Within 7 days</th><td>Technology owners, risk, procurement</td><td>Resolve remaining exposure or approve time-limited exceptions; set EOL migration and vendor remediation milestones.</td><td>Named risk owner, expiry, compensating controls and committed migration plan.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>Make the rollout durable</h3>
+                    <ul>
+                        <li><strong>Rebuild from maintained inputs.</strong> Refresh base images, pin the resulting approved digest, run deterministic dependency installation and rebuild native add-ons where applicable. Verify vendor backports against the vendor advisory and package revision.</li>
+                        <li><strong>Restart and replace.</strong> Updating a binary on disk does not replace a process already running it. Drain traffic, replace instances and verify the serving process. Update launch templates, scheduled jobs and rollback artifacts so recovery cannot silently restore the vulnerable version.</li>
+                        <li><strong>Treat trust stores as configuration with owners.</strong> Reconcile bundled, OS, application and proxy trust; test chain changes without broad TLS bypasses. Monitor certificate failures during canaries and investigate the actual issuer path.</li>
+                        <li><strong>Reduce post-exploitation privileges.</strong> Use non-root identities, least-privilege workload credentials, read-only application filesystems, restricted egress and no container-runtime socket mounts. Native code execution inherits the service's access; an unnecessary cloud role magnifies the incident.</li>
+                        <li><strong>Remove EOL escape routes.</strong> Enforce supported runtime policy in CI, image admission and vendor requirements. Every exception needs an owner, expiry and verified containment, not just an entry in a spreadsheet.</li>
+                    </ul>
+                    <h3>Regression tests that close the ticket</h3>
+                    <p>Version checks are necessary but insufficient. Use authorised local or staging fixtures; do not send malformed test corpora to third-party or production systems. The acceptance tests should match the affected path and business function.</p>
+                    <ul>
+                        <li><strong>PHP:</strong> verify the fixed runtime in each serving pool, check administratively applied upload-progress settings, and exercise request rejection, worker recycling and recovery from memory pressure in staging. Test the application's response to the patched hard-OOM termination behaviour.</li>
+                        <li><strong>Brotli:</strong> normal and malformed streams across chunk boundaries produce expected output or clean rejection on the patched decoder; native harnesses report no relevant sanitizer failure.</li>
+                        <li><strong>DNS:</strong> control-character hostnames fail before a query; exercise each resolver wrapper in use and verify that the connection cannot escape the approved address policy.</li>
+                        <li><strong>TLS and eMudhra:</strong> legitimate service chains succeed, disallowed issuer paths fail under the actual trust configuration, and IP identity tests reject a DNS-only SAN. Exercise fullwidth and noncanonical inputs on deployed platforms.</li>
+                        <li><strong>HTTP:</strong> a local test server sending unsolicited data on an idle pooled socket cannot supply the response for a subsequent request, including when event-loop polling is delayed.</li>
+                        <li><strong>Snapshots:</strong> independent processes started from the rebuilt artifact do not replay the cached initial values; inspect application-generated secrets captured at build time separately.</li>
+                        <li><strong>ZIP:</strong> inconsistent local/central headers cause rejection, and content approved by a scanner is byte-for-byte the content consumed downstream.</li>
+                        <li><strong>Permissions:</strong> disallowed prefix paths, symlink resolution and both realpath variants are denied; the operating-system boundary remains effective independently of Node's policy.</li>
+                    </ul>
+                    <h3>Detection and incident handling</h3>
+                    <p>Correlate native decoder crashes, abnormal worker restarts, unexpected child processes, unusual outbound destinations, TLS identity failures, duplicate early-process identifiers and archive scan/extract discrepancies with the responsible workload and deployment version. These are investigation leads, not unique indicators of these CVEs. A crash can be accidental, and absence of crashes does not prove absence of exploitation.</p>
+                    <p>For PHP2Shell, review retained evidence from at least 17 October, or earlier when local evidence warrants it, rather than beginning at disclosure. Correlate unusual multipart requests, upload-progress activity, memory-limit failures, fatal errors and subsequent worker behaviour. The ordinary <code>PHP_SESSION_UPLOAD_PROGRESS</code> field alone is not proof of an attack. AWS cautions that its published source IPs include shared anonymisation infrastructure; treat matches as investigation leads, not indiscriminate blocklists. Memory disclosure may leave no child process or dropped file, so execution-focused detection alone is incomplete.</p>
+                    <p>If evidence indicates compromise, isolate affected workloads using the incident plan, preserve relevant logs and volatile evidence before replacement when feasible, scope service-account use and lateral access, and rebuild from trusted artifacts. Rotate credentials according to observed or credible exposure and revoke affected sessions or tokens where necessary. Patching closes a vulnerability; it does not evict an intruder or repair stolen credentials.</p>
+
+                    <h2>8. This is the new common, but it is manageable</h2>
+                    <p>"Burning the internet" describes the operational pressure, not a measured global exploitation rate. This release spans native memory safety, parser agreement, PKI trust, asynchronous connection state and build-time entropy. That combination defeats a process organised solely around application package updates.</p>
+                    <p>The durable response is concrete: know the runtime that is actually running, know which untrusted inputs reach it, ship supported security releases rapidly, validate the relevant boundary and retain proof of deployment. Use AI to accelerate review and regression work, but require reproducible evidence before accepting a finding or declaring it fixed. The organisations that make this routine will spend less time treating every advisory as an exceptional crisis.</p>
+
+                    <h2 id="sources">Primary sources</h2>
+                    <ol>
+                        <li><a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases">Node.js: Wednesday, October 21, 2026 Security Releases</a>. Source for the ten CVEs, affected branches, mechanisms, research credits and eMudhra dependency-update entry.</li>
+                        <li><a href="https://nodejs.org/en/blog/release/v22.23.4/">Node.js v22.23.4</a>, <a href="https://nodejs.org/en/blog/release/v24.22.1/">v24.22.1</a> and <a href="https://nodejs.org/en/blog/release/v26.12.1/">v26.12.1</a>. Release artifacts and change details.</li>
+                        <li><a href="https://github.com/nodejs/Release#release-schedule">Node.js release schedule</a> and <a href="https://nodejs.org/en/about/eol">end-of-life guidance</a>. Lifecycle status and support planning.</li>
+                        <li><a href="https://nodejs.org/api/permissions.html">Node.js Permission Model</a> and <a href="https://nodejs.org/api/tls.html">TLS API documentation</a>. Security-boundary limitations and trust configuration.</li>
+                        <li><a href="https://emudhra.com/en/post/certificate-security-incident">eMudhra incident statements, through 26 October</a> and <a href="https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/">Mozilla's 20 October response</a>. Vendor findings and relying-party protections.</li>
+                        <li><a href="https://github.com/nodejs/node/commit/01acf0ee7493d9a6b68dd66eeefe242aa9010759">Node.js: reject chains containing blocked public keys</a>. SPKI enforcement, trust-store independence and TLS session-resumption limitation.</li>
+                        <li><a href="https://www.php.net/archive/2026.php#2026-10-21-5">PHP's 21 October security announcement</a> and <a href="https://www.php.net/archive/2026.php#2026-10-23-1">23 October upload-progress notice</a>. Fix versions, mitigation limitations and the later serializer condition.</li>
+                        <li>PHP security advisories: <a href="https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w">CVE-2026-109618: OOM corruption</a> and <a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp">CVE-2026-109619: stale global state</a>. Root causes, SAPI distinctions and confirmed impact.</li>
+                        <li><a href="https://www.php2shell.com/">PHP2Shell coordinated disclosure</a>. Alias mapping, researcher attribution and demonstration scope.</li>
+                        <li><a href="https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/">Imperva: Node2Shell, 22 October</a>. Independent code-execution validation on an official Linux arm64 Node.js build.</li>
+                        <li><a href="https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot/">AWS: PHP2Shell observations in MadPot</a>. Pre-disclosure attempts and explicit uncertainty about real-world success.</li>
+                    </ol>
+                    <div class="tag-row"><span class="tag">#nodejs</span><span class="tag">#runtime-security</span><span class="tag">#pki</span><span class="tag">#ai-security</span><span class="tag">#vulnerability-management</span></div>
+                </div>
+                <div class="article-nav"><a href="../resources.html">All articles</a><a href="../contact.html">Scope an engagement</a></div>
+            </div>
+        </article>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>&copy; 2026 Preemptive Cyber Security</p><ul class="footer-links"><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../cookies.html">Cookies</a></li><li data-psc-footer-rss><a href="../../feed.xml" type="application/rss+xml">RSS</a></li></ul></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
