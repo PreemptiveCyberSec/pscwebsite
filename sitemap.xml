@@ -446,4 +446,22 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-01-recon-osint.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-02-phishing-pretexting.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-03-appsec-questions.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-04-javascript-analysis.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-05-filter-normalisation.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-06-web-cve-bot.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-07-scanner-orchestration.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-08-burp-ai.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-09-payload-ducky-labs.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-10-c2-mcp-research.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-11-ghidra-ida.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-12-lldb-runtime.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-13-radare-binary-ninja.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-14-automation-architectures.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-15-cloud-privesc-reporting.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/authors/harsh-maniar.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/build-a-hackbot-ai-bug-bounty.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-16-hackbot-agent-harness.html</loc><lastmod>2026-10-29</lastmod></url>
 </urlset>

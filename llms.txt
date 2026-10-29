@@ -15,6 +15,8 @@ This file is a curated map of PSC's public company, service, and security resear
 
 ## Research authors
 
+- [Harsh Maniar](https://preemptivecybersec.com/pages/authors/harsh-maniar.html): Co-author of the AI-Assisted Security Testing series.
+
 - [Viral Maniar](https://preemptivecybersec.com/pages/authors/viral-maniar.html): Managing Director and Principal Consultant covering offensive security, penetration testing, red teaming, and cloud security.
 - [Mike Chen](https://preemptivecybersec.com/pages/authors/mike-chen.html): Lead Penetration Tester covering web application, API, and offensive security research.
 - [Lisa Garcia](https://preemptivecybersec.com/pages/authors/lisa-garcia.html): Security Researcher covering cryptography, vulnerability research, and detection engineering.
@@ -37,6 +39,8 @@ This file is a curated map of PSC's public company, service, and security resear
 
 ## Security research index
 
+- [Build a Hackbot: AI-Assisted Bug Bounty and Zero-Day Research](https://preemptivecybersec.com/pages/blog/build-a-hackbot-ai-bug-bounty.html): Build an evidence-first hackbot: deterministic recon, new-asset queues, API mapping, AI triage, unsent Caido hand-offs, secure recovery, and a runnable local lab.
+
 - [Resources](https://preemptivecybersec.com/pages/resources.html): Complete index of PSC security research, tools, and conference material. Use this page to discover all published articles.
 - [SkillScan](https://preemptivecybersec.com/skillscan.html): Static security inspection for AI agent skill files, scripts, and configurations. Cloud scanning requires explicit upload consent; a clean result is not a guarantee of safety.
 - [Breach Intelligence](https://preemptivecybersec.com/CI.html): A curated, source-labeled view of selected Australian cyber incident records from 2020 onward, with year, month, industry, search, and pagination controls. Counts are not official national breach totals.
@@ -47,6 +51,27 @@ This file is a curated map of PSC's public company, service, and security resear
 - [Quantization Hacking: From SimpleCNN to CIFAR-10](https://preemptivecybersec.com/pages/blog/quantization-hacking-cifar10.html): Step-by-step PyTorch CIFAR-10 lab covering convolution, Adam, cross-entropy, INT8 post-training quantization, and secure model-pipeline testing.
 - [LiteLLM Security: Trivy, Supply-Chain Compromise and AI Gateway RCE](https://preemptivecybersec.com/pages/blog/litellm-ai-gateway-security.html): Source-checked analysis of the March 2026 malicious PyPI releases, authenticated gateway configuration RCE, nested-routing SSRF, and incident response for AI infrastructure.
 - [XML sitemap](https://preemptivecybersec.com/sitemap.xml): Machine-readable index of current public pages and all published research URLs.
+
+## AI-Assisted Security Testing: 16-Part Series
+
+Co-authored by Viral Maniar, Harsh Maniar, and Mike Chen. Original technical guides with linked navigation, lab fixtures, diagrams, validation criteria, and defensive controls.
+
+- [Part 1: Recon and OSINT: Build an Evidence-Led AI Workflow](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-01-recon-osint.html): Practical subdomain enumeration with Subfinder, CT, DNSX and HTTPX, scope filtering, wildcard validation, evidence ledgers, and AI-assisted recon triage.
+- [Part 2: AI Phishing and Pretexting: Engineer a Controlled Simulation](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-02-phishing-pretexting.html): Design authorised AI-assisted phishing simulations with synthetic identities, mail authentication analysis, privacy controls, and detection metrics.
+- [Part 3: LLM-Assisted AppSec: Ask Questions That Produce Tests](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-03-appsec-questions.html): Turn architecture and API contracts into evidence-backed AppSec questions, authorisation matrices, negative tests, and reproducible findings.
+- [Part 4: JavaScript Analysis: Trace Sources, Sinks, and Browser Trust](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-04-javascript-analysis.html): Use LLMs with ASTs, source maps, browser evidence, DOM sinks, postMessage checks, and safe local fixtures for JavaScript security review.
+- [Part 5: LLM-Assisted Filter Testing: Find Parser Disagreements Safely](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-05-filter-normalisation.html): Analyse filter bypass classes through canonicalisation, duplicate parameters, Unicode policy, differential tests, and secure parser boundaries.
+- [Part 6: Web CVE Bot: From Advisory Text to a Patch Decision](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-06-web-cve-bot.html): Design a source-backed CVE triage bot using inventory matching, vendor advisories, KEV, EPSS, VEX, evidence schemas, and patch verification.
+- [Part 7: Scaling Nuclei and Nessus: Deterministic Control, AI Triage](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-07-scanner-orchestration.html): Scale authorised Nuclei and Nessus assessments with template review, global rate budgets, scan policy, queues, evidence deduplication, and retesting.
+- [Part 8: Burp Suite AI: Features, Extensions, and an Evidence-First Workflow](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-08-burp-ai.html): A date-stamped Burp AI guide covering Repeater, Explainer, Explore issue, access-control validation, login sequences, Montoya, extensions, and MCP.
+- [Part 9: Payload Modification and Ducky Script: Safe Endpoint Labs](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-09-payload-ducky-labs.html): Use LLMs for benign payload refactoring, build provenance, regression testing, Ducky Script text-only demonstrations, and endpoint telemetry validation.
+- [Part 10: C2 Research and Red-Team MCPs: Build Read-Only First](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-10-c2-mcp-research.html): Extend authorised C2 research with typed telemetry, simulation adapters, MCP tool policies, capability separation, approval gates, and audit trails.
+- [Part 11: Ghidra and IDA Pro: Evidence-Grounded AI Reverse Engineering](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-11-ghidra-ida.html): Compare GhidraMCP, native scripting, official Hex-Rays IDA MCP, community IDA bridges, decompiler evidence, type recovery, and a safe parser lab.
+- [Part 12: LLDB and AI: Runtime Evidence Without Uncontrolled Execution](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-12-lldb-runtime.html): Use LLDB and community MCP bridges for bounded runtime inspection, register and memory evidence, core-dump triage, and reproducible parser debugging.
+- [Part 13: radare2 and Binary Ninja: Compare AI Analysis Across Representations](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-13-radare-binary-ninja.html): Review r2ai, decai, radare MCP caveats, Binary Ninja Sidekick, community bridges, IL analysis, reversible edits, and cross-tool verification.
+- [Part 14: Automating Pentesting with AI: Architectures, Ecosystems, and Evaluation](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-14-automation-architectures.html): Compare open-source, research, and commercial AI pentesting systems, ReAct, planner-executor, task graphs, RAG, verifiers, and reproducible evaluation.
+- [Part 15: CloudSec, Privilege Analysis, and Reporting: Close the Evidence Loop](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-15-cloud-privesc-reporting.html): Apply AI to cloud configuration review, effective permissions, privilege-escalation preconditions, evidence-backed reporting, retesting, and engagement governance.
+- [Part 16: A Fifteen-Task Hackbot Harness with Oh My Pi, Hermes, and OpenClaw](https://preemptivecybersec.com/pages/blog/ai-pentesting-part-16-hackbot-agent-harness.html): Unify Parts 1–15 with a runnable harness, a 34-file Markdown workspace, a review-gated multi-agent workflow, evidence gates, and operating steps.
 
 ## Threat detection, hunting, and incident response
 
