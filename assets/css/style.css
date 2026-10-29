@@ -734,6 +734,22 @@ h1, h2, h3, h4 {
     box-shadow: 0 0 0 2px rgba(88, 245, 160, 0.25);
 }
 
+#tools .card { cursor: pointer; }
+
+#tools .card > .card-link { position: static; }
+
+#tools .card > .card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+}
+
+#tools .card:has(> .card-link:focus-visible) {
+    border-color: var(--neon);
+    box-shadow: 0 0 0 2px rgba(88, 245, 160, 0.25);
+}
+
 /* ---------- Capabilities ---------- */
 .capability-grid {
     display: grid;

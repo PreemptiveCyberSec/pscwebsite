@@ -163,6 +163,39 @@
 .article-byline strong { color: var(--text-primary); font-weight: 600; }
 
 /* ---------- Prose ---------- */
+.ai-series { padding-top: 110px; }
+.ai-series h2[id] { scroll-margin-top: 96px; }
+.ai-series .prose section > p { color: var(--text-secondary); margin-bottom: 1.25em; font-size: 1.02rem; }
+.ai-series h1 { font-size: 2.65rem; overflow-wrap: break-word; letter-spacing: 0; }
+.ai-series .article-meta, .ai-series .diagram-caption, .ai-series .dg-title { letter-spacing: 0; }
+.ai-series .series-index { margin: 28px 0; padding: 18px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ai-series .series-index summary { cursor: pointer; color: var(--neon); font-family: var(--font-mono); line-height: 1.65; }
+.ai-series .series-index ol { margin-top: 20px; }
+.ai-series .series-index [aria-current="page"] { color: var(--text-primary); font-weight: 600; }
+.ai-series .series-toc { padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.ai-series .series-scope { font-size: 0.88rem; }
+.ai-series .workspace-document { padding: 14px 0; border-top: 1px solid var(--border); }
+.ai-series .workspace-document summary { cursor: pointer; color: var(--neon); font-family: var(--font-mono); font-size: 0.85rem; overflow-wrap: anywhere; }
+.ai-series .workspace-document[open] summary { margin-bottom: 16px; }
+.ai-series .workspace-document code.language-markdown { white-space: pre-wrap; overflow-wrap: anywhere; }
+.ai-series .series-table { max-width: 100%; overflow-x: auto; margin: 24px 0; }
+.ai-series table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; line-height: 1.65; }
+.ai-series th, .ai-series td { padding: 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+.ai-series th { color: var(--neon); font-weight: 500; }
+.ai-series td { color: var(--text-secondary); }
+.ai-series .diagram-figure { border-radius: 6px; }
+.ai-series .diagram-figure svg { max-width: 400px; margin: auto; }
+.ai-series .article-nav a { max-width: 100%; line-height: 1.65; overflow-wrap: anywhere; }
+.ai-series .prose code { overflow-wrap: anywhere; }
+.ai-series .prose pre code { overflow-wrap: normal; }
+.ai-series :is(summary, a, .series-table):focus-visible { outline: 2px solid var(--neon); outline-offset: 4px; }
+@media (max-width: 560px) {
+    .ai-series h1 { font-size: 2rem; }
+    .ai-series .prose h2 { font-size: 1.4rem; }
+    .ai-series .diagram-figure { padding: 18px 10px; }
+    .ai-series .article-byline { align-items: flex-start; line-height: 1.8; }
+}
+
 .prose { margin-top: 14px; }
 
 .prose > p {
