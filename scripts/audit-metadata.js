@@ -125,7 +125,11 @@ for (const relativePath of pagePaths) {
     if (isArticle) {
         requireOne(relativePath, html, "article:published_time");
         requireOne(relativePath, html, "article:modified_time");
-        requireOne(relativePath, html, "article:author");
+        const authorTags = matchingMeta(html, "article:author");
+        if (!authorTags.length || authorTags.some(tag => !tag.content)
+            || new Set(authorTags.map(tag => tag.content)).size !== authorTags.length) {
+            failures.push(`${relativePath}: article:author entries are missing, empty, or duplicated`);
+        }
         requireOne(relativePath, html, "article:section");
     }
 

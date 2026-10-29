@@ -79,7 +79,7 @@ if (homepageNodes.some((node) => node["@type"] === "SearchAction")) failures.pus
 
 const authorDirectory = path.join(root, "pages", "authors");
 const authorFiles = fs.readdirSync(authorDirectory).filter((file) => file.endsWith(".html")).sort();
-if (authorFiles.length !== 4) failures.push(`Expected 4 author profiles, found ${authorFiles.length}`);
+if (authorFiles.length !== 5) failures.push(`Expected 5 author profiles, found ${authorFiles.length}`);
 const personIds = new Set();
 for (const file of authorFiles) {
     const relativePath = `pages/authors/${file}`;
@@ -89,7 +89,7 @@ for (const file of authorFiles) {
     const breadcrumb = one(relativePath, nodes, "BreadcrumbList");
     const canonical = `${origin}/${relativePath}`;
     if (person["@id"] !== `${canonical}#person` || person.url !== canonical) failures.push(`${relativePath}: Person URL mismatch`);
-    if (person.worksFor?.["@id"] !== organizationId) failures.push(`${relativePath}: Person worksFor mismatch`);
+    if ((person.worksFor || person.affiliation)?.["@id"] !== organizationId) failures.push(`${relativePath}: Person organization relationship mismatch`);
     if (person.name !== text(source.match(/<h1\b[^>]*>([\s\S]*?)<\/h1\s*>/i)?.[1] || "")) failures.push(`${relativePath}: Person name differs from H1`);
     if (breadcrumb.itemListElement?.map((item) => item.name).join("|") !== visibleCrumbs(source).join("|")) failures.push(`${relativePath}: breadcrumb names differ`);
     personIds.add(person["@id"]);
@@ -122,12 +122,18 @@ for (const file of articleFiles) {
         organizationAuthors += 1;
         if (visibleAuthor !== "Preemptive Cyber Security Research" || meta(source, "article:author") !== organizationId) failures.push(`${relativePath}: organization byline mismatch`);
     } else {
-        if (!personIds.has(posting.author?.["@id"])) failures.push(`${relativePath}: unresolved Person author`);
-        if (posting.author?.name !== visibleAuthor || meta(source, "article:author") !== posting.author?.url) failures.push(`${relativePath}: Person byline mismatch`);
+        const authors = Array.isArray(posting.author) ? posting.author : [posting.author];
+        const authorMetadata = [...source.matchAll(/<meta\b[^>]*>/gi)]
+            .filter(match => attribute(match[0], "property").toLowerCase() === "article:author")
+            .map(match => decodeHtml(attribute(match[0], "content")));
+        if (!authors.length || authors.some(author => !personIds.has(author?.["@id"]))) failures.push(`${relativePath}: unresolved Person author`);
+        if (new Set(authors.map(author => author?.["@id"])).size !== authors.length) failures.push(`${relativePath}: duplicate Person author`);
+        if (authors.map(author => author?.name).join(", ") !== visibleAuthor.replace(/\s+,/g, ",")
+            || authors.map(author => author?.url).join("|") !== authorMetadata.join("|")) failures.push(`${relativePath}: Person byline mismatch`);
     }
 }
-if (articleFiles.length !== 92) failures.push(`Expected 92 articles, found ${articleFiles.length}`);
-if (organizationAuthors !== 10) failures.push(`Expected 10 organization-authored articles, found ${organizationAuthors}`);
+if (articleFiles.length !== 112) failures.push(`Expected 112 articles, found ${articleFiles.length}`);
+if (organizationAuthors !== 11) failures.push(`Expected 11 organization-authored articles, found ${organizationAuthors}`);
 
 const servicesSource = fs.readFileSync(path.join(root, "pages", "services.html"), "utf8");
 const serviceNodes = graph("pages/services.html", servicesSource);
@@ -168,4 +174,4 @@ if (failures.length) {
     console.error(failures.join("\n"));
     process.exit(1);
 }
-console.log("PASS: Organization, WebSite, 4 Person, 92 BlogPosting, 9 Service, and 101 BreadcrumbList entities agree with visible content.");
+console.log("PASS: Organization, WebSite, 5 Person, 112 BlogPosting, 9 Service, and 122 BreadcrumbList entities agree with visible content.");

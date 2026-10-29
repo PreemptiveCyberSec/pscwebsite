@@ -59,9 +59,11 @@ function readArticlePosts(root) {
         const url = requireText(post, "mainEntityOfPage", relativePath);
         const expectedUrl = `${origin}/${relativePath}`;
         const date = requireText(post, "datePublished", relativePath);
-        const author = typeof post.author?.name === "string"
-            ? post.author.name.trim()
-            : post.author?.["@id"] === organizationId ? organizationAuthor : "";
+        const authors = Array.isArray(post.author) ? post.author : [post.author];
+        const names = authors.map((entry) => typeof entry?.name === "string"
+            ? entry.name.trim()
+            : entry?.["@id"] === organizationId ? organizationAuthor : "");
+        const author = names.every(Boolean) ? names.join(", ") : "";
 
         if (url !== expectedUrl) throw new Error(`${relativePath}: BlogPosting canonical URL mismatch`);
         if (urls.has(url)) throw new Error(`${relativePath}: duplicate BlogPosting canonical URL`);
