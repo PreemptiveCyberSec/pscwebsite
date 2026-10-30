@@ -136,6 +136,25 @@
 
             <div id="ci-status" class="ci-status" role="status" aria-live="polite">Loading incident records…</div>
 
+            <section class="ci-overview" aria-labelledby="overview-heading">
+                <div class="ci-panel-heading">
+                    <div><span class="ci-overline">Collection overview // 2000-2026</span><h2 id="overview-heading">Incident record trends</h2></div>
+                    <span class="ci-panel-unit">Full collection · 2026 YTD</span>
+                </div>
+                <p class="ci-chart-caption">Retained records by calendar year and record type. All years and sources; independent of the filters below. Zero means no records in this collection, not no incidents.</p>
+                <ul id="trend-legend" class="ci-trend-legend" aria-label="Trend series"></ul>
+                <div class="ci-trend-scroll"><div id="year-trend" class="ci-year-trend"></div></div>
+                <details class="ci-trend-data"><summary>Yearly counts</summary><div class="ci-table-wrap"><table class="ci-table"><caption>Retained records, 2000-2026; 2026 is year-to-date</caption><thead><tr><th scope="col">Year</th><th scope="col">All records</th><th scope="col">Public disclosures</th><th scope="col">Actor claims (unverified)</th><th scope="col">Register reports (unverified)</th><th scope="col">Reference only</th></tr></thead><tbody id="trend-data-rows"></tbody></table></div></details>
+                <h3 class="ci-overview-subheading">Collection pulse</h3>
+                <div id="collection-pulse" class="ci-pulse-grid" aria-label="Full collection summary"></div>
+                <div class="ci-overview-breakdowns">
+                    <section aria-labelledby="year-ranking-heading"><h3 id="year-ranking-heading">Records by year</h3><div id="year-ranking" class="ci-bar-chart"></div></section>
+                    <section aria-labelledby="industry-ranking-heading"><h3 id="industry-ranking-heading">Top industries</h3><div id="industry-ranking" class="ci-bar-chart"></div></section>
+                    <section aria-labelledby="source-ranking-heading"><h3 id="source-ranking-heading">Record types</h3><div id="source-ranking" class="ci-bar-chart"></div><p class="ci-overview-note" id="collection-insights"></p></section>
+                </div>
+            </section>
+
+            <h2 class="ci-selected-heading">Selected year</h2>
             <section class="ci-stat-grid" aria-label="Selected year summary">
                 <article class="ci-stat-card"><span class="ci-stat-label">Records in view</span><strong id="stat-total">—</strong><span id="stat-total-note">Selected year and source scope</span></article>
                 <article class="ci-stat-card ci-claim-stat"><span class="ci-stat-label">Unverified claim rows</span><strong id="stat-actor-claims">—</strong><span>Selected year and source scope; not confirmed incidents</span></article>
@@ -202,7 +221,6 @@
                                 <th scope="col">Industry</th>
                                 <th scope="col">Incident summary</th>
                                 <th scope="col">Record status</th>
-                                <th scope="col">Source</th>
                             </tr>
                         </thead>
                         <tbody id="incident-rows"></tbody>
