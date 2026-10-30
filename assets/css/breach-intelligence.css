@@ -146,6 +146,174 @@
     color: var(--mint);
 }
 
+.ci-overview {
+    margin: 24px 0 36px;
+    padding: 24px 0;
+    border-block: 1px solid var(--border-strong);
+}
+
+.ci-overview h2 {
+    font: 500 1.5rem var(--font-mono);
+}
+
+.ci-overview .ci-chart-caption {
+    min-height: 0;
+    margin-bottom: 16px;
+}
+
+.ci-trend-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin: 0 0 16px;
+    padding: 0;
+    list-style: none;
+    color: var(--text-secondary);
+    font: 0.67rem var(--font-mono);
+}
+
+.ci-trend-legend li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.ci-trend-legend span {
+    flex: 0 0 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.ci-trend-scroll {
+    overflow-x: auto;
+}
+
+.ci-year-trend {
+    min-width: 720px;
+    background: linear-gradient(180deg, rgba(88, 245, 160, 0.035), transparent);
+}
+
+.ci-year-trend svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 1;
+}
+
+.ci-year-trend text {
+    fill: var(--text-muted);
+    font: 11px var(--font-mono);
+}
+
+.ci-trend-gridline {
+    stroke: var(--border);
+    stroke-width: 1;
+}
+
+.ci-trend-data {
+    margin: 12px 0 24px;
+    color: var(--text-secondary);
+    font: 0.75rem var(--font-mono);
+}
+
+.ci-trend-data summary {
+    width: fit-content;
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.ci-overview-subheading,
+.ci-overview-breakdowns h3 {
+    margin-bottom: 14px;
+    color: var(--text-primary);
+    font: 500 0.85rem var(--font-mono);
+}
+
+.ci-pulse-grid {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 28px;
+}
+
+.ci-pulse-metric {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: rgba(88, 245, 160, 0.035);
+}
+
+.ci-pulse-metric span {
+    color: var(--text-secondary);
+    overflow-wrap: anywhere;
+    font: 0.62rem/1.5 var(--font-mono);
+}
+
+.ci-pulse-metric strong {
+    color: var(--mint-pale);
+    font: 500 1.25rem var(--font-mono);
+}
+
+.ci-overview-breakdowns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.ci-overview-breakdowns > section {
+    min-width: 0;
+}
+
+.ci-overview-breakdowns .ci-bar-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 5px 10px;
+}
+
+.ci-overview-breakdowns .ci-bar-label {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font: 0.65rem/1.5 var(--font-mono);
+}
+
+.ci-overview-breakdowns .ci-bar-count {
+    grid-column: 2;
+    grid-row: 1;
+    font: 0.65rem var(--font-mono);
+}
+
+.ci-overview-breakdowns .ci-bar-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 5px;
+}
+
+.ci-overview-note {
+    margin-top: 24px;
+    color: var(--text-secondary);
+    font: 0.75rem/1.8 var(--font-mono);
+}
+
+.ci-selected-heading {
+    font-size: 1.4rem;
+}
+
+@media (max-width: 1000px) {
+    .ci-pulse-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .ci-overview-breakdowns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+    .ci-overview > .ci-panel-heading { align-items: flex-start; flex-direction: column; }
+    .ci-overview h2 { font-size: 1.2rem; }
+    .ci-pulse-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ci-overview-breakdowns { grid-template-columns: minmax(0, 1fr); }
+}
+
 .ci-stat-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -296,6 +464,7 @@
 }
 
 .ci-bar-fill {
+    display: block;
     width: var(--bar-width, 0%);
     min-width: 0;
     height: 100%;
@@ -381,7 +550,6 @@
 }
 
 .ci-table-wrap {
-    overflow-x: auto;
     border: 1px solid var(--border);
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     background: rgba(3, 8, 6, 0.48);
@@ -389,10 +557,22 @@
 
 .ci-table {
     width: 100%;
-    min-width: 1050px;
+    table-layout: fixed;
     border-collapse: collapse;
     text-align: left;
 }
+
+.ci-table th,
+.ci-table td {
+    overflow-wrap: anywhere;
+}
+
+.ci-records-section .ci-table th:nth-child(1) { width: 12%; }
+.ci-records-section .ci-table th:nth-child(2) { width: 13%; }
+.ci-records-section .ci-table th:nth-child(3) { width: 17%; }
+.ci-records-section .ci-table th:nth-child(4) { width: 12%; }
+.ci-records-section .ci-table th:nth-child(5) { width: 33%; }
+.ci-records-section .ci-table th:nth-child(6) { width: 13%; }
 
 .ci-table th {
     padding: 14px 13px;
@@ -402,7 +582,7 @@
     font: 0.65rem var(--font-mono);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .ci-table td {
@@ -422,27 +602,12 @@
 }
 
 .ci-table td:first-child {
-    min-width: 125px;
     color: var(--text-primary);
-    white-space: nowrap;
-}
-
-.ci-table td:nth-child(2) {
-    min-width: 125px;
 }
 
 .ci-table td:nth-child(3) {
-    min-width: 170px;
     color: var(--text-primary);
     font-weight: 500;
-}
-
-.ci-table td:nth-child(4) {
-    min-width: 145px;
-}
-
-.ci-table td:nth-child(5) {
-    min-width: 280px;
 }
 
 .ci-table a {
@@ -457,13 +622,14 @@
 
 .ci-status-badge {
     display: inline-flex;
+    max-width: 100%;
     padding: 4px 8px;
     border: 1px solid rgba(88, 245, 160, 0.26);
     border-radius: 99px;
     color: var(--mint-pale);
     background: rgba(88, 245, 160, 0.07);
     font: 0.61rem var(--font-mono);
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .ci-status-badge.is-reference {
@@ -580,6 +746,45 @@
 }
 
 @media (max-width: 900px) {
+    .ci-records-section .ci-table,
+    .ci-records-section .ci-table tbody,
+    .ci-records-section .ci-table tr {
+        display: block;
+    }
+
+    .ci-records-section .ci-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+
+    .ci-records-section .ci-table td {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+        align-items: start;
+        gap: 12px;
+        padding: 10px 12px;
+    }
+
+    .ci-records-section .ci-table td::before {
+        content: attr(data-label);
+        color: var(--mint-pale);
+        font: 0.62rem/1.6 var(--font-mono);
+    }
+
+    .ci-records-section .ci-table tr + tr {
+        border-top: 2px solid var(--border-strong);
+    }
+
+    .ci-trend-data .ci-table th,
+    .ci-trend-data .ci-table td {
+        padding: 10px 4px;
+        font-size: 0.6rem;
+        letter-spacing: 0;
+    }
+
     .ci-hero {
         grid-template-columns: minmax(0, 1fr) 220px;
         gap: 24px;
