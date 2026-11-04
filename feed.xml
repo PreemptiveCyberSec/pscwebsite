@@ -6,7 +6,16 @@
     <description>Defensive security research from Preemptive Cyber Security.</description>
     <language>en</language>
     <atom:link href="https://preemptivecybersec.com/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Thu, 29 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Vibe Hacking: AI&apos;s New Cybersecurity Craze and Why Fundamentals Matter</title>
+      <link>https://preemptivecybersec.com/pages/blog/vibe-hacking-ai-cybersecurity.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/vibe-hacking-ai-cybersecurity.html</guid>
+      <pubDate>Thu, 05 Nov 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Preemptive Cyber Security Research</dc:creator>
+      <category>AI and Cybersecurity Careers</category>
+      <description>AI can accelerate security work, but it cannot replace computing fundamentals. A look at vibe hacking, interview observations, organisational risk, and building AI-augmented practitioners.</description>
+    </item>
     <item>
       <title>AI Pentesting, Part 16: A Fifteen-Task Hackbot Harness with Oh My Pi, Hermes, and OpenClaw</title>
       <link>https://preemptivecybersec.com/pages/blog/ai-pentesting-part-16-hackbot-agent-harness.html</link>
@@ -447,15 +456,6 @@
       <dc:creator>Mike Chen</dc:creator>
       <category>Windows Defense · Process Injection</category>
       <description>Learn the core process injection primitives, evidence chain, memory forensics, detection logic, and Windows hardening.</description>
-    </item>
-    <item>
-      <title>Process Ghosting: Correlating Objects Across Time</title>
-      <link>https://preemptivecybersec.com/pages/blog/process-ghosting-defense.html</link>
-      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/process-ghosting-defense.html</guid>
-      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Mike Chen</dc:creator>
-      <category>Windows Defense · Process Creation</category>
-      <description>Detect process ghosting by correlating file, section, process, image, and memory evidence across Windows telemetry.</description>
     </item>
   </channel>
 </rss>

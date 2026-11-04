@@ -39,6 +39,7 @@ This file is a curated map of PSC's public company, service, and security resear
 
 ## Security research index
 
+- [Vibe Hacking: AI's New Cybersecurity Craze and Why Fundamentals Matter](https://preemptivecybersec.com/pages/blog/vibe-hacking-ai-cybersecurity.html): Examines AI-generated security work, qualitative interview observations, foundational computing skills, organisational risk, and the difference between AI-enabled and AI-augmented practitioners.
 - [Build a Hackbot: AI-Assisted Bug Bounty and Zero-Day Research](https://preemptivecybersec.com/pages/blog/build-a-hackbot-ai-bug-bounty.html): Build an evidence-first hackbot: deterministic recon, new-asset queues, API mapping, AI triage, unsent Caido hand-offs, secure recovery, and a runnable local lab.
 
 - [Resources](https://preemptivecybersec.com/pages/resources.html): Complete index of PSC security research, tools, and conference material. Use this page to discover all published articles.
