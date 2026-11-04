@@ -119,23 +119,25 @@
                         <p class="team-bio">Offensive security specialist leading Preemptive's offensive &amp; defensive services.</p>
                         <span class="team-more">Read bio &rarr;</span>
                     </button>
-                    <div class="card team-card">
+                    <button class="card team-card clickable bio-card" type="button" data-bio="mike" aria-haspopup="dialog">
                         <div class="team-avatar"><div class="team-avatar-inner">MC</div></div>
                         <h3>Mike Chen</h3>
                         <span class="team-role">LEAD PENETRATION TESTER</span>
-                        <p class="team-bio">Web app and API specialist. Multiple CVEs to his name.</p>
-                    </div>
-                    <div class="card team-card">
+                        <p class="team-bio">Web application and API security specialist with published work in testing and defensive engineering.</p>
+                        <span class="team-more">Read bio &rarr;</span>
+                    </button>
+                    <button class="card team-card clickable bio-card" type="button" data-bio="lisa" aria-haspopup="dialog">
                         <div class="team-avatar"><div class="team-avatar-inner">LG</div></div>
                         <h3>Lisa Garcia</h3>
                         <span class="team-role">SECURITY RESEARCHER</span>
-                        <p class="team-bio">Published researcher in cryptography and zero-day discovery.</p>
-                    </div>
-                    <button class="card team-card clickable bio-card" data-bio="shabnam" aria-haspopup="dialog">
-                        <div class="team-avatar"><div class="team-avatar-inner">SS</div></div>
-                        <h3>Shabnam Sharma</h3>
+                        <p class="team-bio">Research focused on cryptography, vulnerability research, and security detection.</p>
+                        <span class="team-more">Read bio &rarr;</span>
+                    </button>
+                    <button class="card team-card clickable bio-card" type="button" data-bio="charmi" aria-haspopup="dialog">
+                        <div class="team-avatar"><div class="team-avatar-inner">CC</div></div>
+                        <h3>Charmi Cook</h3>
                         <span class="team-role">PRODUCT OWNER · DEVSECOPS ADVISOR</span>
-                        <p class="team-bio">Product owner &amp; DevSecOps advisor — aligning technology, product, and sales.</p>
+                        <p class="team-bio">Product Owner and DevSecOps Advisor at Preemptive Cyber Security.</p>
                         <span class="team-more">Read bio &rarr;</span>
                     </button>
                     <button class="card team-card clickable bio-card" data-bio="harsh" aria-haspopup="dialog">
@@ -237,13 +239,31 @@
                         'Viral has spoken at prominent industry conferences such as Black Hat, ROOTCON DEFCON and (ISC)². He is also an active participant in bug bounty programs and has received recognition for responsibly disclosing security vulnerabilities. Outside of his professional work, Viral enjoys building security tools and contributes to multiple projects on GitHub. He can be found on X at @ManiarViral and @PreemptiveCyber.'
                     ]
                 },
-                shabnam: {
-                    initials: 'SS',
-                    name: 'Shabnam Sharma',
-                    role: 'PRODUCT OWNER · DEVSECOPS &amp; PRODUCT ADVISOR',
+                mike: {
+                    initials: 'MC',
+                    name: 'Mike Chen',
+                    role: 'LEAD PENETRATION TESTER',
                     paras: [
-                        'Shabnam is a diversely-skilled information technology professional with over a decade of experience across multinational companies and small-to-medium businesses in Australia. She is currently a Product Owner at a major power supply company in Melbourne and supports Preemptive Cyber Security with DevSecOps cycles and product building.',
-                        'Shabnam has extensive experience building a culture of empowerment and collaboration, and creates an environment that enables alignment between technology, product, and sales.'
+                        'Mike Chen is a Lead Penetration Tester with eight years of experience in security testing, specialising in web applications and APIs.',
+                        'He assesses application security, identifies weaknesses that could affect real-world systems, and provides practical guidance to help teams strengthen their defences.'
+                    ]
+                },
+                lisa: {
+                    initials: 'LG',
+                    name: 'Lisa Garcia',
+                    role: 'SECURITY RESEARCHER',
+                    paras: [
+                        'Lisa Garcia is a Security Researcher with six years of experience focused on cryptography, vulnerability research, and security detection.',
+                        'Her work examines Windows security telemetry, including AMSI and ETW, to advance defensive detection and help security teams better understand emerging threats.'
+                    ]
+                },
+                charmi: {
+                    initials: 'CC',
+                    name: 'Charmi Cook',
+                    role: 'PRODUCT OWNER · DEVSECOPS ADVISOR',
+                    paras: [
+                        'Charmi Cook is a Product Owner and DevSecOps Advisor with 14 years of experience bringing product and technology teams together.',
+                        'She helps align product priorities with secure development practices, guiding teams to integrate security into planning and delivery while keeping outcomes focused on customer and business needs.'
                     ]
                 },
                 harsh: {
@@ -267,7 +287,7 @@
                 if (!b) return;
                 body.innerHTML =
                     '<div class="team-avatar" style="margin: 0 0 22px;"><div class="team-avatar-inner">' + b.initials + '</div></div>' +
-                    '<span class="modal-eyebrow">Team / Advisor</span>' +
+                    '<span class="modal-eyebrow">Team member</span>' +
                     '<h2>' + b.name + '</h2>' +
                     '<p class="team-role" style="margin-bottom: 24px;">' + b.role + '</p>' +
                     '<p class="modal-overview">' + b.paras[0] + '</p>' +
