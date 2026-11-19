@@ -39,6 +39,8 @@ This file is a curated map of PSC's public company, service, and security resear
 
 ## Security research index
 
+- [The Vulnpocalypse: AI Attack Harnesses and the Race to Reduce Exposure](https://preemptivecybersec.com/pages/blog/vulnpocalypse-ai-attack-harnesses.html): Understand AI-assisted vulnerability discovery, reported attack harnesses, ARTEX, and practical exposure management through a filterable inventory.
+
 - [Vibe Hacking: AI's New Cybersecurity Craze and Why Fundamentals Matter](https://preemptivecybersec.com/pages/blog/vibe-hacking-ai-cybersecurity.html): Examines AI-generated security work, qualitative interview observations, foundational computing skills, organisational risk, and the difference between AI-enabled and AI-augmented practitioners.
 - [Build a Hackbot: AI-Assisted Bug Bounty and Zero-Day Research](https://preemptivecybersec.com/pages/blog/build-a-hackbot-ai-bug-bounty.html): Build an evidence-first hackbot: deterministic recon, new-asset queues, API mapping, AI triage, unsent Caido hand-offs, secure recovery, and a runnable local lab.
 

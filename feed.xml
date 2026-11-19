@@ -6,7 +6,16 @@
     <description>Defensive security research from Preemptive Cyber Security.</description>
     <language>en</language>
     <atom:link href="https://preemptivecybersec.com/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Thu, 05 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>The Vulnpocalypse: AI Attack Harnesses and the Race to Reduce Exposure</title>
+      <link>https://preemptivecybersec.com/pages/blog/vulnpocalypse-ai-attack-harnesses.html</link>
+      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/vulnpocalypse-ai-attack-harnesses.html</guid>
+      <pubDate>Thu, 19 Nov 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Mike Chen</dc:creator>
+      <category>AI Security Testing</category>
+      <description>Understand AI-assisted vulnerability discovery, reported attack harnesses, ARTEX, and practical exposure management through a filterable inventory.</description>
+    </item>
     <item>
       <title>Vibe Hacking: AI&apos;s New Cybersecurity Craze and Why Fundamentals Matter</title>
       <link>https://preemptivecybersec.com/pages/blog/vibe-hacking-ai-cybersecurity.html</link>
@@ -447,15 +456,6 @@
       <dc:creator>Mike Chen</dc:creator>
       <category>Windows Defense · Thread Pools</category>
       <description>Defensive analysis of Windows thread-pool injection families, worker-factory telemetry, memory indicators, and response.</description>
-    </item>
-    <item>
-      <title>Primitive Process Injection: A Defender&apos;s Baseline</title>
-      <link>https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html</link>
-      <guid isPermaLink="true">https://preemptivecybersec.com/pages/blog/primitive-process-injection-defense.html</guid>
-      <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Mike Chen</dc:creator>
-      <category>Windows Defense · Process Injection</category>
-      <description>Learn the core process injection primitives, evidence chain, memory forensics, detection logic, and Windows hardening.</description>
     </item>
   </channel>
 </rss>
