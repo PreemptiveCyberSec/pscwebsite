@@ -1,0 +1,13 @@
+.harness-bars { list-style: none; padding: 0; display: grid; gap: 1rem; }
+.harness-bars li > div:first-child { display: flex; justify-content: space-between; gap: 1rem; }
+.harness-bars small { color: var(--text-muted); }
+.harness-bar { background: var(--border); height: .7rem; border-radius: 1rem; overflow: hidden; }
+.harness-bar span { display: block; height: 100%; background: var(--neon); }
+.harness-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: 2rem; }
+.harness-controls input, .harness-controls select { color: var(--text-primary); background: #101b17; border: 1px solid var(--border); border-radius: .25rem; padding: .6rem; font: inherit; max-width: 100%; }
+.harness-controls input:focus-visible, .harness-controls select:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+.harness-controls p { flex-basis: 100%; margin: 0; }
+.harness-table table { min-width: 1450px; }
+.harness-table td { min-width: 9rem; overflow-wrap: anywhere; vertical-align: top; }
+.harness-table td:last-child { min-width: 24rem; }
+.harness-table tr[hidden] { display: none; }
